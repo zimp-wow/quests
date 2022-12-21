@@ -415,5 +415,7 @@ if (($maxlvl) == "61") {
 	#}
 
 sub EVENT_DISCOVER_ITEM {
+	$itemname = quest::getitemname($itemid);
+	quest::discordsend("ooc", "$name discovered $itemname!");
 	quest::gmsay("$name discovered " . quest::varlink($itemid) . "!", 335, 1, 0, 0);
 }
