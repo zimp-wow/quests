@@ -25,10 +25,10 @@ sub return_items {
 	my $items_returned = 0;
 
 	my %ItemHash = (
-		0 => [ plugin::val('$item1'), plugin::val('$item1_charges'), plugin::val('$item1_attuned') ],
-		1 => [ plugin::val('$item2'), plugin::val('$item2_charges'), plugin::val('$item2_attuned') ],
-		2 => [ plugin::val('$item3'), plugin::val('$item3_charges'), plugin::val('$item3_attuned') ],
-		3 => [ plugin::val('$item4'), plugin::val('$item4_charges'), plugin::val('$item4_attuned') ],
+		0 => [ plugin::val('$item1'), plugin::val('$item1_charges'), plugin::val('$item1_attuned'), plugin::val('$item1_inst') ],
+		1 => [ plugin::val('$item2'), plugin::val('$item2_charges'), plugin::val('$item2_attuned'), plugin::val('$item2_inst') ],
+		2 => [ plugin::val('$item3'), plugin::val('$item3_charges'), plugin::val('$item3_attuned'), plugin::val('$item3_inst') ],
+		3 => [ plugin::val('$item4'), plugin::val('$item4_charges'), plugin::val('$item4_attuned'), plugin::val('$item4_inst') ],
 	);
 	
 	foreach my $k (keys(%{$hashref}))
@@ -42,14 +42,21 @@ sub return_items {
 			{
 				if ($client)
 				{
-					$client->SummonItem($k, $ItemHash{$r}[1], $ItemHash{$r}[2]);
-					quest::say("I have no need for this $name, you can have it back.");
-					$items_returned = 1;
+					# remove delivered task items from return for this slot
+					my $inst = $ItemHash{$r}[3];
+					my $return_count = $inst->RemoveTaskDeliveredItems();
+
+					if ($return_count > 0)
+					{
+						$client->SummonFixedItem($k, $inst->GetCharges(), $ItemHash{$r}[2]);
+						quest::say("I have no need for this $name, you can have it back.");
+						$items_returned = 1;
+					}
 				}
 				else
 				{
 					# This shouldn't be needed, but just in case
-					quest::summonitem(1$k, 0);
+					quest::summonfixeditem(1$k, 0);
 					$items_returned = 1;
 				}
 				$rcount--;
