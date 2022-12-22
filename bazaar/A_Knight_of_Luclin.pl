@@ -8,7 +8,7 @@ sub EVENT_SAY {
         }
 
         if ($expansion < 14) {
-            plugin::Whisper("Ah... I see you have yet to unlock Luclin! You have two options. One is the route of the hero. The other, is the route of the collector. Unfortunately, little has been shared with me about what that entails hero... Come back later and I may know more.");
+            plugin::Whisper("Ah... I see you have yet to unlock Luclin! You have two options. One is the route of the [hero]. The other, is the route of the [collector].");
         }
         
         $progressionCount = 8;
@@ -58,4 +58,41 @@ sub EVENT_SAY {
             plugin::Whisper("You have defeated $progressCount of $progressionCount targets: $progressText.");
         }
     }
+
+     if (($text =~/collector/i) && ($expansion <14)){
+      plugin::Whisper("You are one of patience, I see. All you need to do is bring me an Apocryphal Stronghorn's Horn, an Apocryphal Shackle of Auctoritias, an Apocryphal Sword of Pain, and an Apocryphal Siren Hair Earring");
+      return;
+    }
+}
+
+sub EVENT_ITEM {
+  $key = $client->AccountID() . "-kunark-flag";
+  $expansion = quest::get_data($key);
+
+  if ($expansion < 14){
+    if (plugin::takeItems(827200 => 1, 84189 => 1, 825319 => 1, 824741 =>1)) {
+      plugin::Whisper("Here are three tokens. Hand them back to me for your flag!");
+      quest::summonfixeditem(99102);
+      quest::summonfixeditem(99102);
+      quest::summonfixeditem(99102);
+
+      quest::ding();
+      quest::exp(1000000);
+    }
+    
+    if (plugin::takeItems(99102 => 1)){
+      plugin::Whisper("Beware of the evils that lurk Luclin $name!");
+      quest::ding();
+      quest::set_data($client->AccountID() . "sky", 1);
+      quest::set_data($client->AccountID() . "sle", 1);
+      quest::set_data($client->AccountID() . "slee", 1);
+      quest::set_data($client->AccountID() . "sleep", 1);
+      quest::set_data($client->AccountID() . "sleepers", 1);
+      quest::set_data($client->AccountID() . "zla", 1);
+      quest::set_data($client->AccountID() . "kla", 1);
+      quest::set_data($client->AccountID() . "wuo", 1);
+
+      quest::set_data($key, 14);
+    }       
+  }
 }
