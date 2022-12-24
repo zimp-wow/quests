@@ -20,12 +20,7 @@ sub EVENT_ITEM {
 		quest::summonitem(14341); # Item: Staff of the Four
 		quest::faction(404, -100); #truespirit, resets the +100 in gains from quest start up to this point.
 	} else {
-		quest::say("I don't need this.");
-		if($item1 > 0){quest::summonitem("$item1");} 
-		if($item2 > 0){quest::summonitem("$item2");} 
-		if($item3 > 0){quest::summonitem("$item3");} 
-		if($item4 > 0){quest::summonitem("$item4");}
-		if($platinum != 0 || $gold !=0 || $silver != 0 || $copper != 0) {quest::givecash($copper, $silver, $gold, $platinum);}
+		plugin::returnUnusedItems();
 	}
 }
 

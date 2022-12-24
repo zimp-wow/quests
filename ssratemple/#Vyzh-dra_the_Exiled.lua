@@ -20,6 +20,8 @@ function event_timer(e)
 end
 
 function event_death_complete(e)
-	eq.signal(162255,2); --  #cursed_controller
-	eq.set_global("exiled_dead",1,3,"D3");
+	--eq.signal(162255,2); --  #cursed_controller
+	--eq.set_global("exiled_dead",1,3,"D3");
+	eq.spawn2(162206,0, 0, e.self:GetX()+3,e.self:GetY()+3,e.self:GetZ(),0); --NPC: Cursed
+
 end
