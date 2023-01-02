@@ -3,7 +3,7 @@ my $min_players     = 1;
 my $max_players     = 72;
 my $dz_zone         = "ssratemple";
 my $dz_version      = 0;
-my $dz_duration     = 79200; # 22 hours
+my $dz_duration     = 172800; # 48 hours
 
 sub EVENT_SAY {
   if ($text =~ /hail/i) {

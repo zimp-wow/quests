@@ -33,7 +33,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
   if (plugin::check_handin(\%itemcount, 18959 => 1)) {
-    quest::say("Hmmm. I've been waiting for someone to bring me this. I'm sorry such a young one as you has taken up this task. Maybe the sky god blesses ya though. Aye, ya have that look in your eye. Our task is to focus the blessings of the gods and cleanse the filth from the land. I have two tasks for ya.");
+    quest::say("Hmmm. I've been waiting for someone to bring me this. I'm sorry such a young one as you has taken up this task. Maybe the sky god blesses ya though. Aye, ya have that look in your eye. Our task is to focus the blessings of the gods and cleanse the filth from the land. I have [two tasks] for ya.");
     quest::setglobal("shiny_tin_bowl", 1, 0, "F");
   }
   elsif (plugin::check_handin(\%itemcount, 20473 => 1, 20460 => 1)) {
