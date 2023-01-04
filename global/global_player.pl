@@ -1,15 +1,9 @@
 
 sub EVENT_CONNECT {
-    #$client->SendToGuildHall();
-
-#if (quest::get_data($pvp) == 1) {
-	#quest::pvp(off);
-   # quest::set_data($pvp, 2);
-#}
+ 
 
 my $PCRace = $client->GetRace();
 my $PCClass = $client->GetClass();
-#my $level = $client->GetLevel();
 
 
  if($PCRace == 128){ 
@@ -30,7 +24,7 @@ if($PCRace == 130){
 if($PCRace == 330){
 	$key = $client->AccountID() . "-kunark-flag";
 	$expansion = quest::get_data($key);
-	if ($expansion < 20){
+	if ($expansion < 30){ #Froglok lock, set this to 19 on POP unlock, or remove
     $client->SendToGuildHall();
   }
 }
@@ -44,30 +38,10 @@ if($PCClass == 15){
 if($PCClass == 16){
 	$key = $client->AccountID() . "-kunark-flag";
 	$expansion = quest::get_data($key);
-	if ($expansion < 20){
+	if ($expansion < 30){ #Zerker lock, set this to 19 on POP unlock
     $client->SendToGuildHall();
   }
 }
-
-#if($level > 19){
-#	if($PCClass == 4)
-#	{
-#	if (quest::get_data($AM11) == "") {
-#	$client->IncrementAA(199); #AM1
- #   quest::set_data($AM11, 1);
-#}
-#	}
-#}
-
-#if($level > 39){
-#	if($PCClass == 4)
-#	{
-#	if (quest::get_data($AM22) == "") {
-#	$client->IncrementAA(200); #AM1
- #   quest::set_data($AM22, 1);
-#}
-#	}
-#}
 
 $bazkey = $client->CharacterID() . "baz";
 
@@ -295,8 +269,6 @@ if($PCClass == 15){ #Beastlord AA
 	$client->IncrementAA(6984); #Bite of the Asp
 	$client->IncrementAA(734); #Pet Affinity
 
-    
-
 }
 }
 
@@ -306,8 +278,6 @@ if($PCClass == 16){ #Zerker AA
     quest::set_data($zerkaa, 1);
 	$client->Message(15, "You have learned ! Open up your AA window (Default V) to find it!");
 	$client->IncrementAA(); #Enter in zerker AA
-
-    
 
 }
 }
@@ -321,33 +291,29 @@ sub EVENT_SAY {
 if (($text =~ /Expansions/i) && ($expansion == 0)) {
 	$client->Message(15, "You don't have any expansions unlocked!");
 
-#  quest::say("You don't have any expansions unlocked!");
  }
 
  if (($text =~ /Expansions/i) && ($expansion == 1)) {
 	$client->Message(15, "You don't have any expansions unlocked!");
 
- # quest::say("You don't have any expansions unlocked!");
  }
 
  if (($text =~ /Expansions/i) && ($expansion >= 2)) {
 	$client->Message(15, "Expansions Unlocked: Kunark");
 
-  #quest::say("Expansions Unlocked: Kunark");
  }
   if (($text =~ /Expansions/i) && ($expansion >= 6)) {
 	$client->Message(15, "Expansions Unlocked: Velious");
-	  #quest::say("Expansions Unlocked: Velious");
+
  }
   if (($text =~ /Expansions/i) && ($expansion >= 14)) {
 	$client->Message(15, "Expansions Unlocked: Luclin");
 	
-#  quest::say("Expansions Unlocked: Luclin");
+
  }
-  if (($text =~ /Expansions/i) && ($expansion >= 20 )) {
+  if (($text =~ /Expansions/i) && ($expansion >= 30 )) { #set this to 19 on POP unlock
 	$client->Message(15, "Expansions Unlocked: Planes of Power");
 
- # quest::say("Expansions Unlocked: Planes of Power/Legacy of Ykesha");
  }
 
 }
@@ -357,11 +323,7 @@ sub EVENT_ZONE {
 
 my $PCRace = $client->GetRace();
 my $PCClass = $client->GetClass();
-#my $level = $client->GetLevel();
-#if (quest::get_data($pvp) == 1) {
-	#quest::pvp(off);
-    #quest::set_data($pvp, 2);
-#}
+
 $key = $client->AccountID() . "-kunark-flag";
 $expansion = quest::get_data($key);
 
@@ -374,45 +336,14 @@ if (($maxlvl) == "51") {
 }
 }
 
-if ($expansion == 20) {
-if (($maxlvl) == "61") {
+if ($expansion > 30) { #set this to 19 on POP unlock
+if (($maxlvl) == "60") {
 	$client->SetBucket("CharMaxLevel", 65);
 }
 }
 
-
-#	if (quest::get_data($AM11) == "") {
-#	$client->IncrementAA(199); #AM1
- #   quest::set_data($AM11, 1);
-#}
-
-
-#	if (quest::get_data($AM22) == "") {
-#	$client->IncrementAA(200); #AM1
- #   quest::set_data($AM22, 1);
-#}
-
 }
-
-	#if ($client->GetPetID()) {
-	#	$PetID = $entity_list->GetMobByID($client->GetPetID());
-	#	$PetID->Kill();
-	#}
-	#if ($name eq "TurmoilToad") {
-	#	quest::playerrace(27);
-	#	quest::playersize(4);
-	#}
-	#if ($name eq "Fippy") {
-	#	quest::playerrace(39);
-	#	quest::playersize(5);
-	#	quest::playertexture(2);
-	#}
-	#if ($name eq "Sergeant") {
-	#	quest::playerrace(44);
-	#	quest::playersize(6);
-	#	quest::playertexture(1);
-	#	quest::playerfeature("helm", 1);
-	#}
+	
 
 sub EVENT_DISCOVER_ITEM {
 	$itemname = quest::getitemname($itemid);

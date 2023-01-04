@@ -9,7 +9,7 @@ $bindx = $client->GetBindX;
 $bindy = $client->GetBindY;
 $bindz = $client->GetBindZ;
 
-if ($expansion < 20){ #POP
+if ($expansion < 30){ #POP set this to 19 on POP unlock
     $client->Message(7, "You don't belong here!");
     $client->MovePC($bind, $bindx, $bindy, $bindz, $bindh);
   }
