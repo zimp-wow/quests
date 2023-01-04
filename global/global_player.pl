@@ -336,7 +336,7 @@ if (($maxlvl) == "51") {
 }
 }
 
-if ($expansion > 30) { #set this to 19 on POP unlock
+if ($expansion > 30) { #set this to >18 on POP unlock
 if (($maxlvl) == "60") {
 	$client->SetBucket("CharMaxLevel", 65);
 }
