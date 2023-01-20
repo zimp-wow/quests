@@ -4,7 +4,7 @@ sub EVENT_CLICKDOOR {
 	$expansion = quest::get_data($key);
     if($doorid ==77)
     {
-	if ($expansion >= 20){
+	if ($expansion >= 19){
 	quest::movepc(202, 443, -862, -157, -256);
 	}
     else {

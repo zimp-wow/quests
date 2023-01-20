@@ -44,7 +44,7 @@ if($PCClass == 15){
 if($PCClass == 16){
 	$key = $client->AccountID() . "-kunark-flag";
 	$expansion = quest::get_data($key);
-	if ($expansion < 30){ #change this to 19 at PoP launch
+	if ($expansion < 19){ #Zerker unlock -1/20/23 - changed to 19. All below this value will be kicked to Guild Hall
     $client->SendToGuildHall();
   }
 }
@@ -305,10 +305,8 @@ if($PCClass == 16){ #Zerker AA
 	if (quest::get_data($zerkaa) == "") {
     quest::set_data($zerkaa, 1);
 	$client->Message(15, "You have learned ! Open up your AA window (Default V) to find it!");
-	$client->IncrementAA(); #Enter in zerker AA
-
-    
-
+	$client->IncrementAA(4739); #Killing Spree
+	$client->IncrementAA(258); #Rampage    
 }
 }
 
@@ -344,7 +342,7 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 	
 #  quest::say("Expansions Unlocked: Luclin");
  }
-  if (($text =~ /Expansions/i) && ($expansion >= 20 )) { #Change this to 19
+  if (($text =~ /Expansions/i) && ($expansion >= 19 )) { #Change this to 19
 	$client->Message(15, "Expansions Unlocked: Planes of Power");
 
  # quest::say("Expansions Unlocked: Planes of Power/Legacy of Ykesha");
@@ -374,7 +372,7 @@ if (($maxlvl) == "51") {
 }
 }
 
-if ($expansion == 20) { #Change this to >18
+if ($expansion > 18) { #Change this to >18
 if (($maxlvl) == "61") {
 	$client->SetBucket("CharMaxLevel", 65);
 }

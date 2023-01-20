@@ -6,7 +6,7 @@ sub EVENT_CLICKDOOR {
 	$expansion = quest::get_data($key);
     if($doorid ==109)
     {
-	if ($expansion >= 20){
+	if ($expansion >= 19){
 	quest::movepc(202, 883, 877, -157, 0); #Kelethin
 	}
     else {
@@ -15,7 +15,7 @@ sub EVENT_CLICKDOOR {
 }
     if($doorid ==108)
     {
-        if ($expansion >= 20){
+        if ($expansion >= 19){
             quest::movepc(202, 71, 812, -157, -130); #Felwithe
         }
         else {
