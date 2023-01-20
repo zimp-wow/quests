@@ -16,7 +16,7 @@ if ($text=~/hail/i){
   
   if (quest::get_data($akhkey) == "") {
     quest::set_data($akhkey, 1);
-  quest::say("Soon the Scions will grant you passage... Then Aten Ha Ra can finally be put to rest.");
+  quest::say("The Planes of Power need your help! Hurry along!");
   $client->Message(4, "You have gained an expansion flag!");
 
   quest::set_data($key, quest::get_data($key) + 1);
@@ -48,7 +48,7 @@ else
   quest::say("Expansions Unlocked: Luclin");
  }
   if (($text =~ /Expansions/i) && ($expansion >= 19 )) {
-  quest::say("Expansions Unlocked: Planes of Power/Legacy of Ykesha");
+  quest::say("Expansions Unlocked: Planes of Power");
  }
 
 

@@ -32,7 +32,6 @@ function event_trade(e)
 		e.other:SummonItem(17323); -- Item: Shadowed Scepter Frame
 		e.other:AddEXP(20000);
 		e.other:Ding();
-		eq.depop();
 	end
 	--item_lib.return_items(e.self, e.other, e.trade)
 end

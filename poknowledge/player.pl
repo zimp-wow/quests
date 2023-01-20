@@ -9,8 +9,8 @@ $bindx = $client->GetBindX;
 $bindy = $client->GetBindY;
 $bindz = $client->GetBindZ;
 
-if ($expansion < 30){ #POP
-    $client->Message(7, "You don't belong here!");
+if ($status < 80 && expansion < 30){ #POP - set this to 19 on POP unlock
+    $client->Message(7, "You are not ready to relive these memories!");
     $client->MovePC($bind, $bindx, $bindy, $bindz, $bindh);
   }
 

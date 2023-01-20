@@ -30,7 +30,7 @@ if($PCRace == 130){
 if($PCRace == 330){
 	$key = $client->AccountID() . "-kunark-flag";
 	$expansion = quest::get_data($key);
-	if ($expansion < 20){
+	if ($expansion < 30){
     $client->SendToGuildHall();
   }
 }
@@ -44,7 +44,7 @@ if($PCClass == 15){
 if($PCClass == 16){
 	$key = $client->AccountID() . "-kunark-flag";
 	$expansion = quest::get_data($key);
-	if ($expansion < 20){
+	if ($expansion < 30){ #change this to 19 at PoP launch
     $client->SendToGuildHall();
   }
 }
@@ -344,7 +344,7 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 	
 #  quest::say("Expansions Unlocked: Luclin");
  }
-  if (($text =~ /Expansions/i) && ($expansion >= 20 )) {
+  if (($text =~ /Expansions/i) && ($expansion >= 20 )) { #Change this to 19
 	$client->Message(15, "Expansions Unlocked: Planes of Power");
 
  # quest::say("Expansions Unlocked: Planes of Power/Legacy of Ykesha");
@@ -374,7 +374,7 @@ if (($maxlvl) == "51") {
 }
 }
 
-if ($expansion == 20) {
+if ($expansion == 20) { #Change this to >18
 if (($maxlvl) == "61") {
 	$client->SetBucket("CharMaxLevel", 65);
 }
