@@ -27,13 +27,13 @@ if($PCRace == 130){
   }
 }
 
-if($PCRace == 330){
-	$key = $client->AccountID() . "-kunark-flag";
-	$expansion = quest::get_data($key);
-	if ($expansion < 30){
-    $client->SendToGuildHall();
-  }
-}
+#if($PCRace == 330){
+#	$key = $client->AccountID() . "-kunark-flag";
+#	$expansion = quest::get_data($key);
+#	if ($expansion < 30){
+ #   $client->SendToGuildHall();
+ # }
+#}
 if($PCClass == 15){
 	$key = $client->AccountID() . "-kunark-flag";
 	$expansion = quest::get_data($key);
@@ -373,7 +373,7 @@ if (($maxlvl) == "51") {
 }
 
 if ($expansion > 18) { #Change this to >18
-if (($maxlvl) == "61") {
+if (($maxlvl) == "60") {
 	$client->SetBucket("CharMaxLevel", 65);
 }
 }

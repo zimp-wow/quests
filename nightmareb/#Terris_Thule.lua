@@ -47,6 +47,7 @@ function event_hp(e)
 		eq.set_next_inc_hp_event(96); --reset on wipe
 		
 	elseif ( e.hp_event == 79 ) then
+		
 		eq.set_next_hp_event(69);
 		SpawnDefilers(e.self);
 	
@@ -66,7 +67,7 @@ function event_hp(e)
 	elseif ( e.hp_event == 40 ) then
 		e.self:Shout("You will not escape my realm so easily!");
 		eq.get_entity_list():MessageClose(e.self, true, 250, 0, "The air grows thick with the smell of burning mana.  A rumbling sound draws your attention to the massive statues that rest above the ancient monoliths.  The statues begin to crumble, as they shift their attention from the heavens to you!");
-		eq.signal(221013, 1); --signal untargettable statues to wake up
+		eq.signal(221007, 1); --signal untargettable statues to wake up
 	elseif (e.inc_hp_event == 96) then
 		eq.set_next_hp_event(95);
 	end
@@ -81,19 +82,19 @@ function event_hp(e)
 		end
 	elseif ( e.timer == "gargs" ) then
 		eq.stop_timer("gargs");
-		eq.spawn2(221013,0,0,-1954,99,202,191):SetAppearance(3);  --untargettable statue
-		eq.spawn2(221013,0,0,-1748,91,202,330):SetAppearance(3);  --untargettable statue
-		eq.spawn2(221013,0,0,-1736,-125,202,454):SetAppearance(3);  --untargettable statue
-		eq.spawn2(221013,0,0,-1958,-104,202,67):SetAppearance(3);  --untargettable statue
+		eq.spawn2(221007,0,0,-1954,99,202,191):SetAppearance(3);  --untargettable statue
+		eq.spawn2(221007,0,0,-1748,91,202,330):SetAppearance(3);  --untargettable statue
+		eq.spawn2(221007,0,0,-1736,-125,202,454):SetAppearance(3);  --untargettable statue
+		eq.spawn2(221007,0,0,-1958,-104,202,67):SetAppearance(3);  --untargettable statue
 	elseif ( e.timer == "wipereset" ) then
 		eq.stop_timer("wipereset");
 		eq.depop_all(221007); -- depop active gargs
-		eq.depop_all(221013); -- depop inactive gargs
+		eq.depop_all(221007); -- depop inactive gargs
 		
-		eq.spawn2(221013,0,0,-1954,99,202,191):SetAppearance(3);  --untargettable statue
-		eq.spawn2(221013,0,0,-1748,91,202,330):SetAppearance(3);  --untargettable statue
-		eq.spawn2(221013,0,0,-1736,-125,202,454):SetAppearance(3);  --untargettable statue
-		eq.spawn2(221013,0,0,-1958,-104,202,67):SetAppearance(3);  --untargettable statue
+		eq.spawn2(221007,0,0,-1954,99,202,191):SetAppearance(3);  --untargettable statue
+		eq.spawn2(221007,0,0,-1748,91,202,330):SetAppearance(3);  --untargettable statue
+		eq.spawn2(221007,0,0,-1736,-125,202,454):SetAppearance(3);  --untargettable statue
+		eq.spawn2(221007,0,0,-1958,-104,202,67):SetAppearance(3);  --untargettable statue
 	end
 end
         

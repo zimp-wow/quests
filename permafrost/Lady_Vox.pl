@@ -20,7 +20,7 @@ sub EVENT_HP {
 }
 
 sub EVENT_ENTER {
-	if (($ulevel >= 65) && ($status < 80)) {
+	if (($ulevel > 65) && ($status < 80)) {
 		quest::echo(0, "I will not fight you, but I will banish you!");
 		#:: Move player to Lavastorm (27) at the specified coordinates, facing North
 		$client->MovePC(30, -7024, 2020, -60.7, 0);

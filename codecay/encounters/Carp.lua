@@ -140,7 +140,7 @@ end
 
 
 function Bishop_Death(e)
-	eq.spawn2(200067,0,0,306.97,314.78,-70.25,259.0); -- Spawn Untargetable Version of High Priest.
+	eq.spawn2(200032,0,0,306.97,314.78,-70.25,259.0); -- Spawn Untargetable Version of High Priest.
 	eq.spawn2(200034,33,0,325,325,-71.5,277.2); -- Spawn Vindor on their grid.
 	eq.spawn2(200033,34,0,290,325,-71.5,277.2); -- Spawn Raex on their grid.
 end

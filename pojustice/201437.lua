@@ -16,6 +16,9 @@ local cooldown_timer    = 1800000;
 local eject_timer       = 900000;
 local fail_timer        = 360000;
 
+local instance_id = eq.get_zone_instance_id();
+
+
 function event_say(e)
    local qglobals = eq.get_qglobals(e.self,e.other);
 
@@ -37,7 +40,7 @@ function event_say(e)
                trial_group_id = trial_group:GetID();
             else
                client_id = e.other:CharacterID();
-               e.other:MovePC(201, trial_x, trial_y, trial_z, trial_h); -- Zone: pojustice
+               e.other:MovePCInstance(201, instance_id, trial_x, trial_y, trial_z, trial_h); -- Zone: pojustice
             end
 
             -- Spawn the Controller
@@ -90,7 +93,7 @@ function event_timer(e)
       else
           local client_e = eq.get_entity_list():GetClientByCharID(client_id);
           if (client_e ~= nil and client_e.valid) then
-              client_e.other:MovePC( 201, 456, 825, 9, 360 ); -- Zone: pojustice
+              client_e.other:MovePCInstance(201, instance_id, 456, 825, 9, 360 ); -- Zone: pojustice
               client_e.other:Message(3, "A mysterious force translocates you.");
           end
       end
@@ -167,7 +170,7 @@ function MoveGroup(trial_group, src_x, src_y, src_z, distance, tgt_x, tgt_y, tgt
                -- check the distance and port them up if close enough
                if (client_v:CalculateDistance(src_x, src_y, src_z) <= distance) then
                   -- port the player up
-                  client_v:MovePC(201, tgt_x, tgt_y, tgt_z, tgt_h); -- Zone: pojustice
+                  client_v:MovePCInstance(201, instance_id, tgt_x, tgt_y, tgt_z, tgt_h); -- Zone: pojustice
 					
                   if (msg) then
                      client_v:Message(3, msg);

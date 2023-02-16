@@ -49,3 +49,24 @@ sub EVENT_SAY {
         }
   }
 
+sub EVENT_ITEM {
+  $key = $client->AccountID() . "-kunark-flag";
+  $expansion = quest::get_data($key);
+
+  if ($expansion < 19){  
+    if (plugin::takeItems(99103 => 1)){
+      plugin::Whisper("Beware of the evils that lurk in the Planes $name!");
+      quest::ding();
+      quest::set_data($client->AccountID() . "akh", 1);
+      quest::set_data($client->AccountID() . "griegs", 1);
+      quest::set_data($client->AccountID() . "deep", 1);
+      quest::set_data($client->AccountID() . "ssraone", 1);
+      quest::set_data($client->AccountID() . "ssratwo", 1);
+
+      quest::set_data($key, 19);
+    }       
+  }
+
+  plugin::returnUnusedItems();
+
+}

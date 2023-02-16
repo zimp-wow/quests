@@ -19,7 +19,7 @@ sub EVENT_SAY {
     my $dz = $client->CreateExpedition($dz_zone, $dz_version, $dz_duration, $expedition_name, $min_players, $max_players);
     if ($dz) {
       $dz->SetCompass("dreadlands", 238.0, 987.0, -24.90); # 
-      $dz->SetSafeReturn("dreadlands", -7025, 2021, -60, 484.0);
+      $dz->SetSafeReturn("dreadlands", 5518, 187, 1182, -120);
       $dz->SetZoneInLocation(5518, 187, 1182, -120); # tunnel PF
       $dz->AddReplayLockout(79200); # immediately add a 22 hour replay lockout on creation
       quest::say("Tell me when you're [" . quest::saylink("ready") . "] to enter");

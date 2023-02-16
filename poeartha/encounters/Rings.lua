@@ -185,156 +185,26 @@ end
 			
 			
 			
-function Stone_Death(e) -- Count these mobs, if 44, spawn 4 x Rubble at their assigned locations.
+function Stone_Death(e) -- Count these mobs, if 44, spawn A Rock Monstrosity
 	stone_dead=stone_dead+1;
 	eq.debug("Stone Fortification: " .. stone_dead);
 		if stone_dead == 44 then
 		--eq.zone_emote(15,"YAY");
 		eq.depop_with_timer(218029);
-		eq.spawn2(218076,0,0,-588.14,-236.93,85.75,3.3); -- NPC: A_Mound_of_Rubble
-		eq.spawn2(218118,0,0,-642.33,-236.64,85.75,387.8); -- NPC: A_Mound_of_Rubble
-		eq.spawn2(218119,0,0,-640.72,-287.26,85.75,256.5); -- NPC: A_Mound_of_Rubble
-		eq.spawn2(218120,0,0,-589.11,-287.21,85.75,129.5); -- NPC: A_Mound_of_Rubble
+		eq.spawn2(218089,0,0,-614.11,-263.43,89.75,45.8):AddToHateList(e.self:GetTarget(),1); -- NPC: #A_Rock_Monstrosity
 		stone_dead=0;
 		eq.debug("Stone Fortification: " .. stone_dead);
 		end
-end
-
-
-function Rubble_Combat(e) -- Set actions @ 20% HP
-	if (e.joined == true) then
-	eq.set_next_hp_event(20);
-	end
-end
-	
-function Rubbletwo_Combat(e) -- Set actions @ 20% HP
-	if (e.joined == true) then
-	eq.set_next_hp_event(20);
-	end
-end
-
-function Rubblethree_Combat(e) -- Set actions @ 20% HP
-	if (e.joined == true) then
-	eq.set_next_hp_event(20);
-	end
-end
-
-function Rubblefour_Combat(e) -- Set actions @ 20% HP
-	if (e.joined == true) then
-	eq.set_next_hp_event(20);
-	end
-end
-
-function Rubble_HP(e)  -- If 20% HP and NOT the 4th Rubble brought to 20% -  Wipe my agro, go invlun, stop attacking & Path back to my spawn point and await further instructions.
-	if (e.hp_event == 20) then
-		e.self:WipeHateList();
-		e.self:SetHP(e.self:GetMaxHP())
-		e.self:SetSpecialAbility(SpecialAbility.immune_aggro_on, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_magic, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_melee, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_aggro, 1);
-		e.self:SetSpecialAbility(SpecialAbility.no_harm_from_client, 1);
-		e.self:MoveTo(-588.14,-236.93,85.75,3.3,true);
-		rubble_done=rubble_done+1
-		eq.debug("Rubble: " .. rubble_done);
-	end
-	if rubble_done == 4 then -- If im 4th, Despawn all 4 - let the zone know something is happening & Spawn Rock Monstrosity Named
-	eq.zone_emote(10,"The mounds of rubble reform back into the Rock Monstrosity.");
-	eq.depop_all(218076);
-	eq.depop_all(218118);
-	eq.depop_all(218119);
-	eq.depop_all(218120);
-	eq.spawn2(218089,0,0,-614.11,-263.43,89.75,45.8):AddToHateList(e.self:GetTarget(),1); -- NPC: #A_Rock_Monstrosity
-	end	
-end
-
-function Rubbletwo_HP(e) -- If 20% HP and NOT the 4th Rubble brought to 20% -  Wipe my agro, go invlun, stop attacking & Path back to my spawn point and await further instructions.
-	if (e.hp_event == 20) then
-		e.self:WipeHateList();
-		e.self:SetHP(e.self:GetMaxHP())
-		e.self:SetSpecialAbility(SpecialAbility.immune_aggro_on, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_magic, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_melee, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_aggro, 1);
-		e.self:SetSpecialAbility(SpecialAbility.no_harm_from_client, 1);
-		e.self:MoveTo(-642.33,-236.64,85.75,387.8,true);
-		rubble_done=rubble_done+1
-		eq.debug("Rubble: " .. rubble_done);
-	end
-	if rubble_done == 4 then -- If im 4th, Despawn all 4 - let the zone know something is happening & Spawn Rock Monstrosity Named
-	eq.zone_emote(10,"The mounds of rubble reform back into the Rock Monstrosity.");
-	eq.depop_all(218076);
-	eq.depop_all(218118);
-	eq.depop_all(218119);
-	eq.depop_all(218120);
-	eq.spawn2(218089,0,0,-614.11,-263.43,89.75,45.8):AddToHateList(e.self:GetTarget(),1); -- NPC: #A_Rock_Monstrosity
-	end	
-end
-
-function Rubblethree_HP(e) -- If 20% HP and NOT the 4th Rubble brought to 20% -  Wipe my agro, go invlun, stop attacking & Path back to my spawn point and await further instructions.
-	if (e.hp_event == 20) then
-		e.self:WipeHateList();
-		e.self:SetHP(e.self:GetMaxHP())
-		e.self:SetSpecialAbility(SpecialAbility.immune_aggro_on, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_magic, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_melee, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_aggro, 1);
-		e.self:SetSpecialAbility(SpecialAbility.no_harm_from_client, 1);
-		e.self:MoveTo(-640.72,-287.26,85.75,256.5,true);
-		rubble_done=rubble_done+1
-		eq.debug("Rubble: " .. rubble_done);
-	end
-	if rubble_done == 4 then -- If im 4th, Despawn all 4 - let the zone know something is happening & Spawn Rock Monstrosity Named
-	eq.zone_emote(10,"The mounds of rubble reform back into the Rock Monstrosity.");
-	eq.depop_all(218076);
-	eq.depop_all(218118);
-	eq.depop_all(218119);
-	eq.depop_all(218120);
-	eq.spawn2(218089,0,0,-614.11,-263.43,89.75,45.8):AddToHateList(e.self:GetTarget(),1); -- NPC: #A_Rock_Monstrosity
-	end	
-end
-
-function Rubblefour_HP(e) -- If 20% HP and NOT the 4th Rubble brought to 20% -  Wipe my agro, go invlun, stop attacking & Path back to my spawn point and await further instructions.
-	if (e.hp_event == 20) then
-		e.self:WipeHateList();
-		e.self:SetHP(e.self:GetMaxHP())
-		e.self:SetSpecialAbility(SpecialAbility.immune_aggro_on, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_magic, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_melee, 1);
-		e.self:SetSpecialAbility(SpecialAbility.immune_aggro, 1);
-		e.self:SetSpecialAbility(SpecialAbility.no_harm_from_client, 1);
-		e.self:MoveTo(-589.11,-287.21,85.75,129.5,true);
-		rubble_done=rubble_done+1
-		eq.debug("Rubble: " .. rubble_done);
-	end
-	if rubble_done == 4 then -- If im 4th, Despawn all 4 - let the zone know something is happening & Spawn Rock Monstrosity Named
-	eq.zone_emote(10,"The mounds of rubble reform back into the Rock Monstrosity.");
-	eq.depop_all(218076);
-	eq.depop_all(218118);
-	eq.depop_all(218119);
-	eq.depop_all(218120);
-	eq.spawn2(218089,0,0,-614.11,-263.43,89.75,45.8):AddToHateList(e.self:GetTarget(),1); -- NPC: #A_Rock_Monstrosity
-	end	
-end
-
-
-function Rubble_Death(e)
-	eq.depop(218076);
-	eq.depop(218118);
-	eq.depop(218119); -- [Fail Condition] These cannot be brute forced. If these die [Fail Event]
-	eq.depop(218120);
-	stone_counter=0;
-	
 end
 
 function Monstrosity_Death(e) -- After my Death - Spawn Peregin & FD him, set his actions to not agro, go invuln, immune to all forms of agro. Also spawn the waves of Stone Heaps.
 		eq.spawn2(218049,0,0,-631.84,-277.58,89.75,64.3); -- NPC: Peregrin_Rockskull
 		heap_dead=0;
 		eq.debug("Heap Dead: " .. heap_dead);
-		eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-		eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-		eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-		eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
+		eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3); -- NPC: A_Stone_Heap
+		eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5); -- NPC: A_Stone_Heap
+		eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0); -- NPC: A_Stone_Heap
+		eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5); -- NPC: A_Stone_Heap
 		rubble_done=0;
 		eq.debug("Rubble: " .. rubble_done);
 end
@@ -384,34 +254,34 @@ function Heap_Death(e)  -- Count waves of Heaps in 4's  it takes 24 to spawn the
 	heap_dead=heap_dead+1;
 	eq.debug("Heap Dead: " .. heap_dead);
 		if heap_dead == 4 then -- Spawn Wave 1
-		eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-		eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-		eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-		eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
+		eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3); -- NPC: A_Stone_Heap
+		eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5); -- NPC: A_Stone_Heap
+		eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0); -- NPC: A_Stone_Heap
+		eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5); -- NPC: A_Stone_Heap
 		end
 			if heap_dead == 8 then  -- Spawn Wave 2
-			eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-			eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-			eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-			eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
+			eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3); -- NPC: A_Stone_Heap
+			eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5); -- NPC: A_Stone_Heap
+			eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0); -- NPC: A_Stone_Heap
+			eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5); -- NPC: A_Stone_Heap
 			end
 				if heap_dead == 12 then -- Spawn Wave 3
-				eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-				eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-				eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-				eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
+				eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3); -- NPC: A_Stone_Heap
+				eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5); -- NPC: A_Stone_Heap
+				eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0); -- NPC: A_Stone_Heap
+				eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5); -- NPC: A_Stone_Heap
 				end
 					if heap_dead == 16 then -- Spawn Wave 4
-					eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-					eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-					eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-					eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
+					eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3); -- NPC: A_Stone_Heap
+					eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5); -- NPC: A_Stone_Heap
+					eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0); -- NPC: A_Stone_Heap
+					eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5); -- NPC: A_Stone_Heap
 					end
 						if heap_dead == 20 then -- Spawn Wave 5
-						eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-						eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-						eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
-						eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5):AddToHateList(e.self:GetTarget(),1); -- NPC: A_Stone_Heap
+						eq.spawn2(218079,0,0,-545.32,-331.85,85.75,448.3); -- NPC: A_Stone_Heap
+						eq.spawn2(218079,0,0,-544.83,-189.64,85.75,327.5); -- NPC: A_Stone_Heap
+						eq.spawn2(218079,0,0,-689.25,-188.92,85.75,196.0); -- NPC: A_Stone_Heap
+						eq.spawn2(218079,0,0,-689.83,-336.55,85.75,67.5); -- NPC: A_Stone_Heap
 						end
 							if heap_dead  == 24 and el:IsMobSpawnedByNpcTypeID(218092) == true then -- ## Check to see if named can be spawned ##
 							eq.depop_all(218049); -- Depop Fake Peregin
