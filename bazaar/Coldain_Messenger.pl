@@ -15,7 +15,7 @@ sub EVENT_SAY {
     }
 
     if (($text =~/collector/i) && ($expansion <6)){
-      plugin::Whisper("You are one of patience, I see. All you need to do is bring me an Apocryphal Mask of Secrets, an Apocryphal Sebilite Scale Mask, an Apocryphal Helot Skull Helm, and an Apocryphal Helm of the Rile");
+      plugin::Whisper("You are one of patience, I see. All you need to do is bring me an Apocryphal Mask of Secrets, an Apocryphal Sebilite Scale Mask, an Apocryphal Helot Skull Helm, and an Apocryphal Helm of Rile");
       return;
     }
 

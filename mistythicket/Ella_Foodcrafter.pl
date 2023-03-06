@@ -22,7 +22,7 @@ sub EVENT_SAY {
     quest::say("Hi, hi. I've got a lot to do, many mouths to feed, some filthy goblins to smack. If you don't need me for something, please let me go back to my work. Karana watch over you.");
   }
   if (($text=~/two tasks/i) && (defined $qglobals{shiny_tin_bowl})) {
-    quest::say("Well, ya ask before ya act. That's a good sign. What I need isn't easy to find. First, I need a mixture. Plain sounding enough but it's a special one. Cleanses the mind and focuses the earth's energies into a forest walker's mind. I don't know how to make it. I don't even know what it's called. I merely know it exists and we'll be needing it for our task. When ya do find how to make it ya can mix it in that bowl. Keep it when you're done, it's a good bowl.");
+    quest::say("Well, ya ask before ya act. That's a good sign. What I need isn't easy to find. First, I need a mixture. Plain sounding enough but it's a special one. Cleanses the mind and focuses the earth's energies into a forest walker's mind. I don't know how to make it. I don't even know what it's called. I merely know it exists and we'll be needing it for our task. When ya do find how to make it ya can mix it in that bowl and then you can worry about the [second task]. Keep it when you're done, it's a good bowl.");
 	quest::summonitem(17860); # Item: Shiny Tin Bowl
 	quest::delglobal("shiny_tin_bowl");
   }

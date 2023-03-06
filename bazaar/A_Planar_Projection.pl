@@ -8,7 +8,7 @@ sub EVENT_SAY {
         }
 
         if ($expansion < 19) {
-            plugin::Whisper("Ah... I see you have yet to unlock the Planes of Power. Your only option is the route of the [hero].");
+            plugin::Whisper("Ah... I see you have yet to unlock the Planes of Power. You have two options. One is the route of the [hero]. The other, is the route of the [collector].");
     
         }
     }
@@ -47,11 +47,27 @@ sub EVENT_SAY {
             plugin::Whisper("You have defeated $progressCount of $progressionCount targets: $progressText.");
             }
         }
+        if (($text =~/collector/i) && ($expansion <19)){
+      plugin::Whisper("Yes, I remember how patient you were... Bring to me an Unadorned Scepter of Shadows, an Apocryphal Shadel Bandit Ring, an Apocryphal Zekhas' Katar, and an Apocryphal Blade of Insanity");
+      return;
+      }
   }
 
 sub EVENT_ITEM {
   $key = $client->AccountID() . "-kunark-flag";
   $expansion = quest::get_data($key);
+
+  if ($expansion < 19){
+    if (plugin::takeItems(17324 => 1, 828708 => 1, 826826 => 1, 861227 =>1)) {
+      plugin::Whisper("Here are three tokens. Hand one back to me for your flag!");
+      quest::summonfixeditem(99103);
+      quest::summonfixeditem(99103);
+      quest::summonfixeditem(99103);
+      quest::summonfixeditem(22198);
+
+      quest::ding();
+      quest::exp(1000000);
+    }
 
   if ($expansion < 19){  
     if (plugin::takeItems(99103 => 1)){

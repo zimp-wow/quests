@@ -85,7 +85,7 @@ sub EVENT_SIGNAL {
 if($signal == 1) {
 	$tactics_flag=1;
         quest::shout("Quickly! Come see me!");
-	quest::settimer(8,600);
+	quest::settimer(8,1800);
 	}
 if($signal == 2) {
         quest::shout("Fool! The machine cannot work outside of the room!");

@@ -34,7 +34,7 @@ function event_trade(e)
 		e.other:Faction(219,5,0); -- Antonious Bayle
 		e.other:AddEXP(200);
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 18937,item2 = 13947,item3 = 18828,item4 = 12197})) then
-		if(fac < 3) then
+		if(fac < 10) then
 			e.self:Say("You have proven yourself worthy to hold Soulfire. Do not let her slip into the hands of evil. There are many who wish to free the many trapped souls of shadowknights and necromancers trapped inside the blade. The power of the blade can be called upon to heal you if need be. May Rodcet Nife and the twins of Marr hold you in their glory.");
 			e.other:SummonItem(5504); --  soulfire
 			e.other:Ding();

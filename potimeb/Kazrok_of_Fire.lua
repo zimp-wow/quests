@@ -11,6 +11,8 @@ local max_y = 610;
 function event_death_complete(e)
 	-- send a signal to the #fire_trigger that I died
 	eq.signal(223173,2);
+	eq.signal(223097,223173); -- Add Loot Lockout for Phase 1 Wing
+	eq.signal(223097,2); -- Increment Phase 1 Wing Counter
 end
 
 function event_spawn(e)
