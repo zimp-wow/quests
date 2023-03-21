@@ -106,6 +106,7 @@ if($PCClass == 1){ #War AA
 	$client->Message(15, "You have learned Infused by Rage and Rampage! Open up your AA window (Default V) to find them!");
 	$client->IncrementAA(6283); #Infused by Rage
 	$client->IncrementAA(258); #Rampage
+	$client->IncrementAA(4739); #Killing Spree
     
 
 }
@@ -208,6 +209,7 @@ if($PCClass == 9){ #Rogue AA
 	$client->Message(15, "You have learned Chaotic Stab and Shroud of Stealth! Open up your AA window (Default V) to find them!");
 	$client->IncrementAA(287); #Chaotic Stab
 	$client->IncrementAA(605); #Shroud of Stealth
+	$client->IncrementAA(4739); #Killing Spree
     
 
 }

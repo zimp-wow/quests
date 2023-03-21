@@ -15,7 +15,7 @@ sub EVENT_SAY {
             if (($text =~/hero/i) && ($expansion <14)){
             plugin::Whisper("Refinement by fire is the only way we will be ready for Aten Ha Ra. Slay the mighty dragons of Velious.");
             $progressionCount = 8;
-		    $progressCount = 0;
+		        $progressCount = 0;
             $progressText = "";
             if (quest::get_data($client->AccountID() . "sky") > 0) {
             $progressCount++;

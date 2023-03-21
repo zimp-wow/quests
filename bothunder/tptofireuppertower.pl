@@ -6,12 +6,12 @@ sub EVENT_SPAWN {
 }
 
 sub EVENT_ENTER {
-	quest::MovePCInstance(209, $instanceid, 122, -4, -640, 100);
+	quest::MovePCInstance(209, $instanceid, -50, -1200, 2265, 128);
 }
 
 sub EVENT_SAY {
    if($text=~/hail/i)   {
-		quest::MovePCInstance(209, $instanceid, 122, -4, -640, 100);
+		quest::MovePCInstance(209, $instanceid, -50, -1200, 2265, 128);
 
 
 

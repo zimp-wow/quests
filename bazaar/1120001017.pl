@@ -21,8 +21,16 @@ sub EVENT_ITEM
         plugin::check_handin(\%itemcount, 82741 => 1)) # Apocryphal Iksar Hide Mask
     {
         quest::say("Mmmph!!.. *Pop!!* Ouch, my thumb!! Here you are.");
-        quest::say("(Log out to see your changes)");
+        quest::say("Cabilis welcomes you.");
         $client->SetBaseRace(128);
+        quest::faction(440,2000);
+        quest::faction(441,2000);
+        quest::faction(442,2000);
+        quest::faction(443,2000);
+        quest::faction(444,2000);
+        quest::faction(445,2000);
+        quest::changedeity(203);
+        
     }
     plugin::return_items(\%itemcount);
 }

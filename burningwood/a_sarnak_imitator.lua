@@ -27,8 +27,9 @@ function event_say(e)
     e.self:Say("The mistress of charm, Nadia is very beautiful. She, too, traveled with her relatives to the new land. I just recently received a letter from her. She says more and more pilgrims and explorers are arriving every day, and that the outpost is well defended now.");
   elseif(e.message:findi("polzin")) then
     e.self:Say("Master of the Phantasms - he is the last one you will seek out. Hmm...Polzin is native to Erudin, however, after the incident near Paineel, no one has heard from him. I hope that he is well.");
-  --elseif(e.message:findi("i need a sack")) then
-    --e.self:Say("Take this sack and combine the items I requested in it. Then return it to me.");
+  elseif(e.message:findi("i need a sack")) then
+    e.self:Say("Take this sack and combine the items I requested in it. Then return it to me.");
+    e.other:SummonFixedItem(17861); -- Item: Enchanters Sack - added back in by player request
 
   elseif(e.message:findi("purify") and e.other:HasItem(52952)) then
     e.self:Say("The purification is not something that I alone have the power to complete. There was once a crystal that held the power to purify something of this magnitude, however it was shattered long ago. You will need to speak to the masters that remain of dwindling races.");

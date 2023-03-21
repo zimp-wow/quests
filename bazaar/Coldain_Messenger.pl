@@ -22,6 +22,7 @@ sub EVENT_SAY {
     if ($text =~/hero/i) {
         plugin::Whisper("Find my missing brothers. The last I heard of them, they were studying the dragons of Kunark.");
         $progressionCount = 4;
+        $progressCount = 0;
         $progressText = "";
         if (quest::get_data($client->AccountID() . "trak") > 0) {
             $progressCount++;
