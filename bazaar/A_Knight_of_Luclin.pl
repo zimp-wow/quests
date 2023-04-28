@@ -86,7 +86,7 @@ sub EVENT_ITEM {
       quest::exp(1000000);
     }
 
-    
+    if ($expansion >= 6){
     if (plugin::takeItems(99102 => 1)){
       plugin::Whisper("Beware of the evils that lurk Luclin $name!");
       quest::ding();
@@ -105,4 +105,5 @@ sub EVENT_ITEM {
 
   plugin::returnUnusedItems();
 
+}
 }

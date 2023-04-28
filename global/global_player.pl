@@ -233,6 +233,7 @@ if($PCClass == 11){ #Necromancer AA
     quest::set_data($necaa, 1);
 	$client->Message(15, "You have learned Death's Fury, Pet Affinity, and Pestilent Paralysis! Open up your AA window (Default V) to find them!");
 	$client->IncrementAA(834); #Death's Fury
+	$client->IncrementAA(4927); #Gathering Dusk
 	$client->IncrementAA(734); #Pet Affinity
 	$client->IncrementAA(12770); #Pestilent Paralysis
 

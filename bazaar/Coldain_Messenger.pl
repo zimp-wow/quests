@@ -65,7 +65,9 @@ sub EVENT_ITEM {
       quest::ding();
       quest::exp(1000000);
     }
-    
+
+
+    if ($expansion >= 2){
     if (plugin::takeItems(99101 => 1)){
       plugin::Whisper("Beware of the evils that lurk Velious $name!");
       quest::ding();
@@ -77,4 +79,5 @@ sub EVENT_ITEM {
     }       
   }
   plugin::return_items(\%itemcount);
+}
 }

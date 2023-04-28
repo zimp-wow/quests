@@ -11,3 +11,7 @@ function event_trade(e)
 	end
 	--item_lib.return_items(e.self, e.other, e.trade)
 end
+
+function event_spawn(e)
+	e.self:AddItem(28007, 1); -- Torch of the elements
+end

@@ -14,3 +14,9 @@ sub EVENT_CLICKDOOR {
 }
 }
 
+
+sub EVENT_TRADE {
+    quest::say("Busted.");
+}
+
+

@@ -18,8 +18,8 @@ sub EVENT_SAY {
   elsif ($text =~ /request/i) {
     my $dz = $client->CreateExpedition($dz_zone, $dz_version, $dz_duration, $expedition_name, $min_players, $max_players);
     if ($dz) {
-      $dz->SetCompass("bothunder", 0, 0, 0); 
-      $dz->SetSafeReturn("bothunder", 0, 0, 0, 0);
+      $dz->SetCompass("bothunder", 178, 207, -1625); 
+      $dz->SetSafeReturn("bothunder", 178, 207, -1625, 250);
       $dz->SetZoneInLocation(178, 207, -1625, 250);
       $dz->AddReplayLockout(79200); # immediately add a 22 hour replay lockout on creation
       quest::say("Tell me when you're [" . quest::saylink("ready") . "] to enter");

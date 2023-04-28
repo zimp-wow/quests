@@ -69,7 +69,7 @@ sub EVENT_ITEM {
       quest::exp(1000000);
     }
 
-  if ($expansion < 19){  
+  if ($expansion >= 14){  
     if (plugin::takeItems(99103 => 1)){
       plugin::Whisper("Well done! Beware of the evils that lurk in the Planes $name!");
       quest::ding();
@@ -85,4 +85,5 @@ sub EVENT_ITEM {
 
   plugin::returnUnusedItems();
 
-}}
+}
+}

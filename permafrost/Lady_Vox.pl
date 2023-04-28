@@ -3,6 +3,39 @@ sub EVENT_SPAWN {
 	quest::set_proximity($x - 200, $x + 200, $y - 88, $y + 88, $z - 50, $z + 50, 0);
 	#:: Create a HP event at 96 percent health
 	quest::setnexthpevent(96);
+
+ my $roll = quest::ChooseRandom(1,2,3,4,5,6,7);
+ 
+   if($roll == 1)
+   {
+	$npc->AddItem(11608,10);
+   }
+   if($roll == 2)
+   {
+	$npc->AddItem(11604);
+   }
+   if($roll == 3)
+   {
+	$npc->AddItem(11605,1);
+   }
+   if($roll == 4)
+   {
+	$npc->AddItem(711608,50);
+   }
+   if($roll == 5)
+   {
+	$npc->AddItem(711604);
+   }
+   if($roll == 6)
+   {
+	$npc->AddItem(811608,100);
+   }
+   if($roll == 7)
+   {
+	$npc->AddItem(811604);
+   }
+
+
 }
 
 sub EVENT_AGGRO {
