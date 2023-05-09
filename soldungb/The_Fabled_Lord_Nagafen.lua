@@ -103,14 +103,15 @@ function event_timer(e)
 end
 
 function SpawnGiants(e)
-	local xloc = e.self:GetX();
-	local yloc = e.self:GetY();
+	local xloc = e.self:GetX()+75;
+	local yloc = e.self:GetY()+25;
 	local zloc = e.self:GetZ();
 	local heading = e.self:GetHeading();
 	-- sanity depop
 	eq.depop_all(1120001080);
 		eq.zone_emote(MT.Emote,"Fire giants show up to protect their lord!");
 	-- spawn randomly around Nagafen.
+	
 	eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
 	eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
 	eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
