@@ -23,7 +23,7 @@ sub EVENT_SAY {
       quest::say("Tell me when you're [" . quest::saylink("ready") . "] to enter");
     }
     elsif ($dz && $dz->GetName() eq $fabled_expedition_name ) {
-      quest::say("Tell me when you're [" . quest::saylink("ready to remember") . "] to enter");
+      quest::say("Tell me when you're [" . quest::saylink("ready to remember") . "], to enter");
     }
     else {
       quest::say("Would you like to [" . quest::saylink("request") . "] the expedition?");
@@ -39,7 +39,7 @@ sub EVENT_SAY {
       $dz->SetSafeReturn("lavastorm",532, 964, 55.75, 484.0); # agent of ret
       $dz->SetZoneInLocation(-644.10,-1088.42, 26.75, 421.8); # bridge in crushbone
       $dz->AddReplayLockout(259200); # immediately add a 3 day replay lockout on creation
-      quest::say("Tell me when you're [" . quest::saylink("Ready to remember") . "] to enter");
+      quest::say("Tell me when you're [" . quest::saylink("ready to remember") . "], to enter");
     }
   }
   elsif ($text =~ /request/i) {
