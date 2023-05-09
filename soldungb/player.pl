@@ -41,7 +41,7 @@ sub EVENT_ENTERZONE {
 	$bindz = $client->GetBindZ;
 
 	
-	if ($expansion < 19){ #Kunark
+	if ($expansion <20){ #Kunark
 		$client->Message(7, "You don't belong here!");
 		$client->MovePC($bind, $bindx, $bindy, $bindz, $bindh);
 	 }
