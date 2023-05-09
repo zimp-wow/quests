@@ -13,8 +13,10 @@ my $fabled_dz_zone         = "soldungb";
 my $fabled_dz_version      = 1;
 my $fabled_dz_duration     = 79200; # 22 hours
 
-
 sub EVENT_SAY {
+  $key = $client->AccountID() . "-kunark-flag";
+  $expansion = quest::get_data($key);
+  
   if ($text =~ /hail/i) {
     my $dz = $client->GetExpedition();
     if ($dz && $dz->GetName() eq $expedition_name) {
@@ -25,10 +27,12 @@ sub EVENT_SAY {
     }
     else {
       quest::say("Would you like to [" . quest::saylink("request") . "] the expedition?");
-      quest::say("I also see you are prepared for something more. Would you like to [" . quest::saylink("fabled request") . "] the expedition?");
+	  if($expansion >=19) {
+		quest::say("I also see you are prepared for something more. Would you like to [" . quest::saylink("fabled request") . "] the expedition?");
+ 	  }
     }
   }
-  elsif ($text =~ /fabled request/i) {
+  elsif ($text =~ /fabled request/i && $expansion >=19) {
     my $dz = $client->CreateExpedition($fabled_dz_zone, $fabled_dz_version, $fabled_dz_duration, $fabled_expedition_name, $fabled_min_players, $fabled_max_players);
     if ($dz) {
       $dz->SetCompass("lavastorm", 238.0, 987.0, -24.90); # pointing to guard pineshade
