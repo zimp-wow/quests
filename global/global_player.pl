@@ -118,7 +118,8 @@ if($PCClass == 2){ #Clr AA
     quest::set_data($clraa, 1);
 	$client->Message(15, "You have learned Twincast and Divine Arbitration! Open up your AA window (Default V) to find them!");
 	$client->IncrementAA(12652); #Twincast   
-	$client->IncrementAA(507); #Divine Arbitration  
+	$client->IncrementAA(507); #Divine Arbitration
+	$client->IncrementAA(746); #Divine Avatar
     
 
 }
@@ -168,6 +169,8 @@ if($PCClass == 6){ #Dru AA
 	$client->Message(15, "You have learned Spirit of the Wood and Paralytic Spores! Open up your AA window (Default V) to find them!");
 	$client->IncrementAA(548); #Spirit of the Wood
 	$client->IncrementAA(14264); #Paralytic Spores
+	$client->IncrementAA(767); #Critical Affliction
+	$client->IncrementAA(6375); #Destructive Cascade
     
 
 }
@@ -232,8 +235,8 @@ if($PCClass == 11){ #Necromancer AA
 	if (quest::get_data($necaa) == "") {
     quest::set_data($necaa, 1);
 	$client->Message(15, "You have learned Death's Fury, Pet Affinity, and Pestilent Paralysis! Open up your AA window (Default V) to find them!");
-	$client->IncrementAA(834); #Death's Fury
-	$client->IncrementAA(4927); #Gathering Dusk
+	$client->IncrementAA(767); #Critical Affliction
+	$client->IncrementAA(6375); #Destructive Cascade
 	$client->IncrementAA(734); #Pet Affinity
 	$client->IncrementAA(12770); #Pestilent Paralysis
 
@@ -354,6 +357,8 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 }
 
 sub EVENT_ZONE {
+
+	
     
 
 my $PCRace = $client->GetRace();
@@ -419,4 +424,156 @@ sub EVENT_DISCOVER_ITEM {
 	$itemname = quest::getitemname($itemid);
 	quest::discordsend("ooc", "$name discovered $itemname!");
 	quest::gmsay("$name discovered " . quest::varlink($itemid) . "!", 335, 1, 0, 0);
+}
+
+
+sub EVENT_ENTERZONE {
+	my $x = $client->GetX();
+	my $y = $client->GetY();
+	my $z = $client->GetZ();
+	my $h = $client->GetHeading();
+	my $zoneid = $client->GetZoneID();
+	$ssfkey = $client->AccountID() . "ssf";
+	if (quest::get_data($ssfkey) == "1") {
+    if ($zoneid == 13) {
+			$client->SendToInstance("public", "northkarana", 0, $x, $y, $z, $h, "northkarana", 604800);
+		 }
+    elsif
+    ($zoneid == 14) {
+			$client->SendToInstance("public", "southkarana", 0, $x, $y, $z, $h, "southkarana", 604800);
+		 }
+	elsif
+    ($zoneid == 1) {
+			$client->SendToInstance("public", "qeynos", 0, $x, $y, $z, $h, "qeynos", 604800);
+		 }
+	elsif
+    ($zoneid == 2) {
+			$client->SendToInstance("public", "qeynos2", 0, $x, $y, $z, $h, "qeynos2", 604800);
+		 }
+	elsif
+    ($zoneid == 3) {
+			$client->SendToInstance("public", "qrg", 0, $x, $y, $z, $h, "qrg", 604800);
+		 }
+	elsif
+    ($zoneid == 4) {
+			$client->SendToInstance("public", "qeytoqrg", 0, $x, $y, $z, $h, "qeytoqrg", 604800);
+		 }
+	elsif
+    ($zoneid == 5) {
+			$client->SendToInstance("public", "highpass", 0, $x, $y, $z, $h, "highpass", 604800);
+		 }
+	elsif
+    ($zoneid == 6) {
+			$client->SendToInstance("public", "highkeep", 0, $x, $y, $z, $h, "highkeep", 604800);
+		 }
+	elsif
+    ($zoneid == 8) {
+			$client->SendToInstance("public", "freportn", 0, $x, $y, $z, $h, "freportn", 604800);
+		 }
+	elsif
+    ($zoneid == 9) {
+			$client->SendToInstance("public", "freportw", 0, $x, $y, $z, $h, "freportw", 604800);
+		 }
+	elsif
+    ($zoneid == 10) {
+			$client->SendToInstance("public", "freporte", 0, $x, $y, $z, $h, "freporte", 604800);
+		 }
+	elsif
+    ($zoneid == 11) {
+			$client->SendToInstance("public", "runnyeye", 0, $x, $y, $z, $h, "runnyeye", 604800);
+		 }
+	elsif
+    ($zoneid == 12) {
+			$client->SendToInstance("public", "qey2hh1", 0, $x, $y, $z, $h, "qey2hh1", 604800);
+		 }
+	elsif
+    ($zoneid == 15) {
+			$client->SendToInstance("public", "eastkarana", 0, $x, $y, $z, $h, "eastkarana", 604800);
+		 }
+	elsif
+    ($zoneid == 16) {
+			$client->SendToInstance("public", "beholder", 0, $x, $y, $z, $h, "beholder", 604800);
+		 }
+	elsif
+    ($zoneid == 17) {
+			$client->SendToInstance("public", "blackburrow", 0, $x, $y, $z, $h, "blackburrow", 604800);
+		 }
+	elsif
+    ($zoneid == 18) {
+			$client->SendToInstance("public", "paw", 0, $x, $y, $z, $h, "paw", 604800);
+		 }
+	elsif
+    ($zoneid == 19) {
+			$client->SendToInstance("public", "rivervale", 0, $x, $y, $z, $h, "rivervale", 604800);
+		 }
+	elsif
+    ($zoneid == 20) {
+			$client->SendToInstance("public", "kithicor", 0, $x, $y, $z, $h, "kithicor", 604800);
+		 }
+	elsif
+    ($zoneid == 21) {
+			$client->SendToInstance("public", "commons", 0, $x, $y, $z, $h, "commons", 604800);
+		 }
+	elsif
+    ($zoneid == 22) {
+			$client->SendToInstance("public", "ecommons", 0, $x, $y, $z, $h, "ecommons", 604800);
+		 }
+	elsif
+    ($zoneid == 23) {
+			$client->SendToInstance("public", "erudnint", 0, $x, $y, $z, $h, "erudnint", 604800);
+		 }
+	elsif
+    ($zoneid == 24) {
+			$client->SendToInstance("public", "erudnext", 0, $x, $y, $z, $h, "erudnext", 604800);
+		 }
+	elsif
+    ($zoneid == 25) {
+			$client->SendToInstance("public", "nektulos", 0, $x, $y, $z, $h, "nektulos", 604800);
+		 }
+	elsif
+    ($zoneid == 27) {
+			$client->SendToInstance("public", "lavastorm", 0, $x, $y, $z, $h, "lavastorm", 604800);
+		 }
+	elsif
+    ($zoneid == 29) {
+			$client->SendToInstance("public", "halas", 0, $x, $y, $z, $h, "halas", 604800);
+		 }
+	elsif
+    ($zoneid == 30) {
+			$client->SendToInstance("public", "everfrost", 0, $x, $y, $z, $h, "everfrost", 604800);
+		 }
+	elsif
+    ($zoneid == 31) {
+			$client->SendToInstance("public", "soldunga", 0, $x, $y, $z, $h, "soldunga", 604800);
+		 }
+	elsif
+    ($zoneid == 32) {
+			$client->SendToInstance("public", "soldungb", 0, $x, $y, $z, $h, "soldungb", 604800);
+		 }
+	elsif
+    ($zoneid == 33) {
+			$client->SendToInstance("public", "misty", 0, $x, $y, $z, $h, "misty", 604800);
+		 }
+	elsif
+    ($zoneid == 34) {
+			$client->SendToInstance("public", "nro", 0, $x, $y, $z, $h, "nro", 604800);
+		 }
+	elsif
+    ($zoneid == 35) {
+			$client->SendToInstance("public", "sro", 0, $x, $y, $z, $h, "sro", 604800);
+		 }
+	elsif
+    ($zoneid == 36) {
+			$client->SendToInstance("public", "befallen", 0, $x, $y, $z, $h, "befallen", 604800);
+		 }
+	elsif
+    ($zoneid == 37) {
+			$client->SendToInstance("public", "oasis", 0, $x, $y, $z, $h, "oasis", 604800);
+		 }
+	elsif
+    ($zoneid == 38) {
+			$client->SendToInstance("public", "tox", 0, $x, $y, $z, $h, "tox", 604800);
+		 }
+	
+  }
 }
