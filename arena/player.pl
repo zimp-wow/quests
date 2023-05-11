@@ -1,3 +1,4 @@
+$zoneid = quest::GetZoneID();
 
 sub EVENT_CLICKDOOR {
     quest::debug("objectid " . $objectid);
@@ -15,8 +16,20 @@ sub EVENT_CLICKDOOR {
 }
 
 
-sub EVENT_TRADE {
-    quest::say("Busted.");
+sub EVENT_ENTER_ZONE {
+	$ssfkey = $client->AccountID() . "ssf";
+	if (quest::get_data($ssfkey) == "1") {
+		plugin::SendToInstance("public", "arena", 100, 0, 0, 0, "SSF", 604800);	
+	}
 }
+
+sub EVENT_CONNECT {
+	$ssfkey = $client->AccountID() . "ssf";
+	if (quest::get_data($ssfkey) == "1") {
+	plugin::SendToInstance("public", "arena", 100, 0, 0, 0, "SSF", 604800);
+	}
+}
+
+
 
 
