@@ -39,6 +39,7 @@ function event_combat(e)
 		eq.stop_timer("CastRain");
 		eq.stop_timer("CastSingleNuke");
 		eq.stop_timer("CastBIGNuke");
+		eq.stop_timer("CheckCloseHateDistance");
 	end
 end
 function SpawnCrystal(e)
