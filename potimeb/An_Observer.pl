@@ -10,15 +10,15 @@ sub EVENT_SAY {
 $key = $client->AccountID() . "-kunark-flag";
 $expansion = quest::get_data($key);
 
-$nagkey = $client->AccountID() . "-fabled-nag";
+$quarmkey = $client->AccountID() . "-quarm-kill";
 
 if ($text=~/hail/i){
   
-  if (quest::get_data($nagkey) == "") {
-    quest::set_data($nagkey, 1);
-  quest::say("I am but one half. In death, I am warm. In death, she is cold. Oh how I miss spending evenings in Cabilis with you, my love.");
-  $client->Message(4, "You have gained an expansion flag!");
-  quest::set_data($key, quest::get_data($key) + 1);
+  if (quest::get_data($quarmkey) == "") {
+    quest::set_data($quarmkey, 1);
+    quest::say("I am but one half. In death, I am warm. In death, she is cold. Oh how I miss spending evenings in Cabilis with you, my love.");
+    $client->Message(4, "You have gained an expansion flag!");
+    quest::set_data($key, quest::get_data($key) + 1);
   }
 else
 {
