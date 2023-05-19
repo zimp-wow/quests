@@ -56,14 +56,14 @@ end
 
 function SummonPlayer(e)
 
-	local rand_hate = e.self:GetHateClosest();
+	local rand_hate = e.self:GetHateClosestClient();
 	local xloc = e.self:GetX();
 	local yloc = e.self:GetY();
 	local zloc = e.self:GetZ();
-	if (rand_hate.valid and rand_hate:IsClient() and not e.self:IsMezzed() and not rand_hate:IsPet()) then
+	if (rand_hate.valid) then
 		local rand_hate_v = rand_hate:CastToClient()
 		if (rand_hate_v.valid) then
-			if(e.self:CalculateDistance(rand_hate:GetX(), rand_hate:GetY(), rand_hate:GetZ()) >30) then
+			if(e.self:CalculateDistance(rand_hate:GetX(), rand_hate:GetY(), rand_hate:GetZ()) >20) then
 				e.self:CastSpell(9079, rand_hate:GetID());
 				eq.zone_emote(MT.Emote, "Rokyl rips apart the fabric of space and time to get to his target. Chaos leaks into the room. (Everyone takes 5,000 damage!!!!)");
 				e.self:CameraEffect(500,5);
@@ -104,7 +104,9 @@ function event_timer(e)
 			return;
 		end
 		e.self:Shout("I call upon the flames to strike you down!");
-		local rand_hate = e.self:GetHateClosest();
+		eq.zone_emote(MT.Emote, "Fabled Magus Rokyl begins gather mana for a massive spell!");
+		SummonPlayer(e);
+		local rand_hate = e.self:GetHateClosestClient();
 		e.self:CastSpell(19563, rand_hate:GetID());
 		eq.set_timer("CastBIGNuke", 20000);
 		
@@ -116,7 +118,7 @@ function event_timer(e)
 			return;
 		end
 		
-		e.self:CastSpell(39861, e.self:GetHateClosest():GetID());
+		e.self:CastSpell(39861, e.self:GetHateClosestClient():GetID());
 		eq.set_timer("CastSingleNuke", 1000);
 		
 		

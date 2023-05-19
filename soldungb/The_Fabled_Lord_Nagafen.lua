@@ -137,7 +137,18 @@ function SpawnRokyl(e)
 	
 
 end
+function SpawnFabledIksar(e)
 
+	local xloc = e.self:GetX();
+	local yloc = e.self:GetY();
+	local zloc = e.self:GetZ();
+	local heading = e.self:GetHeading();
+	
+	-- spawn randomly around Nagafen.
+	eq.spawn2(1120001086,0,0,xloc,yloc,zloc,heading);
+	
+
+end
 function DepopAdds(e)
 
 	eq.depop_all(1120001078); --rokyl
@@ -219,6 +230,7 @@ function event_death_complete(e)
 
 	e.self:Shout("So then... my fate is sealed... until we meet again.");
 	DepopAdds(e);
+	SpawnFabledIksar(e);
 	eq.stop_timer("AE");
 	eq.stop_timer("TankAEDMG");
 	eq.world_emote(15, "The Fabled Nagafen memory has faded....for now.");
