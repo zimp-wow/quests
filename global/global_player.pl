@@ -27,13 +27,13 @@ if($PCRace == 130){
   }
 }
 
-#if($PCRace == 330){
-#	$key = $client->AccountID() . "-kunark-flag";
-#	$expansion = quest::get_data($key);
-#	if ($expansion < 30){
- #   $client->SendToGuildHall();
- # }
-#}
+if($PCRace == 330){
+	$key = $client->AccountID() . "-kunark-flag";
+	$expansion = quest::get_data($key);
+	if ($expansion < 30){
+    $client->SendToGuildHall();
+  }
+}
 if($PCClass == 15){
 	$key = $client->AccountID() . "-kunark-flag";
 	$expansion = quest::get_data($key);
@@ -433,6 +433,14 @@ sub EVENT_ENTERZONE {
 	my $z = $client->GetZ();
 	my $h = $client->GetHeading();
 	my $zoneid = $client->GetZoneID();
+
+	if($PCRace == 330){
+	$key = $client->AccountID() . "-kunark-flag";
+	$expansion = quest::get_data($key);
+	if ($expansion < 30){
+    $client->SendToGuildHall();
+  }
+}
 	$ssfkey = $client->AccountID() . "ssf";
 	if (quest::get_data($ssfkey) == "1") {
     if ($zoneid == 13) {

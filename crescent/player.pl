@@ -6,3 +6,7 @@ sub EVENT_CONNECT {
   sub EVENT_ZONE {
     $client->SendToGuildHall();
   }
+
+  sub EVENT_ENTERZONE {
+    $client->SendToGuildHall();
+  }
