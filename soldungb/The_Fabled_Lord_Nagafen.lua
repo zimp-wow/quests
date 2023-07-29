@@ -75,8 +75,8 @@ function event_timer(e)
 		e.self:CameraEffect(1000,5);
 		e.self:CastSpell(23150,e.self:GetID())
 		--lets not overlap our tank buster AE with the 60 sec AE
-		--eq.stop_timer("TankAEDMG");
-		--eq.set_timer("TankAEDMG",6000);
+		eq.stop_timer("TankAEDMG");
+		eq.set_timer("TankAEDMG",6000);
 		--lets go again in 30 sec!
 		if(phase == 7 ) then
 			--if under 25% change to every 15 seconds
@@ -164,13 +164,13 @@ function event_hp(e)
 		--terrifying roar, -1k resist poison, 300 range
 		e.self:CastSpell(6790,e.self:GetID());
 		--get get a target randomly
-		current_target = e.self:GetHateRandom();
+		current_target = e.self:GetHateDamageTop(e.self);
 		--wipe the hate list
 		ignore_reengage=true;
 		ignore_disengage=true;
 		e.self:WipeHateList();
 		--add 3k new threat to the random target
-		e.self:AddToHateList(current_target,3000);
+		e.self:AddToHateList(current_target,2000);
 		
 		eq.set_next_hp_event(85);
 	
