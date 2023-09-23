@@ -200,6 +200,7 @@ if($PCClass == 8){ #Bard AA
 	$client->IncrementAA(559); #Harmonious Attack IV
 	$client->IncrementAA(560); #Harmonious Attack V
 	$client->IncrementAA(1110); #Dance of Blades
+	$client->IncrementAA(225); #Jam Fest I
     
 
 }
