@@ -15,9 +15,9 @@ function event_say(e)
 	if(e.message:findi("hail")) then
 		e.self:Say("Hail, " .. e.other:GetName() .. "! This is the Deepwater Temple. Here you shall find the wisdom and courage of Prexus, the Ocean Lord. I am glad to see you have an interest. Forgive me if I cut our conversation short, but I have many [Deepwater tasks] to complete.");  
 	elseif(e.message:findi("deepwater task")) then   
-		if(e.other:GetFaction(e.self) > 5) then
+		if(e.other:GetFaction(e.self) > 6) then
 			e.self:Say("We, the Deepwater Knights, know of your vile ways. You had best leave while you can.");
-		elseif(e.other:GetFaction(e.self) < 4) then
+		elseif(e.other:GetFaction(e.self) < 5) then
 			e.self:Say("We here at the Deepwater Temple must tend to the [Peacekeeper battlestaff] and the [Deepwater harpoon] as well as other duties such as [ocean protection]. There is always something we must do.");  
 		else
 			e.self:Say("There is no reason to dislike you, but we of the Deepwater Knights must see more done for our cause before we truly accept you.");
