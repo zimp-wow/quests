@@ -6,6 +6,13 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 
+if ($item2 || $item3 || $item4) 
+{
+     quest::say("Only one item can be given to me at a time");
+     plugin::return_items(\%itemcount);
+     return;
+}
+
 $rcmath = $item1 - 70000;
 $apocmath = $item1 - 80000;
 $rcmath2 = $item1 - 700000;
