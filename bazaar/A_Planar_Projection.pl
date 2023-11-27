@@ -48,7 +48,7 @@ sub EVENT_SAY {
             }
         }
         if (($text =~/collector/i) && ($expansion <19)){
-      plugin::Whisper("Yes, I remember how patient you were... Bring to me an Unadorned Scepter of Shadows, an Apocryphal Shadel Bandit Ring, an Apocryphal Zekhas' Katar, and an Apocryphal Blade of Insanity");
+      plugin::Whisper("Yes, I remember how patient you were... Bring to me an Unadorned Scepter of Shadows, an Apocryphal Shadel Bandit Ring, an Apocryphal Zekhas' Katar, and an Apocryphal Blade of Insanity. This will grant you three Apocryphal tokens. When one is turned in to me, that hero will be granted access to The Planes of Power.");
       return;
       }
   }
@@ -57,7 +57,7 @@ sub EVENT_ITEM {
   $key = $client->AccountID() . "-kunark-flag";
   $expansion = quest::get_data($key);
 
-  if ($expansion < 19){
+  if ($expansion < 20){
     if (plugin::takeItems(17324 => 1, 828708 => 1, 826826 => 1, 861227 =>1)) {
       plugin::Whisper("Here are three tokens. Hand one back to me for your flag!");
       quest::summonfixeditem(99103);

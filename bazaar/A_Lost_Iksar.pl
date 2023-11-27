@@ -43,7 +43,7 @@ sub EVENT_SAY {
         }
     }
     if (($text =~/collector/i) && ($expansion <2)){
-        plugin::Whisper("You are one of patience, I see. All you need to do is bring me an Apocryphal Elemental Binder, an Apocryphal Djarn's Amethyst Ring, an Apocryphal Crown of the Froglok Kings, and an Apocryphal Scalp of the Ghoul Lord");
+        plugin::Whisper("You are one of patience, I see. All you need to do is bring me an Apocryphal Elemental Binder, an Apocryphal Djarn's Amethyst Ring, an Apocryphal Crown of the Froglok Kings, and an Apocryphal Scalp of the Ghoul Lord. This will grant you three Apocryphal tokens. When one is turned in to me, that hero will be granted access to The Ruins of Kunark.");
     }
 }
 
@@ -54,7 +54,7 @@ sub EVENT_ITEM {
     $nagkey = $client->AccountID() . "nag";
     $voxkey = $client->AccountID() . "vox";
 
-    if ($expansion < 2){
+    if ($expansion < 20){
         if (plugin::takeItems(828043 => 1, 810366 => 1, 810142 => 1, 826997 =>1)) {
 		    plugin::Whisper("Here are three tokens. Hand them back to me for your flag!");
             quest::ding();

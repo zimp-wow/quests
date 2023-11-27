@@ -94,6 +94,31 @@ sub EVENT_ITEM {
     quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
     quest::ze(15,'The Guildhall Portal has been aligned to Brell\'s Rest');
   }
+
+  elsif(plugin::check_handin(\%itemcount, 976015 => 1)){
+    quest::setglobal("ghport$uguild_id",976015,3,"H24");
+    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
+    quest::ze(15,'The Guildhall Portal has been aligned to Field of Bone');
+  }
+
+ elsif(plugin::check_handin(\%itemcount, 976014 => 1)){
+    quest::setglobal("ghport$uguild_id",976014,3,"H24");
+    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
+    quest::ze(15,'The Guildhall Portal has been aligned to Western Wastes');
+  }
+
+ elsif(plugin::check_handin(\%itemcount, 976013 => 1)){
+    quest::setglobal("ghport$uguild_id",976013,3,"H24");
+    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
+    quest::ze(15,'The Guildhall Portal has been aligned to Scarlet Desert');
+  }
+
+  elsif(plugin::check_handin(\%itemcount, 976010 => 1)){
+    quest::setglobal("ghport$uguild_id",976010,3,"H24");
+    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
+    quest::ze(15,'The Guildhall Portal has been aligned to Everfrost');
+  }
+
   plugin::return_items(\%itemcount);
 }
 
