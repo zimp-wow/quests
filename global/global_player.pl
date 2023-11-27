@@ -10,6 +10,8 @@ sub EVENT_CONNECT {
 my $PCRace = $client->GetRace();
 my $PCClass = $client->GetClass();
 #my $level = $client->GetLevel();
+my $global_bucket_key 	= "froglok-unlock";
+my $unlock_progress = quest::get_data($global_bucket_key);
 
 
  if($PCRace == 128){ 
@@ -28,11 +30,9 @@ if($PCRace == 130){
 }
 
 if($PCRace == 330){
-	$key = $client->AccountID() . "-kunark-flag";
-	$expansion = quest::get_data($key);
-	if ($expansion < 30){
+	#if ($unlock_progress < 500){
     $client->SendToGuildHall();
-  }
+ # }
 }
 if($PCClass == 15){
 	$key = $client->AccountID() . "-kunark-flag";
@@ -103,10 +103,11 @@ if($PCClass == 1){ #War AA
 	$waraa = $client->CharacterID() . "war";
 	if (quest::get_data($waraa) == "") {
     quest::set_data($waraa, 1);
-	$client->Message(15, "You have learned Infused by Rage and Rampage! Open up your AA window (Default V) to find them!");
+	$client->Message(15, "You have learned Infused by Rage, Killing Spree, and Vehement Rage! Open up your AA window (Default V) to find them!");
 	$client->IncrementAA(6283); #Infused by Rage
-	$client->IncrementAA(258); #Rampage
+	$client->IncrementAA(6607); #Vehement Rage
 	$client->IncrementAA(4739); #Killing Spree
+	$client->IncrementAA(1597); #Call of Challenge
     
 
 }
@@ -436,11 +437,10 @@ sub EVENT_ENTERZONE {
 	my $zoneid = $client->GetZoneID();
 
 	if($PCRace == 330){
-	$key = $client->AccountID() . "-kunark-flag";
-	$expansion = quest::get_data($key);
-	if ($expansion < 30){
+	#if ($unlock_progress < 500){
+
     $client->SendToGuildHall();
-  }
+  #}
 }
 	$ssfkey = $client->AccountID() . "ssf";
 	if (quest::get_data($ssfkey) == "1") {

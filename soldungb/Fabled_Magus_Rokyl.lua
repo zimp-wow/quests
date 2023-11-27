@@ -31,7 +31,7 @@ function event_combat(e)
 		eq.set_timer("CastRain", math.random(3000,4000));
 		eq.set_timer("CastSingleNuke", math.random(3000,4000));
 		eq.set_timer("CastBIGNuke", 20000);
-		eq.set_timer("CheckCloseHateDistance",  math.random(5000,6000));
+		--eq.set_timer("CheckCloseHateDistance",  math.random(5000,6000));
 		
 	else
 		--check to see if we purposefully wiped the hate list, if so ignore this
@@ -39,7 +39,7 @@ function event_combat(e)
 		eq.stop_timer("CastRain");
 		eq.stop_timer("CastSingleNuke");
 		eq.stop_timer("CastBIGNuke");
-		eq.stop_timer("CheckCloseHateDistance");
+		--eq.stop_timer("CheckCloseHateDistance");
 	end
 end
 function SpawnCrystal(e)
@@ -68,7 +68,7 @@ function SummonPlayer(e)
 				e.self:CastSpell(9079, rand_hate:GetID());
 				eq.zone_emote(MT.Emote, "Rokyl rips apart the fabric of space and time to get to his target. Chaos leaks into the room. (Everyone takes 5,000 damage!!!!)");
 				e.self:CameraEffect(500,5);
-				e.self:DamageAreaClients(5000,300);
+				--e.self:DamageAreaClients(5000,300);
 				return true;
 			end
 		end

@@ -11,7 +11,7 @@ my $fabled_min_players     = 1;
 my $fabled_max_players     = 18;
 my $fabled_dz_zone         = "soldungb";
 my $fabled_dz_version      = 1;
-my $fabled_dz_duration     = 259000; # just shy of 3 days
+my $fabled_dz_duration     = 79200; # 22 hours
 
 sub EVENT_SAY {
   $key = $client->AccountID() . "-kunark-flag";

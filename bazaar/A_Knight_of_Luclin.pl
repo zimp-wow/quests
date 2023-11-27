@@ -65,7 +65,7 @@ sub EVENT_SAY {
         
 
      if (($text =~/collector/i) && ($expansion <14)){
-      plugin::Whisper("You are one of patience, I see. All you need to do is bring me an Apocryphal Stronghorn's Horn, an Apocryphal Shackle of Auctoritias, an Apocryphal Sword of Pain, and an Apocryphal Siren Hair Earring");
+      plugin::Whisper("You are one of patience, I see. All you need to do is bring me an Apocryphal Stronghorn's Horn, an Apocryphal Shackle of Auctoritias, an Apocryphal Sword of Pain, and an Apocryphal Siren Hair Earring. This will grant you three Apocryphal tokens. When one is turned in to me, that hero will be granted access to Luclin.");
       return;
       }
     
@@ -75,7 +75,7 @@ sub EVENT_ITEM {
   $key = $client->AccountID() . "-kunark-flag";
   $expansion = quest::get_data($key);
 
-  if ($expansion < 14){
+  if ($expansion < 20){
     if (plugin::takeItems(827200 => 1, 84189 => 1, 825319 => 1, 824741 =>1)) {
       plugin::Whisper("Here are three tokens. Hand one back to me for your flag!");
       quest::summonfixeditem(99102);

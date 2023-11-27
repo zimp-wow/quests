@@ -78,6 +78,19 @@ sub EVENT_CLICKDOOR {
   elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 88740) { #brellsrest
     quest::popup('Teleport', 'Teleport to Brell\'s Rest?', 21986, 1, 0);
   }
+  elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 976015) { #Field of Bone
+    quest::popup('Teleport', 'Teleport to Field of Bone?', 11178, 1, 0);
+  }
+  elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 976014) { #Western Wastes
+    quest::popup('Teleport', 'Teleport to Western Wastes?', 111120, 1, 0);
+  }
+  elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 976013) { #Scarlet Desert
+    quest::popup('Teleport', 'Teleport to Scarlet Desert?', 111175, 1, 0);
+  }
+  elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 976010) { #Everfrost
+    quest::popup('Teleport', 'Teleport to Everfrost?', 11130, 1, 0);
+  }
+
 }
 }
 
@@ -152,4 +165,17 @@ sub EVENT_POPUPRESPONSE {
   if ($popupid == 21986) { #brellsrest
     #quest::movepc(480,-23,-619,36);
   }
+  if ($popupid == 11178) { #fieldofbone
+    quest::movepc(78,2802,1194,-7, 318);
+  }
+  if ($popupid == 111120) { #westwastes
+    quest::movepc(120,2307,889,-21, 306);
+  }
+  if ($popupid == 111175) { #scarlet
+    quest::movepc(175, -1777, -956, -99, 187);
+  }
+  if ($popupid == 11130) { #everquest
+    quest::movepc(30, 590,-791,-54,181);
+  }
+
 }

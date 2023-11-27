@@ -15,7 +15,7 @@ sub EVENT_SAY {
     }
 
     if (($text =~/collector/i) && ($expansion <6)){
-      plugin::Whisper("You are one of patience, I see. All you need to do is bring me an Apocryphal Mask of Secrets, an Apocryphal Sebilite Scale Mask, an Apocryphal Helot Skull Helm, and an Apocryphal Helm of Rile");
+      plugin::Whisper("You are one of patience, I see. All you need to do is bring me an Apocryphal Mask of Secrets, an Apocryphal Sebilite Scale Mask, an Apocryphal Helot Skull Helm, and an Apocryphal Helm of Rile. This will grant you three Apocryphal tokens. When one is turned in to me, that hero will be granted access to Velious.");
       return;
     }
 
@@ -55,7 +55,7 @@ sub EVENT_ITEM {
   $key = $client->AccountID() . "-kunark-flag";
   $expansion = quest::get_data($key);
 
-  if ($expansion < 6){
+  if ($expansion < 20){
     if (plugin::takeItems(85772 => 1, 83201 => 1, 81414 => 1, 84578 =>1)) {
       plugin::Whisper("Here are three tokens. Hand them back to me for your flag!");
       quest::summonfixeditem(99101);

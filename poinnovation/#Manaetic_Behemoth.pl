@@ -19,8 +19,8 @@ sub EVENT_TIMER {
     quest::depop();
   }
   if($timer == 8) {
-    #failed. shorten respawn timer to 24 hours. 
-    quest::updatespawntimer(42135,86400000);
+    #failed. shorten respawn timer to 15 minutes. 
+    quest::updatespawntimer(42135,900000);
     quest::depop();
   }
   if($timer == 4 && ($x < 1010 || $x > 1240)) {

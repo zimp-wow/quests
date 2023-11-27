@@ -12,7 +12,7 @@ sub EVENT_ITEM {
 	if (plugin::check_handin(\%itemcount, 12319 => 1)) {
 		quest::say("Excellent work, young ayyar! You have proven your willingness to dispose of the enemies of our tribe, now you must face one of their most murderous sentries! Bring me the head of Sentinel Creot and I shall induct you into our sejah!");
 		#:: Give a 10343 - Kejaar Totem
-		quest::summonitem(110343);
+		quest::summonitem(10343);
 		#:: Ding!
 		quest::ding();
 		#:: Grant a moderate experience award
@@ -28,7 +28,7 @@ sub EVENT_ITEM {
 	if (plugin::check_handin(\%itemcount, 12438 => 1)) {
 		quest::say("You have proven your self yet again! You are now a full member of our sejah because of this brave act! To show your status here is a bracer for you to wear.");
 		#:: Give a 3147 - Sejah Ghulam Bracer
-		quest::summonitem(13147);
+		quest::summonitem(3147);
 		#:: Ding!
 		quest::ding();
 		#:: Grant a moderate experience award

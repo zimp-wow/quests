@@ -61,7 +61,7 @@ function event_timer(e)
 	if(e.timer == "TankAEDMG") then
 
 		eq.stop_timer(e.timer);
-		eq.set_timer("TankAEDMG",5000);
+		eq.set_timer("TankAEDMG",10000);
 		--Fire beam, 6k -250 FR resist. 300 resist diff is about 40% partial resist and 60% full
 		--AOE dmg around the tank
 		e.self:CastSpell(42231,e.self:GetTarget():GetID());
@@ -118,10 +118,10 @@ function SpawnGiants(e)
 	eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
 	eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
 	eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
-	eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
-	eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
-	eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
-	eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
+	--eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
+	--eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
+	--eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
+	--eq.spawn2(1120001080,0,0,xloc + math.random(-50,50),yloc + math.random(-50,50),zloc,heading);
 end
 	
 function SpawnRokyl(e)
@@ -170,7 +170,7 @@ function event_hp(e)
 		ignore_disengage=true;
 		e.self:WipeHateList();
 		--add 3k new threat to the random target
-		e.self:AddToHateList(current_target,2000);
+		--e.self:AddToHateList(current_target,2000);
 		
 		eq.set_next_hp_event(85);
 	
@@ -186,7 +186,7 @@ function event_hp(e)
 		ignore_disengage=true;
 		e.self:WipeHateList();
 		--add 3k new threat to the random target
-		e.self:AddToHateList(current_target,3000);
+		--e.self:AddToHateList(current_target,3000);
 		eq.set_next_hp_event(80);
 	elseif (e.hp_event <=80 and phase == 3) then
 		phase = 4;
@@ -201,7 +201,7 @@ function event_hp(e)
 		ignore_disengage=true;
 		e.self:WipeHateList();
 		--add 3k new threat to the random target
-		e.self:AddToHateList(current_target,3000);
+		--e.self:AddToHateList(current_target,3000);
 		eq.set_next_hp_event(75);
 
 	elseif (e.hp_event <= 75 and phase == 4) then
