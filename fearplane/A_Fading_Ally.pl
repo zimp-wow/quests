@@ -110,6 +110,7 @@ sub EVENT_ITEM {
 			if (!$entity_list->IsMobSpawnedByNpcTypeID($panic_npctype)) {
 				$response .= " Oh Gods. I remember now! Something unspeakable comes for us!";
 				quest::spawn2($panic_npctype, 0, 0, 352, 803, 205, 385);
+				quest::faction(1080,1000); # Faction: Mith Marr
 			} else {
 				$response .= " The Panic can only harm us if we fall prey to it!";
 				my $panic_id = $entity_list->GetNPCByNPCTypeID($panic_npctype);
