@@ -442,7 +442,7 @@ sub EVENT_ENTERZONE {
 			$client->SendToGuildHall();
 		}
 	}
-}
+
 	$ssfkey = $client->AccountID() . "ssf";
 	if (quest::get_data($ssfkey) == "1") {
     if ($zoneid == 13) {
