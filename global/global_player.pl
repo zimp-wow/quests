@@ -30,10 +30,11 @@ if($PCRace == 130){
 }
 
 if($PCRace == 330){
-	#if ($unlock_progress < 500){
-    $client->SendToGuildHall();
- # }
+	if (!quest::get_data("guktan-enabled")){
+    	$client->SendToGuildHall();
+  	}
 }
+
 if($PCClass == 15){
 	$key = $client->AccountID() . "-kunark-flag";
 	$expansion = quest::get_data($key);
@@ -437,10 +438,10 @@ sub EVENT_ENTERZONE {
 	my $zoneid = $client->GetZoneID();
 
 	if($PCRace == 330){
-	#if ($unlock_progress < 500){
-
-    $client->SendToGuildHall();
-  #}
+		if (!quest::get_data("guktan-enabled")){
+			$client->SendToGuildHall();
+		}
+	}
 }
 	$ssfkey = $client->AccountID() . "ssf";
 	if (quest::get_data($ssfkey) == "1") {
