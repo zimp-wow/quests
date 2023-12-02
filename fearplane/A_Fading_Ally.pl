@@ -42,7 +42,7 @@ sub EVENT_SAY {
 	} elsif($text =~/we/i) {
 		$response = "I feel so alone here... I wasn’t always alone. I had friends... and family... didn’t I?. The green orbs, maybe they hold an answer?";
 	} elsif($text =~/Panic/i) {
-        $response = "";
+        $response = "I want to help... But what can I do? Did we ever stand a chance? I wish I could remember.";
     }
 	
 	quest::say($response);
