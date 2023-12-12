@@ -35,8 +35,8 @@ function deactivate(mob)
 	activated = false;
 	eq.stop_all_timers();
 	mob:SetBodyType(11, true);
-	mob:SetSpecialAbility(24, 1);	--will not aggro
-	mob:SetSpecialAbility(35, 1);	--no harm from players
+	mob:SetSpecialAbility(24, 0);	--will not aggro
+	mob:SetSpecialAbility(35, 0);	--no harm from players
 	mob:WipeHateList();
 	mob:GotoBind();
 	depop_guards();
@@ -47,7 +47,7 @@ function activate(mob)
 	mob:SetBodyType(1, true);		--humanoid
 	mob:SetSpecialAbility(24, 0);	--will not aggro
 	mob:SetSpecialAbility(35, 0);	--no harm from players
-	eq.set_timer("monitor", 30 * 60 * 1000);	--remain targetable for 30 minutes at a minimum.  after that point will go untargetable if spwanpoints repop and mob is not engaged
+	eq.set_timer("monitor", 30 * 60 * 2000);	--remain targetable for 30 minutes at a minimum.  after that point will go untargetable if spwanpoints repop and mob is not engaged
 	spawn_guards();
 end
 
