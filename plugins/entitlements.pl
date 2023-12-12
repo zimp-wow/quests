@@ -31,7 +31,7 @@ sub set_discord_account {
     }
 
     # Insert or update the user record
-    my $sql = "INSERT INTO discord_users (account_id, discord_id, subs_level) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE discord_id = VALUES(discord_id), subs_level = VALUES(subs_level)";
+    my $sql = "REPLACE INTO discord_users (account_id, discord_id, subs_level) VALUES (?, ?, ?)";
     
     eval {
         $dbh->do($sql, undef, $account_id, $discord_id, $subs_level);
