@@ -11,5 +11,7 @@ function event_item(e)
         e.self:Shout("CAZIC, HOW DARE YOU! THE LIGHT WILL CLEANSE YOU!");
         eq.world_emote(MT.Red, "FROGLOKS! GUKTAN! MY FAITHFUL FRIENDS! I REMEMBER. WE REMEMBER!");
         eq.world_emote(MT.Yellow, "Guktan characters may now be created by all players.");
+        eq.world_wide_signal_client("froglok-unlock");
+        eq.set_data("froglok-unlock", 1);
     end	
 end

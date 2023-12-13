@@ -1,4 +1,13 @@
 
+sub EVENT_SIGNAL {
+	quest::debug("signal " . $signal);
+
+	if ($signal == "froglok-unlock") {
+		$client->SetBucket("frogk-title", 1);
+		$client->SetTitleSuffix("Savior of the Guktan", 1);
+	}
+}
+
 sub EVENT_CONNECT {
     #$client->SendToGuildHall();
 
@@ -29,7 +38,7 @@ if($PCRace == 130){
   }
 }
 
-if($PCRace == 330){
+if($PCRace == 330 && !quest::get_data("froglok_unlocked")){
 	if (!quest::get_data("guktan-enabled")){
     	$client->SendToGuildHall();
   	}
