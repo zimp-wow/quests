@@ -21,7 +21,8 @@ sub EVENT_SAY {
 	my $charname 		= $client->GetCleanName();
 	my $response;
 
-	if($text=~/Hail/i){				
+	if($text=~/Hail/i){		
+		eq.world_wide_signal_client(100);		
 		if($unlock_progress < 50) { #50
 			$response = "$charname... That name sounds familiar. Do you remember me? I feel like I’ve forgotten something... or been forgotten?";
 		} elsif($unlock_progress >= 50 && $unlock_progress < 100) {

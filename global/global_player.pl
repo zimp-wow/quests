@@ -2,7 +2,7 @@
 sub EVENT_SIGNAL {
 	quest::debug("signal " . $signal);
 
-	if ($signal == "froglok-unlock") {
+	if ($signal == 100) {
 		$client->SetBucket("frogk-title", 1);
 		$client->SetTitleSuffix("Savior of the Guktan", 1);
 	}
