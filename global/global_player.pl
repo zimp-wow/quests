@@ -4,7 +4,7 @@ sub EVENT_SIGNAL {
 
 	if ($signal == 100) {
 		$client->SetBucket("frogk-title", 1);
-		$client->SetTitleSuffix("Savior of the Guktan", 1);
+		$client->SetTitleSuffix(", Savior of the Guktan", 1);
 	}
 }
 
