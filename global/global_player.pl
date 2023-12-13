@@ -38,12 +38,6 @@ if($PCRace == 130){
   }
 }
 
-if($PCRace == 330 && !quest::get_data("froglok_unlocked")){
-	if (!quest::get_data("guktan-enabled")){
-    	$client->SendToGuildHall();
-  	}
-}
-
 if($PCClass == 15){
 	$key = $client->AccountID() . "-kunark-flag";
 	$expansion = quest::get_data($key);
