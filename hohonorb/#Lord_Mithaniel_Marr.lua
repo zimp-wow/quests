@@ -3,7 +3,7 @@ eq.spawn2(202368,0,0,2380,-2,444,387); -- NPC: A_Planar_Projection
 eq.depop_with_timer(220016); -- depop the trigger
 end
 
-function event_item(e)
+function event_trade(e)
 	local item_lib = require("items");
 	if (item_lib.check_turn_in(e.trade, {item1 = 81554, item2 = 81547, item3 = 976017, item4 = 820655})) then 
 		e.self:Say(string.format("%s! How dare you profane this place with such heinous artifacts!", e.other:GetCleanName()));
