@@ -23,6 +23,7 @@ sub EVENT_SAY {
 
 	if($text=~/Hail/i){		
 		quest::worldwidesignalclient(100);	
+		quest::set_data("froglok-unlock", 1);
 		if($unlock_progress < 50) { #50
 			$response = "$charname... That name sounds familiar. Do you remember me? I feel like I’ve forgotten something... or been forgotten?";
 		} elsif($unlock_progress >= 50 && $unlock_progress < 100) {
