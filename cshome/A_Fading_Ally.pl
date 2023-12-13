@@ -17,37 +17,7 @@ sub set_unlock_progress {
 }
 	
 sub EVENT_SAY {
-	my $unlock_progress = get_unlock_progress();
-	my $charname 		= $client->GetCleanName();
-	my $response;
-
-	if($text=~/Hail/i){		
-		quest::worldwidesignalclient(100);	
-		quest::set_data("froglok-unlock", 1);
-		if($unlock_progress < 50) { #50
-			$response = "$charname... That name sounds familiar. Do you remember me? I feel like I’ve forgotten something... or been forgotten?";
-		} elsif($unlock_progress >= 50 && $unlock_progress < 100) {
-			$response = "$charname! Yes! Yes, I believe we adventured together ages ago... or was that another adventurer? Was I an adventurer? Were we once heroes?";
-		} elsif($unlock_progress >= 100 && $unlock_progress < 300) {
-			$response = "$charname! I am starting to remember. The Rathe Mountains... my Guktan brothers and sisters. Our memories, you and I, are returning. Please, don’t stop now. I can feel something great swirling in the sea of time.";
-		} elsif($unlock_progress >= 300 && $unlock_progress < 500) {
-			$response = "$charname! I can see them now! I knew they were real! My people... Our existence must not be relegated to the sands of time. Soon... I will see them again soon! Still... ";
-		} elsif($unlock_progress >= 500) {
-			$response = "$charname! Oh no... no no no. I was wrong... I was so wrong. We didn't forget. We were too afraid to remember. Why did He abandon us? When Fear came calling... when we needed Him the most... He was nowhere to be found. [Panic] descended across the realms. But, why? He was our savior. He lead us from the shadows. He loved us and we worshipped Him for it. He wouldn't have just left us. You may have forgotten but He would never... not unless someone or some... thing... made him forget. Please. Please! You must remind Him. Remind Him of what only Fear now knows... Remind Him of what only Fear has seen... Remind Him of the Words used to completely erase us... Remind Him with the very blood that covers the hands of so many. ";
-		}
-		
-		if ($unlock_progress < 500) {
-			$response .= " My memories feel [scattered]. I wish I could remember.";
-		}
-	} elsif($text =~/scattered/i){
-		$response = "It feels like the very memories that make me real have been scattered throughout places [we] once traveled... If you find them, please return them.";
-	} elsif($text =~/we/i) {
-		$response = "I feel so alone here... I wasn’t always alone. I had friends... and family... didn’t I?. The green orbs, maybe they hold an answer?";
-	} elsif($text =~/Panic/i) {
-        $response = "";
-    }
-	
-	quest::say($response);
+	$client->AddAlternateCurrencyValue(6, 1);
 }
 
 sub EVENT_ITEM { 
