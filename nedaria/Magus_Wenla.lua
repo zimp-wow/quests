@@ -9,7 +9,7 @@ function event_say(e)
 	elseif(e.message:findi("everfrost")) then
 		e.self:CastSpell(4180,e.other:GetID(),0,1); -- Spell: Teleport: Everfrost
 
-	elseif(e.message:findi("natimbi")) then
+	elseif(e.message:findi("natimbi") and eq.get_data("god-open") and (eq.get_data(e.other:AccountID() .. "-saryrn-flag") > 0 or eq.get_data(e.other:AccountID() .. "-kunark-flag") >= 20)) then
 		e.other:MovePC(280, -1557, -853, 241,180); -- Zone: natimbi
 
 	elseif(e.message:findi("north ro")) then
