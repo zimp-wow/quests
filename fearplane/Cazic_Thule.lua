@@ -20,10 +20,8 @@ function event_death_complete(e)
 
 	-- sanity depop
 	eq.depop(1120001104);
+	eq.spawn2(1120001104,0,0,e.self:GetX(),e.self:GetY(),e.self:GetZ(),e.self:GetHeading());
 	-- spawn fading ally
-	if tonumber(eq.get_data("froglok-unlock")) >= 500 then	
-		eq.spawn2(1120001104,0,0,e.self:GetX(),e.self:GetY(),e.self:GetZ(),e.self:GetHeading());
-	end
 end
 
 function event_trade(e)
