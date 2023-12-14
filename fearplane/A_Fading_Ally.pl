@@ -92,34 +92,21 @@ sub EVENT_ITEM {
 	set_unlock_progress($unlock_progress);
 	
 	if ($count) {
-		
-		my $account_key 	= $client->AccountID() . "froglok-memories-contributed";
-		my $account_contrib = quest::get_data($account_key) + $count;
-
-		quest::set_data($account_key, $account_contrib);
-		
+				
 		$response = "Thanks be to $charname! Another memory dances free in our mind. ";
-		if ($unlock_progress < 50) {
-		} elsif ($unlock_progress >= 50 && $unlock_progress <= 100) {
-			$response .= " Only a small number of memories have been brought to me so far, please help me! ";
-		} elsif ($unlock_progress > 100 && $unlock_progress <= 300) {
-			$response .= " The number of memories that have been collected grows... ";
-		} elsif ($unlock_progress > 300 && $unlock_progress <= 500) {
-			$response .= " Almost all of my memories have been collected. It cannot be long now... ";
-		} elsif ($unlock_progress > 500 && ($zoneid == 72 || $zoneid == 26)) {
-			if (!$entity_list->IsMobSpawnedByNpcTypeID($panic_npctype)) {
-				$response .= " Oh Gods. I remember now! Something unspeakable comes for us!";
-				quest::spawn2($panic_npctype, 0, 0, 352, 803, 205, 385);
-				quest::faction(208,2000); # Faction: Mith Marr
-			} else {
-				$response .= " The Panic can only harm us if we fall prey to it!";
-				my $panic_id = $entity_list->GetNPCByNPCTypeID($panic_npctype);
-				if ($panic_id && $panic_id->GetTarget()) {
-					$panic_id->SetHP($panic_id->GetHP() - ($panic_id->GetMaxHP() / 20));
-					$panic_id->Shout("Who's memories are these?! I WILL NOT BE DENIED!");
-				}
+
+		if (!$entity_list->IsMobSpawnedByNpcTypeID($panic_npctype)) {
+			$response .= "Oh Gods. I remember now! Something unspeakable comes for us!";
+			quest::spawn2($panic_npctype, 0, 0, 352, 803, 205, 385);
+			quest::faction(208,2000); # Faction: Mith Marr
+		} else {
+			$response .= "The Panic can only harm us if we fall prey to it!";
+			my $panic_id = $entity_list->GetNPCByNPCTypeID($panic_npctype);
+			if ($panic_id && $panic_id->GetTarget()) {
+				$panic_id->SetHP($panic_id->GetHP() - ($panic_id->GetMaxHP() / 20));
+				$panic_id->Shout("Who's memories are these?! I WILL NOT BE DENIED!");
 			}
-		}
+		}	
 
 		quest::say($response);
 	}
