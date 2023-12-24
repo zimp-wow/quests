@@ -210,7 +210,7 @@ function event_signal(e)
 	--stonemite event
 	if e.signal == 296033 or e.signal == 296030 or e.signal == 296035 or e.signal == 296036 then
 		if not confused_say and not rambling_say and not incoherent_say and not irrational_say then
-			eq.set_timer("stonemite",20 * 1000);				-- 20 sec timer to get all the phrases said
+			eq.set_timer("stonemite",60 * 1000);				-- 60 sec timer to get all the phrases said
 		end
 
 		if e.signal == 296033 then					-- NPC: #a_confused_exile

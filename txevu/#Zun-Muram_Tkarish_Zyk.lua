@@ -58,24 +58,24 @@ function event_timer(e)
 	elseif (e.timer == "banishHateTop") then
 		banished_pc = e.self:GetHateTop()
 		if (banished_pc ~= nil) then
-			banished_pc:Message(MT.LightGray,"Zun`Muram Tkarish Zyk tells you, 'I grow tired of your insolence.  Rot in your new home!'")
+			banished_pc:Message(MT.LightGray,"Zun`Muram Tkarish Zyk tells you, 'I grow tired of your insolence.  You are no threat to me!'")
 			e.self:SetHate(banished_pc,1,1)
 			-- Randomly north or south jail
-			if (banished_pc:IsClient()) then
-				local banished_pc_v = banished_pc:CastToClient()
-				if (banished_pc_v.valid) then
-					local rand = math.random(1,2);
-					if (rand == 1) then
-						banished_pc_v:MovePC(297, 1475, 205, -327, 255) --north jail
-						eq.spawn2(297076,0,0, 1475, 205, -327, 0)
+			--if (banished_pc:IsClient()) then
+			--	local banished_pc_v = banished_pc:CastToClient()
+			--	if (banished_pc_v.valid) then
+			--		local rand = math.random(1,2);
+			--		if (rand == 1) then
+			--			banished_pc_v:MovePC(297, 1475, 205, -327, 255) --north jail
+			--			eq.spawn2(297076,0,0, 1475, 205, -327, 0)
 						--spawn north jailer npc a_jailer (297076)
-					elseif (rand == 2) then
-						banished_pc_v:MovePC(297, 1475, -205, -327, 0) --south jail
-						eq.spawn2(297075,0,0, 1475, -205, -327, 0)
+			--		elseif (rand == 2) then
+			--			banished_pc_v:MovePC(297, 1475, -205, -327, 0) --south jail
+			--			eq.spawn2(297075,0,0, 1475, -205, -327, 0)
 						--spawn south jailer npc a_jailer (297075)
-					end
-				end
-			end
+			--		end
+			--	end
+			--end
 			-- If they don't open the door and get out within 20 seconds, the ghosts spawn2
 			--eq.set_timer("ghost_check", 20000)
 
