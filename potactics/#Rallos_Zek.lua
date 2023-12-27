@@ -18,7 +18,7 @@ function event_combat(e)
 		if(not eq.is_paused_timer('depop')) then
 			eq.pause_timer('depop');
 		end
-	eq.set_timer('adds', 45 * 1000);
+	eq.set_timer('adds', 120 * 1000);
 	eq.set_timer("OOBcheck", 6 * 1000);
 	else
 		eq.resume_timer('depop');
