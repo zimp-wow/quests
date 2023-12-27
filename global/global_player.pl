@@ -362,35 +362,33 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 
 }
 
-sub EVENT_ZONE {
+sub EVENT_ZONE {   
 
-	
-    
+	my $PCRace  = $client->GetRace();
+	my $PCClass = $client->GetClass();
 
-my $PCRace = $client->GetRace();
-my $PCClass = $client->GetClass();
-#my $level = $client->GetLevel();
-#if (quest::get_data($pvp) == 1) {
-	#quest::pvp(off);
-    #quest::set_data($pvp, 2);
-#}
-$key = $client->AccountID() . "-kunark-flag";
-$expansion = quest::get_data($key);
-
-$maxlvl = $client->GetBucket("CharMaxLevel");
+	$key 	   = $client->AccountID() . "-kunark-flag";
+	$expansion = quest::get_data($key);
+	$maxlvl	 	= $client->GetBucket("CharMaxLevel");
 
 
-if ($expansion > 1) { #Kunark-Luclin
-if (($maxlvl) == "51") {
-	$client->SetBucket("CharMaxlevel", 60);
-}
-}
+	if ($expansion > 1) { #Kunark-Luclin
+		if (($maxlvl) == "51") {
+			$client->SetBucket("CharMaxlevel", 60);
+		}
+	}
 
-if ($expansion > 18) { #Change this to >18
-if (($maxlvl) == "60") {
-	$client->SetBucket("CharMaxLevel", 65);
-}
-}
+	if ($expansion > 18) { 
+		if (($maxlvl) == "60") {
+			$client->SetBucket("CharMaxLevel", 65);
+		}
+	}
+
+	if (quest::get_data("god-open") == 10 && ($expansion >= 20 || quest::get_data($client->AccountID() . "-saryrn-flag"))) {
+		if (($maxlvl) == "65") {
+			$client->SetBucket("CharMaxLevel", 70);
+		}
+	}
 
 
 #	if (quest::get_data($AM11) == "") {
