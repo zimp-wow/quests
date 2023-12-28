@@ -437,13 +437,7 @@ sub EVENT_ENTERZONE {
 	my $z = $client->GetZ();
 	my $h = $client->GetHeading();
 	my $zoneid = $client->GetZoneID();
-
-	if($PCRace == 330){
-		if (!quest::get_data("guktan-enabled")){
-			$client->SendToGuildHall();
-		}
-	}
-
+	
 	$ssfkey = $client->AccountID() . "ssf";
 	if (quest::get_data($ssfkey) == "1") {
     if ($zoneid == 13) {
