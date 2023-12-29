@@ -107,7 +107,9 @@ sub EVENT_SAY {
 	  }
    }
 
-   plugin::Whisper($response);
+   if ($response) {
+   	plugin::Whisper($response);
+   }
 }
 
 sub get_random_glamour {
