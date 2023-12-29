@@ -63,10 +63,12 @@ sub EVENT_SAY {
    my $response = "";
    my $clientName = $client->GetCleanName();
 
-   my $link_services = "[".quest::saylink("link_services", 1, "services")."]";
-   my $link_services_2 = "[".quest::saylink("link_services", 1, "do for you")."]";
-   my $link_glamour_stone = "[".quest::saylink("link_glamour_stone", 1, "Glamour-Stone")."]";
-   my $link_custom_work = "[".quest::saylink("link_custom_work", 1, "custom enchantments")."]";
+   my $link_services 		= "[".quest::saylink("link_services", 1, "services")."]";
+   my $link_services_2 		= "[".quest::saylink("link_services", 1, "do for you")."]";
+   my $link_glamour_stone 	= "[".quest::saylink("link_glamour_stone", 1, "Glamour-Stone")."]";
+   my $link_custom_work		= "[".quest::saylink("link_custom_work", 1, "custom enchantments")."]";
+   my $link_echo_of_memory  = "[".quest::saylink("link_echo_of_memory", 1, "Echo of Memory")."]";
+   my $link_random_ornament = "[".quest::saylink("link_random_ornament", 1, "random ornament")."]";
 
    if($text=~/hail/i) {
       if (!$client->GetBucket("Tawnos")) {
@@ -77,7 +79,7 @@ sub EVENT_SAY {
    }
 
    elsif ($text eq "link_services") {
-      $response = "Primarily, I can enchant a $link_glamour_stone for you. A speciality of my own invention, these augments can change the appearance of your equipment to mimic another item that you posess. I do charge a nominal fee, a mere 5000 platinum coins, for this service AND more importantly, the item you want to glamour WILL be sacrificed.";
+      $response = "Primarily, I can enchant a $link_glamour_stone for you. A speciality of my own invention, these augments can change the appearance of your equipment to mimic another item that you posess. I do charge a nominal fee, a mere 5000 platinum coins, for this service AND more importantly, the item you want to glamour WILL be sacrificed. I aim to offer $link_custom_work for my most discerning customers soon, too.";
       $client->SetBucket("Tawnos", 1);
    }
 
@@ -85,9 +87,42 @@ sub EVENT_SAY {
       $response = "If you are interested in a $link_glamour_stone, simply hand me the item which you'd like me to duplicate, along with my fee. PLEASE NOTE: Any item you hand me WILL be devoured in the glamour process.";
    }
 
-   #elsif ($text eq "link_custom_work") {
-  #    $response = "I do not have all of my equipment prepared yet, so we will discuss that at a later time";
-  # }
+   elsif ($text eq "link_custom_work") {
+      $response = "I can produce a Glamour-Stone of a remarkable and unique nature, based upon whatever item my muse conjures. There is no predicting what illusion may be produced! I will only embark upon this artistic work in exchange for $link_echo_of_memory, however. Would you like me to produce a $link_random_ornament for you?";
+   }
 
-   plugin::Whisper($response);
+   elsif ($text eq "link_echo_of_memory") {
+      $response = "These are rare fragments of a previous age. Rumor is, only by great service to the realm can you obtain them.";
+   }
+
+   elsif ($text eq "link_random_ornament") {
+      my $eom_available = $client->GetAlternateCurrencyValue(6);
+
+	  if ($eom_available < 5) {
+		$response = "I'm sorry, $clientName. You don't have enough Echo of Memory, please return when you have enough to pay me.";
+	  } elsif (my $random_result = get_random_glamour()) {
+		$client->SetAlternateCurrencyValue(6, $eom_available - 5);
+		$client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
+		$client->SummonItem($random_result);
+	  }
+   }
+
+   if ($response) {
+   	plugin::Whisper($response);
+   }
+}
+
+sub get_random_glamour {
+	my $dbh = plugin::LoadMysql();
+    # Prepare the SQL statement
+    my $sth = $dbh->prepare('SELECT id FROM items WHERE items.name LIKE "%Glamour-Stone%" ORDER BY RAND() LIMIT 1;');
+    
+    # Execute the statement
+    $sth->execute();
+
+    # Fetch the result (a random item id)
+    my $id = $sth->fetchrow(); 
+
+    # Return the fetched ID
+    return $id;
 }
