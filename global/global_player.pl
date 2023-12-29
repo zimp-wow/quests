@@ -21,7 +21,9 @@ sub CheckWorldWideBuffs {
 			$client->ApplySpell($value, quest::get_data_remaining("eom_$value")/6);
 
 			quest::debug(quest::get_data_remaining("eom_$value"));
-		}		
+		} else {
+			$client->BuffFadeBySpellID($value);
+		}
     }
 }
 
