@@ -6,6 +6,11 @@ sub EVENT_SIGNAL {
 		$client->SetBucket("frogk-title", 1);
 		$client->SetTitleSuffix(", Savior of the Guktan", 1);
 	}
+
+	# Serverwide Donator buffs
+	if ($signal >= 43002 || $signal <= 43008) {
+		$client->ApplySpell($signal);
+	}
 }
 
 sub EVENT_CONNECT {
