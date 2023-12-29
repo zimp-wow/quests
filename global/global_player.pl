@@ -8,9 +8,7 @@ sub EVENT_SIGNAL {
 	}
 
 	# Serverwide Donator buffs
-	if ($signal >= 43002 || $signal <= 43008) {
-		$client->ApplySpell($signal, 2400);
-	}
+	CheckWorldWideBuffs();
 }
 
 sub CheckWorldWideBuffs {
