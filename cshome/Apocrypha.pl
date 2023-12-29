@@ -5,6 +5,40 @@
 # 3) Zone and Login methods in global_player apply the requested buffs with the requested durations
 
 my $platinum_price = 5000;
+my $duration_override = 0; #set this value to override 'regular' buffs duration
+
+sub handle_buff_for_level {
+    my $buff_map = {
+        70 => [5488, 3125], # add as desired
+        60 => [1111, 2222], # example values
+        # ... more ...
+    };
+
+    my $client_level = $client->GetLevel();
+    my $closest_level = 0;
+
+    # Find the closest level in the map, not exceeding the client's level
+    foreach my $level (keys %$buff_map) {
+        if ($level <= $client_level && $level > $closest_level) {
+            $closest_level = $level;
+        }
+    }
+
+    # If a matching level was found, perform actions with its associated list
+    if ($closest_level > 0) {
+        my $buffs = $buff_map->{$closest_level};
+
+        # Here, do something with the list of buffs
+        # For example, print them:
+        foreach my $buff (@$buffs) {
+            if ($duration_override) {                
+                $client->ApplySpellBuff($buff, $duration_override);
+            } else {
+                $client->ApplySpellBuff($buff);
+            }
+        }
+    }
+}
 
 sub EVENT_SAY {
     my $response = "";
@@ -15,7 +49,7 @@ sub EVENT_SAY {
     }
 
     elsif ($text=~/modest fee/i) {
-        $response = "In exchange for $platinum_price platinum, I can cast one of the following enhancements on your group. Each should co-exist with over versions of this type of effect, and will last four hours. Would you like to enhance your [Experience Gain], [Hit Points and Armor Class], [Basic Statistics], [Movement Speed], [Mana Regeneration], [Attack Speed], or [Health Regeneration]?";
+        $response = "In exchange for $platinum_price platinum, I can cast one of the following enhancements on your group. Each should co-exist with over versions of this type of effect, and will last four hours. Would you like to enhance your [Experience Gain], [Hit Points and Armor Class], [Basic Statistics], [Movement Speed], [Mana Regeneration], [Attack Speed], or [Health Regeneration]? Alternatively, if you want me to replicate the [buffs] of other adventuring classes, I can do that, too.";
     }
 
     elsif ($text=~/exotic payment/i) {
@@ -88,6 +122,15 @@ sub EVENT_SAY {
             }
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
+        }
+    }
+
+    elsif ($text=~/buffs/i) {
+        if ($client->TakeMoneyFromPP($platinum_price * 1000, 1)) {
+            $response = "Enjoy your newfound power!";
+            handle_buff_for_level();
+        } else {
+             $response = "You do not have enough coin to pay for this power.";
         }
     }
 
@@ -203,7 +246,7 @@ sub ApplyWorldWideBuff {
         return 0;
     } else {
         if (!$skip_payment) { $client->SetAlternateCurrencyValue(6, $eom_avail - 5); }
-        
+
         my %buff_types = (
             43002 => "Experience Gain",
             43003 => "Hit Points and Armor Class",
