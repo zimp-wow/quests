@@ -5,9 +5,10 @@ sub EVENT_SAY {
   }
   if($text=~/Echo of Memory/i) {
     if ($client->GetAlternateCurrencyValue(6) < 5) {
-        quest::say("You don't have any Echoes, my friend. Come back when you do!");
+        quest::say("You don't have enough Echoes, my friend. Come back when you do!");
     } else {
         $client->SetAlternateCurrencyValue(6, $client->GetAlternateCurrencyValue(6) - 5);
+        $client->Message(15, string message)
         GetRandomResult();
     }
   }
