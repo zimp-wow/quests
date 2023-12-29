@@ -195,24 +195,24 @@ sub ApplyWorldWideBuff {
         $client->SetAlternateCurrencyValue(6, $eom_avail - 5);
         my $buff_type = "";
         if ($buff_id == 43002) {
-            $buff_type = "Experience Gain."
+            $buff_type = "Experience Gain"
         } elsif ($buff_id == 43003) {
-            $buff_type = "Hit Points and Armor Class."
+            $buff_type = "Hit Points and Armor Class"
         } elsif ($buff_id == 43004) {
-            $buff_type = "Basic Statistics."
+            $buff_type = "Basic Statistics"
         } elsif ($buff_id == 43005) {
-            $buff_type = "Movement Speed."
+            $buff_type = "Movement Speed"
         } elsif ($buff_id == 43006) {
-            $buff_type = "Mana Regeneration."
+            $buff_type = "Mana Regeneration"
         } elsif ($buff_id == 43007) {
-            $buff_type = "Attack Speed."
+            $buff_type = "Attack Speed"
         } elsif ($buff_id == 43008) {
-            $buff_type = "Health Regeneration."
+            $buff_type = "Health Regeneration"
         }
 
-        if (quest::get_data("eom_$buff_id")) {
+        if (quest::get_data("eom_$buff_id")) {            
+            quest::set_data("eom_$buff_id", 1, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));
             my ($hours, $minutes, $seconds) = convert_seconds(quest::get_data_remaining("eom_$buff_id"));
-            quest::set_data("eom_$buff_id", 1, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));        
             quest::worldwidemessage(15, $client->GetCleanName() . " has used their Echo of Memory to extend your enhanced $buff_type. This buff will endure for $hours Hours and $minutes Minutes.");
         } else {
             quest::set_data("eom_$buff_id", 1, H4);
