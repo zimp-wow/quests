@@ -96,7 +96,15 @@ sub EVENT_SAY {
    }
 
    elsif ($text eq "link_random_ornament") {
-      $response = "";
+      my $eom_available = $client->GetAlternateCurrencyValue(6);
+
+	  if ($eom_available < 5) {
+		$response = "I'm sorry, $clientName. You don't have enough Echo of Memory, please return when you have enough to pay me.";
+	  } elsif (my $random_result = get_random_glamour()) {
+		$client->SetAlternateCurrencyValue(6, $eom_available - 5);
+		$client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
+		$client->SummonItem($random_result);
+	  }
    }
 
    plugin::Whisper($response);

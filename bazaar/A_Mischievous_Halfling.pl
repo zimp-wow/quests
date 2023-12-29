@@ -8,7 +8,7 @@ sub EVENT_SAY {
         quest::say("You don't have enough Echoes, my friend. Come back when you do!");
     } else {
         $client->SetAlternateCurrencyValue(6, $client->GetAlternateCurrencyValue(6) - 5);
-        $client->Message(15, string message)
+        $client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
         GetRandomResult();
     }
   }
