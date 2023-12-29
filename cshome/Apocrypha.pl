@@ -24,32 +24,62 @@ sub EVENT_SAY {
 
     elsif ($text=~/world experience gain/i) {        
         my $buff_id = 43002;
-        $response = "Excellent! Your fellow adventurers will surely appreciate this!";
-        ApplyWorldWideBuff(43002);
+        if (ApplyWorldWideBuff($buff_id)) {
+            $response = "Excellent! Your fellow adventurers will appreciate this!";
+        } else {
+            $response = "You do not have enough [Echo of Memory] to afford that.";
+        }
     }
     elsif ($text=~/world hit points and armor class/i) {
-        # Add your logic for World Hit Points and Armor Class here
-        $response = "Handling World Hit Points and Armor Class.";
+        my $buff_id = 43003;
+        if (ApplyWorldWideBuff($buff_id)) {
+            $response = "Excellent! Your fellow adventurers will appreciate this!";
+        } else {
+            $response = "You do not have enough [Echo of Memory] to afford that.";
+        }
     }
     elsif ($text=~/world basic statistics/i) {
-        # Add your logic for World Basic Statistics here
-        $response = "Handling World Basic Statistics.";
+        my $buff_id = 43004;
+        if (ApplyWorldWideBuff($buff_id)) {
+            $response = "Excellent! Your fellow adventurers will appreciate this!";
+        } else {
+            $response = "You do not have enough [Echo of Memory] to afford that.";
+        }
     }
     elsif ($text=~/world movement speed/i) {
-        # Add your logic for World Movement Speed here
-        $response = "Handling World Movement Speed.";
+        my $buff_id = 43005;
+        if (ApplyWorldWideBuff($buff_id)) {
+            $response = "Excellent! Your fellow adventurers will appreciate this!";
+        } else {
+            $response = "You do not have enough [Echo of Memory] to afford that.";
+        }
     }
     elsif ($text=~/world mana regeneration/i) {
-        # Add your logic for World Mana Regeneration here
-        $response = "Handling World Mana Regeneration.";
+        my $buff_id = 43006;
+        if (ApplyWorldWideBuff($buff_id)) {
+            $response = "Excellent! Your fellow adventurers will appreciate this!";
+        } else {
+            $response = "You do not have enough [Echo of Memory] to afford that.";
+        }
     }
     elsif ($text=~/world attack speed/i) {
-        # Add your logic for World Attack Speed here
-        $response = "Handling World Attack Speed.";
+        my $buff_id = 43007;
+        if (ApplyWorldWideBuff($buff_id)) {
+            $response = "Excellent! Your fellow adventurers will appreciate this!";
+        } else {
+            $response = "You do not have enough [Echo of Memory] to afford that.";
+        }
     }
     elsif ($text=~/world health regeneration/i) {
-        # Add your logic for World Health Regeneration here
-        $response = "Handling World Health Regeneration.";
+        my $buff_id = 43008;
+        if (ApplyWorldWideBuff($buff_id)) {
+            $response = "Excellent! Your fellow adventurers will appreciate this!";
+        } else {
+            $response = "You do not have enough [Echo of Memory] to afford that.";
+        }
+    }
+    elsif ($test=~/all world enchantments/i) {
+
     }
 
     elsif ($text=~/experience gain/i) {
@@ -157,24 +187,41 @@ sub ApplyGroupBuff {
 
 sub ApplyWorldWideBuff {
     my $buff_id = shift;
+    my $eom_avail = $client->GetAlternateCurrencyValue(6);
 
-    if (quest::get_data("eom_$buff_id")) {
-        quest::set_data("eom_$buff_id", 1, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));
+    if ($eom_avail < 5) {
+        return 0;
     } else {
-        quest::set_data("eom_$buff_id", 1, H4);
+        $client->SetAlternateCurrencyValue(6, $eom_avail - 5);
+        my $buff_type = "";
+        if ($buff_id == 43002) {
+            $buff_type = "Experience Gain."
+        } elsif ($buff_id == 43003) {
+            $buff_type = "Hit Points and Armor Class."
+        } elsif ($buff_id == 43004) {
+            $buff_type = "Basic Statistics."
+        } elsif ($buff_id == 43005) {
+            $buff_type = "Movement Speed."
+        } elsif ($buff_id == 43006) {
+            $buff_type = "Mana Regeneration."
+        } elsif ($buff_id == 43007) {
+            $buff_type = "Attack Speed."
+        } elsif ($buff_id == 43008) {
+            $buff_type = "Health Regeneration."
+        }
+
+        if (quest::get_data("eom_$buff_id")) {
+            my ($hours, $minutes, $seconds) = convert_seconds(quest::get_data_remaining("eom_$buff_id"));
+            quest::set_data("eom_$buff_id", 1, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));        
+            quest::worldwidemessage(15, $client->GetCleanName() . " has used their Echo of Memory to extend your enhanced $buff_type. This buff will endure for $hours Hours and $minutes Minutes.");
+        } else {
+            quest::set_data("eom_$buff_id", 1, H4);
+            quest::worldwidemessage(15, $client->GetCleanName() . " has used their Echo of Memory to enhance your $buff_type. This buff will endure for 4 Hours.");
+        }
+        
+        quest::worldwidesignalclient($buff_id);
+        return 1;
     }
-    
-    quest::worldwidesignalclient($buff_id);
-
-    my $buff_type = "";
-
-    if ($buff_id == 43002) {
-        $buff_type = "Experience Gain."
-    }
-
-    my ($hours, $minutes, $seconds) = convert_seconds(quest::get_data_remaining("eom_$buff_id"));
-
-    quest::worldwidemessage(15, $client->GetCleanName() . " has used Echo of Memory to enhance your Experience Gain. This buff will endure for $hours Hours and $minutes Minutes.");
 }
 
 sub convert_seconds {
