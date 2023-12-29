@@ -19,8 +19,6 @@ sub CheckWorldWideBuffs {
 
 		if ($data > 0) {
 			$client->ApplySpell($value, quest::get_data_remaining("eom_$value")/6);
-
-			quest::debug(quest::get_data_remaining("eom_$value"));
 		} else {
 			$client->BuffFadeBySpellID($value);
 		}
@@ -357,7 +355,8 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 
 }
 
-sub EVENT_ZONE {   
+sub EVENT_ZONE {
+	CheckWorldWideBuffs();
 
 	my $PCRace  = $client->GetRace();
 	my $PCClass = $client->GetClass();
