@@ -82,8 +82,9 @@ sub EVENT_SAY {
         my $eom_avail = $client->GetAlternateCurrencyValue(6);
         if ($eom_avail >= 25) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
+            $client->SetAlternateCurrencyValue(6, $eom_avail - 25);
             for my $value (43002 .. 43008) {
-                ApplyWorldWideBuff($value);                
+                ApplyWorldWideBuff($value, 1);                
             }
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
@@ -195,28 +196,24 @@ sub ApplyGroupBuff {
 
 sub ApplyWorldWideBuff {
     my $buff_id = shift;
+    my $skip_payment = shift;
     my $eom_avail = $client->GetAlternateCurrencyValue(6);
 
-    if ($eom_avail < 5) {
+    if ($eom_avail < 5 && !$skip_payment) {
         return 0;
     } else {
-        $client->SetAlternateCurrencyValue(6, $eom_avail - 5);
-        my $buff_type = "";
-        if ($buff_id == 43002) {
-            $buff_type = "Experience Gain"
-        } elsif ($buff_id == 43003) {
-            $buff_type = "Hit Points and Armor Class"
-        } elsif ($buff_id == 43004) {
-            $buff_type = "Basic Statistics"
-        } elsif ($buff_id == 43005) {
-            $buff_type = "Movement Speed"
-        } elsif ($buff_id == 43006) {
-            $buff_type = "Mana Regeneration"
-        } elsif ($buff_id == 43007) {
-            $buff_type = "Attack Speed"
-        } elsif ($buff_id == 43008) {
-            $buff_type = "Health Regeneration"
-        }
+        if (!$skip_payment) { $client->SetAlternateCurrencyValue(6, $eom_avail - 5); }
+        
+        my %buff_types = (
+            43002 => "Experience Gain",
+            43003 => "Hit Points and Armor Class",
+            43004 => "Basic Statistics",
+            43005 => "Movement Speed",
+            43006 => "Mana Regeneration",
+            43007 => "Attack Speed",
+            43008 => "Health Regeneration",
+        );
+        my $buff_type = $buff_types{$buff_id} // "Unknown Buff";  # Fallback for unknown buff IDs
 
         if (quest::get_data("eom_$buff_id")) {            
             quest::set_data("eom_$buff_id", 1, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));
