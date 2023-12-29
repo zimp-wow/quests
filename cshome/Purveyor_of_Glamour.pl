@@ -111,6 +111,7 @@ sub EVENT_SAY {
 }
 
 sub get_random_glamour {
+	my $dbh = plugin::LoadMysql();
     # Prepare the SQL statement
     my $sth = $dbh->prepare('SELECT id FROM items WHERE items.name LIKE "%Glamour-Stone%" ORDER BY RAND() LIMIT 1;');
     
