@@ -19,7 +19,7 @@ sub EVENT_SAY {
     }
 
     elsif ($text=~/exotic payment/i) {
-        $response = "In exchange for five [Echo of Memory], I can enchant the entire world! Each should co-exist with over versions of this type of effect, and will last four hours. If the world is already enchanted in this way, purchasing additional enhancement will extend the duration of the current enchantment. Would you like to enhance the [World Experience Gain], [World Hit Points and Armor Class], [World Basic Statistics], [World Movement Speed], [World Mana Regeneration], [World Attack Speed], or [World Health Regeneration]?";
+        $response = "In exchange for five [Echo of Memory], I can enchant the entire world! Each should co-exist with over versions of this type of effect, and will last four hours. If the world is already enchanted in this way, purchasing additional enhancement will extend the duration of the current enchantment. Would you like to enhance the [World Experience Gain], [World Hit Points and Armor Class], [World Basic Statistics], [World Movement Speed], [World Mana Regeneration], [World Attack Speed], or [World Health Regeneration]? Alternatively, for twenty-five Echoes, I can cast [all world enchantments]!";
     }
 
     elsif ($text=~/world experience gain/i) {        
@@ -79,7 +79,12 @@ sub EVENT_SAY {
         }
     }
     elsif ($test=~/all world enchantments/i) {
-
+        my $eom_avail = $client->GetAlternateCurrencyValue(6);
+        if ($eom_avail >= 25) {
+            for my $value (43002 .. 43008) {
+                ApplyWorldWideBuff($value);
+            }
+        }
     }
 
     elsif ($text=~/experience gain/i) {
