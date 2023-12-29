@@ -13,70 +13,56 @@ sub EVENT_SIGNAL {
 	}
 }
 
+sub CheckWorldWideBuffs {
+    for my $value (43002 .. 43008) {
+        my $data = quest::get_data("eom_$value");
+
+		if ($data > 0) {
+			$client->ApplySpell($value, quest::get_data_remaining("eom_$value"));
+		}		
+    }
+}
+
+
 sub EVENT_CONNECT {
-    #$client->SendToGuildHall();
 
-#if (quest::get_data($pvp) == 1) {
-	#quest::pvp(off);
-   # quest::set_data($pvp, 2);
-#}
+	CheckWorldWideBuffs();
 
-my $PCRace = $client->GetRace();
-my $PCClass = $client->GetClass();
-#my $level = $client->GetLevel();
-my $global_bucket_key 	= "froglok-unlock";
-my $unlock_progress = quest::get_data($global_bucket_key);
+	my $PCRace = $client->GetRace();
+	my $PCClass = $client->GetClass();
+	my $global_bucket_key 	= "froglok-unlock";
+	my $unlock_progress = quest::get_data($global_bucket_key);
 
 
- if($PCRace == 128){ 
-	$key = $client->AccountID() . "-kunark-flag";
-	$expansion = quest::get_data($key);
-	if ($expansion < 2){
-    $client->SendToGuildHall();
-  }
- }
-if($PCRace == 130){
-	$key = $client->AccountID() . "-kunark-flag";
-	$expansion = quest::get_data($key);
-	if ($expansion < 14){
-    $client->SendToGuildHall();
-  }
-}
+	if($PCRace == 128){ 
+		$key = $client->AccountID() . "-kunark-flag";
+		$expansion = quest::get_data($key);
+		if ($expansion < 2){
+		$client->SendToGuildHall();
+	}
+	}
+	if($PCRace == 130){
+		$key = $client->AccountID() . "-kunark-flag";
+		$expansion = quest::get_data($key);
+		if ($expansion < 14){
+		$client->SendToGuildHall();
+	}
+	}
 
-if($PCClass == 15){
-	$key = $client->AccountID() . "-kunark-flag";
-	$expansion = quest::get_data($key);
-	if ($expansion < 14){
-    $client->SendToGuildHall();
-  }
-}
-if($PCClass == 16){
-	$key = $client->AccountID() . "-kunark-flag";
-	$expansion = quest::get_data($key);
-	if ($expansion < 19){ #Zerker unlock -1/20/23 - changed to 19. All below this value will be kicked to Guild Hall
-    $client->SendToGuildHall();
-  }
-}
-
-#if($level > 19){
-#	if($PCClass == 4)
-#	{
-#	if (quest::get_data($AM11) == "") {
-#	$client->IncrementAA(199); #AM1
- #   quest::set_data($AM11, 1);
-#}
-#	}
-#}
-
-#if($level > 39){
-#	if($PCClass == 4)
-#	{
-#	if (quest::get_data($AM22) == "") {
-#	$client->IncrementAA(200); #AM1
- #   quest::set_data($AM22, 1);
-#}
-#	}
-#}
+	if($PCClass == 15){
+			$key = $client->AccountID() . "-kunark-flag";
+			$expansion = quest::get_data($key);
+			if ($expansion < 14){
+			$client->SendToGuildHall();
+		}
+	}
+		if($PCClass == 16){
+			$key = $client->AccountID() . "-kunark-flag";
+			$expansion = quest::get_data($key);
+			if ($expansion < 19){ #Zerker unlock -1/20/23 - changed to 19. All below this value will be kicked to Guild Hall
+			$client->SendToGuildHall();
+		}
+	}
 
 $bazkey = $client->CharacterID() . "baz";
 

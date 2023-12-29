@@ -8,18 +8,21 @@ sub EVENT_SAY {
     my $response = "";
     my $clientName = $client->GetCleanName();
 
-    my $eom_experience   = quest::get_data('eom_experience');
-    my $eom_aego         = quest::get_data('eom_aego');
-    my $eom_focus        = quest::get_data('eom_focus');
-    my $eom_speed        = quest::get_data('eom_speed');
-    my $eom_mana         = quest::get_data('eom_mana');
-    my $eom_haste        = quest::get_data('eom_haste');
-    my $eom_regen        = quest::get_data('eom_regen');
+    my $eom_experience   = quest::get_data('eom_43002');
+    my $eom_aego         = quest::get_data('eom_43003');
+    my $eom_focus        = quest::get_data('eom_43004');
+    my $eom_speed        = quest::get_data('eom_43005');
+    my $eom_mana         = quest::get_data('eom_43006');
+    my $eom_haste        = quest::get_data('eom_43007');
+    my $eom_regen        = quest::get_data('eom_43008');
 
     my $link_services 	 = "[".quest::saylink("link_services", 1, "services")."]";
 
     if($text=~/hail/i) {   
-        quest::worldwidesignalclient(43002);
+        ApplyWorldWideBuff(43002);
+
+
+
     }
 
     elsif ($text eq "link_services") {
@@ -29,4 +32,11 @@ sub EVENT_SAY {
     if ($response) {
         plugin::Whisper($response);
     }
+}
+
+sub ApplyWorldWideBuff {
+    my $buff_id = shift;
+
+    quest::worldwidesignalclient($buff_id);
+    quest::set_data("eom_$buff_id", 1, H4);
 }
