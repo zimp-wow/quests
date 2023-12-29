@@ -1,7 +1,15 @@
 
 sub EVENT_SAY {
   if($text=~/hail/i) {
-    quest::say("Thank you for coming to Crow's Casino! If you would like to try your luck at a game of chance, simply hand me 5,000 platinum pieces."); 
+    quest::say("Thank you for coming to Crow's Casino! If you would like to try your luck at a game of chance, simply hand me 5,000 platinum pieces. If you'd rather wager five [Echo of Memory], I'll accept that, too.");
+  }
+  if($text=~/Echo of Memory/i) {
+    if ($client->GetAlternateCurrencyValue(6) < 5) {
+        quest::say("You don't have any Echoes, my friend. Come back when you do!");
+    } else {
+        $client->SetAlternateCurrencyValue(6, $client->GetAlternateCurrencyValue(6) - 5);
+        GetRandomResult();
+    }
   }
 }
 
@@ -9,6 +17,16 @@ sub EVENT_ITEM {
   my $cash = 0;
   $cash = ($platinum * 1000) + ($gold * 100) + ($silver * 10) + $copper;
   if ($cash == 5000000) { #5000 Platinum
+    GetRandomResult();
+  }
+  else {
+    quest::say("Only one transaction at a time please of 5,000 platinum pieces! The casino is very busy!");
+    quest::givecash($copper, $silver, $gold, $platinum);
+  }
+  plugin::return_items(\%itemcount);
+}
+
+sub GetRandomResult() {
     quest::say("Okay, here we go! Rolling the dice!");
     my $random_result = int(rand(100));
     if ($random_result < 25) #0-24 rolls win this - 25% chance
@@ -61,12 +79,5 @@ sub EVENT_ITEM {
         quest::summonfixeditem(quest::ChooseRandom(36995,57825,64489,57819,57818,37538)); #Food - 2% chance for an else. 99,100.
         quest::say("Better luck next time! Here's some food for your troubles!"); 
     }
-
-  }
-  else {
-    quest::say("Only one transaction at a time please of 5,000 platinum pieces! The casino is very busy!");
-    quest::givecash($copper, $silver, $gold, $platinum);
-  }
-    plugin::return_items(\%itemcount);
 }
 
