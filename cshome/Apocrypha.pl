@@ -29,7 +29,6 @@ sub handle_buff_for_level {
         my $buffs = $buff_map->{$closest_level};
 
         # Here, do something with the list of buffs
-        # For example, print them:
         foreach my $buff (@$buffs) {
             if ($duration_override) {                
                 $client->ApplySpellBuff($buff, $duration_override);
