@@ -78,7 +78,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
-    elsif ($test=~/all world enchantments/i) {
+    elsif ($text=~/all world enchantments/i) {
         my $eom_avail = $client->GetAlternateCurrencyValue(6);
         if ($eom_avail >= 25) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
