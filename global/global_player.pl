@@ -23,7 +23,6 @@ sub CheckWorldWideBuffs {
     }
 }
 
-
 sub EVENT_CONNECT {
 
 	CheckWorldWideBuffs();

@@ -164,5 +164,26 @@ sub ApplyWorldWideBuff {
         quest::set_data("eom_$buff_id", 1, H4);
     }
     
-    quest::worldwidesignalclient($buff_id);    
+    quest::worldwidesignalclient($buff_id);
+
+    my $buff_type = "";
+
+    if ($buff_id == 43002) {
+        $buff_type = "Experience Gain."
+    }
+
+    my ($hours, $minutes, $seconds) = convert_seconds(quest::get_data_remaining("eom_$buff_id"));
+
+    quest::worldwidemessage(15, $client->GetCleanName() . " has used Echo of Memory to enhance your Experience Gain. This buff will endure for $hours Hours and $minutes Minutes.");
+}
+
+sub convert_seconds {
+    my ($seconds) = @_;
+
+    my $hours = int($seconds / 3600);
+    $seconds %= 3600;
+    my $minutes = int($seconds / 60);
+    $seconds %= 60;
+
+    return ($hours, $minutes, $seconds);
 }
