@@ -10,44 +10,132 @@ sub EVENT_SAY {
     my $response = "";
     my $clientName = $client->GetCleanName();
 
-    my $eom_experience   = quest::get_data('eom_43002');
-    my $eom_aego         = quest::get_data('eom_43003');
-    my $eom_focus        = quest::get_data('eom_43004');
-    my $eom_speed        = quest::get_data('eom_43005');
-    my $eom_mana         = quest::get_data('eom_43006');
-    my $eom_haste        = quest::get_data('eom_43007');
-    my $eom_regen        = quest::get_data('eom_43008');
-
     if ($text=~/hail/i) {   
         $response = "Hail, Adventurer. I seek to empower your ilk for my own profit. For a [modest fee], I will enhance the power of your group for a time. In exchange for more [exotic payment], I will enhance the power of all adventurers in the world.";
     }
+
     elsif ($text=~/modest fee/i) {
         $response = "In exchange for $platinum_price platinum, I can cast one of the following enhancements on your group. Each should co-exist with over versions of this type of effect, and will last four hours. Would you like to enhance your [Experience Gain], [Hit Points and Armor Class], [Basic Statistics], [Movement Speed], [Mana Regeneration], [Attack Speed], or [Health Regeneration]?";
     }
+
+    elsif ($text=~/exotic payment/i) {
+        $response = "In exchange for five [Echo of Memory], I can enchant the entire world! Each should co-exist with over versions of this type of effect, and will last four hours. If the world is already enchanted in this way, purchasing additional enhancement will extend the duration of the current enchantment. Would you like to enhance the [World Experience Gain], [World Hit Points and Armor Class], [World Basic Statistics], [World Movement Speed], [World Mana Regeneration], [World Attack Speed], or [World Health Regeneration]?";
+    }
+
+    elsif ($text=~/world experience gain/i) {        
+        my $buff_id = 43002;
+        $response = "Excellent! Your fellow adventurers will surely appreciate this!";
+        ApplyWorldWideBuff(43002);
+    }
+    elsif ($text=~/world hit points and armor class/i) {
+        # Add your logic for World Hit Points and Armor Class here
+        $response = "Handling World Hit Points and Armor Class.";
+    }
+    elsif ($text=~/world basic statistics/i) {
+        # Add your logic for World Basic Statistics here
+        $response = "Handling World Basic Statistics.";
+    }
+    elsif ($text=~/world movement speed/i) {
+        # Add your logic for World Movement Speed here
+        $response = "Handling World Movement Speed.";
+    }
+    elsif ($text=~/world mana regeneration/i) {
+        # Add your logic for World Mana Regeneration here
+        $response = "Handling World Mana Regeneration.";
+    }
+    elsif ($text=~/world attack speed/i) {
+        # Add your logic for World Attack Speed here
+        $response = "Handling World Attack Speed.";
+    }
+    elsif ($text=~/world health regeneration/i) {
+        # Add your logic for World Health Regeneration here
+        $response = "Handling World Health Regeneration.";
+    }
+
     elsif ($text=~/experience gain/i) {
-        if (ApplyGroupBuff(43002)) {
-            $response = "Enjoy your newfound power!";
+        my $buff_id = 43002;
+        if (quest::get_data("eom_$buff_id")) {
+            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
         } else {
-            $response = "You do not have enough coin to pay for this power.";
+            if (ApplyGroupBuff($buff_id)) {
+                $response = "Enjoy your newfound power!";
+            } else {
+                $response = "You do not have enough coin to pay for this power.";
+            }
         }
     }
+
     elsif ($text=~/hit points and armor class/i) {
-        $response = "Enhancing hit points and armor class will cost you $platinum_price platinum. Are you sure you wish to proceed?";
+        my $buff_id = 43004;
+        if (quest::get_data("eom_$buff_id")) {
+            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
+        } else {
+            if (ApplyGroupBuff($buff_id)) {
+                $response = "Enjoy your newfound power!";
+            } else {
+                $response = "You do not have enough coin to pay for this power.";
+            }
+        }
     }
     elsif ($text=~/basic statistics/i) {
-        $response = "Enhancing basic statistics will cost you $platinum_price platinum. Are you sure you wish to proceed?";
+        my $buff_id = 43004;
+        if (quest::get_data("eom_$buff_id")) {
+            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
+        } else {
+            if (ApplyGroupBuff($buff_id)) {
+                $response = "Enjoy your newfound power!";
+            } else {
+                $response = "You do not have enough coin to pay for this power.";
+            }
+        }
     }
     elsif ($text=~/movement speed/i) {
-        $response = "Enhancing movement speed will cost you $platinum_price platinum. Are you sure you wish to proceed?";
+        my $buff_id = 43005;
+        if (quest::get_data("eom_$buff_id")) {
+            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
+        } else {
+            if (ApplyGroupBuff($buff_id)) {
+                $response = "Enjoy your newfound power!";
+            } else {
+                $response = "You do not have enough coin to pay for this power.";
+            }
+        }
     }
     elsif ($text=~/mana regeneration/i) {
-        $response = "Enhancing mana regeneration will cost you $platinum_price platinum. Are you sure you wish to proceed?";
+        my $buff_id = 43006;
+        if (quest::get_data("eom_$buff_id")) {
+            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
+        } else {
+            if (ApplyGroupBuff($buff_id)) {
+                $response = "Enjoy your newfound power!";
+            } else {
+                $response = "You do not have enough coin to pay for this power.";
+            }
+        }
     }
     elsif ($text=~/attack speed/i) {
-        $response = "Enhancing attack speed will cost you $platinum_price platinum. Are you sure you wish to proceed?";
+        my $buff_id = 43007;
+        if (quest::get_data("eom_$buff_id")) {
+            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
+        } else {
+            if (ApplyGroupBuff($buff_id)) {
+                $response = "Enjoy your newfound power!";
+            } else {
+                $response = "You do not have enough coin to pay for this power.";
+            }
+        }
     }
     elsif ($text=~/health regeneration/i) {
-        $response = "Enhancing health regeneration will cost you $platinum_price platinum. Are you sure you wish to proceed?";
+        my $buff_id = 43008;
+        if (quest::get_data("eom_$buff_id")) {
+            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
+        } else {
+            if (ApplyGroupBuff($buff_id)) {
+                $response = "Enjoy your newfound power!";
+            } else {
+                $response = "You do not have enough coin to pay for this power.";
+            }
+        }
     }
 
     if ($response) {
@@ -57,19 +145,24 @@ sub EVENT_SAY {
 
 sub ApplyGroupBuff {
     my $buff_id = shift;
-    
+
     if ($client->TakeMoneyFromPP($platinum_price * 1000, 1)) {
-        $client->ApplySpell($buff_id, 2400);
+        $client->ApplySpellGroup($buff_id, 2400);
         return 1;
     } else {
         return 0;
-    }
+    }    
 }
 
 
 sub ApplyWorldWideBuff {
     my $buff_id = shift;
 
-    quest::worldwidesignalclient($buff_id);
-    quest::set_data("eom_$buff_id", 1, H4);
+    if (quest::get_data("eom_$buff_id")) {
+        quest::set_data("eom_$buff_id", 1, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));
+    } else {
+        quest::set_data("eom_$buff_id", 1, H4);
+    }
+    
+    quest::worldwidesignalclient($buff_id);    
 }
