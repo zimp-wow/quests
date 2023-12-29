@@ -7,5 +7,9 @@ sub EVENT_SAY {
 			quest::delete_data("god-open");
 			quest::say("Disabling Gates of Discord Access");
 		}
+
+		if ($text=~/eom/i) {
+			$client->AddAlternateCurrencyValue(6, 10);
+		}
 	}
 }
