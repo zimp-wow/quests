@@ -18,7 +18,7 @@ sub CheckWorldWideBuffs {
         my $data = quest::get_data("eom_$value");
 
 		if ($data > 0) {
-			$client->ApplySpell($value, quest::get_data_remaining("eom_$value"));
+			$client->ApplySpell($value, quest::get_data_remaining("eom_$value")/6);
 
 			quest::debug(quest::get_data_remaining("eom_$value"));
 		}		
