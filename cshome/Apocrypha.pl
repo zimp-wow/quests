@@ -4,7 +4,7 @@
 # 2) Set a bucket value with a 4 hour expiration.
 # 3) Zone and Login methods in global_player apply the requested buffs with the requested durations
 
-my $duration_override = 60; #set this value to override 'regular' buffs duration
+my $duration_override = 600; #set this value to override 'regular' buffs duration
 
 sub handle_buff_for_level {
     my $buff_map = {
