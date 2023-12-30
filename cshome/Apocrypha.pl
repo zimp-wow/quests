@@ -4,8 +4,7 @@
 # 2) Set a bucket value with a 4 hour expiration.
 # 3) Zone and Login methods in global_player apply the requested buffs with the requested durations
 
-my $platinum_price = 5000;
-my $duration_override = 0; #set this value to override 'regular' buffs duration
+my $duration_override = 60; #set this value to override 'regular' buffs duration
 
 sub handle_buff_for_level {
     my $buff_map = {
@@ -15,6 +14,13 @@ sub handle_buff_for_level {
         61 => [3397, 3479, 2524, 3441, 3178, 3360], # 500pp - Voice of Quellious, Vallons Quickening, Blessing of Replenishment, Spirit of Bih'li, Hand of Virtue, Focus of the Seventh
         # ... more ...
     };
+
+    my $price_map = {
+        1  => 0,
+        20 => 10,
+        46 => 250,
+        61 => 500,
+    }
 
     my $client_level = $client->GetLevel();
     my $closest_level = 0;
@@ -28,15 +34,21 @@ sub handle_buff_for_level {
 
     # If a matching level was found, perform actions with its associated list
     if ($closest_level > 0) {
-        my $buffs = $buff_map->{$closest_level};
+        if ($client->TakeMoneyFromPP($price_map->{$closest_level} * 1000)) {
+            my $buffs = $buff_map->{$closest_level};
 
-        # Here, do something with the list of buffs
-        foreach my $buff (@$buffs) {
-            if ($duration_override) {                
-                $client->ApplySpellBuff($buff, $duration_override);
-            } else {
-                $client->ApplySpellBuff($buff);
+            # Here, do something with the list of buffs
+            foreach my $buff (@$buffs) {
+                if ($duration_override) {                
+                    $client->ApplySpellBuff($buff, $duration_override);
+                } else {
+                    $client->ApplySpellBuff($buff);
+                }
             }
+
+            plugin::Whisper("Enjoy your newfound power.");
+        } else {
+            plugin::Whisper("You do not have enough coin to afford that.");
         }
     }
 }
@@ -50,14 +62,14 @@ sub EVENT_SAY {
     }
 
     elsif ($text=~/modest fee/i) {
-        $response = "In exchange for $platinum_price platinum, I can cast one of the following enhancements on your group. Each should co-exist with over versions of this type of effect, and will last four hours. Would you like to enhance your [Experience Gain], [Hit Points and Armor Class], [Basic Statistics], [Movement Speed], [Mana Regeneration], [Attack Speed], or [Health Regeneration]? Alternatively, if you want me to replicate the [buffs] of other adventuring classes, I can do that, too.";
+        $response = "In exchange for a fee of platinum, I will enhance you and your party with several [buffs].";
     }
 
     elsif ($text=~/exotic payment/i) {
-        $response = "In exchange for five [Echo of Memory], I can enchant the entire world! Each should co-exist with over versions of this type of effect, and will last four hours. If the world is already enchanted in this way, purchasing additional enhancement will extend the duration of the current enchantment. Would you like to enhance the [World Experience Gain], [World Hit Points and Armor Class], [World Basic Statistics], [World Movement Speed], [World Mana Regeneration], [World Attack Speed], or [World Health Regeneration]? Alternatively, for twenty-five Echoes, I can cast [all world enchantments]!";
+        $response = "In exchange for five [Echo of Memory], I can enchant the entire world! Each should co-exist with over versions of this type of effect, and will last four hours. If the world is already enchanted in this way, purchasing additional enhancement will extend the duration of the current enchantment. Would you like to enhance the [Experience Gain], [Hit Points and Armor Class], [Combat Statistics], [Movement Speed], [Mana Regeneration], [Attack Speed], or [Health Regeneration]? Alternatively, for twenty-five Echoes, I can cast [all of these enchantments]!";
     }
 
-    elsif ($text=~/world experience gain/i) {        
+    elsif ($text=~/experience gain/i) {        
         my $buff_id = 43002;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
@@ -65,7 +77,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
-    elsif ($text=~/world hit points and armor class/i) {
+    elsif ($text=~/hit points and armor class/i) {
         my $buff_id = 43003;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
@@ -73,7 +85,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
-    elsif ($text=~/world basic statistics/i) {
+    elsif ($text=~/combat statistics/i) {
         my $buff_id = 43004;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
@@ -81,7 +93,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
-    elsif ($text=~/world movement speed/i) {
+    elsif ($text=~/movement speed/i) {
         my $buff_id = 43005;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
@@ -89,7 +101,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
-    elsif ($text=~/world mana regeneration/i) {
+    elsif ($text=~/mana regeneration/i) {
         my $buff_id = 43006;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
@@ -97,7 +109,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
-    elsif ($text=~/world attack speed/i) {
+    elsif ($text=~/attack speed/i) {
         my $buff_id = 43007;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
@@ -105,7 +117,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
-    elsif ($text=~/world health regeneration/i) {
+    elsif ($text=~/health regeneration/i) {
         my $buff_id = 43008;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
@@ -113,7 +125,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
-    elsif ($text=~/all world enchantments/i) {
+    elsif ($text=~/all of these enchantments/i) {
         my $eom_avail = $client->GetAlternateCurrencyValue(6);
         if ($eom_avail >= 25) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
@@ -126,99 +138,8 @@ sub EVENT_SAY {
         }
     }
 
-    elsif ($text=~/buffs/i) {
-        if ($client->TakeMoneyFromPP($platinum_price * 1000, 1)) {
-            $response = "Enjoy your newfound power!";
-            handle_buff_for_level();
-        } else {
-             $response = "You do not have enough coin to pay for this power.";
-        }
-    }
-
-    elsif ($text=~/experience gain/i) {
-        my $buff_id = 43002;
-        if (quest::get_data("eom_$buff_id")) {
-            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
-        } else {
-            if (ApplyGroupBuff($buff_id)) {
-                $response = "Enjoy your newfound power!";
-            } else {
-                $response = "You do not have enough coin to pay for this power.";
-            }
-        }
-    }
-
-    elsif ($text=~/hit points and armor class/i) {
-        my $buff_id = 43004;
-        if (quest::get_data("eom_$buff_id")) {
-            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
-        } else {
-            if (ApplyGroupBuff($buff_id)) {
-                $response = "Enjoy your newfound power!";
-            } else {
-                $response = "You do not have enough coin to pay for this power.";
-            }
-        }
-    }
-    elsif ($text=~/basic statistics/i) {
-        my $buff_id = 43004;
-        if (quest::get_data("eom_$buff_id")) {
-            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
-        } else {
-            if (ApplyGroupBuff($buff_id)) {
-                $response = "Enjoy your newfound power!";
-            } else {
-                $response = "You do not have enough coin to pay for this power.";
-            }
-        }
-    }
-    elsif ($text=~/movement speed/i) {
-        my $buff_id = 43005;
-        if (quest::get_data("eom_$buff_id")) {
-            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
-        } else {
-            if (ApplyGroupBuff($buff_id)) {
-                $response = "Enjoy your newfound power!";
-            } else {
-                $response = "You do not have enough coin to pay for this power.";
-            }
-        }
-    }
-    elsif ($text=~/mana regeneration/i) {
-        my $buff_id = 43006;
-        if (quest::get_data("eom_$buff_id")) {
-            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
-        } else {
-            if (ApplyGroupBuff($buff_id)) {
-                $response = "Enjoy your newfound power!";
-            } else {
-                $response = "You do not have enough coin to pay for this power.";
-            }
-        }
-    }
-    elsif ($text=~/attack speed/i) {
-        my $buff_id = 43007;
-        if (quest::get_data("eom_$buff_id")) {
-            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
-        } else {
-            if (ApplyGroupBuff($buff_id)) {
-                $response = "Enjoy your newfound power!";
-            } else {
-                $response = "You do not have enough coin to pay for this power.";
-            }
-        }
-    }
-    elsif ($text=~/health regeneration/i) {
-        my $buff_id = 43008;
-        if (quest::get_data("eom_$buff_id")) {
-            $response = "I am already empowering all adventurers in this manner. It would be pointless for me to enhance you in this way.";
-        } else {
-            if (ApplyGroupBuff($buff_id)) {
-                $response = "Enjoy your newfound power!";
-            } else {
-                $response = "You do not have enough coin to pay for this power.";
-            }
-        }
+    elsif ($text=~/buffs/i) {        
+        handle_buff_for_level();
     }
 
     if ($response) {
