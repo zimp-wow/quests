@@ -20,7 +20,7 @@ sub handle_buff_for_level {
         20 => 10,
         46 => 250,
         61 => 500,
-    }
+    };
 
     my $client_level = $client->GetLevel();
     my $closest_level = 0;
