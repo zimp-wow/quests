@@ -9,8 +9,10 @@ my $duration_override = 0; #set this value to override 'regular' buffs duration
 
 sub handle_buff_for_level {
     my $buff_map = {
-        70 => [5488, 3125], # add as desired
-        60 => [1111, 2222], # example values
+        1 => [2525, 314, 278, 145, 356, 170], # Free - Harnessing of Spirit, Resolution, Spirit of Wolf, Chloroplast, Shield of Thorns, Alacrity
+        20 => [2525, 314, 278, 145, 356, 170], # 10pp - Harnessing of Spirit, Resolution, Spirit of Wolf, Chloroplast, Shield of Thorns, Alacrity
+        46 => [2530, 2510, 2524, 2528, 2895, 2570], # 250pp - Khura's Focus, Blessing of Aegolism, Spirit of Bih'li, Regrowth of Dark Khura, Speed of the Brood, Koadics Endless Intellect
+        61 => [3397, 3479, 2524, 3441, 3178, 3360], # 500pp - Voice of Quellious, Vallons Quickening, Blessing of Replenishment, Spirit of Bih'li, Hand of Virtue, Focus of the Seventh
         # ... more ...
     };
 
