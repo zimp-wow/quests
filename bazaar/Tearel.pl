@@ -119,6 +119,12 @@ sub EVENT_ITEM {
     quest::ze(15,'The Guildhall Portal has been aligned to Everfrost');
   }
 
+  elsif(plugin::check_handin(\%itemcount, 976016 => 1)){
+    quest::setglobal("ghport$uguild_id",976016,3,"H24");
+    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
+    quest::ze(15,'The Guildhall Portal has been aligned to Barindu');
+  }  
+
   plugin::return_items(\%itemcount);
 }
 
@@ -158,7 +164,7 @@ sub EVENT_SIGNAL {
       $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Stonebrunt Mountains.\'');
     } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876011) { #slaughter
       $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Wall of Slaughter.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876012) { #barindu
+    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 976016) { #barindu
       $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Barindu, Hanging Gardens.\'');
     } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876070) { #eastkorlach
       $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Undershore.\'');

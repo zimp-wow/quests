@@ -103,7 +103,7 @@ sub EVENT_ITEM {
 			$response .= "The Panic can only harm us if we fall prey to it!";
 			my $panic_id = $entity_list->GetNPCByNPCTypeID($panic_npctype);
 			if ($panic_id && $panic_id->GetTarget()) {
-				$panic_id->SetHP($panic_id->GetHP() - ($panic_id->GetMaxHP() / 10));
+				$panic_id->SetHP($panic_id->GetHP() - ($panic_id->GetMaxHP() / 20));
 				$panic_id->Shout("Who's memories are these?! I WILL NOT BE DENIED!");
 			}
 		}	

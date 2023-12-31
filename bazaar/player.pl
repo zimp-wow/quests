@@ -54,7 +54,7 @@ sub EVENT_CLICKDOOR {
   elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876011) { #slaughter
     quest::popup('Teleport', 'Teleport to Wall of Slaughter?', 6180, 1, 0);
   }
-  elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876012) { #barindu
+  elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 976016) { #barindu
     quest::popup('Teleport', 'Teleport to Barindu, Hanging Gardens?', 5733, 1, 0);
   }
   elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876070) { #eastkorlach
@@ -142,7 +142,7 @@ sub EVENT_POPUPRESPONSE {
     quest::movepc(300,-943,13,130); # Zone: wallofslaughter
   }
   if ($popupid == 5733) { #barindu
-    quest::movepc(283,209,-515,-119); # Zone: barindu
+    quest::movepc(283,590,-1457,-123,388); # Zone: barindu
   }
   if ($popupid == 8237) { #eastkorlach
     #quest::movepc(362,-750,-1002,48);
