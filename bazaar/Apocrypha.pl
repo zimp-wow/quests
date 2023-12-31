@@ -49,13 +49,13 @@ sub apply_buffs {
                         my $player = $group->GetMember($count);       
                         $player->ApplySpell($buff, $duration_override);
                         if ($player->GetPet()) {
-                            $player->GetPet()->ApplySpell($buff, $duration_override);
+                            $player->GetPet()->ApplySpellBuff($buff, $duration_override);
                         }
                     }
                 } else {
                     $client->ApplySpell($buff, $duration_override);
                     if ($client->GetPet()) {
-                        $client->GetPet()->ApplySpell($buff, $duration_override);
+                        $client->GetPet()->ApplySpellBuff($buff, $duration_override);
                     }
                 }
             }
