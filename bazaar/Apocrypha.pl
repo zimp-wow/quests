@@ -40,9 +40,9 @@ sub handle_buff_for_level {
             # Here, do something with the list of buffs
             foreach my $buff (@$buffs) {
                 if ($duration_override) {                
-                    $client->ApplySpellBuff($buff, $duration_override);
+                    $client->ApplySpellGroup($buff, $duration_override);
                 } else {
-                    $client->ApplySpellBuff($buff);
+                    $client->ApplySpellGroup($buff);
                 }
             }
 
