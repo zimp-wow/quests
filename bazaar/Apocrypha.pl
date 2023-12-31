@@ -45,7 +45,8 @@ sub apply_buffs {
                 my $client_group = $client->GetGroup();
 
                 if ($client_group) {
-                    foreach my $player (@$client_group) {                        
+                    for ($count = 0; $count < $group->GroupCount(); $count++) {
+                        my $player = $group->GetMember($count);       
                         $player->ApplySpell($buff, $duration_override);
                         if ($player->GetPet()) {
                             $player->GetPet()->ApplySpell($buff, $duration_override);
