@@ -95,21 +95,44 @@ sub EVENT_SAY {
       $response = "These are rare fragments of a previous age. Rumor is, only by great service to the realm can you obtain them.";
    }
 
-   elsif ($text eq "link_random_ornament") {
-      my $eom_available = $client->GetAlternateCurrencyValue(6);
+	elsif ($text eq "link_random_ornament") {
+		my $eom_available = $client->GetAlternateCurrencyValue(6);
 
-	  if ($eom_available < 5) {
-		$response = "I'm sorry, $clientName. You don't have enough Echo of Memory, please return when you have enough to pay me.";
-	  } elsif (my $random_result = get_random_glamour()) {
-		$client->SetAlternateCurrencyValue(6, $eom_available - 5);
-		$client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
-		$client->SummonItem($random_result);
-	  }
-   }
+		if ($eom_available < 5) {
+			$response = "I'm sorry, $clientName. You don't have enough Echo of Memory, please return when you have enough to pay me.";
+		} elsif (my $random_result = get_random_glamour()) {
+			$client->SetAlternateCurrencyValue(6, $eom_available - 5);
+			$client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
+			$client->SummonItem($random_result);
 
-   if ($response) {
-   	plugin::Whisper($response);
-   }
+			# Deserialize the existing list of glamour IDs
+			my @glamour_list = DeserializeList($client->GetBucket("random_glamours"));
+
+			# Check if the new glamour ID is already in the list
+			unless (grep { $_ == $random_result } @glamour_list) {
+				# Add the new glamour ID to the list if it's not a duplicate
+				push(@glamour_list, $random_result);
+				# Serialize and store the updated list back into the bucket
+				$client->SetBucket("random_glamours", SerializeList(@glamour_list));
+			}
+		}
+	}
+
+	if ($response) {
+   		plugin::Whisper($response);
+   	}
+}
+
+# Serializer
+sub SerializeList {
+    my @list = @_;
+    return join(',', @list);
+}
+
+# Deserializer
+sub DeserializeList {
+    my $string = shift;
+    return split(',', $string);
 }
 
 sub get_random_glamour {
