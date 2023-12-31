@@ -38,7 +38,7 @@ sub apply_buffs {
     my ($client, $closest_level, $duration_override) = @_;
 
     if ($closest_level > 0) {
-        if ($client->TakeMoneyFromPP($price_map->{$closest_level} * 1000)) {
+        if ($client->TakeMoneyFromPP($price_map->{$closest_level} * 1000, 1)) {
             my $buffs = $buff_map->{$closest_level};
 
             foreach my $buff (@$buffs) {
