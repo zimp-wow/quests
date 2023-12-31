@@ -42,10 +42,20 @@ sub apply_buffs {
             my $buffs = $buff_map->{$closest_level};
 
             foreach my $buff (@$buffs) {
-                if ($duration_override) {
-                    $client->ApplySpellGroup($buff, $duration_override);
+                my $client_group = $client->GetGroup();
+
+                if ($client_group) {
+                    foreach my $player (@$client_group) {                        
+                        $player->ApplySpell($buff, $duration_override);
+                        if ($player->GetPet()) {
+                            $player->GetPet()->ApplySpell($buff, $duration_override);
+                        }
+                    }
                 } else {
-                    $client->ApplySpellGroup($buff);
+                    $client->ApplySpell($buff, $duration_override);
+                    if ($client->GetPet()) {
+                        $client->GetPet()->ApplySpell($buff, $duration_override);
+                    }
                 }
             }
 
@@ -72,6 +82,9 @@ sub EVENT_SAY {
     }
 
     elsif ($text=~/modest fee/i) {
+        my $level_break = get_level_breakpoint($client->GetLevel());
+        quest::debug("level_break: $level_break");
+
         my $plat_price = $price_map->{get_level_breakpoint($client->GetLevel())};        
        
         if ($plat_price == 0) {
