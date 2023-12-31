@@ -42,9 +42,9 @@ sub apply_buffs {
             my $buffs = $buff_map->{$closest_level};
 
             foreach my $buff (@$buffs) {
-                my $client_group = $client->GetGroup();
+                my $group = $client->GetGroup();
 
-                if ($client_group) {
+                if ($group) {
                     for ($count = 0; $count < $group->GroupCount(); $count++) {
                         my $player = $group->GetMember($count);       
                         $player->ApplySpell($buff, $duration_override);
