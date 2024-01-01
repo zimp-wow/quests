@@ -17,6 +17,9 @@ sub CheckWorldWideBuffs {
 
 		if ($data > 0) {
 			$client->ApplySpell($value, quest::get_data_remaining("eom_$value")/6);
+			if ($client->HasPet()) {
+				$client->GetPet()->ApplySpellBuff($value, quest::get_data_remaining("eom_$value")/6);
+			}
 		} else {
 			$client->BuffFadeBySpellID($value);
 		}
