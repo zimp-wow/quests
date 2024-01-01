@@ -1,3 +1,12 @@
+sub EVENT_SPAWN {
+  quest::settimer("appearance", 1);
+}
+
+sub EVENT_TIMER {
+  quest::stoptimer("appearance");
+  $npc->SetAppearance(1);
+}
+
 sub EVENT_SAY {
     if($text=~/hail/i) {
         quest::say("Hello, $name. If you give me a rose colored or apocryphal dark elf illusion mask, I can change you permanently into a Dark Elf.");
