@@ -4,7 +4,7 @@ sub EVENT_SAY {
     quest::say("Oh my, you really don’t remember me do you? I could never forget a comrade in arms! Hail $name! Let me see that faded writ and I’ll give you something to jog your memory");
   }
   if($text=~/denizens of this realm/i){
-    quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
+    quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. Every quest you endeavor will reward you with Rose Colored or Apocryphal items like I have. Go see Apocrypha toward the back of the main building for his blessing, then use Tearel and his magic map to choose where to begin your adventure! Good luck $name.");
     }
 }
 
