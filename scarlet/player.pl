@@ -1,4 +1,6 @@
 
+
+
 sub EVENT_ENTERZONE {
 $key = $client->AccountID() . "-kunark-flag";
 $expansion = quest::get_data($key);
@@ -9,9 +11,10 @@ $bindx = $client->GetBindX;
 $bindy = $client->GetBindY;
 $bindz = $client->GetBindZ;
 
-if ($expansion < 2){ #Kunark
+if ($expansion < 14){ #Luclin
     $client->Message(7, "You don't belong here!");
     $client->MovePC($bind, $bindx, $bindy, $bindz, $bindh);
   }
 
 }
+
