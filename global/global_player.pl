@@ -32,7 +32,7 @@ sub EVENT_CONNECT {
 		quest::set_data($client->AccountID() . "-saryrn-flag");
 		$client->Message(4, "You have gained a progression flag!");
 	} else {
-		$client->Message(4, "You have NOT gained a progression flag!");
+		quest::debug("UNABLE TO FIND SARYRN FLAG");
 	}
 
 	CheckWorldWideBuffs();
