@@ -4,7 +4,7 @@ sub EVENT_SPAWN {
 
 sub EVENT_TIMER {
   quest::stoptimer("appearance");
-  $npc->SetAppearance(1);
+  $npc->SetAppearance(3);
 }
 
 sub EVENT_SAY {

@@ -2,7 +2,7 @@
 
 local uqua = "Uqua, the Ocean God Chantry"
 local uqua_raid = {
-	expedition = { name="Uqua, the Ocean God Chantry", min_players=18, max_players=54 },
+	expedition = { name="Uqua, the Ocean God Chantry", min_players=3, max_players=54 },
 	instance   = { zone="uqua", version=0, duration=eq.seconds("6h") },
 	compass    = { zone="yxtta", x=1575.46, y=1745.46, z=-397.62 },
 	safereturn = { zone="yxtta", x=1232.68, y=-783.72, z=-428.72, h=128 },
