@@ -28,6 +28,11 @@ sub CheckWorldWideBuffs {
 
 sub EVENT_CONNECT {
 
+	if ($pop_pot_saryn_final) {
+		quest::set_data($client->AccountID() . "-saryrn-flag");
+		$client->Message(4, "You have gained a progression flag!");
+	}
+
 	CheckWorldWideBuffs();
 
 	my $PCRace = $client->GetRace();
