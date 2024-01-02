@@ -369,18 +369,21 @@ sub EVENT_ZONE {
 	if ($expansion > 1) { #Kunark-Luclin
 		if (($maxlvl) == "51") {
 			$client->SetBucket("CharMaxlevel", 60);
+			$client->Message(15, "Your maxmimum level has been set to 60.");
 		}
 	}
 
 	if ($expansion > 18) { 
 		if (($maxlvl) == "60") {
 			$client->SetBucket("CharMaxLevel", 65);
+			$client->Message(15, "Your maxmimum level has been set to 65.");
 		}
 	}
 
 	if (quest::get_data("god-open") == 10 && ($expansion >= 20 || quest::get_data($client->AccountID() . "-saryrn-flag"))) {
 		if (($maxlvl) == "65") {
 			$client->SetBucket("CharMaxLevel", 70);
+			$client->Message(15, "Your maxmimum level has been set to 70.");
 		}
 	}
 
