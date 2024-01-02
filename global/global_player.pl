@@ -28,7 +28,7 @@ sub CheckWorldWideBuffs {
 
 sub EVENT_CONNECT {
 
-	if (defined $qglobals(pop_pot_saryn_final) || defined $qglobals(pop_pot_saryn) ) {
+	if (defined $qglobals{pop_pot_saryn_final} || defined $qglobals{pop_pot_saryn} ) {
 		quest::set_data($client->AccountID() . "-saryrn-flag");
 		$client->Message(4, "You have gained a progression flag!");
 	}
