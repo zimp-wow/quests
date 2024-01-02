@@ -47,9 +47,11 @@ sub apply_buffs {
                 if ($group) {
                     for ($count = 0; $count < $group->GroupCount(); $count++) {
                         my $player = $group->GetMember($count);       
-                        $player->ApplySpell($buff, $duration_override);
-                        if ($player->GetPet()) {
-                            $player->GetPet()->ApplySpellBuff($buff, $duration_override);
+                        if ($player) {
+                            $player->ApplySpell($buff, $duration_override);
+                            if ($player->GetPet()) {
+                                $player->GetPet()->ApplySpellBuff($buff, $duration_override);
+                            }
                         }
                     }
                 } else {
