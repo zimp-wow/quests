@@ -21,6 +21,10 @@ sub EVENT_ENTERZONE {
       $entity_list->FindDoor(16)->SetLockPick(0);
     }
   }
+
+  #Just unlock it because this event is cancer;
+  $entity_list->FindDoor(16)->SetLockPick(0);
+  
 }
 
 sub EVENT_CLICKDOOR {
