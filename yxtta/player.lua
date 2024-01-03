@@ -61,6 +61,9 @@ function enterzone(e)
 		eq.get_entity_list():FindDoor(16):SetLockPick(0);
 		event_completed = true;
 	end
+
+	-- Unlock the door always because fuck this event
+	eq.get_entity_list():FindDoor(16):SetLockPick(0);
 end
 
 function event_reset(e)
