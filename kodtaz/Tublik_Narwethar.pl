@@ -116,72 +116,103 @@ sub EVENT_SAY {
               }
           );
 
-          my $lockouts = $client->GetExpeditionLockouts($expedition_name);
-
-          if (!keys %$lockouts) {
-            my $expedition = $client->CreateExpedition(\%expedition_info);
-            quest::say("The glyphs you recovered show an Artifact of Righteousness that is guarded by a sentinel that is ages old. You will find the Sanctuary of the Righteous to the south of the Altar of Destruction. You must gather a raiding party several times larger than your normal party's size and be prepared for anything. Find an entrance to the inner chambers of the Sanctuary of the Righteous and recover the artifact. May you be gifted with the luck of the brotherhood. I fear you may need it.");
-            $expedition->AddReplayLockout(1000);
-          }
+          my $expedition = $client->CreateExpedition(\%expedition_info);
+          quest::say("The glyphs you recovered show an Artifact of Righteousness that is guarded by a sentinel that is ages old. You will find the Sanctuary of the Righteous to the south of the Altar of Destruction. You must gather a raiding party several times larger than your normal party's size and be prepared for anything. Find an entrance to the inner chambers of the Sanctuary of the Righteous and recover the artifact. May you be gifted with the luck of the brotherhood. I fear you may need it.");          
       }
   }
 
   if ($text=~/sanctuary of the glorified/i) {
-    if ($raid) {
-		if ($raid->RaidCount() <= 54) {
-		  if (!defined($qglobals{ikkylockout4})) {
-			if (defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) {
-			  if ($InIkkyV4 == 0) {
-				$Instance = quest::CreateInstance("ikkinz",4,21600);
-				quest::AssignRaidToInstance($Instance);   
-				quest::say("Instance added.");
-				$client->MarkCompassLoc(2656, 442, -396);
-				quest::say("The glyphs you recovered show an Artifact of Glorification that is guarded by a sentinel that is ages old. You will find the Sanctuary of the Glorification to the south of the Altar of Destruction. You must gather a raiding party several times larger than your normal party's size and be prepared for anything. Find an entrance to the inner chambers of the Sanctuary of the Glorified and recover the artifact. May you be gifted with the luck of the brotherhood. I fear you may need it.");
-			  }
-			  else {
-				$client->Message(13, "You are already in an instance!");
-			  }
-			}
-		  }
-		  else {
-			$client->Message(13, "You have recently completed a raid.");
-		  }
-		} else {
-			$client->Message(13, "You have ".$raid->RaidCount()." players in raid.  Only 54 allowed");
-		} 
-    }
-    else {
-      $client->Message(13, "You are not in a raid!");
-    }
+      if ((defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) || $client->GetGM()) {
+        
+          # Define the expedition name and version
+          my $expedition_name = "Ikkinz, Chambers of Glorification";
+          my $dz_version = 4;
+          my $dz_duration = 79200;
+
+          # Define the expedition information
+          my %expedition_info = (
+              expedition => {
+                  name        => $expedition_name,
+                  min_players => 1,
+                  max_players => 54
+              },
+              instance => {
+                  zone     => "ikkinz",
+                  version  => $dz_version,
+                  duration => $dz_duration
+              },
+              compass => {
+                  zone => "kodtaz",
+                  x    => 2656,
+                  y    => 442,
+                  z    => -396
+              },
+              safereturn => {
+                  zone => "kodtaz",
+                  x    => $npc->GetX(),
+                  y    => $npc->GetY(),
+                  z    => $npc->GetZ(),
+                  h    => 0.0
+              },
+              zonein => {
+                  x => 2656,
+                  y => 442,
+                  z => -396,
+                  h => 256.0
+              }
+          );
+
+          my $expedition = $client->CreateExpedition(\%expedition_info);
+          quest::say("The glyphs you recovered show an Artifact of Glorification that is guarded by a sentinel that is ages old. You will find the Sanctuary of the Glorification to the south of the Altar of Destruction. You must gather a raiding party several times larger than your normal party's size and be prepared for anything. Find an entrance to the inner chambers of the Sanctuary of the Glorified and recover the artifact. May you be gifted with the luck of the brotherhood. I fear you may need it.");          
+      }
   }
-  if ($text=~/sanctuary of the transcendent/i) {
-    if ($raid) {
-		if ($raid->RaidCount() <= 54) {
-		  if (!defined($qglobals{ikkylockout5})) {
-			if (defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) {
-			  if ($InIkkyV5 == 0) {
-				$Instance = quest::CreateInstance("ikkinz", 5, 21600);
-				quest::AssignRaidToInstance($Instance);   
-				quest::say("Instance added.");
-				$client->MarkCompassLoc(1573, 1737, -396);
-				quest::say("The glyphs you recovered show an Artifact of Transcendence that is guarded by a sentinel that is ages old. You will find the Sanctuary of the Transcendent to the south of the Altar of Destruction. You must gather a raiding party several times larger than your normal party's size and be prepared for anything. Find an entrance to the inner chambers of the Sanctuary of the Transcendent and recover the artifact. May you be gifted with the luck of the brotherhood. I fear you may need it.");
-			  }
-			  else {
-				$client->Message(13, "You are already in an instance!");
-			  }
-			}
-		  }
-		  else {
-			$client->Message(13, "You have recently completed a raid.");
-		  }
-		} else {
-			$client->Message(13, "You have ".$raid->RaidCount()." players in raid.  Only 54 allowed");
-		} 
-    }
-    else {
-      $client->Message(13, "You are not in a raid!");
-    }
+
+  if ($text=~/sanctuary of the glorified/i) {
+      if ((defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) || $client->GetGM()) {
+        
+          # Define the expedition name and version
+          my $expedition_name = "Ikkinz, Chambers of Transcendence";
+          my $dz_version = 5;
+          my $dz_duration = 79200;
+
+          # Define the expedition information
+          my %expedition_info = (
+              expedition => {
+                  name        => $expedition_name,
+                  min_players => 1,
+                  max_players => 54
+              },
+              instance => {
+                  zone     => "ikkinz",
+                  version  => $dz_version,
+                  duration => $dz_duration
+              },
+              compass => {
+                  zone => "kodtaz",
+                  x    => 1573,
+                  y    => 1737,
+                  z    => -396
+              },
+              safereturn => {
+                  zone => "kodtaz",
+                  x    => $npc->GetX(),
+                  y    => $npc->GetY(),
+                  z    => $npc->GetZ(),
+                  h    => 0.0
+              },
+              zonein => {
+                  x => 1573,
+                  y => 1737,
+                  z => -396,
+                  h => 256.0
+              }
+          );
+
+          my $expedition = $client->CreateExpedition(\%expedition_info);
+          quest::say("The glyphs you recovered show an Artifact of Transcendence that is guarded by a sentinel that is ages old. You will find the Sanctuary of the Transcendent to the south of the Altar of Destruction. You must gather a raiding party several times larger than your normal party's size and be prepared for anything. Find an entrance to the inner chambers of the Sanctuary of the Transcendent and recover the artifact. May you be gifted with the luck of the brotherhood. I fear you may need it.");          
+      }
   }
+  
   if (($text=~/altar of destruction/i) && defined($qglobals{ikkyraid}) && ($qglobals{ikkyraid} == 3)) { 
     quest::say("The Altar of Destruction is far more remarkable than any other temple built in this region. I have been catching up on the history of those three artifacts and now you must harness the power that the geomantic priests once held. That power will combine the three pieces you collected into one final [" . quest::saylink("Icon of the Altar") . "].");
   }

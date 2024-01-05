@@ -71,7 +71,7 @@ function event_death_complete(e)
 	
 	local dz = eq.get_expedition()
 	if dz.valid then
-		dz:AddReplayLockout(eq.seconds("22h"))
+		dz:AddReplayLockoutDuration(eq.seconds("2h"))
 	end
 end
 
