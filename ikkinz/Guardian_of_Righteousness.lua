@@ -69,3 +69,6 @@ function event_death_complete(e)
 	eq.get_entity_list():FindDoor(11):SetLockPick(0);
 end
 
+function event_killed_merit(e)
+	e.other:AddExpeditionLockout("Ikkinz, Chambers of Righteousness", "Guardian of Righteousness", 79200);
+end
