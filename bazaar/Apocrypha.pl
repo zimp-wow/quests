@@ -190,7 +190,6 @@ sub ApplyGroupBuff {
     }    
 }
 
-
 sub ApplyWorldWideBuff {
     my $buff_id = shift;
     my $skip_payment = shift;
@@ -221,11 +220,12 @@ sub ApplyWorldWideBuff {
             quest::set_data("eom_$buff_id", 1, H4);
             quest::worldwidemessage(15, $client->GetCleanName() . " has used their Echo of Memory to enhance your $buff_type. This buff will endure for 4 Hours.");
             quest::discordsend("eom", $client->GetCleanName() . " has used their Echo of Memory to enhance your $buff_type. This buff will endure for 4 Hours.");
-        
+        }
         quest::worldwidesignalclient($buff_id);
         return 1;
     }
 }
+
 
 sub convert_seconds {
     my ($seconds) = @_;
