@@ -118,7 +118,16 @@ sub EVENT_SAY {
 
           $client->CreateExpedition(\%expedition_info);
         } else {
-          quest::debug("Gots lockout");
+          my $lockouts = $client->GetExpeditionLockouts($expedition_name);
+
+          if (ref($lockouts) eq 'HASH') {
+              foreach my $key (keys %{$lockouts}) {
+                my $value = $lockouts->{$key};
+                quest::debug("Key: $key, Value: $value");
+            }
+          } else {
+              quest::debug("Returned value is not a hash reference.");
+          }
         }
       }
   }
