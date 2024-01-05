@@ -81,7 +81,7 @@ sub EVENT_SAY {
           # Define the expedition name and version
           my $expedition_name = "Ikkinz, Chambers of Righteousness";
           my $dz_version = 3;
-          my $dz_duration = 21600;
+          my $dz_duration = 79200;
 
           # Define the expedition information
           my %expedition_info = (
@@ -93,7 +93,7 @@ sub EVENT_SAY {
               instance => {
                   zone     => "ikkinz",
                   version  => $dz_version,
-                  duration => 79200
+                  duration => $dz_duration
               },
               compass => {
                   zone => "kodtaz",
@@ -119,6 +119,8 @@ sub EVENT_SAY {
           $client->CreateExpedition(\%expedition_info);
         } else {
           my $lockouts = $client->GetExpeditionLockouts($expedition_name);
+
+          $client->AddExpeditionLockout($expedition_name, "Guardian of Righteousness", $dz_duration);
 
           if (ref($lockouts) eq 'HASH') {
               foreach my $key (keys %{$lockouts}) {
