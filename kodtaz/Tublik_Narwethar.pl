@@ -77,7 +77,7 @@ sub EVENT_SAY {
 
   if ($text=~/sanctuary of the righteous/i) {
       if ((defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) || $client->GetGM()) {
-        if (!$client->GetExpeditionLockouts($expedition_name)) {
+        
           # Define the expedition name and version
           my $expedition_name = "Ikkinz, Chambers of Righteousness";
           my $dz_version = 3;
@@ -117,10 +117,12 @@ sub EVENT_SAY {
           );
 
           $client->CreateExpedition(\%expedition_info);
-        } else {
+          $client->AddExpeditionLockout($expedition_name, "Guardian of Righteousness", $dz_duration);
+       
+          
           my $lockouts = $client->GetExpeditionLockouts($expedition_name);
 
-          $client->AddExpeditionLockout($expedition_name, "Guardian of Righteousness", $dz_duration);
+          
 
           if (ref($lockouts) eq 'HASH') {
               foreach my $key (keys %{$lockouts}) {
@@ -130,7 +132,7 @@ sub EVENT_SAY {
           } else {
               quest::debug("Returned value is not a hash reference.");
           }
-        }
+        
       }
   }
 
