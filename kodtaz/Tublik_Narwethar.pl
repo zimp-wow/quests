@@ -114,10 +114,8 @@ sub EVENT_SAY {
               }
           );
 
-          $client->CreateExpedition(\%expedition_info);
-          if ($client->GetExpedition() && $client->GetExpedition()->GetName() eq $expedition_name) {
-            $client->AddExpeditionLockout($expedition_name, $expedition_name, 79200);
-          }
+          $client->CreateExpedition(\%expedition_info);          
+          $client->AddExpeditionLockout($expedition_name, $expedition_name, 79200);
       }
   }
 
