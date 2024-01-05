@@ -91,7 +91,7 @@ sub EVENT_SAY {
               instance => {
                   zone     => "ikkinz",
                   version  => $dz_version,
-                  duration => 79200;
+                  duration => 79200
               },
               compass => {
                   zone => "kodtaz",
