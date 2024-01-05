@@ -74,8 +74,8 @@ sub EVENT_SAY {
     quest::say("The power wasn't as noticeable before. Now, though, it seems there's a fiend in the pit that's become agitated by the removal of these objects we've been collecting. I believe that whatever is behind the energy disruption kept a watchful eye over those objects. Now that they're gone, I believe it will try to find them again and destroy anything and everything in its path in the process. You must [" . quest::saylink("stop it") . "] before it has a chance!");
 	quest::delglobal("ikkypit");
   }
+
   if ($text=~/sanctuary of the righteous/i) {
-    if ($raid) {
       if ((defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) || $client->GetGM()) {
           # Define the expedition name and version
           my $expedition_name = "Ikkinz, Chambers of Righteousness";
@@ -116,7 +116,7 @@ sub EVENT_SAY {
 
           $client->CreateExpedition(\%expedition_info);
       }
-    }
+  }
 
   if ($text=~/sanctuary of the glorified/i) {
     if ($raid) {
