@@ -86,12 +86,12 @@ sub EVENT_SAY {
               expedition => {
                   name        => $expedition_name,
                   min_players => 1,
-                  max_players => 6
+                  max_players => 54
               },
               instance => {
                   zone     => "ikkinz",
                   version  => $dz_version,
-                  duration => "3h"  # Assuming a function to convert this to seconds
+                  duration => 79200;
               },
               compass => {
                   zone => "kodtaz",
