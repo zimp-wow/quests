@@ -77,9 +77,11 @@ sub EVENT_SAY {
 
   if ($text=~/sanctuary of the righteous/i) {
       if ((defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) || $client->GetGM()) {
+        if (!$client->GetExpeditionLockouts($expedition_name)) {
           # Define the expedition name and version
           my $expedition_name = "Ikkinz, Chambers of Righteousness";
           my $dz_version = 3;
+          my $dz_duration = 21600;
 
           # Define the expedition information
           my %expedition_info = (
@@ -101,9 +103,9 @@ sub EVENT_SAY {
               },
               safereturn => {
                   zone => "kodtaz",
-                  x    => -504.0,
-                  y    => -1165.0,
-                  z    => -381.0,
+                  x    => $npc->GetX(),
+                  y    => $npc->GetY(),
+                  z    => $npc->GetZ(),
                   h    => 0.0
               },
               zonein => {
@@ -114,8 +116,10 @@ sub EVENT_SAY {
               }
           );
 
-          $client->CreateExpedition(\%expedition_info);          
-          $client->AddExpeditionLockout($expedition_name, $expedition_name, 79200);
+          $client->CreateExpedition(\%expedition_info);
+        } else {
+          quest::debug("Gots lockout");
+        }
       }
   }
 
