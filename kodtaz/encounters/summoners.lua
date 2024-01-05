@@ -91,6 +91,8 @@ local priest = eq.get_entity_list():GetMobByNpcTypeID(293213);
         end
     elseif (e.signal == 4) then
         e.self:SetSpecialAbility(35, 0); --turn off immunity
+        e.self:SetSpecialAbility(19, 0);
+	    e.self:SetSpecialAbility(20, 0);
         e.self:SetSpecialAbility(24, 0); --turn off anti aggro
     elseif (e.signal == 5) then
         spawnadds = spawnadds + 1;
