@@ -118,7 +118,7 @@ sub EVENT_SAY {
 
           my $lockouts = $client->GetExpeditionLockouts($expedition_name);
 
-          if (keys %$lockouts) {
+          if (!keys %$lockouts) {
             $client->CreateExpedition(\%expedition_info);
             quest::say("The glyphs you recovered show an Artifact of Righteousness that is guarded by a sentinel that is ages old. You will find the Sanctuary of the Righteous to the south of the Altar of Destruction. You must gather a raiding party several times larger than your normal party's size and be prepared for anything. Find an entrance to the inner chambers of the Sanctuary of the Righteous and recover the artifact. May you be gifted with the luck of the brotherhood. I fear you may need it.");
           }        
