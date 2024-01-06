@@ -304,7 +304,6 @@ sub EVENT_ITEM {
     if (plugin::check_handin(\%itemcount, 60173 => 1)) {
       quest::say("You can't have this? What kind of trickery is this? You haven't completed the [" . quest::saylink("final step") . "] yet have you?.");
     }
-  quest::summonfixeditem(60173); # Item: Icon of the Altar
   }
   if (defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) {
     if (plugin::check_handin(\%itemcount, 60160 => 1)) {
