@@ -44,5 +44,5 @@ sub EVENT_ITEM {
 		my $expedition = $client->CreateExpedition(\%expedition_info);
 	}
   }
-  plugin::return_items(\%itemcount);
+  quest::summonfixeditem(60173); # Item: Icon of the Altar
 }   

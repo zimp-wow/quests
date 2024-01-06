@@ -167,7 +167,7 @@ sub EVENT_SAY {
       }
   }
 
-  if ($text=~/sanctuary of the glorified/i) {
+  if ($text=~/sanctuary of the transcendent/i) {
       if ((defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) || $client->GetGM()) {
         
           # Define the expedition name and version
@@ -298,11 +298,11 @@ sub EVENT_ITEM {
       $client->Message(4, "Finished! - You've constructed your Icon of the Altar!");
       quest::setglobal("ikky",14,5,"F");
 	}
-	quest::summonitem(60173); # Item: Icon of the Altar
+	quest::summonfixeditem(60173); # Item: Icon of the Altar
   }
   if (defined($qglobals{ikky}) && ($qglobals{ikky} < 14)) {
     if (plugin::check_handin(\%itemcount, 60173 => 1)) {
-      quest::say("You can't have this? What kind of trickery is this? I'm alerting the proper autorities you thief.");
+      quest::say("You can't have this? What kind of trickery is this? You haven't completed the [" . quest::saylink("final step") . "] yet have you?.");
     }
   }
   if (defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) {
