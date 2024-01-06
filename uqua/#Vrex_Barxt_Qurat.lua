@@ -57,7 +57,7 @@ function event_timer(e)
 		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-886,117,59,226):AddToHateList(e.self:GetHateRandom());	-- NE 3rd
 		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-808,102,59,290):AddToHateList(e.self:GetHateRandom());	-- NW 3rd
 		
-		mob_count = 12;
+		mob_count = 4;
 
 		e.self:ModifyNPCStat("special_abilities",abilities_inactive);
 		e.self:SetOOCRegen(0);
@@ -138,6 +138,9 @@ function event_signal(e)
 		if e.self:GetHP() > hp_one_percent then 
 			e.self:SetHP(e.self:GetHP() - hp_one_percent) 
 		end
+
+		mob_count = eq.get_entity_list()
+
 
 		if mob_count == 0 then 
 			e.self:ModifyNPCStat("special_abilities",abilities_active);
