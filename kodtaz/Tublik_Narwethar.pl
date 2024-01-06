@@ -167,7 +167,7 @@ sub EVENT_SAY {
       }
   }
 
-  if ($text=~/sanctuary of the glorified/i) {
+  if ($text=~/sanctuary of the transcendent/i) {
       if ((defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) || $client->GetGM()) {
         
           # Define the expedition name and version

@@ -95,7 +95,7 @@ function event_hp(e)
 		local npc_list =  eq.get_entity_list():GetNPCList();
 		for npc in npc_list.entries do
 			if npc.valid and (npc:GetNPCTypeID() == 292074 or npc:GetNPCTypeID() == 292075) then
-				npc:SetSpecialAbility(24, 0);
+				npc:SetSpecialAbility(24, 0); --will not aggro
 				npc:SetSpecialAbility(35, 0);
 				npc:SetSpecialAbility(25, 0);
 				npc:AddToHateList(e.self:GetHateRandom(),1);
