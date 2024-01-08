@@ -79,4 +79,3 @@ sub EVENT_DEATH_COMPLETE {
 	quest::ze(15,"It reforms instantly!");
   }
 }
-
