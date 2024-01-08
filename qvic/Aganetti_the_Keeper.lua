@@ -31,7 +31,7 @@ function event_say(e)
 			else
 				e.other:Message(MT.NPCQuestSay, "Aganetti the Keeper says, 'Very well! If you will not heed my warning, then you have chosen to suffer the consequences. I grant you entrance to Inktu`Ta.'")
 				local dz = e.other:CreateExpedition(inktuta_raid)
-				dz:AddReplayLockout(eq.seconds("2h"));
+				dz:AddReplayLockout(eq.seconds("22h"));
 			end
 		else
 			e.other:Message(MT.NPCQuestSay, "Aganetti the Keeper says, 'The Cynosure's magic prevents me from allowing passage into Inktu'ta. We shall speak more after his demise.'")
