@@ -1,7 +1,7 @@
 --Ikkinz Raid #3: Chambers of Transcendence  
 --at a much later point in the timeline, nixki does not HP flux
 function event_spawn(e)
-	eq.set_timer("hpflux", 5 * 1000);
+	eq.set_timer("hpflux", 30 * 1000);
 	eq.set_next_hp_event(4);
 end
 
