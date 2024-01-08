@@ -62,7 +62,7 @@ function event_trade(e)
 	local splinter	= 0; -- Item: Splinter of the High Temple (60253)
 
 	if eq.get_data(data_bucket) ~= "" then -- Has Started
-		local temp = eq.get_data(data_bucket);
+		local temp = eq.get_data(data_bucket) // "";
 		s = eq.split(temp, ',');
 
 		sliver		= tonumber(s[1]); -- Item: Sliver of the High Temple (60176)
@@ -91,7 +91,7 @@ end
 function progress_check(e)
 	local data_bucket = ("txevu_items-"..e.other:CharacterID());
 	if eq.get_data(data_bucket) ~= "" then -- Has Started
-		local temp = eq.get_data(data_bucket);
+		local temp = eq.get_data(data_bucket) // "";
 		s = eq.split(temp, ',');
 
 		local sliver	= tonumber(s[1]); -- Item: Sliver of the High Temple (60176)
