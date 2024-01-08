@@ -221,9 +221,10 @@ if($PCClass == 10){ #Shaman AA
 	$shmaa = $client->CharacterID() . "shm";
 	if (quest::get_data($shmaa) == "") {
     quest::set_data($shmaa, 1);
-	$client->Message(15, "You have learned Group Shrink and Ancestral Aid! Open up your AA window (Default V) to find them!");
+	$client->Message(15, "You have learned Group Shrink, Summon Companion and Ancestral Aid! Open up your AA window (Default V) to find them!");
 	$client->IncrementAA(10957); #Group Shrink
 	$client->IncrementAA(1327); #Ancestral Aid
+	$client->IncrementAA(8227); #Summon Companion
     
 
 }
@@ -233,11 +234,12 @@ if($PCClass == 11){ #Necromancer AA
 	$necaa = $client->CharacterID() . "nec";
 	if (quest::get_data($necaa) == "") {
     quest::set_data($necaa, 1);
-	$client->Message(15, "You have learned Death's Fury, Pet Affinity, and Pestilent Paralysis! Open up your AA window (Default V) to find them!");
+	$client->Message(15, "You have learned Death's Fury, Pet Affinity, Summon Companion and Pestilent Paralysis! Open up your AA window (Default V) to find them!");
 	$client->IncrementAA(767); #Critical Affliction
 	$client->IncrementAA(6375); #Destructive Cascade
 	$client->IncrementAA(734); #Pet Affinity
 	$client->IncrementAA(12770); #Pestilent Paralysis
+	$client->IncrementAA(8227); #Summon Companion
 
     
 
@@ -263,10 +265,11 @@ if($PCClass == 13){ #Mage AA
 	$magaa = $client->CharacterID() . "mag";
 	if (quest::get_data($magaa) == "") {
     quest::set_data($magaa, 1);
-	$client->Message(15, "You have learned Companion's Fury, Pet Affinity, and Host in the Shell! Open up your AA window (Default V) to find it!");
+	$client->Message(15, "You have learned Companion's Fury, Pet Affinity, Summon Companion and Host in the Shell! Open up your AA window (Default V) to find it!");
 	$client->IncrementAA(8201); #Companion's Fury
 	$client->IncrementAA(734); #Pet Affinity
 	$client->IncrementAA(8342); #Host in the Shell
+	$client->IncrementAA(8227); #Summon Companion
 
     
 
@@ -277,7 +280,7 @@ if($PCClass == 14){ #Enchanter AA
 	$encaa = $client->CharacterID() . "enc";
 	if (quest::get_data($encaa) == "") {
     quest::set_data($encaa, 1);
-	$client->Message(15, "You have learned Permanent Illusion, Project Illusion, Phantasmic Reflex, and Animation Empathy! Open up your AA window (Default V) to find them!");
+	$client->Message(15, "You have learned Permanent Illusion, Project Illusion, Phantasmic Reflex, Summon Companion and Animation Empathy! Open up your AA window (Default V) to find them!");
 	$client->IncrementAA(158); #Permanent Illusion
 	$client->IncrementAA(643); #Project Illusion
 	$client->IncrementAA(10551); #Phantasmic Reflex
@@ -285,6 +288,7 @@ if($PCClass == 14){ #Enchanter AA
 	$client->IncrementAA(581); #Animation Empathy 2
 	$client->IncrementAA(582); #Animation Empathy 3
 	$client->IncrementAA(734); #Pet Affinity
+	$client->IncrementAA(8227); #Summon Companion
 
     
 
@@ -295,10 +299,11 @@ if($PCClass == 15){ #Beastlord AA
 	$blaa = $client->CharacterID() . "bl";
 	if (quest::get_data($blaa) == "") {
     quest::set_data($blaa, 1);
-	$client->Message(15, "You have learned Chameleon Strike! Open up your AA window (Default V) to find it!");
+	$client->Message(15, "You have learned Chameleon Strike, Bite of the Asp, and Summon Companion! Open up your AA window (Default V) to find it!");
 	$client->IncrementAA(11080); #Chameleon Strike
 	$client->IncrementAA(6984); #Bite of the Asp
 	$client->IncrementAA(734); #Pet Affinity
+	$client->IncrementAA(8227); #Summon Companion
 
     
 
