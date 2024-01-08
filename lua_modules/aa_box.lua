@@ -8,7 +8,6 @@ setmetatable(box, {
     end,
 })
 
--- Top = North, Bottom = South, Right = East, Left = West
 function box.new(top, bottom, right, left)
     local self = setmetatable({}, box)
     self.top = top or -99999

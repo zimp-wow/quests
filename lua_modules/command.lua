@@ -3,22 +3,21 @@
 local commands_path = "lua_modules/commands/";
 local commands      = { };
 
-commands["don"]			= { 80,  require(commands_path .. "don") };
-commands["endurance"]	= { 50,  require(commands_path .. "endurance") };
-commands["editor"]		= { 100,  require(commands_path .. "editor") };
-commands["statboard"]	= { 0,  require(commands_path .. "statboard") };
+commands["endurance"] = { 50,  require(commands_path .. "endurance") };
+commands["lockouts"]  = { 0,   require(commands_path .. "lockouts") };
+commands["timeleft"]  = { 0,   require(commands_path .. "time_left") };
 
 function eq.DispatchCommands(e)
 	local command = commands[e.command];
 
 	for k,v in pairs(e.args) do
-		-- eq.debug("[command.lua] key " .. k .. ' value ' .. v);
+		eq.debug("[command.lua] key " .. k .. ' value ' .. v);
 	end
 
-	if command then
+	if(command) then
 		local access = command[1];
-		if access > e.self:Admin() then
-			e.self:Message(MT.Red, "Access level not high enough.");
+		if(access > e.self:Admin()) then
+			e.self:Message(13, "Access level not high enough.");
 			return 1;
 		end
 
