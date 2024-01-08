@@ -27,3 +27,4 @@ function Mob:CastedSpellFinished(spell_id, target) -- note, we do have a server 
 	self:SendBeginCast(spell_id, 0);
 	self:SpellFinished(spell_id, target);
 end
+
