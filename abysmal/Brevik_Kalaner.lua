@@ -60,8 +60,9 @@ function event_trade(e)
 	local fragment	= 0; -- Item: Fragment of the High Temple (60252)
 	local splinter	= 0; -- Item: Splinter of the High Temple (60253)
 
-	if data_bucket ~= "" then -- Has Started
-		local s = eq.split(data_bucket, ',');
+	if eq.get_data(data_bucket) ~= "" then -- Has Started
+		local temp = eq.get_data(data_bucket);
+		s = eq.split(temp, ',');
 
 		sliver		= tonumber(s[1]); -- Item: Sliver of the High Temple (60176)
 		fragment	= tonumber(s[2]); -- Item: Fragment of the High Temple (60252)
