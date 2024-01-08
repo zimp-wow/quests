@@ -70,15 +70,15 @@ function event_trade(e)
 		splinter	= tonumber(s[3]); -- Item: Splinter of the High Temple (60253)
 	end
 
-	if(item_lib.check_turn_in(e.self, e.trade, {item1 = 60176, item2 = 60252, item3 = 60253})) then -- Item: Sliver of the High Temple, Fragment of the High Temple, Splinter of the High Temple
+	if(item_lib.check_turn_in(e.trade, {item1 = 60176, item2 = 60252, item3 = 60253})) then -- Item: Sliver of the High Temple, Fragment of the High Temple, Splinter of the High Temple
 		update_databucket(e,1,1,1);
-	elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 60176})) then -- Item: Sliver of the High Temple
+	elseif(item_lib.check_turn_in(e.trade, {item1 = 60176})) then -- Item: Sliver of the High Temple
 		e.other:Message(MT.NPCQuestSay, "Brevik Kalaner says, 'You've found a sliver from the high temple deep within the mountains! I'm impressed. Do you have anything else or do you [need this back]?'");
 		update_databucket(e,1,fragment,splinter);
-	elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 60252})) then -- Item: Fragment of the High Temple
+	elseif(item_lib.check_turn_in(e.trade, {item1 = 60252})) then -- Item: Fragment of the High Temple
 		e.other:Message(MT.NPCQuestSay, "Brevik Kalaner says, 'You've found a fragment from the high temple deep within the chantry! I'm impressed. Do you have anything else or do you [need this back]?'");
 		update_databucket(e,sliver,1,splinter);
-	elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 60253})) then -- Item: Splinter of the High Temple
+	elseif(item_lib.check_turn_in(e.trade, {item1 = 60253})) then -- Item: Splinter of the High Temple
 		e.other:Message(MT.NPCQuestSay, "Brevik Kalaner says, 'You've found a splinter from the high temple deep within the mountains! I'm impressed. Do you have anything else or do you [need this back]?'");
 		update_databucket(e,sliver,fragment,1);
 	end
