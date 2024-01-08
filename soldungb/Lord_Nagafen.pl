@@ -39,7 +39,7 @@ sub EVENT_TIMER {
 			foreach $ent (@hate_list) {
 				my $h_ent = $ent->GetEnt();
 				if ($h_ent->IsClient()) {
-					if ($h_ent->GetLevel() > 65) {
+					if ($h_ent->GetLevel() > 80) {
 						quest::ze(0, "I will not fight you, but I will banish you!");
 						#:: Move player to Lavastorm (27) at the specified coordinates, facing North
 						$h_ent->CastToClient()->MovePC(27, -64, 262, -93.96, 0);
