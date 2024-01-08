@@ -66,29 +66,37 @@ function Client:GetFaction(npc)
 end
 
 function Client:Class()
-	local class = self:GetClass();
-	
-	do
-		local c = {
-		 [1] = "Warrior",
-		 [2] = "Cleric",
-		 [3] = "Paladin",
-		 [4] = "Ranger",
-		 [5] = "Shadow Knight",
-		 [6] = "Druid",
-		 [7] = "Monk",
-		 [8] = "Bard",
-		 [9] = "Rogue",
-		 [10] = "Shaman",
-		 [11] = "Necromancer",
-		 [12] = "Wizard",
-		 [13] = "Magician",
-		 [14] = "Enchanter",
-		 [15] = "Beastlord",
-		 [16] = "Berserker"
-		 }
+	local class = nil;
 
-	return c[class];
+	if self:IsPet() then -- Check if pet and get owners class
+		class = self:GetOwner():GetClass();
+	else
+		class = self:GetClass();
+	end
+
+	local c = {
+		[1] = "Warrior",
+		[2] = "Cleric",
+		[3] = "Paladin",
+		[4] = "Ranger",
+		[5] = "Shadow Knight",
+		[6] = "Druid",
+		[7] = "Monk",
+		[8] = "Bard",
+		[9] = "Rogue",
+		[10] = "Shaman",
+		[11] = "Necromancer",
+		[12] = "Wizard",
+		[13] = "Magician",
+		[14] = "Enchanter",
+		[15] = "Beastlord",
+		[16] = "Berserker"
+	}
+
+	if self:IsClient() and class > 0 and class <= 16 then -- Check if client and class is valid
+		return c[class];
+	else
+		return "notvalid"
 	end
 end
 
@@ -238,6 +246,7 @@ function Client:HasItem(itemid, trade)
 	end
 
 	--corpse
+	--[[
 	local bodycount = self:GetCorpseCount();
 	
 	if(bodycount > 0) then
@@ -257,6 +266,7 @@ function Client:HasItem(itemid, trade)
 			end
 		end
 	end
+	]]--
 	return false;
 end
 
@@ -319,6 +329,7 @@ function Client:GetRaidMemberCountInZone()
 	end
 	return count
 end
+
 
 function Client:IsClass(...)
     local class = self:GetClass();

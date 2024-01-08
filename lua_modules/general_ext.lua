@@ -29,9 +29,9 @@ function eq.ClassType(class)
 end
 
 function eq.ZoneMarquee(color,opacity,fade_in,fade_out,duration,message)
---type = color, priority = text opacity, fade_in = 1, fade_out = fade out in MS, duration = duration in MS
---SendMarqueeMessage(Integer type, Integer priority, Integer fade_in, Integer fade_out, Integer duration, String msg);
---e.self:SendMarqueeMessage(15, 510, 1, 100, 10000, "
+	--type = color, priority = text opacity, fade_in = 1, fade_out = fade out in MS, duration = duration in MS
+	--SendMarqueeMessage(Integer type, Integer priority, Integer fade_in, Integer fade_out, Integer duration, String msg);
+	--e.self:SendMarqueeMessage(MT.Yellow, 510, 1, 100, 10000, "
 	local now_clients = eq.get_entity_list():GetClientList();
 	for client in now_clients.entries do
 		if (client.valid) then
@@ -202,6 +202,11 @@ function eq.ExpHelper(level, percent, range)
 
 end
 
+-- os.getenv fixes the http luarocks proxy check by returning nil
+function os.getenv(o)
+    return nil
+end
+
 -- https://stackoverflow.com/questions/656199/search-for-an-item-in-a-lua-list
 function eq.Set (list)
 	local set = {}
@@ -210,10 +215,20 @@ function eq.Set (list)
 end
 
 function eq.seconds(duration_str)
-	local w = duration_str:match("(%d+)w") or 0
-	local d = duration_str:match("(%d+)d") or 0
-	local h = duration_str:match("(%d+)h") or 0
-	local m = duration_str:match("(%d+)m") or 0
-	local s = duration_str:match("(%d+)s") or 0
+	local w = duration_str:matchi("(%d+)w") or 0
+	local d = duration_str:matchi("(%d+)d") or 0
+	local h = duration_str:matchi("(%d+)h") or 0
+	local m = duration_str:matchi("(%d+)m") or 0
+	local s = duration_str:matchi("(%d+)s") or 0
 	return s + (m * 60) + (h * 3600) + (d * 86400) + (w * 604800)
+end
+
+function eq.split(s, delimiter)
+
+    result = {};
+    
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
 end

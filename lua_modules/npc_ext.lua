@@ -27,29 +27,39 @@ function NPC:RandomRoam(maxx,maxy,maxz,los)
 	maxz = maxz or 15;
 	los = los or 5;
 
-	if(self:IsEngaged() ~= 1) then
+	if not self:IsEngaged() then
 		local curx = self:GetX();
 		local cury = self:GetY();
-		local origx = self:GetSpawnPointX();
-		local origy = self:GetSpawnPointY();
-		local origz = self:GetSpawnPointZ();
-		local guardx = self:GetGuardPointX();
-		local guardy = self:GetGuardPointY();
+		local origx = self:GetSpawnPointX() or 0;
+		local origy = self:GetSpawnPointY() or 0;
+		local origz = self:GetSpawnPointZ() or 0;
+		local guardx = self:GetGuardPointX() or 0;
+		local guardy = self:GetGuardPointY() or 0;
 
-		if(curx == guardx and cury == guardy) then
+		if curx == guardx and cury == guardy then
 			local randomx = math.random(maxx) + 1;
 			local randomy = math.random(maxy) + 1;
 			local posx = origx + randomx;
 			local posy = origy + randomy;
 			local negx = origx - randomx;
 			local negy = origy - randomy;
-			local newx = math.random(posx,negx);
-			local newy = math.random(posy,negy);
+			local newx, newy, newz = 0;
+			if posx > negx then -- Flip order
+				newx = math.random(negx, posx);
+			else
+				newx = math.random(posx,negx);
+			end
+
+			if posy > negy then -- Flip order
+				newy = math.random(negy, posy);
+			else
+				newy = math.random(posy,negy);
+			end
 			local newz = self:FindGroundZ(newx,newy, 5) + 1;
 
-			if(newz > -999999 and origz > (newz - maxz + 1) and origz < (newz + maxz - 1)) then
+			if newz > -999999 and origz > (newz - maxz + 1) and origz < (newz + maxz - 1) then
 				local loscheck = self:CheckLoSToLoc(newx, newy, newz, los);
-				if(loscheck) then
+				if loscheck then
 					self:MoveTo(newx,newy,newz,-1,true);
 				end
 			end
@@ -71,4 +81,12 @@ function NPC:GetClientsInProximity(distance)
 		end
 	end
 	return clients
+end
+
+function NPC:DeathNotification(e)
+	if (eq.is_content_flag_enabled("production")) then
+		eq.discord_send("Kill_Tracker", " **NPC Kill Tracker** ["..os.date ("%c").."] ```YAML\n NPC: [".. e.self:GetCleanName().."] ["..e.self:GetNPCTypeID().."] \n Zone: ["..eq.get_zone_long_name().."] ID: ["..eq.get_zone_id().."] Loc: ["..tonumber(string.format("%.2f", e.self:GetX())).." "..tonumber(string.format("%.2f", e.self:GetY())).." "..tonumber(string.format("%.2f", e.self:GetZ())).." "..tonumber(string.format("%.2f", e.self:GetHeading())).."] \n Instance ID: ["..eq.get_zone_instance_id().."] \n Number on Hate List: ["..tonumber(e.self:CountHateList()).."] \n Killer: ["..e.other:GetName().."] ["..e.other:CastToClient():CharacterID().."] \n Guild Name: ["..eq.get_guild_name_by_id(eq.get_guild_id_by_char_id(e.other:CastToClient():CharacterID())).."]```");
+	else
+		eq.discord_send("Dev_Quest_Logging", " **NPC Kill Tracker** ["..os.date ("%c").."] ```YAML\n NPC: [".. e.self:GetCleanName().."] ["..e.self:GetNPCTypeID().."] \n Zone: ["..eq.get_zone_long_name().."] ID: ["..eq.get_zone_id().."] Loc: ["..tonumber(string.format("%.2f", e.self:GetX())).." "..tonumber(string.format("%.2f", e.self:GetY())).." "..tonumber(string.format("%.2f", e.self:GetZ())).." "..tonumber(string.format("%.2f", e.self:GetHeading())).."] \n Instance ID: ["..eq.get_zone_instance_id().."] \n Number on Hate List: ["..tonumber(e.self:CountHateList()).."] \n Killer: ["..e.other:GetName().."] ["..e.other:CastToClient():CharacterID().."] \n Guild Name: ["..eq.get_guild_name_by_id(eq.get_guild_id_by_char_id(e.other:CastToClient():CharacterID())).."]```");
+	end
 end
