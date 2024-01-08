@@ -85,6 +85,7 @@ function event_timer(e)
 end
 
 function event_enter(e)
+	eq.debug("Entered Gas Chamber 1");
 	if completed then
 		eq.get_entity_list():FindDoor(9):SetLockPick(0);
 		eq.get_entity_list():FindDoor(9):ForceOpen(e.self);
