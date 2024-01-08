@@ -15,7 +15,7 @@ function event_say(e)
 	elseif e.message:findi("need this back") then
 		local data_bucket = e.other:GetBucket("txevu_items");
 		if data_bucket ~= "" then -- Has Started
-			local s = eq.split(data_bucket, ',');
+			local s = split(data_bucket, ',');
 
 			local sliver	= tonumber(s[1]); -- Item: Sliver of the High Temple (60176)
 			local fragment	= tonumber(s[2]); -- Item: Fragment of the High Temple (60252)
@@ -61,7 +61,7 @@ function event_trade(e)
 	local splinter	= 0; -- Item: Splinter of the High Temple (60253)
 
 	if data_bucket ~= "" then -- Has Started
-		local s = eq.split(data_bucket, ',');
+		local s = split(data_bucket, ',');
 
 		sliver		= tonumber(s[1]); -- Item: Sliver of the High Temple (60176)
 		fragment	= tonumber(s[2]); -- Item: Fragment of the High Temple (60252)
@@ -89,7 +89,7 @@ end
 function progress_check(e)
 	local data_bucket = e.other:GetBucket("txevu_items");
 	if data_bucket ~= "" then -- Has Started
-		local s = eq.split(data_bucket, ',');
+		local s = split(data_bucket, ',');
 
 		local sliver	= tonumber(s[1]); -- Item: Sliver of the High Temple (60176)
 		local fragment	= tonumber(s[2]); -- Item: Fragment of the High Temple (60252)
