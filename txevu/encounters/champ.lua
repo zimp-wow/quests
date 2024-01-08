@@ -370,9 +370,7 @@ end
 function IxtHsek_Death(e)
 	-- ixt death controls respawn of the event
 	eq.depop_with_timer(297001); -- event is successful, initiate respawn
-	eq.unique_spawn(297041, 0, 0, -108, -30, -439, 385); --arena (297041) will turn on arena spawn condition in 1 hour
-	eq.signal(297140,297001); -- Add Lockout
-	e.self:DeathNotification(e);
+	eq.unique_spawn(297049, 0, 0, -108, -30, -439, 385); --arena (297049) will turn on arena spawn condition in 1 hour
 end
 
 function event_encounter_load(e)
@@ -385,7 +383,6 @@ function event_encounter_load(e)
 	eq.register_npc_event("champ", Event.combat, 297034, MastruqChampion_Combat);
 	eq.register_npc_event("champ", Event.signal, 297034, MastruqChampion_Signal);
 	eq.register_npc_event("champ", Event.hp, 297034, MastruqChampion_HP);
-	eq.register_npc_event("champ", Event.death_complete, 297034, MastruqChampion_Death);
 	eq.register_npc_event("champ", Event.spawn, 297034, MastruqChampion_Spawn);
 
 	eq.register_npc_event("champ", Event.hp, 297211, IxtHsek_HP);
