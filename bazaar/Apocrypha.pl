@@ -165,6 +165,8 @@ sub EVENT_SAY {
             for my $value (43002 .. 43008) {
                 ApplyWorldWideBuff($value, 1);                
             }
+
+            quest::worldwidesignalclient(1);
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
@@ -194,6 +196,7 @@ sub ApplyWorldWideBuff {
     my $buff_id = shift;
     my $skip_payment = shift;
     my $eom_avail = $client->GetAlternateCurrencyValue(6);
+    my $skip_update = shift || 0;
 
     if ($eom_avail < 5 && !$skip_payment) {
         return 0;
@@ -221,11 +224,12 @@ sub ApplyWorldWideBuff {
             quest::worldwidemessage(15, $client->GetCleanName() . " has used their Echo of Memory to enhance your $buff_type. This buff will endure for 4 Hours.");
             quest::discordsend("ooc", $client->GetCleanName() . " has used their Echo of Memory to enhance your $buff_type. This buff will endure for 4 Hours.");
         }
-        quest::worldwidesignalclient($buff_id);
+
+        
+        if (!$skip_payment) { quest::worldwidesignalclient($buff_id); }
         return 1;
     }
 }
-
 
 sub convert_seconds {
     my ($seconds) = @_;
