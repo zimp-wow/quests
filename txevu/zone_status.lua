@@ -42,23 +42,23 @@ function Spawn_Champ()
 end
 
 function Spawn_HP()
-	-- eq.spawn2(297212,0,0,-720,346,-475,0);	-- NPC: #priest_trigger
+	eq.spawn2(297212,0,0,-720,346,-475,0);	-- NPC: #priest_trigger
 end
 
 function Spawn_Ukun()
-	-- eq.spawn2(297082,0,0,270,446,-420.87,118);	-- NPC: #Ukun_Bloodfeaster
+	eq.spawn2(297082,0,0,270,446,-420.87,118);	-- NPC: #Ukun_Bloodfeaster
 end
 
 function Spawn_ACM()
-	-- eq.spawn2(297056,0,0,627,0,-364.87,140.25);	-- NPC: #Ancient_Cragbeast_Matriarch
+	eq.spawn2(297056,0,0,627,0,-364.87,140.25);	-- NPC: #Ancient_Cragbeast_Matriarch
 end
 
 function Spawn_INL()
-	-- eq.spawn2(297090,0,0,991,0,-372.87,387.5);	-- NPC: #Ikaav_Nysf_Lleiv
+	eq.spawn2(297090,0,0,991,0,-372.87,387.5);	-- NPC: #Ikaav_Nysf_Lleiv
 end
 
 function Spawn_Zun()
-	-- eq.spawn2(297150,0,0,1506.94,1.8,-285.87,374.75);	-- NPC: #Zun`Muram_Tkarish_Zyk
+	eq.spawn2(297150,0,0,1506.94,1.8,-285.87,374.75);	-- NPC: #Zun`Muram_Tkarish_Zyk
 end
 
 function AddLockout(lockout)

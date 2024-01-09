@@ -1,4 +1,5 @@
---north jail mobs
+-- a_kyv_hunter (297134) part of ZMTZ event
+
 function event_combat(e)
 	if e.joined then
 		eq.set_timer("OOBcheck", 3000)
@@ -10,7 +11,7 @@ end
 function event_timer(e)
 	if e.timer == "OOBcheck" then
 		eq.stop_timer("OOBcheck");
-		if (e.self:GetY() < 175) then
+		if (e.self:GetX() < 1215 or e.self:GetY() > 106 or e.self:GetY() < -106) then
 			e.self:CastSpell(3791,e.self:GetID()); -- Spell: Ocean's Cleansing
 			e.self:GotoBind();
 			e.self:WipeHateList();
