@@ -235,7 +235,7 @@ function event_signal(e)
 			end
 		end
 	elseif ( Tacvi_Lockouts[e.signal] ~= nil ) then
-		AddLockout( Tacvi_Lockouts[e.signal] );
+		-- AddLockout( Tacvi_Lockouts[e.signal] );
 	end
 end
 
