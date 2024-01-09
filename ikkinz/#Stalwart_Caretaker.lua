@@ -22,7 +22,7 @@ function event_say(e)
 		e.self:Say("An adventurer... " .. e.other:GetName() .. ". Have you done your [research]?");
 	elseif(e.message:findi("research")) then
 		e.self:Say("Did it lead you to any clues on how to read the runed glyphs? Did you find the key? The [Runic Inscription]?");
-	elseif(e.message:findi("runic inscriptiion")) then
+	elseif(e.message:findi("runic inscription")) then
 		e.self:Say("I know I've seen it before... but it's been a long time. Do you know [who has it]?");
 	elseif(e.message:findi("who has it")) then
 		e.self:Say("I caught a rogue trying to pick my non existent pockets... he seemed certain that [I have it].");
