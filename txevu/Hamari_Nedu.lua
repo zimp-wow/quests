@@ -1,6 +1,6 @@
 local tacvi = "Tacvi, Seat of the Slaver"
 local tacvi_raid = {
-	expedition = { name="Tacvi, Seat of the Slaver", min_players=18, max_players=54 },
+	expedition = { name="Tacvi, Seat of the Slaver", min_players=3, max_players=54 },
 	instance   = { zone="tacvi", version=0, duration=eq.seconds("6h") },
 	compass    = { zone="txevu", x=-133.21, y=-210.36, z=-421.04 },
 	safereturn = { zone="txevu", x=-325, y=0, z=-422.12, h=128 },
