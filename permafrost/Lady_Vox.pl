@@ -73,7 +73,7 @@ sub EVENT_TIMER {
 			foreach $ent (@hate_list) {
 				my $h_ent = $ent->GetEnt();
 				if ($h_ent->IsClient()) {
-					if ($h_ent->GetLevel() > 65) {
+					if ($h_ent->GetLevel() > 80) {
 						quest::ze(0, "I will not fight you, but I will banish you!");
 						#:: Move player to everfrost (30) at the specified coordinates, facing North
 						$h_ent->CastToClient()->MovePC(30, -7024, 2020, -60.7, 0);
