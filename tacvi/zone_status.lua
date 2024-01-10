@@ -122,6 +122,14 @@ function Spawn_ZMMD()
 end
 
 function Spawn_ZMYV()
+	local x,y,z,h = 366, -488, -0.375, 352;
+	eq.spawn2(298023, 0, 0, x, y, z, h);			-- NPC: Zun`Muram_Yihst_Vor
+	eq.spawn2(298000, 0, 0, x + 30, y + 30, z, h);	-- NPC: _
+	eq.spawn2(298001, 0, 0, x + 30, y - 30, z, h);	-- NPC: _
+	eq.spawn2(298003, 0, 0, x - 30, y + 30, z, h);	-- NPC: _
+	eq.spawn2(298004, 0, 0, x - 30, y - 30, z, h);	-- NPC: _
+	eq.spawn2(298005, 0, 0, x + 30, y, z, h);		-- NPC: _
+	eq.spawn2(298006, 0, 0, x - 30, y, z, h);		-- NPC: _
 	eq.spawn2(298023, 0, 0, 366.0, -488.0, -0.375, 352); -- NPC: Zun`Muram_Yihst_Vor
 	eq.spawn2(eq.ChooseRandom(298015,298016,298021), 0, 0, 272.0, -487.0, -2.75, 354); -- NPC(s): an_elite_mastruq_berserker (298015), an_elite_mastruq_crusher (298016), an_elite_mastruq_destroyer (298021)
 	-- Prathun's Remains
@@ -234,8 +242,8 @@ function event_signal(e)
 				eq.get_entity_list():FindDoor(14):SetLockPick(0); -- ZMKP Tunat
 			end
 		end
-	elseif ( Tacvi_Lockouts[e.signal] ~= nil ) then
-		AddLockout( Tacvi_Lockouts[e.signal] );
+	elseif Tacvi_Lockouts[e.signal] ~= nil then
+		-- AddLockout( Tacvi_Lockouts[e.signal] );
 	end
 end
 
