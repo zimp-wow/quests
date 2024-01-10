@@ -7,7 +7,7 @@ local mob_count				= 0;
 
 
 function event_spawn(e)
-	eq.set_timer("add_phase_1", 1 * 60 * 1000) -- 1 Minute Timer
+	eq.set_timer("add_phase_1", 1 * 180 * 1000) -- 1 Minute Timer
 	eq.set_timer("tether", 3 * 1000) -- 3s Check on tether
 	eq.set_next_hp_event(40)
 	eq.spawn2(292074,0,0,-748,16,60,382); -- NPC: #a_destructive_channeler
@@ -23,7 +23,7 @@ function event_timer(e)
 		end	
 	elseif e.timer == "add_phase_1" then
 		eq.stop_timer("add_phase_1");
-		eq.set_timer("add_phase_2", 1 * 60 * 1000) -- 1 Minute Timer
+		eq.set_timer("add_phase_2", 1 * 180 * 1000) -- 1 Minute Timer
 
 		-- Signal summoners to lay down
 		eq.signal(292086, 1);
@@ -35,7 +35,7 @@ function event_timer(e)
 		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-827,110,59,270):AddToHateList(e.self:GetHateRandom());	-- NW 1st
 	elseif e.timer == "add_phase_2" then
 		eq.stop_timer("add_phase_2");
-		eq.set_timer("add_phase_3", 1 * 60 * 1000) -- 1 Minute Timer
+		eq.set_timer("add_phase_3", 1 * 180 * 1000) -- 1 Minute Timer
 
 		-- Signal summoners to lay down
 		eq.signal(292087, 1);
