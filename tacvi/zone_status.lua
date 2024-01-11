@@ -41,14 +41,14 @@ local TMCV_EVENT	= 'Tunat`Muram Cuu Vauax'
 
 function setup_event() -- 4.5 Days
 	Tacvi_Lockouts = {
-		[298039] = {PXK_EVENT,	eq.seconds('108h'), Spawn_PXK},
-		[298201] = {PKK_EVENT,	eq.seconds('108h'), Spawn_PKK},
-		[298032] = {PRT_EVENT,	eq.seconds('108h'), Spawn_PRT},
-		[298029] = {ZMKP_EVENT,	eq.seconds('108h'), Spawn_ZMKP},
-		[298018] = {ZMSB_EVENT,	eq.seconds('108h'), Spawn_ZMSB},
-		[298020] = {ZMMD_EVENT,	eq.seconds('108h'), Spawn_ZMMD},
-		[298023] = {ZMYV_EVENT,	eq.seconds('108h'), Spawn_ZMYV},
-		[298055] = {TMCV_EVENT,	eq.seconds('108h'), Spawn_TMCV}
+		[298039] = {PXK_EVENT,	eq.seconds('20h'), Spawn_PXK},
+		[298201] = {PKK_EVENT,	eq.seconds('20h'), Spawn_PKK},
+		[298032] = {PRT_EVENT,	eq.seconds('20h'), Spawn_PRT},
+		[298029] = {ZMKP_EVENT,	eq.seconds('20h'), Spawn_ZMKP},
+		[298018] = {ZMSB_EVENT,	eq.seconds('20h'), Spawn_ZMSB},
+		[298020] = {ZMMD_EVENT,	eq.seconds('20h'), Spawn_ZMMD},
+		[298023] = {ZMYV_EVENT,	eq.seconds('20h'), Spawn_ZMYV},
+		[298055] = {TMCV_EVENT,	eq.seconds('20h'), Spawn_TMCV}
 	}
 end
 
@@ -243,7 +243,7 @@ function event_signal(e)
 			end
 		end
 	elseif Tacvi_Lockouts[e.signal] ~= nil then
-		-- AddLockout( Tacvi_Lockouts[e.signal] );
+		AddLockout( Tacvi_Lockouts[e.signal] );
 	end
 end
 
