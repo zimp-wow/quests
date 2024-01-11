@@ -8,7 +8,7 @@ local curse_bearers	= {296059,296060,296061,296062,296063,296064};
 function event_spawn(e)
 	initial = 0;
 	eq.set_timer("win_check", 5 * 1000);		-- 5s Check
-	eq.set_timer("initial_bearers", 15 * 1000)	-- 15s timer
+	eq.set_timer("initial_bearers", 60 * 1000)	-- 15s timer
 end
 
 function event_signal(e)
