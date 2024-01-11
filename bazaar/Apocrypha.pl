@@ -35,10 +35,10 @@ sub get_level_breakpoint {
 }
 
 sub apply_buffs {
-    my ($client, $closest_level, $duration_override) = @_;
+    my ($client, $closest_level, $duration_override, $duration_scale, $price_scale) = @_;
 
     if ($closest_level > 0) {
-        if ($client->TakeMoneyFromPP($price_map->{$closest_level} * 1000, 1)) {
+        if ($client->TakeMoneyFromPP($price_map->{$closest_level} * 1000 * $price_scale, 1)) {
             my $buffs = $buff_map->{$closest_level};
 
             foreach my $buff (@$buffs) {
@@ -50,7 +50,7 @@ sub apply_buffs {
                         if ($player) {
                             $player->ApplySpell($buff, $duration_override);
                             if ($player->GetPet()) {
-                                $player->GetPet()->ApplySpellBuff($buff, $duration_override);
+                                $player->GetPet()->ApplySpellBuff($buff, $duration_override * $duration_scale);
                             }
                         }
                     }
@@ -72,8 +72,12 @@ sub apply_buffs {
 sub handle_buff_for_level {
     my $client_level = $client->GetLevel();
     my $closest_level = get_level_breakpoint($client_level);
+    my ($duration_scale, $price_scale) = @_;
     
-    apply_buffs($client, $closest_level, $duration_override);
+    $duration_scale //= 1;  # Set to 1 if not provided
+    $price_scale //= 1;     # Set to 1 if not provided
+    
+    apply_buffs($client, $closest_level, $duration_override, $duration_scale, $price_scale);
 }
 
 sub EVENT_SAY {
@@ -93,7 +97,7 @@ sub EVENT_SAY {
         if ($plat_price == 0) {
             $response = "I will enhance you and your party with several [buffs] free of charge.";
         } else {
-            $response = "In exchange for a fee of $plat_price platinum, I will enhance you and your party with several [buffs].";
+            $response = "In exchange for a fee of $plat_price platinum, I will enhance you and your party with several [buffs]. I can also apply these buffs for [double] their durations for three times the price.";
         }
     }
 
@@ -174,6 +178,10 @@ sub EVENT_SAY {
 
     elsif ($text=~/buffs/i) {        
         handle_buff_for_level();
+    }
+
+    elsif ($text=~/double/i) {        
+        handle_buff_for_level(2, 3);
     }
 
     if ($response) {
