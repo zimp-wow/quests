@@ -57,7 +57,7 @@ sub apply_buffs {
                 } else {
                     $client->ApplySpell($buff, $duration_override);
                     if ($client->GetPet()) {
-                        $client->GetPet()->ApplySpellBuff($buff, $duration_override);
+                        $client->GetPet()->ApplySpellBuff($buff, $duration_override * $duration_scale);
                     }
                 }
             }
