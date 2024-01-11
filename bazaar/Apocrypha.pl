@@ -37,6 +37,8 @@ sub get_level_breakpoint {
 sub apply_buffs {
     my ($client, $closest_level, $duration_override, $duration_scale, $price_scale) = @_;
 
+    $duration_override *= $duration_scale;
+
     quest::debug("duration_scale: $duration_scale, $price_scale");
 
     if ($closest_level > 0) {
@@ -54,14 +56,14 @@ sub apply_buffs {
                         if ($player) {
                             $player->ApplySpell($buff, $duration_override);
                             if ($player->GetPet()) {
-                                $player->GetPet()->ApplySpellBuff($buff, $duration_override * $duration_scale);
+                                $player->GetPet()->ApplySpellBuff($buff, $duration_override);
                             }
                         }
                     }
                 } else {
                     $client->ApplySpell($buff, $duration_override);
                     if ($client->GetPet()) {
-                        $client->GetPet()->ApplySpellBuff($buff, $duration_override * $duration_scale);
+                        $client->GetPet()->ApplySpellBuff($buff, $duration_override);
                     }
                 }
             }
