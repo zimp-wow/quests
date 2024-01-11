@@ -4,7 +4,7 @@
 # 2) Set a bucket value with a 4 hour expiration.
 # 3) Zone and Login methods in global_player apply the requested buffs with the requested durations
 
-my $duration_override = 900; #set this value to override 'regular' buffs duration
+my $duration_override = 1200; #set this value to override 'regular' buffs duration
 
 my $buff_map = {
     1 => [2525, 314, 278, 145, 356, 170], # Free - Harnessing of Spirit, Resolution, Spirit of Wolf, Chloroplast, Shield of Thorns, Alacrity
