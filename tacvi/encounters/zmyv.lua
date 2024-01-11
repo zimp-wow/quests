@@ -8,7 +8,7 @@ end
 function ZMYV_Combat(e)
 	if e.joined then
 		e.self:Say("The weak willed and the idle will serve my cause.");
-		eq.set_timer("allure", 90 * 1000);
+		-- eq.set_timer("allure", 90 * 1000);
 	else
 		eq.set_timer("wipecheck", 1 * 1000);
 		eq.stop_timer("check");
