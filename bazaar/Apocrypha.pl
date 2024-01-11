@@ -37,8 +37,12 @@ sub get_level_breakpoint {
 sub apply_buffs {
     my ($client, $closest_level, $duration_override, $duration_scale, $price_scale) = @_;
 
+    quest::debug("duration_scale: $duration_scale, $price_scale");
+
     if ($closest_level > 0) {
         if ($client->TakeMoneyFromPP($price_map->{$closest_level} * 1000 * $price_scale, 1)) {
+            my $price = $price_map->{$closest_level} * $price_scale;
+            $client->Message(15, "You have given $price platinum to Apocrypha.");
             my $buffs = $buff_map->{$closest_level};
 
             foreach my $buff (@$buffs) {
