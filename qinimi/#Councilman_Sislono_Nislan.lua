@@ -75,6 +75,7 @@ function event_signal(e)
 end
 
 function event_trade(e)
+	local qglobals = eq.get_qglobals(e.self, e.other);
 	local item_lib = require("items");
 	if qglobals["bic"] ~= nil and qglobals["bic"] >= "1" and item_lib.check_turn_in(e.trade, {item1 = 67700}) then -- Item: Kreshin's Journal Page
 		e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'Yes, I have seen this and others like it before. While we do not understand where it comes from, we have come to the conclusion that these strange glyphs express somthing important to your people. These particular glyphs were made by the small one they hold captive in the courtroom. If you wish to help him, you will have to retrieve the [stone of entry]. Only with this stone can you enter the courtroom and help the one who calls himself Kreshin.");
