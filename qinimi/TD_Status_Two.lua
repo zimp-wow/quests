@@ -19,6 +19,7 @@ function event_timer(e)
 end
 
 function CheckPlayerCount(e)
+	local instance_id = eq.get_zone_instance_id();
 	local player_list = eq.get_entity_list():GetClientList();
 	local count = 0;
 	if(player_list ~= nil) then
@@ -26,7 +27,7 @@ function CheckPlayerCount(e)
 			if pc:GetX() >= min_x and pc:GetX() <= max_x and pc:GetY() >= min_y and pc:GetY() <= max_y and not pc:GetGM() then
 				count = count + 1;
 				if count > player_limit then 
-					pc:MovePC(zone_id, -300.73, -1480.06, -15.33, 42);	-- boot to zone in
+					pc:MovePCInstance(zone_id, instance_id, -300.73, -1480.06, -15.33, 42);	-- boot to zone in
 				end
 			end
 		end
@@ -43,5 +44,6 @@ function event_signal(e)
 end
 
 function event_enter(e)
-	e.other:MovePC(zone_id, -300.73, -1480.06, -15.33, 42);	-- boot to zone in
+	local instance_id = eq.get_zone_instance_id();
+	e.other:MovePCInstance(zone_id, instance_id, -300.73, -1480.06, -15.33, 42);	-- boot to zone in
 end

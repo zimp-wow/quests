@@ -379,7 +379,8 @@ function KickPlayers(e)
 	if(player_list ~= nil) then
 		for pc in player_list.entries do
 			if pc.valid and pc:GetX() >= min_x and pc:GetX() <= max_x and pc:GetY() >= min_y and pc:GetY() <= max_y and not pc:GetGM() then
-				pc:MovePC(zone_id, -1480.06, -300.73, -15.33, 42);	-- boot to zone in
+				local instance_id = eq.get_zone_instance_id();
+				pc:MovePCInstance(zone_id, instance_id, -1480.06, -300.73, -15.33, 42);	-- boot to zone in
 			end
 		end
 	end

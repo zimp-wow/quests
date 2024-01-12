@@ -8,6 +8,7 @@ local zone_id					= eq.get_zone_id();
 
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.self, e.other);
+	local instance_id = eq.get_zone_instance_id();
 	local raid = e.other:GetRaid();
 	local raid_id = raid:GetID();
 	local event_up_1 = eq.get_entity_list():GetMobByNpcTypeID(mass_of_stones[1]);
@@ -22,7 +23,7 @@ function event_say(e)
 		elseif e.message:findi("items") then
 			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'The key consists of mud, some stonedust particles, and a piece of chalk. The mud can be found in the sewers beneth the city. The stonedust is plentiful near the coliseum, and the chalk can be found all over this area. Bring these to me and I will make you a temporary key which will grant you access to the courtroom. I implore you to hurry. I fear the one you seek may not be alive much longer.'");
 		end
-	elseif qglobals["bic_qin"] ~= nil and qglobals["bic_qin"] == "2" then
+	elseif qglobals["bic_qin"] ~= nil and qglobals["bic_qin"] > "2" then
 		if e.message:findi("ritual") then
 			e.other:Message(MT.NPCQuestSay, "While animating stone comes easy for us, sometimes we need an extremely powerful stone worker to help with the city. These stone servants were made through a ritual which combined the power of eight geomancers into a ninth. This geomancer would then imbue a stone worker with this power, resulting in a more powerful construct. We stopped doing the ritual when we discovered that it could take away our ability over time. If [she] has somehow figured out a way to absorb this power, then my people could be in more danger than I thought possible.'");
 		elseif e.message:findi("she") then
@@ -30,7 +31,7 @@ function event_say(e)
 		elseif e.message:findi("promise") then
 			e.other:Message(MT.NPCQuestSay, "I cannot tell you how relieved this makes me. Now to the issue at hand. While Xictic and those she chooses can roam freely in and out of the magical dome surrounding the chamber, if anyone else tries to enter they are held back. As a councilman, I was granted a device that allows access into the dome and I've managed to keep it away from the prying eyes of the Mata Muram. Using it is not without its consequences, though. As soon as an outsider shows up within the dome, they will know what has occurred and will come searching for the culprit so be certain you are ready to face the challenges ahead before you embark upon this venture. Only eighteen of you will be allowed into the chamber at one time so gather your forces and tell me you are [ready] to face Xictic.'");
 		elseif e.message:findi("ready") then
-			if e.other:GetRaidMemberCountInZone() >= 6 and e.other:IsRaidGrouped() then
+			if e.other:GetRaidMemberCountInZone() >= 3 and e.other:IsRaidGrouped() then
 				e.self:Emote("pulls out a small stone and closes it in his hand. 'Please be careful. What you are about to see may shock you at first, but don't let yourself be distracted for too long. These beings are merciless and once they have discovered your presence, they will stop at nothing to add your corpse to the others in the area.'");
 
 				if qglobals["gates_thunder_dome_event_1"] == nil and event_up_1.valid and raid_id_by_thunder_dome[1] == nil then
@@ -47,8 +48,9 @@ function event_say(e)
 				end
 				
 				if thunder_dome_id > 0 and thunder_dome_id < 4 and raid_id_by_thunder_dome[thunder_dome_id] == raid:GetID() then
+					local instance_id = eq.get_zone_instance_id();
 					e.self:Emote("SCREAMS and Ports everyone up... maybe?");
-					raid:TeleportRaid(e.self, zone_id, 0, unpack(thunder_dome_locs[thunder_dome_id]))
+					raid:TeleportRaid(e.self, zone_id, instance_id, unpack(thunder_dome_locs[thunder_dome_id]))
 					eq.depop_all(controllers[thunder_dome_id]) -- Depop TD_Status_One Prior
 					eq.load_encounter(encounter_names[thunder_dome_id]);
 				else
