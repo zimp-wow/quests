@@ -183,5 +183,5 @@ function spawn_event()
 end
 
 function event_death_complete(e)
-	-- eq.signal(297140,297150); -- Add Lockout
+	eq.signal(297140,297150); -- Add Lockout
 end

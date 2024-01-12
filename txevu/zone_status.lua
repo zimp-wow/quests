@@ -11,23 +11,24 @@ local ACM_EVENT		= 'Ancient Cragbeast Matriarch'
 local INL_EVENT		= 'Ikaav Nysf Lleiv'
 local ZMTZ_EVENT	= 'Zun Muram Tkarish Zyk'
 
-function setup_events()
+function setup_event()
 	Txevu_Lockouts = {
-		[297001] = {CHAMP_EVENT	,	eq.seconds('72h'), Spawn_Champ},
-		[297212] = {HP_EVENT	,	eq.seconds('108h'), Spawn_HP},
-		[297082] = {UKUN_EVENT	,	eq.seconds('72h'), Spawn_Ukun},
-		[297056] = {ACM_EVENT	,	eq.seconds('72h'), Spawn_ACM},
-		[297090] = {INL_EVENT	,	eq.seconds('72h'), Spawn_INL},
-		[297150] = {ZMTZ_EVENT	,	eq.seconds('132h'), Spawn_Zun}
-	};
+		[297001] = {CHAMP_EVENT,eq.seconds('20h'), Spawn_Champ},
+		[297212] = {HP_EVENT,	eq.seconds('20h'), Spawn_HP},
+		[297082] = {UKUN_EVENT,	eq.seconds('20h'), Spawn_Ukun},
+		[297056] = {ACM_EVENT,	eq.seconds('20h'), Spawn_ACM},
+		[297090] = {INL_EVENT,	eq.seconds('20h'), Spawn_INL},
+		[297150] = {ZMTZ_EVENT,	eq.seconds('20h'), Spawn_Zun}
+	}
 end
 
 function event_spawn(e)
-	zone_id = eq.get_zone_id();
+	local zone_id = eq.get_zone_id();
 	instance_id = eq.get_zone_instance_id();
+	local expedition = eq.get_expedition_by_zone_instance(zone_id,instance_id);
 
 	if instance_id ~= 0 then
-		setup_events();
+		setup_event();
 	end
 
 	for k,v in pairs(Txevu_Lockouts) do

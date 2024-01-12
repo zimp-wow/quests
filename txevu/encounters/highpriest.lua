@@ -604,7 +604,7 @@ end
 
 function HP_Death(e)
 	eq.depop_with_timer(297212) -- depop trigger
-	-- eq.signal(297140,297212); -- Add Lockout
+	eq.signal(297140,297212); -- Add Lockout
 end
 
 function event_encounter_load(e)
