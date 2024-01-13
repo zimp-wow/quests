@@ -12,7 +12,7 @@ function event_scale_calc(e)
 	if Total < 0 then
 		e.self:SetScale(0);
 	elseif Total > 7 then
-		e.self:SetScale(7);
+		e.self:SetScale(1);
 	else
 		e.self:SetScale(Total/7);
 	end
