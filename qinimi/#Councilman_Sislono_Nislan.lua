@@ -15,15 +15,7 @@ function event_say(e)
 	local event_up_2 = eq.get_entity_list():GetMobByNpcTypeID(mass_of_stones[2]);
 	local event_up_3 = eq.get_entity_list():GetMobByNpcTypeID(mass_of_stones[3]);
 
-	if qglobals["bic_qin"] ~= nil and qglobals["bic_qin"] >= "2" then
-		if e.message:findi("thing") then
-			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'The geomantic device which raises you into the courtroom is an ancient one and takes time to reset after it has been used. If you are having trouble entering, be patient. You will know it is ready to receive a key when you hear a grinding sound from the base of the device as it settles into place. Please be sure you are fully prepared before entering. While it once was a place of peaceful discussion, the courtroom is now a place where terrible torture is conducted by those the legion wants information from. When they see uninvited guests, they will not be very happy. The leader of this area's force is known as Tixxrt and stopping him is the only way you can save the small one, called Kreshin.'");
-		elseif e.message:findi("stone of entry") then
-			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'Gaining access to such a private place has always been reserved for the elders of my people. While the legion may have destroyed our home, they have yet to figure out a way around many of our wards that bar access to our sacred areas. Unfortunately, their frustration at gaining entry resulted in the painful torture of many of my people until they were given the keys to enter. The courtroom requires one of these keys and while the invaders hold all of the existing keys, I can create one if you can retrieve the proper [items].'");
-		elseif e.message:findi("items") then
-			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'The key consists of mud, some stonedust particles, and a piece of chalk. The mud can be found in the sewers beneth the city. The stonedust is plentiful near the coliseum, and the chalk can be found all over this area. Bring these to me and I will make you a temporary key which will grant you access to the courtroom. I implore you to hurry. I fear the one you seek may not be alive much longer.'");
-		end
-	elseif qglobals["bic_qin"] ~= nil and qglobals["bic_qin"] > "2" then
+	if qglobals["bic_qin"] ~= nil and qglobals["bic_qin"] > "2" then
 		if e.message:findi("ritual") then
 			e.other:Message(MT.NPCQuestSay, "While animating stone comes easy for us, sometimes we need an extremely powerful stone worker to help with the city. These stone servants were made through a ritual which combined the power of eight geomancers into a ninth. This geomancer would then imbue a stone worker with this power, resulting in a more powerful construct. We stopped doing the ritual when we discovered that it could take away our ability over time. If [she] has somehow figured out a way to absorb this power, then my people could be in more danger than I thought possible.'");
 		elseif e.message:findi("she") then
@@ -59,6 +51,14 @@ function event_say(e)
 			else
 				e.other:Message(MT.Red, "You are very brave to offer your assistance, but you should join a raiding party before I bring you into the land of nightmares.");
 			end
+		end
+	elseif qglobals["bic_qin"] ~= nil and qglobals["bic_qin"] == "2" then
+		if e.message:findi("thing") then
+			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'The geomantic device which raises you into the courtroom is an ancient one and takes time to reset after it has been used. If you are having trouble entering, be patient. You will know it is ready to receive a key when you hear a grinding sound from the base of the device as it settles into place. Please be sure you are fully prepared before entering. While it once was a place of peaceful discussion, the courtroom is now a place where terrible torture is conducted by those the legion wants information from. When they see uninvited guests, they will not be very happy. The leader of this area's force is known as Tixxrt and stopping him is the only way you can save the small one, called Kreshin.'");
+		elseif e.message:findi("stone of entry") then
+			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'Gaining access to such a private place has always been reserved for the elders of my people. While the legion may have destroyed our home, they have yet to figure out a way around many of our wards that bar access to our sacred areas. Unfortunately, their frustration at gaining entry resulted in the painful torture of many of my people until they were given the keys to enter. The courtroom requires one of these keys and while the invaders hold all of the existing keys, I can create one if you can retrieve the proper [items].'");
+		elseif e.message:findi("items") then
+			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'The key consists of mud, some stonedust particles, and a piece of chalk. The mud can be found in the sewers beneth the city. The stonedust is plentiful near the coliseum, and the chalk can be found all over this area. Bring these to me and I will make you a temporary key which will grant you access to the courtroom. I implore you to hurry. I fear the one you seek may not be alive much longer.'");
 		end
 	else
 		if e.message:findi("hail") then
