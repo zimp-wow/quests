@@ -12,7 +12,7 @@ end
 
 function event_combat(e)
 	if e.joined then
-		eq.set_timer("banishHateTop", 25 * 1000); -- Attempt to banish every 25s
+		-- eq.set_timer("banishHateTop", 25 * 1000); -- Attempt to banish every 25s
 		eq.set_timer("ritualist_adds_1", 30 * 1000); -- 30s initial start
 		eq.set_timer("ritualist_adds_2", 60 * 1000); -- 60s initial start
 		eq.set_timer("ritualist_adds_3", 90 * 1000); -- 90s initial start
@@ -183,5 +183,5 @@ function spawn_event()
 end
 
 function event_death_complete(e)
-	-- eq.signal(297140,297150); -- Add Lockout
+	eq.signal(297140,297150); -- Add Lockout
 end

@@ -371,6 +371,7 @@ function IxtHsek_Death(e)
 	-- ixt death controls respawn of the event
 	eq.depop_with_timer(297001); -- event is successful, initiate respawn
 	eq.unique_spawn(297049, 0, 0, -108, -30, -439, 385); --arena (297049) will turn on arena spawn condition in 1 hour
+	eq.signal(297140,297001); -- Add Lockout
 end
 
 function event_encounter_load(e)

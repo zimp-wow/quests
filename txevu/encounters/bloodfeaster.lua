@@ -140,7 +140,7 @@ end
 
 function Bloodfeaster_Death(e)
 	eq.spawn2(297074, 0, 0, 209, 456, -420, 0) --feaster (297074) will flip spawn condition off and depop adds
-	-- eq.signal(297140,297082); -- Add Lockout
+	eq.signal(297140,297082); -- Add Lockout
 end
 
 function Controller_Spawn(e)

@@ -108,5 +108,5 @@ end
 
 function event_death_complete(e)
 	eq.spawn_condition("txevu",instance_id,4,0)
-	-- eq.signal(297140,297090); -- Add Lockout
+	eq.signal(297140,297090); -- Add Lockout
 end

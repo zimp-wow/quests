@@ -78,7 +78,6 @@ function ACMDeath(e)
 	adds = false
 	combat = false
 	eq.signal(297140,297056); -- Add Lockout
-	e.self:DeathNotification(e);
 end
 
 function ACMTimer(e)
