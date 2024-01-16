@@ -234,7 +234,7 @@ function start_phase_3(e)
 	eq.signal(thunderdome_controller, 99);
 	deaths	=	0;
 	phase	=	3;
-	eq.depop_all(mass_of_stone);
+	eq.depop_with_timer(mass_of_stone);
 	eq.depop_all(sacrafice_npc);
 	eq.unique_spawn(kabeka,0,0,unpack(center_loc));
 end
@@ -388,7 +388,7 @@ end
 
 function cleanup(e)
 	---- force depop all npc's involved with TD One
-	eq.depop_all(mass_of_stone);
+	eq.depop_with_timer(mass_of_stone);
 	eq.depop_all(sacrafice_npc);
 	eq.depop_all(chamber_guardian);
 	eq.depop_all(ukun);
