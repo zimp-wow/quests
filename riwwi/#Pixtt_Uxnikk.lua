@@ -1,4 +1,4 @@
-local TM_minimum_players = 18; --changed to 6 much later (2017)
+local TM_minimum_players = 3; --changed to 6 much later (2017)
 
 
 function event_say(e)
