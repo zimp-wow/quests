@@ -21,7 +21,7 @@ sub EVENT_SAY {
       $dz->SetCompass("txevu", -324, 0, -420); # pointing to guard pineshade
       $dz->SetSafeReturn("txevu", -324, 0, -420, 129);
       $dz->SetZoneInLocation(-324, 0, -420, 129);
-      $dz->AddReplayLockout(79200); # immediately add a 22 hour replay lockout on creation
+      # $dz->AddReplayLockout(79200); # immediately add a 22 hour replay lockout on creation
       quest::say("Tell me when you're [" . quest::saylink("ready") . "] to enter");
     }
   }
