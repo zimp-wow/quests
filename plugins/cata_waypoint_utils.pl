@@ -1,38 +1,3 @@
-sub NPCTell {	
-	my $npc = plugin::val('npc');
-    my $client = plugin::val('client');
-	my $message = shift;
-
-	my $NPCName = $npc->GetCleanName();
-    my $tellColor = 257;
-	
-    $client->Message($tellColor, "$NPCName tells you, '" . $message . "'");
-}
-
-sub YellowText {
-	my $message     = shift;
-    my $client      = shift || plugin::val('client');
-    my $tellColor   = 335;
-	
-    $client->Message($tellColor, $message);
-}
-
-sub RedText {
-	my $message     = shift;
-    my $client      = shift || plugin::val('client');
-    my $tellColor   = 287;
-	
-    $client->Message($tellColor, $message);
-}
-
-sub PurpleText {
-	my $message     = shift;
-    my $client      = shift || plugin::val('client');
-    my $tellColor   = 257;
-	
-    $client->Message($tellColor, $message);
-}
-
 # Serializer
 sub SerializeList {
     my @list = @_;
@@ -56,90 +21,6 @@ sub DeserializeHash {
     my $string = shift;
     my %hash = map { split('=', $_, 2) } split(';', $string);
     return %hash;
-}
-
-sub return_items_silent {
-	my $hashref = plugin::var('$itemcount');
-	my $client = plugin::val('$client');
-	my $name = plugin::val('$name');
-	my $items_returned = 0;
-
-	my %item_data = (
-		0 => [ plugin::val('$item1'), plugin::val('$item1_charges'), plugin::val('$item1_attuned'), plugin::val('$item1_inst') ],
-		1 => [ plugin::val('$item2'), plugin::val('$item2_charges'), plugin::val('$item2_attuned'), plugin::val('$item2_inst') ],
-		2 => [ plugin::val('$item3'), plugin::val('$item3_charges'), plugin::val('$item3_attuned'), plugin::val('$item3_inst') ],
-		3 => [ plugin::val('$item4'), plugin::val('$item4_charges'), plugin::val('$item4_attuned'), plugin::val('$item4_inst') ],
-	);
-
-	my %return_data = ();	
-
-	foreach my $k (keys(%{$hashref})) {
-		next if ($k == 0);
-		my $rcount = $hashref->{$k};
-		my $r;
-		for ($r = 0; $r < 4; $r++) {
-			if ($rcount > 0 && $item_data{$r}[0] && $item_data{$r}[0] == $k) {
-				if ($client) {
-					my $inst = $item_data{$r}[3];
-					my $return_count = $inst->RemoveTaskDeliveredItems();
-					if ($return_count > 0) {
-						$client->SummonItem($k, $inst->GetCharges(), $item_data{$r}[2]);
-						$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
-						$items_returned = 1;
-						next;
-					}
-					$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
-					$client->SummonItem($k, $item_data{$r}[1], $item_data{$r}[2]);
-					$items_returned = 1;
-				} else {
-					$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
-					quest::summonitem($k, 0);
-					$items_returned = 1;
-				}
-				$rcount--;
-			}
-		}
-
-		delete $hashref->{$k};
-	}
-
-	# check if we have any money to return
-	my @money = ("platinum", "gold", "silver", "copper");
-	my $returned_money = 0;
-	foreach my $m (@money) {
-		if ($hashref->{$m} && $hashref->{$m} > 0) {
-			$returned_money = 1;
-		}
-	}
-
-	if ($returned_money) {
-		my ($cp, $sp, $gp, $pp) = ($hashref->{"copper"}, $hashref->{"silver"}, $hashref->{"gold"}, $hashref->{"platinum"});
-		$client->AddMoneyToPP($cp, $sp, $gp, $pp, 1);
-		$client->SetEntityVariable("RETURN_MONEY", "$cp|$sp|$gp|$pp");
-	}
-
-	$client->SetEntityVariable("RETURN_ITEMS", plugin::GetHandinItemsSerialized("Return", %return_data));
-
-	if ($items_returned || $returned_money) {
-		#quest::say("I have no need for this $name, you can have it back.");
-	}
-
-	quest::send_player_handin_event();
-
-	# Return true if items were returned
-	return ($items_returned || $returned_money);
-}
-
-# Check if the specified item ID exists
-sub item_exists_in_db {
-    my $item_id = shift;
-    my $dbh = plugin::LoadMysql();
-    my $sth = $dbh->prepare("SELECT count(*) FROM items WHERE id = ?");
-    $sth->execute($item_id);
-
-    my $result = $sth->fetchrow_array();
-
-    return $result > 0 ? 1 : 0;
 }
 
 sub get_total_attunements {
@@ -408,51 +289,6 @@ sub get_continent_fix {
 }
 
 # Get character's saved zone data
-sub get_zone_data_for_character {
-    my ($characterID, $suffix) = @_;
-    my $charKey = $characterID . "-TL-" . $suffix;
-
-    fix_zone_data($characterID, $suffix);
-
-    my $charDataString = quest::get_data($charKey);
-
-    # Debug: Print the raw string data
-    #quest::debug("characterID: $characterID suffix: $suffix Raw Data: $charDataString");
-
-    my %teleport_zones;
-    my @zone_entries = split /:/, $charDataString;
-
-    foreach my $entry (@zone_entries) {
-        my @tokens = split /,/, $entry;
-        $teleport_zones{$tokens[0]} = [@tokens[1..$#tokens]];
-    }
-
-    return \%teleport_zones;
-}
-
-sub set_zone_data_for_character {
-    my ($characterID, $zone_data_hash_ref, $suffix) = @_;
-    my $charKey = $characterID . "-TL-" . $suffix;
-
-    # Debug: Print the key used to store data
-    #quest::debug("Setting data with key: $charKey");
-
-    my @data_entries;
-
-    while (my ($desc, $zone_data) = each %{$zone_data_hash_ref}) {
-        my $entry = join(",", $desc, @{$zone_data});
-        push @data_entries, $entry;
-    }
-
-    my $charDataString = join(":", @data_entries);
-
-    # Debug: Print the data string being set
-    #quest::debug("Setting Raw Data: $charDataString");
-
-    quest::set_data($charKey, $charDataString);
-}
-
-# Get character's saved zone data
 sub get_zone_data_for_account {
     my ($accountID, $suffix) = @_;
     my $charKey = $accountID . "-TL-Account-" . $suffix;
@@ -570,53 +406,6 @@ sub add_zone_entry {
     my $teleport_zones = get_zone_data_for_account($accountID, $suffix);
     $teleport_zones->{$zone_name} = $zone_data;
     set_zone_data_for_account($accountID, $teleport_zones, $suffix);
-}
-
-sub fix_zone_data {
-    my ($characterID, $suffix) = @_;
-    my $charKey = $characterID . "-TL-" . $suffix;
-    my $charDataString = quest::get_data($charKey);
-    my $data_hash = plugin::deserialize_zone_data($charDataString);  
-
-    delete $data_hash->{''};
-    
-    foreach my $key (keys %$data_hash) {        
-        if (quest::GetZoneLongName($key) ne "UNKNOWN") {
-            quest::debug("Fixed an element");  
-            my $zone_sn = $key;
-            my $zone_desc = $data_hash->{$key}[0];  # Access the elements using ->
-
-            # Create a new entry in the hash with the zone_desc as the key
-            $data_hash->{$zone_desc} = [$key, @{$data_hash->{$key}}[1..4]];
-
-            # Delete the original key from the hash
-            delete $data_hash->{$key};
-        }
-    }
-
-    quest::set_data($charKey, plugin::serialize_zone_data($data_hash));
-}
-
-sub is_focus_equipped {
-    my ($client, $desired_focus_id) = @_;
-
-    # Return immediately if necessary parameters aren't provided
-    return unless ($client && defined $desired_focus_id);
-
-    # Check if any of the equipped augments in the items have the desired focus effect
-    for my $slot_index (0..22) {
-        my $item_id    = $client->GetItemIDAt($slot_index);
-        my $item_focus = $client->GetItemStat($item_id, 'focuseffect');
-        return 1 if ($item_focus == $desired_focus_id);
-        for my $aug_index (0..6) {
-            my $augment_id      = $client->GetAugmentIDAt($slot_index, $aug_index);
-            my $augment_focus   = $client->GetItemStat($augment_id, 'focuseffect');
-            return 1 if ($augment_focus == $desired_focus_id);
-        }
-    }
-
-    # If neither items nor augments have the focus, return 0
-    return 0;
 }
 
 return 1;
