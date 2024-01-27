@@ -25,7 +25,7 @@ sub DeserializeHash {
 
 sub get_total_attunements {
     my $client = shift;
-    my @suffixes = ('A', 'O', 'F', 'K', 'V', 'L'); # Add more suffixes as needed
+    my @suffixes = ('A', 'O', 'F', 'K', 'V', 'L', 'P', 'G', 'O'); # Add more suffixes as needed
     my $total = 0;
 
     foreach my $suffix (@suffixes) {

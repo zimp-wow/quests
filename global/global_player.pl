@@ -429,6 +429,9 @@ sub EVENT_DISCOVER_ITEM {
 
 
 sub EVENT_ENTERZONE {
+
+	CheckWorldWideBuffs();
+
 	my $x = $client->GetX();
 	my $y = $client->GetY();
 	my $z = $client->GetZ();
