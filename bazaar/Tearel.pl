@@ -1,17 +1,5 @@
 sub EVENT_SAY {
 
-  my %suffix_to_pretty_name = (
-    'A' => 'Continent A',
-    'O' => 'Continent O',
-    'F' => 'Continent F',
-    'K' => 'Continent K',
-    'V' => 'Continent V',
-    'L' => 'Continent L',
-    'P' => 'Continent P',
-    'T' => 'Continent T',
-    'D' => 'Continent D',
-);
-
   my $zone_data = plugin::get_zone_data($client->AccountID());
 
   if ($text=~/hail/i) {
@@ -40,7 +28,7 @@ sub EVENT_SAY {
     # Check for each suffix and add entries if valid zone data exists
     foreach my $suffix (plugin::get_suffixes()) {
         if (exists($zone_data->{$suffix}) && %{ $zone_data->{$suffix} }) {
-            $client->Message(257, "-[ " . quest::saylink(quest::get_continent_by_suffix($suffix), 1));
+            $client->Message(257, "-[ " . quest::saylink(plugin::get_continent_by_suffix($suffix), 1));
         }
     }
   }
