@@ -93,16 +93,15 @@ if (($maxlvl) == "") {
 
 if($PCClass == 1){ #War AA
 	$waraa = $client->CharacterID() . "war";
-	if (quest::get_data($waraa) == "") {
-    quest::set_data($waraa, 1);
-	$client->Message(15, "You have learned Infused by Rage, Killing Spree, and Vehement Rage! Open up your AA window (Default V) to find them!");
-	$client->IncrementAA(6283); #Infused by Rage
-	$client->IncrementAA(6607); #Vehement Rage
-	$client->IncrementAA(4739); #Killing Spree
-	$client->IncrementAA(1597); #Call of Challenge
-    
+	if (!quest::get_data($waraa)) {
+		quest::set_data($waraa, 1);
+		$client->Message(15, "You have learned Infused by Rage, Killing Spree, and Vehement Rage! Open up your AA window (Default V) to find them!");
+		$client->IncrementAA(6283); #Infused by Rage
+		$client->IncrementAA(6607); #Vehement Rage
+		$client->IncrementAA(4739); #Killing Spree
+		$client->IncrementAA(1597); #Call of Challenge		
 
-}
+	}
 }
 
 if($PCClass == 2){ #Clr AA
