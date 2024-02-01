@@ -1,12 +1,13 @@
 sub get_suffixes {
-    return ('A', 'O', 'F', 'K', 'V', 'L', 'P', 'T', 'D'); 
+    return ('A', 'G', 'O', 'F', 'K', 'V', 'L', 'P', 'T', 'D'); 
 }
 
 sub get_continent_by_suffix {
     my ($suffix) = @_;
     
     my %suffix_to_pretty_name = (
-        'A' => 'Antonica & Gunthak',
+        'A' => 'Antonica ',
+        'G' => 'Gunthak,'
         'O' => 'Odus',
         'F' => 'Faydwer',
         'K' => 'Kunark',
