@@ -6,7 +6,7 @@ sub get_continent_by_suffix {
     my ($suffix) = @_;
     
     my %suffix_to_pretty_name = (
-        'A' => 'Antonica ',
+        'A' => 'Antonica',
         'G' => 'Gunthak',
         'O' => 'Odus',
         'F' => 'Faydwer',
