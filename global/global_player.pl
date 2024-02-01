@@ -10,7 +10,7 @@ sub CheckWorldWideBuffs {
     for my $value (43002 .. 43008) {
         my $data = quest::get_data("eom_$value");
 
-		if ($data > 0) {
+		if ($data) {
 			$client->ApplySpell($value, quest::get_data_remaining("eom_$value")/6);
 			if ($client->HasPet()) {
 				$client->GetPet()->ApplySpellBuff($value, quest::get_data_remaining("eom_$value")/6);
