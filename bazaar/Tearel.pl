@@ -8,19 +8,19 @@ sub EVENT_SAY {
   #if ($client->GetGM()) {
 
   if ($text=~/hail/i) { 
-    quest::say("Hello $name! I here to transport you to whichever destination you require! I can sell you
-                    [teleportion stones] which can attune this magic map beside me to several notable locations 
-                    throughout Norrath. If you are a more experienced adventurer, I can [transport] you to 
-                    places that you have strong memories of.");
+    quest::say("Greetings $name! I can help you get to almost anywhere! I sell
+                    [teleportion stones] which, when handed back to me, will attune this magic map 
+                    to several notable places that I've visted before. If you are a more experienced adventurer however, 
+                    I can [transport] you to places that YOU have visted and attuned yourself to by discovering Runes.");
   }
 
   if ($text=~/teleportion stones/i) {
     quest::say("Absolutely. The process is simple! Purchase the teleportation stone of your choosing 
                     then give it to me. I will then enchant the map to take you to your destination! 
-                    Simply click it and you will be gone!");
+                    Simply click on the map afterwards and you will be off!");
   }
   if ($text=~/transport/i) {
-    quest::say("Of course. Tell me about the place that you remember.");
+    quest::say("Very good! Tell me about this place that you remember.");
     $client->Message(257, " ------- Select a Continent ------- ");
     # Check for each suffix and add entries if valid zone data exists
     foreach my $suffix (plugin::get_suffixes()) {
