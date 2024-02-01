@@ -2,6 +2,9 @@ sub EVENT_SAY {
   if ($text=~/hail/i) {
     quest::say("$myvalue Hello $name! Would you like to set your guild teleportation circle? The process is simple! Purchase the teleportation stone of your choosing then give it to me. I will then enchant the map to take you to your destination! Simply click it and you will be gone!");
   }
+  if ($client->GetGM()) {
+    quest::whisper("Hello");
+  }
 }
 
 sub EVENT_ITEM {
