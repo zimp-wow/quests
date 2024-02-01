@@ -56,7 +56,7 @@ sub return_items {
 				else
 				{
 					# This shouldn't be needed, but just in case
-					quest::summonfixeditem(1$k, 0);
+					quest::summonfixeditem($k, 0);
 					$items_returned = 1;
 				}
 				$rcount--;
