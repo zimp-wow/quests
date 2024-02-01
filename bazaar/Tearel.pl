@@ -35,6 +35,9 @@ sub EVENT_SAY {
         }
     }
   }
+  if ($text =~ /^($continent_regex)$/i) {
+    quest::whisper("continent name captured");
+  }
 
   }
 }
