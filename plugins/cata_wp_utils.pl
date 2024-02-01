@@ -83,7 +83,7 @@ sub get_zone_data_for_account {
     my @zone_entries = split /:/, $charDataString;
 
     foreach my $entry (@zone_entries) {
-        my @tokens = split /,/, $entry;
+        my @tokens = split /+/, $entry;
         $teleport_zones{$tokens[0]} = [@tokens[1..$#tokens]];
     }
 
@@ -107,7 +107,7 @@ sub set_zone_data_for_account {
     my @data_entries;
 
     while (my ($desc, $zone_data) = each %{$zone_data_hash_ref}) {
-        my $entry = join(",", $desc, @{$zone_data});
+        my $entry = join("+", $desc, @{$zone_data});
         push @data_entries, $entry;
     }
 
