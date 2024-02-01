@@ -5,13 +5,7 @@ sub EVENT_SAY {
 
   quest::debug($continent_regex);
 
-  if ($text=~/hail/i) {
-    quest::say("Hello $name! Would you like to set your guild teleportation circle? The process is simple! 
-                Purchase the teleportation stone of your choosing then give it to me. I will then enchant 
-                the map to take you to your destination! Simply click it and you will be gone!");
-  }
-
-  if ($client->GetGM()) {
+  #if ($client->GetGM()) {
 
   if ($text=~/hail/i) { 
     quest::say("Hello $name! I here to transport you to whichever destination you require! I can sell you
@@ -54,7 +48,7 @@ sub EVENT_SAY {
     $client->MovePC(quest::GetZoneID($flat_data->{$text}[0]), $flat_data->{$text}[1], $flat_data->{$text}[2], $flat_data->{$text}[3], $flat_data->{$text}[4]);
   }
 
-  }
+  #}
 }
 
 sub EVENT_ITEM {
