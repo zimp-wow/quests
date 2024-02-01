@@ -1,6 +1,6 @@
 sub EVENT_SAY {
 
-  my $continent_regex = join('|', map { quotemeta(get_continent_by_suffix($_)) } plugin::get_suffixes());
+  my $continent_regex = join('|', map { quotemeta(plugin::get_continent_by_suffix($_)) } plugin::get_suffixes());
   my $zone_data       = plugin::get_zone_data($client->AccountID());
 
   quest::debug($continent_regex);
