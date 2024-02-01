@@ -23,6 +23,7 @@ sub EVENT_ENTER {
 
         # Use $TLDesc as key and structure our data with zone short name, coordinates, and heading
         my $locData = [quest::GetZoneShortName($npc->GetZoneID()), $npc->GetX(), $npc->GetY(), $npc->GetZ(), $npc->GetHeading()];
+        plugin::SerializeHash();
 
         if (!plugin::has_zone_entry($accountID, $TLDesc, $suffix) && !($suffix eq "")) {
             quest::message(15, "This place seems familiar. You are sure to remember it later.");
