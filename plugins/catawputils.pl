@@ -1,3 +1,5 @@
+quest::debug("Test!");
+
 # Serializer
 sub SerializeList {
     my @list = @_;
