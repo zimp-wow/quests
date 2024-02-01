@@ -57,12 +57,8 @@ sub get_zone_data_elements {
         my $teleport_zones = $zone_data->{$suffix};
 
         foreach my $key (keys %{$teleport_zones}) {
-            my $zone_data_array = $teleport_zones->{$key};
-            
-            foreach my $element (@{$zone_data_array}) {
-                # Store the payload data for the location identifier
-                $all_elements{$key} = $element;
-                quest::debug("Storing $key with $element");
+                $all_elements{$key} = $teleport_zones->{$key};
+                quest::debug("Storing $key with $all_elements{$key}");
             }
         }
     }
