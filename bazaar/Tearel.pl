@@ -1,9 +1,30 @@
 sub EVENT_SAY {
   if ($text=~/hail/i) {
-    quest::say("$myvalue Hello $name! Would you like to set your guild teleportation circle? The process is simple! Purchase the teleportation stone of your choosing then give it to me. I will then enchant the map to take you to your destination! Simply click it and you will be gone!");
+    quest::say("Hello $name! Would you like to set your guild teleportation circle? The process is simple! 
+                Purchase the teleportation stone of your choosing then give it to me. I will then enchant 
+                the map to take you to your destination! Simply click it and you will be gone!");
   }
+
   if ($client->GetGM()) {
-    quest::whisper("Hello");
+
+  if ($text=~/hail/i) { 
+    quest::whisper("Hello $name! I here to transport you to whichever destination you require! I can sell you
+                    [teleportion stones] which can attune this magic map beside me to several notable locations 
+                    throughout Norrath. If you are a more experienced adventurer, I can [transport] you to 
+                    places that you have strong memories of.");
+  }
+
+  if ($text=~/shards/i) {
+    quest::whisper("Absolutely. The process is simple! Purchase the teleportation stone of your choosing 
+                    then give it to me. I will then enchant the map to take you to your destination! 
+                    Simply click it and you will be gone!");
+  }
+  if ($text=~/transport/i) {
+    quest::whisper("Of course. Tell me about the place that you remember.");
+    $client->Message(257, " ------- Select a Continent ------- ");
+    $client->Message(258, "-[".quest::saylink("Antonica", 1)."]");
+  }
+
   }
 }
 
