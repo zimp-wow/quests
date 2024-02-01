@@ -8,6 +8,7 @@ sub EVENT_SPAWN {
 
 sub EVENT_ENTER {
     if ($client->GetGM()) {
+        plugin::DoAnim("salute");
         quest::debug("Attempting to update attunement point...");
 
         my @tokens = split /:/, $npc->GetLastName();
