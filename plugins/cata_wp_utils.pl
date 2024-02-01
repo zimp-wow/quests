@@ -1,22 +1,22 @@
+my %suffix_to_pretty_name = (
+    'A' => 'Antonica',
+    'G' => 'Gunthak',
+    'O' => 'Odus',
+    'F' => 'Faydwer',
+    'K' => 'Kunark',
+    'V' => 'Velious',
+    'L' => 'Luclin',
+    'P' => 'The Planes',
+    'T' => 'Taelosia',
+    'D' => 'Discord',
+);
+
 sub get_suffixes {
     return ('A', 'G', 'O', 'F', 'K', 'V', 'L', 'P', 'T', 'D'); 
 }
 
 sub get_continent_by_suffix {
-    my ($suffix) = @_;
-    
-    my %suffix_to_pretty_name = (
-        'A' => 'Antonica',
-        'G' => 'Gunthak',
-        'O' => 'Odus',
-        'F' => 'Faydwer',
-        'K' => 'Kunark',
-        'V' => 'Velious',
-        'L' => 'Luclin',
-        'P' => 'The Planes',
-        'T' => 'Taelosia',
-        'D' => 'Discord',
-    );
+    my ($suffix) = @_;  
 
     return $suffix_to_pretty_name{$suffix} || $suffix;
 }
@@ -26,7 +26,7 @@ sub get_suffix_by_continent {
     
     my %suffix_by_continent;
     foreach my $suffix (keys %suffix_to_pretty_name) {
-        my $pretty_name = get_continent_by_suffix($suffix);
+        my $pretty_name = $suffix_to_pretty_name{$suffix};
         $suffix_by_continent{$pretty_name} = $suffix;
     }
 
