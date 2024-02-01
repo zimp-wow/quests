@@ -1,6 +1,9 @@
 sub EVENT_SAY {
 
-  my $zone_data = plugin::get_zone_data($client->AccountID());
+  my $continent_regex = join('|', map { quotemeta(get_continent_by_suffix($_)) } plugin::get_suffixes());
+  my $zone_data       = plugin::get_zone_data($client->AccountID());
+
+  quest::debug($continent_regex);
 
   if ($text=~/hail/i) {
     quest::say("Hello $name! Would you like to set your guild teleportation circle? The process is simple! 
