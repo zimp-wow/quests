@@ -46,7 +46,7 @@ sub EVENT_SAY {
           $client->Message(257, " ------- Select a Location ------- ");
           foreach my $key (keys %{$continent_data}) {
               my $value = $continent_data->{$key};
-              $client->Message(257, "-[" . quest::saylink($key, 0));
+              $client->Message(257, "-[ " . quest::saylink($key, 0));
           }
 
 
@@ -55,6 +55,9 @@ sub EVENT_SAY {
       }
   }
 
+  if (exists($flat_data->{$text})) {
+    $client->MovePC(quest::GetZoneID($flat_data->{$text}[0]), $flat_data->{$text}[1], $flat_data->{$text}[2], $flat_data->{$text}[3], $flat_data->{$text}[4]);
+  }
 
   }
 }
