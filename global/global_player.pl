@@ -87,7 +87,7 @@ $bazkey = $client->CharacterID() . "baz";
 
 	$maxlvl = $client->GetBucket("CharMaxLevel"); #Code for Max Level
 
-	if (!$maxlvl) {
+	if (!$maxlvl || $maxlvl eq "") {
 		$client->SetBucket("CharMaxlevel", 51); #By default, on initial log in (first time) we are setting Max Level to 51.
 	}
 
