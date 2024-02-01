@@ -2,6 +2,24 @@ sub get_suffixes {
     return ('A', 'O', 'F', 'K', 'V', 'L', 'P', 'T', 'D'); 
 }
 
+sub get_continent_by_suffix {
+    my ($suffix) = @_;
+    
+    my %suffix_to_pretty_name = (
+        'A' => 'Antonica & Gunthak',
+        'O' => 'Odus',
+        'F' => 'Faydwer',
+        'K' => 'Kunark',
+        'V' => 'Velious',
+        'L' => 'Luclin',
+        'P' => 'The Planes',
+        'T' => 'Taelosia',
+        'D' => 'The Realm of Discord',
+    );
+
+    return $suffix_to_pretty_name{$suffix} || $suffix;
+}
+
 # Get a map of zone data for each suffix
 sub get_zone_data {
     my ($accountID) = @_;
