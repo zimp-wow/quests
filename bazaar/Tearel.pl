@@ -2,7 +2,7 @@ sub EVENT_SAY {
 
   my $continent_regex = join('|', map { my $continent = plugin::get_continent_by_suffix($_); $continent =~ s/\s+//g; quotemeta($continent) } plugin::get_suffixes());
   my $zone_data       = plugin::get_zone_data($client->AccountID());
-  my $reverse = get_zone_data_elements($client->AccountID());
+  my $reverse = plugin::get_zone_data_elements($client->AccountID());
 
   quest::debug($continent_regex);
 
