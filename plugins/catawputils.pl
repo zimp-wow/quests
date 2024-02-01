@@ -382,7 +382,7 @@ sub deserialize_zone_data {
     my %data = ();
     foreach my $entry (split /:/, $string) {
         my @tokens = split /,/, $entry;
-        $data{$tokens[0]} = [ @tokens[1..5] ];
+        $data{$tokens[0]} = [ @tokens[1..$#tokens] ];
     }
     return \%data;
 }
