@@ -1,6 +1,45 @@
 sub EVENT_SAY {
+
+  my $continent_regex = join('|', map { my $continent = plugin::get_continent_by_suffix($_); $continent =~ s/\s+//g; quotemeta($continent) } plugin::get_suffixes());
+  my $zone_data       = plugin::get_zone_data($client->AccountID());
+
+  quest::debug($continent_regex);
+
   if ($text=~/hail/i) {
-    quest::say("$myvalue Hello $name! Would you like to set your guild teleportation circle? The process is simple! Purchase the teleportation stone of your choosing then give it to me. I will then enchant the map to take you to your destination! Simply click it and you will be gone!");
+    quest::say("Hello $name! Would you like to set your guild teleportation circle? The process is simple! 
+                Purchase the teleportation stone of your choosing then give it to me. I will then enchant 
+                the map to take you to your destination! Simply click it and you will be gone!");
+  }
+
+  if ($client->GetGM()) {
+
+  if ($text=~/hail/i) { 
+    quest::whisper("Hello $name! I here to transport you to whichever destination you require! I can sell you
+                    [teleportion stones] which can attune this magic map beside me to several notable locations 
+                    throughout Norrath. If you are a more experienced adventurer, I can [transport] you to 
+                    places that you have strong memories of.");
+  }
+
+  if ($text=~/teleportion stones/i) {
+    quest::whisper("Absolutely. The process is simple! Purchase the teleportation stone of your choosing 
+                    then give it to me. I will then enchant the map to take you to your destination! 
+                    Simply click it and you will be gone!");
+  }
+  if ($text=~/transport/i) {
+    quest::whisper("Of course. Tell me about the place that you remember.");
+    $client->Message(257, " ------- Select a Continent ------- ");
+    # Check for each suffix and add entries if valid zone data exists
+    foreach my $suffix (plugin::get_suffixes()) {
+        if (exists($zone_data->{$suffix}) && %{ $zone_data->{$suffix} }) {
+            $client->Message(257, "-[ " . quest::saylink(plugin::get_continent_by_suffix($suffix), 1));
+        }
+    }
+  }
+  if ($text =~ /^($continent_regex)$/i) {
+    my $continent = ucfirst(lc($1));
+    quest::whisper("Suffix: " . plugin::get_suffix_by_continent($continent));
+  }
+
   }
 }
 
