@@ -26,7 +26,7 @@ sub EVENT_SAY {
     quest::whisper("Of course. Tell me about the place that you remember.");
     $client->Message(257, " ------- Select a Continent ------- ");
     # Check for each suffix and add entries if valid zone data exists
-    foreach my $suffix (get_suffixes()) {
+    foreach my $suffix (plugin::get_suffixes()) {
         if (exists($zone_data->{$suffix}) && %{ $zone_data->{$suffix} }) {
             $client->Message(257, "-[ " . quest::saylink("Transport to $suffix", 1) . " ]");
         }
