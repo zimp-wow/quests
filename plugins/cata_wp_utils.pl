@@ -46,6 +46,30 @@ sub get_zone_data {
     return \%zone_data_by_suffix;
 }
 
+sub get_zone_data_elements {
+    my ($accountID) = @_;
+    my %all_elements;
+
+    # Get the nested hashes from get_zone_data
+    my $zone_data = get_zone_data($accountID);
+
+    foreach my $suffix (keys %{$zone_data}) {
+        my $teleport_zones = $zone_data->{$suffix};
+
+        foreach my $key (keys %{$teleport_zones}) {
+            my $zone_data_array = $teleport_zones->{$key};
+            
+            foreach my $element (@{$zone_data_array}) {
+                # Store the payload data for the location identifier
+                $all_elements{$key} = $element;
+                quest::debug("Storing $key with $element");
+            }
+        }
+    }
+
+    return \%all_elements;
+}
+
 # Check if a particular piece of data (by zone description) is present
 sub has_zone_entry {
     my ($accountID, $zone_desc, $suffix) = @_;
