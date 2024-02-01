@@ -46,7 +46,7 @@ sub EVENT_SAY {
           $client->Message(257, " ------- Select a Location ------- ");
           foreach my $key (keys %{$continent_data}) {
               my $value = $continent_data->{$key};
-              $client->Message(257, "-[" . quest::saylink($key, 1));
+              $client->Message(257, "-[" . quest::saylink($key, 0));
           }
 
 
