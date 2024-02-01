@@ -1,3 +1,20 @@
+sub get_suffixes {
+    return ('A', 'O', 'F', 'K', 'V', 'L', 'P', 'T', 'D'); 
+}
+
+# Get a map of zone data for each suffix
+sub get_zone_data {
+    my ($accountID) = @_;
+    my %zone_data_by_suffix;
+
+    foreach my $suffix (get_suffixes()) {
+        my $teleport_zones = get_zone_data_for_account($accountID, $suffix);
+        $zone_data_by_suffix{$suffix} = $teleport_zones;
+    }
+
+    return \%zone_data_by_suffix;
+}
+
 # Check if a particular piece of data (by zone description) is present
 sub has_zone_entry {
     my ($accountID, $zone_desc, $suffix) = @_;

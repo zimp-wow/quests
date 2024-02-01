@@ -1,4 +1,7 @@
 sub EVENT_SAY {
+
+  my $zone_data = get_zone_data($client->AccountID());
+
   if ($text=~/hail/i) {
     quest::say("Hello $name! Would you like to set your guild teleportation circle? The process is simple! 
                 Purchase the teleportation stone of your choosing then give it to me. I will then enchant 
@@ -22,7 +25,12 @@ sub EVENT_SAY {
   if ($text=~/transport/i) {
     quest::whisper("Of course. Tell me about the place that you remember.");
     $client->Message(257, " ------- Select a Continent ------- ");
-    $client->Message(257, "-[ ".quest::saylink("Antonica", 1));
+    # Check for each suffix and add entries if valid zone data exists
+    foreach my $suffix (get_suffixes()) {
+        if (exists($zone_data->{$suffix}) && %{ $zone_data->{$suffix} }) {
+            $client->Message(257, "-[ " . quest::saylink("Transport to $suffix", 1) . " ]");
+        }
+    }
   }
 
   }
