@@ -12,6 +12,11 @@ sub DeserializeList {
     return split(',', $string);
 }
 
+use List::Util qw(max);
+use List::Util qw(min);
+use POSIX;
+use JSON;
+
 # Serializer
 sub SerializeHash {
     my %hash = @_;
