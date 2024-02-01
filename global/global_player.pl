@@ -63,31 +63,31 @@ sub EVENT_CONNECT {
 
 $bazkey = $client->CharacterID() . "baz";
 
-if (quest::get_data($bazkey) == "") {
-	quest::summonitem(18471);
-    quest::set_data($bazkey, 1);
-	
-    $client->Message(15, "You have learned Bazaar Portal! Open up your AA window (Default V) to find it and other abilities!");
-	$client->IncrementAA(1000); #origin
-	$client->IncrementAA(12636); #Eyes Wide Open 1
-	$client->IncrementAA(12637); #2
-	$client->IncrementAA(8445); #3
-	$client->IncrementAA(8446); #4
-	$client->IncrementAA(8447); #5
-	$client->IncrementAA(16419); #6
-	$client->IncrementAA(16420); #7
-	$client->IncrementAA(16421); #8
-	$client->IncrementAA(1021); #Mystical Attuning 1
-	$client->IncrementAA(1022); #2
-	$client->IncrementAA(1023); #3
-	$client->IncrementAA(1024); #4
-	$client->IncrementAA(1025); #5
-    
-}
+	if (!quest::get_data($bazkey)) {
+		quest::summonitem(18471);
+		quest::set_data($bazkey, 1);
+		
+		$client->Message(15, "You have learned Bazaar Portal! Open up your AA window (Default V) to find it and other abilities!");
+		$client->IncrementAA(1000); #origin
+		$client->IncrementAA(12636); #Eyes Wide Open 1
+		$client->IncrementAA(12637); #2
+		$client->IncrementAA(8445); #3
+		$client->IncrementAA(8446); #4
+		$client->IncrementAA(8447); #5
+		$client->IncrementAA(16419); #6
+		$client->IncrementAA(16420); #7
+		$client->IncrementAA(16421); #8
+		$client->IncrementAA(1021); #Mystical Attuning 1
+		$client->IncrementAA(1022); #2
+		$client->IncrementAA(1023); #3
+		$client->IncrementAA(1024); #4
+		$client->IncrementAA(1025); #5
+		
+	}
 
 	$maxlvl = $client->GetBucket("CharMaxLevel"); #Code for Max Level
 
-	if (($maxlvl) == "") {
+	if (!$maxlvl) {
 		$client->SetBucket("CharMaxlevel", 51); #By default, on initial log in (first time) we are setting Max Level to 51.
 	}
 
