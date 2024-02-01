@@ -46,7 +46,7 @@ sub get_zone_data {
     return \%zone_data_by_suffix;
 }
 
-sub get_zone_data_elements {
+sub get_flat_data {
     my ($accountID) = @_;
     my %all_elements;
 
@@ -57,9 +57,7 @@ sub get_zone_data_elements {
         my $teleport_zones = $zone_data->{$suffix};
 
         foreach my $key (keys %{$teleport_zones}) {
-            $all_elements{$key} = $teleport_zones->{$key};
-            quest::debug("Storing $key with $all_elements{$key}");
-            
+            $all_elements{$key} = $teleport_zones->{$key};            
         }
     }
 

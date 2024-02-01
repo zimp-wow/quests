@@ -2,7 +2,7 @@ sub EVENT_SAY {
 
   my $continent_regex = join('|', map { my $continent = plugin::get_continent_by_suffix($_); $continent =~ s/\s+//g; quotemeta($continent) } plugin::get_suffixes());
   my $zone_data       = plugin::get_zone_data($client->AccountID());
-  my $reverse = plugin::get_zone_data_elements($client->AccountID());
+  my $flat_data       = plugin::get_flat_data($client->AccountID());
 
   quest::debug($continent_regex);
 
@@ -43,9 +43,9 @@ sub EVENT_SAY {
       my $continent_data = $zone_data->{$suffix};
 
       if ($continent_data && ref($continent_data) eq 'HASH') {
+          $client->Message(257, " ------- Select a Location ------- ");
           foreach my $key (keys %{$continent_data}) {
               my $value = $continent_data->{$key};
-
               $client->Message(257, "-[" . quest::saylink($key, 1));
           }
 
