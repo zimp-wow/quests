@@ -36,7 +36,8 @@ sub EVENT_SAY {
     }
   }
   if ($text =~ /^($continent_regex)$/i) {
-    quest::whisper("continent name captured");
+    my $continent = ucfirst(lc($1));
+    quest::whisper("Suffix: " . plugin::get_suffix_by_continent($continent));
   }
 
   }

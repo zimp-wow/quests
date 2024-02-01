@@ -15,10 +15,22 @@ sub get_continent_by_suffix {
         'L' => 'Luclin',
         'P' => 'The Planes',
         'T' => 'Taelosia',
-        'D' => 'The Realm of Discord',
+        'D' => 'Discord',
     );
 
     return $suffix_to_pretty_name{$suffix} || $suffix;
+}
+
+sub get_suffix_by_continent {
+    my ($continent) = @_;
+    
+    my %suffix_by_continent;
+    foreach my $suffix (keys %suffix_to_pretty_name) {
+        my $pretty_name = get_continent_by_suffix($suffix);
+        $suffix_by_continent{$pretty_name} = $suffix;
+    }
+
+    return $suffix_by_continent{$continent} || $continent;
 }
 
 # Get a map of zone data for each suffix
