@@ -6,7 +6,7 @@ my %suffix_to_pretty_name = (
     'K' => 'Kunark',
     'V' => 'Velious',
     'L' => 'Luclin',
-    'P' => 'The Planes',
+    'P' => 'Planes',
     'T' => 'Taelosia',
     'D' => 'Discord',
 );
