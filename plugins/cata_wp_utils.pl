@@ -57,9 +57,9 @@ sub get_zone_data_elements {
         my $teleport_zones = $zone_data->{$suffix};
 
         foreach my $key (keys %{$teleport_zones}) {
-                $all_elements{$key} = $teleport_zones->{$key};
-                quest::debug("Storing $key with $all_elements{$key}");
-            }
+            $all_elements{$key} = $teleport_zones->{$key};
+            quest::debug("Storing $key with $all_elements{$key}");
+            
         }
     }
 
