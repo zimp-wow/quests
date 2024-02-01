@@ -14,7 +14,7 @@ sub EVENT_SAY {
                     places that you have strong memories of.");
   }
 
-  if ($text=~/shards/i) {
+  if ($text=~/teleportion stones/i) {
     quest::whisper("Absolutely. The process is simple! Purchase the teleportation stone of your choosing 
                     then give it to me. I will then enchant the map to take you to your destination! 
                     Simply click it and you will be gone!");
@@ -22,7 +22,7 @@ sub EVENT_SAY {
   if ($text=~/transport/i) {
     quest::whisper("Of course. Tell me about the place that you remember.");
     $client->Message(257, " ------- Select a Continent ------- ");
-    $client->Message(258, "-[".quest::saylink("Antonica", 1)."]");
+    $client->Message(257, "-[ ".quest::saylink("Antonica", 1));
   }
 
   }
