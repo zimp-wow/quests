@@ -4,12 +4,10 @@ sub EVENT_SAY {
     quest::say("Thank you for coming to Crow's Casino! If you would like to try your luck at a game of chance, simply hand me 5,000 platinum pieces. If you'd rather wager five [Echo of Memory], I'll accept that, too.");
   }
   if($text=~/Echo of Memory/i) {
-    if ($client->GetAlternateCurrencyValue(6) < 5) {
-        quest::say("You don't have enough Echoes, my friend. Come back when you do!");
-    } else {
-        $client->SetAlternateCurrencyValue(6, $client->GetAlternateCurrencyValue(6) - 5);
-        $client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
+    if (plugin::SpendEOM($client, 5)) {
         GetRandomResult();
+    } else {
+        quest::say("You don't have enough Echoes, my friend. Come back when you do!");
     }
   }
 }

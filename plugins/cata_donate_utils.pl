@@ -11,9 +11,10 @@ sub SpendEOM {
         $client->SetAlternateCurrencyValue($eom_id, $eom_available - $amount); # Use $amount instead of hardcoding 5
         $client->Message(15, "You have SPENT $amount [".quest::varlink(46779)."]."); # Reflect the dynamic $amount
 
-        # Retrieve current log value, default to 0 if undefined, then add $amount
-        my $current_eom_spend = quest::get_data($eom_log) || 0; # Defaults to 0 if not previously set
-        quest::set_data($eom_log, $current_eom_spend + $amount); # Properly increment the log by $amount
+        if (!$client->GetGM()) {
+            my $current_eom_spend = quest::get_data($eom_log) || 0; # Defaults to 0 if not previously set
+            quest::set_data($eom_log, $current_eom_spend + $amount);
+        }
 
         return 1;
     }

@@ -101,19 +101,20 @@ sub EVENT_SAY {
 		if ($eom_available < 5) {
 			$response = "I'm sorry, $clientName. You don't have enough Echo of Memory, please return when you have enough to pay me.";
 		} elsif (my $random_result = get_random_glamour()) {
-			$client->SetAlternateCurrencyValue(6, $eom_available - 5);
-			$client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
-			$client->SummonItem($random_result);
 
-			# Deserialize the existing list of glamour IDs
-			my @glamour_list = DeserializeList($client->GetBucket("random_glamours"));
+			if (plugin::SpendEOM($client, 5)) {			
+				$client->SummonItem($random_result);
 
-			# Check if the new glamour ID is already in the list
-			unless (grep { $_ == $random_result } @glamour_list) {
-				# Add the new glamour ID to the list if it's not a duplicate
-				push(@glamour_list, $random_result);
-				# Serialize and store the updated list back into the bucket
-				$client->SetBucket("random_glamours", SerializeList(@glamour_list));
+				# Deserialize the existing list of glamour IDs
+				my @glamour_list = DeserializeList($client->GetBucket("random_glamours"));
+
+				# Check if the new glamour ID is already in the list
+				unless (grep { $_ == $random_result } @glamour_list) {
+					# Add the new glamour ID to the list if it's not a duplicate
+					push(@glamour_list, $random_result);
+					# Serialize and store the updated list back into the bucket
+					$client->SetBucket("random_glamours", SerializeList(@glamour_list));
+				}
 			}
 		}
 	}

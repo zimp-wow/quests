@@ -215,7 +215,7 @@ sub ApplyWorldWideBuff {
     if ($eom_avail < 5 && !$skip_payment) {
         return 0;
     } else {
-        if (!$skip_payment) { $client->SetAlternateCurrencyValue(6, $eom_avail - 5); }
+        if (!$skip_payment) { plugin::SpendEOM($client, 5); }
 
         my %buff_types = (
             43002 => "Experience Gain",
