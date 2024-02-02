@@ -83,6 +83,8 @@ sub EVENT_SAY {
             my $y = $flat_data->{$location}[2];
             my $z = $flat_data->{$location}[3];
             my $heading = $flat_data->{$location}[4];
+            
+            my $group = $client->GetGroup();
 
             if ($is_group_transport && $group) {
                 # Iterate over group members and transport them, excluding the client for now
