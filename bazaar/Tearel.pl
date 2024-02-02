@@ -116,40 +116,15 @@ sub EVENT_SAY {
   }
 }
 
-# Define a subroutine to return the shared portal destinations map
-sub get_portal_destinations {
-    return {
-        10092   => 'The Plane of Hate',
-        10094   => 'The Plane of Sky',
-        876000  => 'The Northern Plains of Karana',
-        876001  => 'East Commonlands',
-        876002  => 'The Lavastorm Mountains',
-        876003  => 'Toxxulia Forest',
-        876004  => 'The Greater Faydark',
-        876005  => 'The Dreadlands',
-        876006  => 'The Iceclad Ocean',
-        876007  => 'Cobalt Scar',
-        876009  => 'The Twilight Sea',
-        876010  => 'Stonebrunt Mountains',
-        876011  => 'Wall of Slaughter',
-        876012  => 'Barindu, Hanging Gardens',
-        88739   => 'The Plane of Time',
-        976015  => 'Field of Bone',
-        976014  => 'Western Wastes',
-        976013  => 'Scarlet Desert',
-        976010  => 'Everfrost',
-        976016  => 'Barindu',
-    };
-}
-
 sub EVENT_ITEM {
-    my %portal_destinations = %{ get_portal_destinations() };
+    my %portal_destinations = %{ plugin::get_portal_destinations() };
     
     foreach my $item (keys %portal_destinations) {
         if (plugin::check_handin(\%itemcount, $item => 1)) {
-            quest::setglobal("ghport", $item, 3, "H24");
+            # Set the destination using the item ID
+            quest::set_data("magic_map_target", $item); 
             quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-            quest::ze(15, "The Magic Map has been aligned to " . $portal_destinations{$item});
+            quest::ze(15, "The Magic Map has been aligned to " . $portal_destinations{$item}[0]);
             plugin::return_items(\%itemcount);
             return;
         }
@@ -159,23 +134,21 @@ sub EVENT_ITEM {
 }
 
 sub EVENT_ENTER {
-    my %destination_messages = %{ get_portal_destinations() };
+    my %destination_messages = %{ plugin::get_portal_destinations() };
 
     quest::debug("Trying proximity notification.");
     
     my $pc = $client;
     if ($pc) {
-        my $global_name = "ghport";
-        
-        if (defined $qglobals{$global_name}) {
-            my $destination_id = $qglobals{$global_name};
-            if (exists $destination_messages{$destination_id}) {
-                my $destination_name = $destination_messages{$destination_id};
-                $pc->Message(5, $npc->GetCleanName() . " says 'The Magic Map is currently aligned to " . $destination_name . ".'");
-            }
+        my $destination_id = quest::get_data("magic_map_target");
+        if ($destination_id && exists $destination_messages{$destination_id}) {
+            # Extract the destination name using the saved ID
+            my $destination_name = $destination_messages{$destination_id}[0];
+            $pc->Message(5, $npc->GetCleanName() . " says 'The Magic Map is currently aligned to " . $destination_name . ".'");
         }
     }
 }
+
 
 sub get_cost_for_level {
   my $client = plugin::val('$client');

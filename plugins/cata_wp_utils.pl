@@ -15,6 +15,30 @@ sub get_suffixes {
     return ('A', 'G', 'O', 'F', 'K', 'V', 'L', 'P', 'T', 'D'); 
 }
 
+sub get_portal_destinations {
+    return {
+        10092   => ['The Plane of Hate', 666, 186, -393, 656, 3],
+        10094   => ['The Plane of Sky', 674, 71, 539, 1384, -664],
+        876000  => ['The Northern Plains of Karana', 2708, 13, 1209, -3685, -5],
+        876001  => ['East Commonlands', 4176, 22, -140, -1520, 3],
+        876002  => ['The Lavastorm Mountains', 534, 27, 460, 460, -86],
+        876003  => ['Toxxulia Forest', 2707, 38, -916, -1510, -33],
+        876004  => ['The Greater Faydark', 2706, 54, -441, -2023, 4],
+        876005  => ['The Dreadlands', 2709, 86, 9658, 3047, 1052],
+        876006  => ['The Iceclad Ocean', 2284, 110, 385, 5321, -17],
+        876007  => ['Cobalt Scar', 2031, 117, -1634, -1065, 299],
+        876009  => ['The Twilight Sea', 3615, 170, -1028, 1338, 39],
+        876010  => ['Stonebrunt Mountains', 3794, 100, 673, -4531, 0],
+        876011  => ['Wall of Slaughter', 6180, 300, -943, 13, 130],
+        876012  => ['Barindu, Hanging Gardens', 5733, 283, 590, -1457, -123],
+        88739   => ['The Plane of Time', 20543, 219, 0, 110, 8],
+        976015  => ['Field of Bone', 11178, 78, 2802, 1194, -7],
+        976014  => ['Western Wastes', 111120, 120, 2307, 889, -21],
+        976013  => ['Scarlet Desert', 111175, 175, -1777, -956, -99],
+        976010  => ['Everfrost', 11130, 30, 590, -791, -54],
+    };
+}
+
 sub get_continent_by_suffix {
     my ($suffix) = @_;  
 
