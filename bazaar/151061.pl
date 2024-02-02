@@ -18,24 +18,24 @@ if ($client->GetGM()) {
             my $races = get_races();
             foreach my $id (sort { $a <=> $b } keys %$races) {
                 my $race_name = $races->{$id};
-                $client->Message(257, "-[ " . quest::saylink("RACECHANGE:".$id, 0, $race_name));
+                $client->Message(257, "-[ " . quest::saylink("RACECHANGE:".$id, 1, $race_name));
             }
         }
+    }   
 
-        if ($text =~ /^RACECHANGE:(\d+)$/i) {
-            if (plugin::SpendEOM($client, $race_change_cost)) {
-                my $race_id = $1;
-                my $races = get_races();
+    elsif ($text =~ /^RACECHANGE:(\d+)$/i) {
+        if (plugin::SpendEOM($client, $race_change_cost)) {
+            my $race_id = $1;
+            my $races = get_races();
 
-                if (exists $races->{$race_id}) {
-                    my $race_name = $races->{$race_id};
-                    quest::debug("Do racechange here");
-                } else {
-                    $client->Message(13, "An error occurred. Unable to change race to ID $race_id.");
-                }
+            if (exists $races->{$race_id}) {
+                my $race_name = $races->{$race_id};
+                quest::debug("Do racechange here");
             } else {
-                quest::say("Sadly, $name, you do not have sufficient Echoes of Memory to properly anchor yourself for this change. Perhaps you will return later.");
+                $client->Message(13, "An error occurred. Unable to change race to ID $race_id.");
             }
+        } else {
+            quest::say("Sadly, $name, you do not have sufficient Echoes of Memory to properly anchor yourself for this change. Perhaps you will return later.");
         }
     }
 }
