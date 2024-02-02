@@ -77,7 +77,7 @@ if ($client->GetGM()) {
         }
     }
 
-    elseif ($client->GetBucket("namechange_active")) {
+    elsif ($client->GetBucket("namechange_active")) {
         my @banlist = (
             'asshole', 'dick', 'bastard', 'whore', 'slut',
             'fag', 'dyke', 'cock', 'pussy', 
