@@ -38,7 +38,7 @@ sub EVENT_SAY {
 
       quest::debug("New capture group. $1, and $2");
 
-      if ($text =~ /^($continent_regex)$/i) {
+      if ($text =~ /^($continent_regex)(:group)?$/i) {
         my $continent = ucfirst(lc($1));
         my $suffix = plugin::get_suffix_by_continent($continent);
         my $continent_data = $zone_data->{$suffix};
