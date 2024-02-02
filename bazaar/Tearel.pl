@@ -89,11 +89,11 @@ sub EVENT_SAY {
                 for (my $count = 0; $count < $group->GroupCount(); $count++) {
                     my $player = $group->GetMember($count);
                     if ($player && $client->CharacterID() != $player->CharacterID()) {
-                        $player->MovePC($zone_id, $x, $y, $z, $heading);
+                        $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
                     }
                 }
                 # Move the client last to avoid premature script termination
-                $client->MovePC($zone_id, $x, $y, $z, $heading);
+                #$client->MovePC($zone_id, $x, $y, $z, $heading);
             } else {
                 # Individual transport for the client
                 $client->MovePC($zone_id, $x, $y, $z, $heading);
