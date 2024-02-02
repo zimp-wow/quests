@@ -161,7 +161,7 @@ sub EVENT_ITEM {
 sub EVENT_ENTER {
     my %destination_messages = %{ get_portal_destinations() };
     
-    my $pc = $entity_list->GetClientByCharID($signal);
+    my $pc = $client;
     if ($pc) {
         my $uguild_id = $pc->GuildID();
         my $global_name = "ghport$uguild_id";
