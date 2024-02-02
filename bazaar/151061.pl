@@ -49,12 +49,12 @@ if ($client->GetGM()) {
         }
     }
     
-    elsif ($text == $sex_word) {
+    elsif ($text eq $sex_word) {
         quest::say("Just [". quest::saylink("SEXCHANGE", 1, "say the word") ."], and for the price of a mere ". plugin::num2en($sex_change_cost) ." [". plugin::EOMLink() ."], I will adjust your form.");
         $client->Message(15, "WARNING: You will disconnect immediately upon changing your sex.");
     }
 
-    elsif ($text == "SEXCHANGE") {
+    elsif ($text eq "SEXCHANGE") {
         if (plugin::SpendEOM($client, $sex_change_cost)) {
             quest::permagender(!$client->GetGender());
         } else {
