@@ -2,7 +2,8 @@
 #(Body Modification)
 
 my $race_change_cost = 5;
-my $sex_change_cost = 5;
+my $sex_change_cost  = 5;
+my $name_change_cost = 5;
 
 sub EVENT_SAY {
 if ($client->GetGM()) {
@@ -15,7 +16,9 @@ if ($client->GetGM()) {
     }
 
     if ($text=~/hail/i) {
-        quest::say("Greetings, $name. Do you seek perfection? Are you [". quest::saylink("unhappy with your form", 1) ."]? Are you interested in embracing [". quest::saylink($sex_word, 1) ."]? Perhaps, instead you simply desire a [new identity] altogether?");
+        quest::say("Greetings, $name. Do you seek perfection? Are you [". quest::saylink("unhappy with your form", 1) ."]? 
+                    Are you interested in embracing [". quest::saylink($sex_word, 1) ."]? 
+                    Perhaps, instead you simply desire a [". quest::saylink("new identity", 1) ."] altogether?");
     }
 
     elsif ($text=~/unhappy with your form/i) {
@@ -33,7 +36,23 @@ if ($client->GetGM()) {
                 }
             }
         }
-    }   
+    }
+    
+    elsif ($text=~/new identity/i) {
+        quest::say("Sometimes, our memories of our past call to us. We can assume the names of our past or future selves, anchored in time.
+                    For a pittance, ". plugin::num2en($name_change_cost) ." [". plugin::EOMLink() ."], I can change the name that you present 
+                    to the world. Be aware, all will be made aware of this change for posterity. Do you [". quest::saylink("wish to continue", 1) ."]?");
+    }
+
+    elsif ($text=~/wish to continue/i) {
+        $client->Message(15, "The next line you say to ". $npc->GetCleanName() ." will be assessed as a potential new name. If it is valid and you have the Echoes of Memory available, your name will be changed. This state will remain active for 1 minute.");
+        $client->SetBucket("namechange_active", 1, 60s);
+    }
+
+    elsif ($text eq $sex_word) {
+        quest::say("Just [". quest::saylink("SEXCHANGE", 1, "say the word") ."], and for the price of a mere ". plugin::num2en($sex_change_cost) ." [". plugin::EOMLink() ."], I will adjust your form.");
+        $client->Message(15, "WARNING: You will disconnect immediately upon changing your sex.");
+    }
 
     elsif ($text =~ /^RACECHANGE:(\d+)$/i) {
         if (plugin::SpendEOM($client, $race_change_cost)) {
@@ -49,11 +68,6 @@ if ($client->GetGM()) {
             quest::say("Sadly, $name, you do not have sufficient Echoes of Memory to properly anchor yourself for this change. Perhaps you will return later.");
         }
     }
-    
-    elsif ($text eq $sex_word) {
-        quest::say("Just [". quest::saylink("SEXCHANGE", 1, "say the word") ."], and for the price of a mere ". plugin::num2en($sex_change_cost) ." [". plugin::EOMLink() ."], I will adjust your form.");
-        $client->Message(15, "WARNING: You will disconnect immediately upon changing your sex.");
-    }
 
     elsif ($text eq "SEXCHANGE") {
         if (plugin::SpendEOM($client, $sex_change_cost)) {
@@ -62,6 +76,41 @@ if ($client->GetGM()) {
             quest::say("Sadly, $name, you do not have sufficient Echoes of Memory to properly anchor yourself for this change. Perhaps you will return later.");
         }
     }
+
+    elseif ($client->GetBucket("namechange_active")) {
+        my @banlist = (
+            'asshole', 'dick', 'bastard', 'whore', 'slut',
+            'fag', 'dyke', 'cock', 'pussy', 
+            'nigger', 'chink', 'spic', 'gook', 'kike', 'faggot', 'queer', 'tranny',
+            'twat', 'wanker', 'prick', 'jizz', 'sperm', 'orgasm',
+            'rape', 'molest', 'abuse', 'grope', 'murder', 'kill', 'suicide', 'death',
+            'drug', 'cocaine', 'heroin', 'meth', 
+            'motherfucker', 'clit', 'bullshit', 'retard', 'retarded',
+            'douchebag', 'shithead', 'fuckface', 'asshat', 'cumshot', 'dildo', 
+            'masturbate', 'masturbation', 'nazi', 'hitler', 'satan', 'satanic',
+            'incest', 'pedophile', 'pedo', 'snuff', 'asslick', 'rimjob', 'blowjob',
+            'handjob', 'analsex', 'sodomize', 'sodomy', 'scum', 'prostitute', 
+            'porn', 'erotic', 'hooker', 'stripper',
+            'gangbang', 'threesome', 'sextoy', 'vibrator',
+            'homo', 'lesbo', 'lesbian', 'gay', 
+        );
+
+        if (length($text) > 2) {
+            my $contains_banned = 0;
+            foreach my $banned (@banlist) {
+                if (index($text, $banned) != -1) {
+                    $contains_banned = 1;
+                    last;
+                }
+            }
+
+            if (!$contains_banned && $text =~ /^[a-zA-Z]+$/) {
+                $text = ucfirst(lc($text));
+                quest::debug($text);
+            }
+        }
+    }
+
 }
 }
 
