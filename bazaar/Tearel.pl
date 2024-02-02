@@ -37,14 +37,20 @@ sub EVENT_SAY {
       my $is_group_transport = defined $2; # True if it's a group transport
 
       quest::debug("New capture group. $1, and $2");
+
+      if ($text =~ /^($continent_regex)$/i) {
+        my $continent = ucfirst(lc($1));
+        my $suffix = plugin::get_suffix_by_continent($continent);
+        my $continent_data = $zone_data->{$suffix};
       
-      # Check if we're in the stage of selecting a location
-      if ($continent_data && ref($continent_data) eq 'HASH') {
-          $client->Message(257, " ------- Select a Location ------- ");
-          foreach my $key (keys %{$continent_data}) {
-              my $mode_indicator = $is_group_transport ? ":group" : "";
-              $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 0, $key));
-          }
+        # Check if we're in the stage of selecting a location
+        if ($continent_data && ref($continent_data) eq 'HASH') {
+            $client->Message(257, " ------- Select a Location ------- ");
+            foreach my $key (keys %{$continent_data}) {
+                my $mode_indicator = $is_group_transport ? ":group" : "";
+                $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 0, $key));
+            }
+        }
       }
       
       # Execute transport when a specific location is selected
