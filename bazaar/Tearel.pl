@@ -29,7 +29,7 @@ sub EVENT_SAY {
     return;
   }
 
-  elsif ($text=~/Echo of Memory/i && !!$group_flg) {
+  elsif ($text=~/Echo of Memory/i && !$group_flg) {
     if ($eom_available >= 5) {
       quest::say("Simply [confirm] to me that you'd like to spend your Echoes in this way, and it will be done.");
     } else {
@@ -37,7 +37,7 @@ sub EVENT_SAY {
     }
   }
 
-  elsif ($text=~/confirm/ && !!$group_flg && $eom_available >= 5) {
+  elsif ($text=~/confirm/ && !$group_flg && $eom_available >= 5) {
       $client->SetAlternateCurrencyValue(6, $eom_available - 5);
 			$client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
       quest::say("Excellent! I can transport [your group], whenever you'd like");
