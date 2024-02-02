@@ -147,7 +147,7 @@ sub EVENT_ITEM {
     
     foreach my $item (keys %portal_destinations) {
         if (plugin::check_handin(\%itemcount, $item => 1)) {
-            quest::setglobal("ghport$uguild_id", $item, 3, "H24");
+            quest::setglobal("ghport", $item, 3, "H24");
             quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
             quest::ze(15, "The Magic Map has been aligned to " . $portal_destinations{$item});
             plugin::return_items(\%itemcount);
@@ -165,8 +165,7 @@ sub EVENT_ENTER {
     
     my $pc = $client;
     if ($pc) {
-        my $uguild_id = $pc->GuildID();
-        my $global_name = "ghport$uguild_id";
+        my $global_name = "ghport";
         
         if (defined $qglobals{$global_name}) {
             my $destination_id = $qglobals{$global_name};
