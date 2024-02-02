@@ -45,10 +45,10 @@ sub EVENT_SAY {
   }
 
   elsif ($text=~/confirm/ && !$group_flg && $eom_available >= 5) {
-      quest::set_data($client->AccountID() ."-group-ports-enabled",1);
-      $client->SetAlternateCurrencyValue(6, $eom_available - 5);
-			$client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
-      quest::say("Excellent! I can transport [your group], whenever you'd like.");
+    if (plugin::SpendEOM($client, 5)) {
+        quest::set_data($client->AccountID() ."-group-ports-enabled",1);
+        quest::say("Excellent! I can transport [your group], whenever you'd like.");
+    }
   }
 
   elsif ($text=~/transport you/i || ($text=~/your group/i  && $group_flg)) {
