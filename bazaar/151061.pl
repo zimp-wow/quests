@@ -6,6 +6,14 @@ my $race_change_cost = 5;
 sub EVENT_SAY {
 if ($client->GetGM()) {
     if ($text=~/hail/i) {
+        
+        my $sex;
+        if ($client->GetGender()) {
+            quest::debug("true");
+        } else {
+
+        }
+
         quest::say("Greetings, $name. Do you seek perfection? Are you [unhappy with your form]? Perhaps, instead you desire to [bestow a nickname] upon your companion?");
     }
 
@@ -13,7 +21,8 @@ if ($client->GetGM()) {
         quest::say("Just so. If you can properly anchor your memories - perhaps with ". plugin::num2en($race_change_cost) ." [". plugin::EOMLink() ."], I can adjust your form.
                     Be warned, this process is quite traumatic, and you will immediately black out.");
         if (plugin::GetEOM($client) > $race_change_cost) {
-            $client->Message(15, "Warning. You will disconnect immediately upon selecting a new race.");
+            $client->Message(15, "WARNING: You will disconnect immediately upon selecting a new race.");
+            $client->Message(15, "WARNING: You may select illegal races for your class. No support will be given for any problems caused as a result.");
             $client->Message(257, " ------- Select a Race ------- ");
             my $races = get_races();
             foreach my $id (sort { $a <=> $b } keys %$races) {
