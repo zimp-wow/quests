@@ -27,7 +27,7 @@ if ($client->GetGM()) {
         if (plugin::SpendEOM($client, $race_change_cost)) {
             my $race_id = $1;
             my $races = get_races();
-            if (exists $races->{$race_id}) {
+            if ($client->GetRace() != $race_id && exists $races->{$race_id}) {
                 my $race_name = $races->{$race_id};
                 quest::permarace($race_id);
             } else {
