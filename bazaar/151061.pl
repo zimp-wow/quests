@@ -46,7 +46,7 @@ if ($client->GetGM()) {
 
     elsif ($text=~/wish to continue/i) {
         $client->Message(15, "The next line you say to ". $npc->GetCleanName() ." will be assessed as a potential new name. If it is valid and you have the Echoes of Memory available, your name will be changed. This state will remain active for 1 minute.");
-        $client->SetBucket("namechange_active", 1, 60s);
+        $client->SetBucket("namechange_active", 1, '60s');
     }
 
     elsif ($text eq $sex_word) {
