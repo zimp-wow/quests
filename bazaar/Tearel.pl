@@ -4,14 +4,14 @@ sub EVENT_SAY {
   my $flat_data       = plugin::get_flat_data($client->AccountID());
 
   quest::debug($continent_regex);
-
-  #if ($client->GetGM()) {
-
+  
+  if ($client-GetGM()) {
   if ($text=~/hail/i) { 
     quest::say("Greetings $name! I can help you get to almost anywhere! I sell
                     [teleportion stones] which, when handed back to me, will attune this magic map 
                     to several notable places that I've visted before. If you are a more experienced adventurer however, 
-                    I can [transport] you to places that YOU have visted and attuned yourself to by discovering Runes.");
+                    I can [transport you] or your [group] to places that you have visted, in this life or in others, 
+                    and attuned yourself to by discovering Rune Circles.");
   }
 
   if ($text=~/teleportion stones/i) {
@@ -19,36 +19,87 @@ sub EVENT_SAY {
                     then give it to me. I will then enchant the map to take you to your destination! 
                     Simply click on the map afterwards and you will be off!");
   }
-  if ($text=~/transport/i) {
-    quest::say("Very good! Tell me about this place that you remember.");
+
+  if ($text=~/transport you/i || $text=~/group/i) {
     $client->Message(257, " ------- Select a Continent ------- ");
     # Check for each suffix and add entries if valid zone data exists
     foreach my $suffix (plugin::get_suffixes()) {
         if (exists($zone_data->{$suffix}) && %{ $zone_data->{$suffix} }) {
-            $client->Message(257, "-[ " . quest::saylink(plugin::get_continent_by_suffix($suffix), 1));
+            my $link_text = plugin::get_continent_by_suffix($suffix);
+            my $mode_indicator = $text =~ /group/i ? ":group" : "";
+            $client->Message(257, "-[ " . quest::saylink($link_text . $mode_indicator, 1, $link_text));
         }
     }
   }
 
-  if ($text =~ /^($continent_regex)$/i) {
-      my $continent = ucfirst(lc($1));
-      my $suffix = plugin::get_suffix_by_continent($continent);
-      my $continent_data = $zone_data->{$suffix};
-
-      if ($continent_data && ref($continent_data) eq 'HASH') {
-          $client->Message(257, " ------- Select a Location ------- ");
-          foreach my $key (keys %{$continent_data}) {
-              my $value = $continent_data->{$key};
-              $client->Message(257, "-[ " . quest::saylink($key, 0));
-          }
+  # Assuming this block is adjusted to generate saylinks with transport mode indicators
+  if ($continent_data && ref($continent_data) eq 'HASH') {
+      $client->Message(257, " ------- Select a Location ------- ");
+      foreach my $key (keys %{$continent_data}) {
+          my $mode_indicator = $is_group_transport ? ":group" : "";
+          $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 0, $key));
       }
   }
 
-  if (exists($flat_data->{$text})) {
-    $client->MovePC(quest::GetZoneID($flat_data->{$text}[0]), $flat_data->{$text}[1], $flat_data->{$text}[2], $flat_data->{$text}[3], $flat_data->{$text}[4]);
-  }
+  # Adjusted transport execution block
+  if ($text =~ /^(.+?)(:group)?$/) { # Capture the location and optional group indicator
+      my $location = $1;
+      my $is_group_transport = defined $2; # True if it's a group transport
 
-  #}
+      if (exists($flat_data->{$location})) {
+          if ($is_group_transport) {
+              # Handle group transport logic here
+              # For example, iterate over a group of players and move them
+              $client->Message(257, "Transporting group to $location");
+              # Placeholder for group transport logic
+          } else {
+              # Individual transport
+              $client->MovePC(quest::GetZoneID($flat_data->{$location}[0]), $flat_data->{$location}[1], $flat_data->{$location}[2], $flat_data->{$location}[3], $flat_data->{$location}[4]);
+          }
+      }
+  }
+  }  else {
+    if ($text=~/hail/i) { 
+      quest::say("Greetings $name! I can help you get to almost anywhere! I sell
+                      [teleportion stones] which, when handed back to me, will attune this magic map 
+                      to several notable places that I've visted before. If you are a more experienced adventurer however, 
+                      I can [transport] you to places that YOU have visted and attuned yourself to by discovering Runes.");
+    }
+
+    if ($text=~/teleportion stones/i) {
+      quest::say("Absolutely. The process is simple! Purchase the teleportation stone of your choosing 
+                      then give it to me. I will then enchant the map to take you to your destination! 
+                      Simply click on the map afterwards and you will be off!");
+    }
+    if ($text=~/transport/i) {
+      quest::say("Very good! Tell me about this place that you remember.");
+      $client->Message(257, " ------- Select a Continent ------- ");
+      # Check for each suffix and add entries if valid zone data exists
+      foreach my $suffix (plugin::get_suffixes()) {
+          if (exists($zone_data->{$suffix}) && %{ $zone_data->{$suffix} }) {
+              $client->Message(257, "-[ " . quest::saylink(plugin::get_continent_by_suffix($suffix), 1));
+          }
+      }
+    }
+
+    if ($text =~ /^($continent_regex)$/i) {
+        my $continent = ucfirst(lc($1));
+        my $suffix = plugin::get_suffix_by_continent($continent);
+        my $continent_data = $zone_data->{$suffix};
+
+        if ($continent_data && ref($continent_data) eq 'HASH') {
+            $client->Message(257, " ------- Select a Location ------- ");
+            foreach my $key (keys %{$continent_data}) {
+                my $value = $continent_data->{$key};
+                $client->Message(257, "-[ " . quest::saylink($key, 0));
+            }
+        }
+    }
+
+    if (exists($flat_data->{$text})) {
+      $client->MovePC(quest::GetZoneID($flat_data->{$text}[0]), $flat_data->{$text}[1], $flat_data->{$text}[2], $flat_data->{$text}[3], $flat_data->{$text}[4]);
+    }
+  }
 }
 
 sub EVENT_ITEM {
