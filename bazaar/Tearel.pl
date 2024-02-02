@@ -26,7 +26,7 @@ sub EVENT_SAY {
   elsif ($text=~/your group/i && !$group_flg) {
     quest::say("If you'd like for me to transport your group, I'll need a stronger connection to your memories. Bring me five
                 [Echo of Memory], and I can transport all of you any time you ask.");
-    return;
+    return; # Exit early.
   }
 
   elsif ($text=~/Echo of Memory/i && !$group_flg) {
@@ -38,6 +38,7 @@ sub EVENT_SAY {
   }
 
   elsif ($text=~/confirm/ && !$group_flg && $eom_available >= 5) {
+      quest::set_data($client->AccountID() ."-group-ports-enabled",1);
       $client->SetAlternateCurrencyValue(6, $eom_available - 5);
 			$client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
       quest::say("Excellent! I can transport [your group], whenever you'd like");
@@ -50,7 +51,7 @@ sub EVENT_SAY {
         if (exists($zone_data->{$suffix}) && %{ $zone_data->{$suffix} }) {
             my $link_text = plugin::get_continent_by_suffix($suffix);
             my $mode_indicator = $text =~ /group/i ? ":group" : "";
-            $client->Message(257, "-[ " . quest::saylink($link_text . $mode_indicator, 0, $link_text));
+            $client->Message(257, "-[ " . quest::saylink($link_text . $mode_indicator, 1, $link_text));
         }
     }
   }
@@ -70,20 +71,32 @@ sub EVENT_SAY {
               $client->Message(257, " ------- Select a Location ------- ");
               foreach my $key (keys %{$continent_data}) {
                   my $mode_indicator = $is_group_transport ? ":group" : "";
-                  $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 0, $key));
+                  $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 1, $key));
               }
           }
         }
         
         # Execute transport when a specific location is selected
         if (exists($flat_data->{$location})) {
-            if ($is_group_transport) {
-                # Group transport logic
-                $client->Message(257, "Transporting group to $location");
-                # Implement the actual group transport logic here
+            my $zone_id = quest::GetZoneID($flat_data->{$location}[0]);
+            my $x = $flat_data->{$location}[1];
+            my $y = $flat_data->{$location}[2];
+            my $z = $flat_data->{$location}[3];
+            my $heading = $flat_data->{$location}[4];
+
+            if ($is_group_transport && $group) {
+                # Iterate over group members and transport them, excluding the client for now
+                for (my $count = 0; $count < $group->GroupCount(); $count++) {
+                    my $player = $group->GetMember($count);
+                    if ($player && $client->CharacterID() != $player->CharacterID()) {
+                        $player->MovePC($zone_id, $x, $y, $z, $heading);
+                    }
+                }
+                # Move the client last to avoid premature script termination
+                $client->MovePC($zone_id, $x, $y, $z, $heading);
             } else {
-                # Individual transport
-                $client->MovePC(quest::GetZoneID($flat_data->{$location}[0]), $flat_data->{$location}[1], $flat_data->{$location}[2], $flat_data->{$location}[3], $flat_data->{$location}[4]);
+                # Individual transport for the client
+                $client->MovePC($zone_id, $x, $y, $z, $heading);
             }
         }
       }
