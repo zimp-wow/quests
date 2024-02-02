@@ -71,7 +71,7 @@ sub EVENT_SAY {
               $client->Message(257, " ------- Select a Location ------- ");
               foreach my $key (keys %{$continent_data}) {
                   my $mode_indicator = $is_group_transport ? ":group" : "";
-                  $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 1, $key));
+                  $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 0, $key));
               }
           }
         }
