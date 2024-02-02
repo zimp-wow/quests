@@ -35,6 +35,8 @@ sub EVENT_SAY {
   elsif ($text =~ /^(.+?)(:group)?$/) { # Capture the location and optional group indicator
       my $location = $1; # This captures the actual location name
       my $is_group_transport = defined $2; # True if it's a group transport
+
+      quest::debug("New capture group. $1, and $2");
       
       # Check if we're in the stage of selecting a location
       if ($continent_data && ref($continent_data) eq 'HASH') {
