@@ -18,7 +18,8 @@ if ($client->GetGM()) {
     if ($text=~/hail/i) {
         quest::say("Greetings, $name. Do you seek perfection? Are you [". quest::saylink("unhappy with your form", 1) ."]? 
                     Are you interested in embracing [". quest::saylink($sex_word, 1) ."]? 
-                    Perhaps, instead you simply desire a [". quest::saylink("new identity", 1) ."] altogether?");
+                    Perhaps, instead you simply desire a [". quest::saylink("new identity", 1) ."] altogether? 
+                    Or... lastly, maybe you just seek to [". quest::saylink("name your companion", 1) ."]?");
     }
 
     elsif ($text=~/unhappy with your form/i) {
@@ -44,15 +45,32 @@ if ($client->GetGM()) {
                     to the world. Be aware, all will be made aware of this change for posterity. Do you [". quest::saylink("wish to continue", 1) ."]?");
     }
 
+    elsif ($text=~/name your companion/i) {
+        
+    }
+
     elsif ($text=~/wish to continue/i) {
         if (plugin::SpendEOM($client, $name_change_cost)) {
+            quest::say("I wait with bated breath... although, if you'd rather [". quest::saylink("keep this interaction between me and you", 1) ."], 
+                        that can be arranged for an additional ". plugin::num2en($name_change_cost) ." Echo of Memory.");
             $client->Message(15, "The next line you say to ". $npc->GetCleanName() ." will be assessed as a potential new name. 
-                                If it is valid and you have the Echoes of Memory available, your name will be changed. 
-                                This state will remain active indefinitely, say 'Cancel' to get a refund of your EoM.");
+                                  If it is valid and you have the Echoes of Memory available, your name will be changed. 
+                                  This state will remain active indefinitely, say 'Cancel' to get a refund of your EoM.");
             $client->SetBucket("namechange_active", 1);
         } else {
             quest::say("Sadly, $name, you do not have sufficient Echoes of Memory to properly anchor yourself for this change. Perhaps you will return later.");
         }
+    }
+
+    elsif ($text=~/keep this interaction between me and you/i) {
+        
+        if (plugin::SpendEOM($client, $name_change_cost)) {
+            quest::whisper("Noted. Please continue.");
+            $client->SetBucket("namechange_active", 2);
+        } else {
+            quest::whisper("Sadly, $name, you make promises that you cannot keep. Ask this of me again when you have more Echoes of Memory.");
+        }
+        
     }
 
     elsif ($text eq $sex_word) {
@@ -85,9 +103,10 @@ if ($client->GetGM()) {
 
     elsif ($client->GetBucket("namechange_active")) {
         if (lc($text) eq 'cancel') {
+            plugin::RefundEOM($client, $name_change_cost * $client->GetBucket("namechange_active"));
+            $client->Message(15, "Your namechange has been cancelled.");            
             $client->DeleteBucket("namechange_active");
-            $client->Message(15, "Your namechange has been cancelled.");
-            plugin::RefundEOM($client, $name_change_cost);
+            return;
         }
 
         my @banlist = (
@@ -116,10 +135,30 @@ if ($client->GetGM()) {
                 }
             }
 
-            if (!$contains_banned && $text =~ /^[a-zA-Z]+$/) {
+            if (!$contains_banned && $text =~ /^[a-zA-Z]+$/ && $client->GetBucket("namechange_active") <= 2) {
                 $text = ucfirst(lc($text));
-                $client->DeleteBucket("namechange_active");
-                quest::rename($text);
+                my $dbh = plugin::LoadMysql();
+                my $sth = $dbh->prepare("SELECT COUNT(*) FROM character_data WHERE name = ?");
+
+                $sth->execute($text);
+                my ($name_count) = $sth->fetchrow_array();
+
+                if ($name_count > 0) {
+                    $client->Message(15, "The name $text is already taken. Please choose another name.");
+                } else {
+                    my $old_name = $client->GetCleanName();
+
+                    quest::rename($text);
+                    if ($client->GetBucket("namechange_active") < 2) {
+                        quest::discordsend("ooc", $old_name . " has chosen to rename themselves to $text. Hail, " . $text .".");                        
+                    }
+                    quest::discordsend("namelog", "Namechange: $old_name -> $text");
+                    $client->DeleteBucket("namechange_active");
+                }
+            } 
+            
+            elsif ($client->GetBucket("namechange_active") > 2) {
+
             }
         }
     }
