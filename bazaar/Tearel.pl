@@ -160,6 +160,8 @@ sub EVENT_ITEM {
 
 sub EVENT_ENTER {
     my %destination_messages = %{ get_portal_destinations() };
+
+    quest::debug("Trying proximity notification.");
     
     my $pc = $client;
     if ($pc) {
