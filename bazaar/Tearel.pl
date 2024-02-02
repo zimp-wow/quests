@@ -2,6 +2,9 @@ sub EVENT_SAY {
   my $continent_regex = join('|', map { my $continent = plugin::get_continent_by_suffix($_); $continent =~ s/\s+//g; quotemeta($continent) } plugin::get_suffixes());
   my $zone_data       = plugin::get_zone_data($client->AccountID());
   my $flat_data       = plugin::get_flat_data($client->AccountID());
+  my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled");
+  
+  my $eom_available   = $client->GetAlternateCurrencyValue(6);
 
   quest::debug($continent_regex);
   
@@ -20,7 +23,27 @@ sub EVENT_SAY {
                     Simply click on the map afterwards and you will be off!");
   }
 
-  elsif ($text=~/transport you/i || $text=~/your group/i) {
+  elsif ($text=~/your group/i && !$group_flg) {
+    quest::say("If you'd like for me to transport your group, I'll need a stronger connection to your memories. Bring me five
+                [Echo of Memory], and I can transport all of you any time you ask.");
+    return;
+  }
+
+  elsif ($text=~/Echo of Memory/i && !!$group_flg) {
+    if ($eom_available >= 5) {
+      quest::say("Simply [confirm] to me that you'd like to spend your Echoes in this way, and it will be done.");
+    } else {
+      quest::say("I'm sorry, but you don't have enough Echoes in order to resonante with those memories at the moment.");
+    }
+  }
+
+  elsif ($text=~/confirm/ && !!$group_flg && $eom_available >= 5) {
+      $client->SetAlternateCurrencyValue(6, $eom_available - 5);
+			$client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
+      quest::say("Excellent! I can transport [your group], whenever you'd like");
+  }
+
+  elsif ($text=~/transport you/i || ($text=~/your group/i  && $group_flg)) {
     $client->Message(257, " ------- Select a Continent ------- ");
     # Check for each suffix and add entries if valid zone data exists
     foreach my $suffix (plugin::get_suffixes()) {
@@ -36,33 +59,33 @@ sub EVENT_SAY {
       my $location = $1; # This captures the actual location name
       my $is_group_transport = defined $2; # True if it's a group transport
 
-      quest::debug("New capture group. $1, and $2");
-
-      if ($text =~ /^($continent_regex)(:group)?$/i) {
-        my $continent = ucfirst(lc($1));
-        my $suffix = plugin::get_suffix_by_continent($continent);
-        my $continent_data = $zone_data->{$suffix};
-      
-        # Check if we're in the stage of selecting a location
-        if ($continent_data && ref($continent_data) eq 'HASH') {
-            $client->Message(257, " ------- Select a Location ------- ");
-            foreach my $key (keys %{$continent_data}) {
-                my $mode_indicator = $is_group_transport ? ":group" : "";
-                $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 0, $key));
+      if (!$is_group_transport || $group_flg) {
+        if ($text =~ /^($continent_regex)(:group)?$/i) {
+          my $continent = ucfirst(lc($1));
+          my $suffix = plugin::get_suffix_by_continent($continent);
+          my $continent_data = $zone_data->{$suffix};
+        
+          # Check if we're in the stage of selecting a location
+          if ($continent_data && ref($continent_data) eq 'HASH') {
+              $client->Message(257, " ------- Select a Location ------- ");
+              foreach my $key (keys %{$continent_data}) {
+                  my $mode_indicator = $is_group_transport ? ":group" : "";
+                  $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 0, $key));
+              }
+          }
+        }
+        
+        # Execute transport when a specific location is selected
+        if (exists($flat_data->{$location})) {
+            if ($is_group_transport) {
+                # Group transport logic
+                $client->Message(257, "Transporting group to $location");
+                # Implement the actual group transport logic here
+            } else {
+                # Individual transport
+                $client->MovePC(quest::GetZoneID($flat_data->{$location}[0]), $flat_data->{$location}[1], $flat_data->{$location}[2], $flat_data->{$location}[3], $flat_data->{$location}[4]);
             }
         }
-      }
-      
-      # Execute transport when a specific location is selected
-      if (exists($flat_data->{$location})) {
-          if ($is_group_transport) {
-              # Group transport logic
-              $client->Message(257, "Transporting group to $location");
-              # Implement the actual group transport logic here
-          } else {
-              # Individual transport
-              $client->MovePC(quest::GetZoneID($flat_data->{$location}[0]), $flat_data->{$location}[1], $flat_data->{$location}[2], $flat_data->{$location}[3], $flat_data->{$location}[4]);
-          }
       }
   }
 
