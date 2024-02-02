@@ -6,6 +6,8 @@ sub EVENT_SAY {
   
   my $eom_available   = $client->GetAlternateCurrencyValue(6);
 
+  my $cost            = 1000 * get_cost_for_level();
+
   quest::debug($continent_regex);
   
   if ($client->GetGM()) {
@@ -41,10 +43,11 @@ sub EVENT_SAY {
       quest::set_data($client->AccountID() ."-group-ports-enabled",1);
       $client->SetAlternateCurrencyValue(6, $eom_available - 5);
 			$client->Message(15, "You have SPENT 5 [".quest::varlink(46779)."].");
-      quest::say("Excellent! I can transport [your group], whenever you'd like");
+      quest::say("Excellent! I can transport [your group], whenever you'd like.");
   }
 
   elsif ($text=~/transport you/i || ($text=~/your group/i  && $group_flg)) {
+    quest::say("Very good! Tell me about this place that you remember. This transportation will cost " . get_cost_for_level() . " platinum pieces.");
     $client->Message(257, " ------- Select a Continent ------- ");
     # Check for each suffix and add entries if valid zone data exists
     foreach my $suffix (plugin::get_suffixes()) {
@@ -86,19 +89,23 @@ sub EVENT_SAY {
             
             my $group = $client->GetGroup();
 
-            if ($is_group_transport && $group) {
-                # Iterate over group members and transport them, excluding the client for now
-                for (my $count = 0; $count < $group->GroupCount(); $count++) {
-                    my $player = $group->GetMember($count);
-                    if ($player && $client->CharacterID() != $player->CharacterID()) {
-                        $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
-                    }
-                }
-                # Move the client last to avoid premature script termination
-                #$client->MovePC($zone_id, $x, $y, $z, $heading);
+            if ($client->TakeMoneyFromPP($cost, 1)) { 
+              if ($is_group_transport && $group) {
+                  # Iterate over group members and transport them, excluding the client for now
+                  for (my $count = 0; $count < $group->GroupCount(); $count++) {
+                      my $player = $group->GetMember($count);
+                      if ($player && $client->CharacterID() != $player->CharacterID()) {
+                          $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
+                      }
+                  }
+                  # Move the client last to avoid premature script termination
+                  #$client->MovePC($zone_id, $x, $y, $z, $heading);
+              } else {
+                  # Individual transport for the client
+                  $client->MovePC($zone_id, $x, $y, $z, $heading);
+              }
             } else {
-                # Individual transport for the client
-                $client->MovePC($zone_id, $x, $y, $z, $heading);
+              quest::say("I'm sorry, but you don't have enough platinum to pay for this transport.");
             }
         }
       }
@@ -325,5 +332,21 @@ sub EVENT_SIGNAL {
     } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 88740) { #brellsrest
       $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Brell\'s Rest.\'');  
     }
+  }
+}
+
+sub get_cost_for_level {
+  my $client = plugin::val('$client');
+  my $level  = $client->GetLevel();
+
+  my %cost_map = (
+    0  => 10,  # Default for levels 1-50
+    51 => 25,  # Cost for levels 51-60
+    61 => 75,  # Cost for levels 61-65
+    66 => 150, # Cost for levels above 65
+  );
+
+  for my $threshold (sort { $b <=> $a } keys %cost_map) {
+    return $cost_map{$threshold} if $level >= $threshold;
   }
 }
