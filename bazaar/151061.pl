@@ -1,7 +1,7 @@
 #Sulentia, Polymorphist
 #(Body Modification)
 
-my $race_change_cost = 5;
+my $race_change_cost = 10;
 my $sex_change_cost  = 5;
 my $name_change_cost = 5;
 
@@ -39,7 +39,7 @@ if ($client->GetGM()) {
     }
     
     elsif ($text=~/new identity/i) {
-        quest::say("Sometimes, our memories of our past call to us. We can assume the names of our past or future selves, anchored in time.
+        quest::say("Sometimes, the memories of our past call to us. We can assume the names of our past or future selves, anchored in time.
                     For a pittance, ". plugin::num2en($name_change_cost) ." [". plugin::EOMLink() ."], I can change the name that you present 
                     to the world. Be aware, all will be made aware of this change for posterity. Do you [". quest::saylink("wish to continue", 1) ."]?");
     }
