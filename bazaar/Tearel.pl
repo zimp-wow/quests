@@ -27,7 +27,7 @@ sub EVENT_SAY {
         if (exists($zone_data->{$suffix}) && %{ $zone_data->{$suffix} }) {
             my $link_text = plugin::get_continent_by_suffix($suffix);
             my $mode_indicator = $text =~ /group/i ? ":group" : "";
-            $client->Message(257, "-[ " . quest::saylink($link_text . $mode_indicator, 1, $link_text));
+            $client->Message(257, "-[ " . quest::saylink($link_text . $mode_indicator, 0, $link_text));
         }
     }
   }
