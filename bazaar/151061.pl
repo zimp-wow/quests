@@ -15,7 +15,7 @@ if ($client->GetGM()) {
     }
 
     if ($text=~/hail/i) {
-        quest::say("Greetings, $name. Do you seek perfection? Are you [unhappy with your form]? Are you interested in embracing [$sex_word]? Perhaps, instead you simply desire a [new identity] altogether?");
+        quest::say("Greetings, $name. Do you seek perfection? Are you [". quest::saylink("unhappy with your form", 1) ."]? Are you interested in embracing [". quest::saylink($sex_word, 1) ."]? Perhaps, instead you simply desire a [new identity] altogether?");
     }
 
     elsif ($text=~/unhappy with your form/i) {
@@ -50,7 +50,7 @@ if ($client->GetGM()) {
         }
     }
     
-    elsif ($text == $sex_word) {
+    elsif ($text eq $sex_word) {
         quest::say("Just [". quest::saylink("SEXCHANGE", 1, "say the word") ."], and for the price of a mere ". plugin::num2en($sex_change_cost) ." [". plugin::EOMLink() ."], I will adjust your form.");
         $client->Message(15, "WARNING: You will disconnect immediately upon changing your sex.");
     }
