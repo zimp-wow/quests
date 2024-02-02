@@ -1,14 +1,3 @@
-sub EVENT_ENTERZONE {
-  quest::settimer("ZoneIn", 3);
-}
-
-sub EVENT_TIMER {
-  if ($timer eq "ZoneIn") {
-    quest::stoptimer("ZoneIn");
-    quest::signalwith(12000173,$charid); # NPC: Zeflmin_Werlikanin Portal Crystals
-  }
-}
-
 sub EVENT_CLICKDOOR {
     my %portal_destinations = %{ plugin::get_portal_destinations() };
     my $destination         = quest::get_data("magic_map_target");
