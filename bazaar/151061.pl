@@ -26,7 +26,7 @@ if ($client->GetGM()) {
                     Be warned, this process is quite traumatic, and you will immediately black out.");
         if (plugin::GetEOM($client) > $race_change_cost) {
             $client->Message(15, "WARNING: You will disconnect immediately upon selecting a new race.");
-            $client->Message(15, "WARNING: You may select illegal races for your class. No support will be given for any problems caused as a result.");
+            $client->Message(15, "WARNING: You may select illegal races for your class. No support will be provided for any problems caused as a result.");
             $client->Message(257, " ------- Select a Race ------- ");
             my $races = get_races();
             foreach my $id (sort { $a <=> $b } keys %$races) {
@@ -45,8 +45,14 @@ if ($client->GetGM()) {
     }
 
     elsif ($text=~/wish to continue/i) {
-        $client->Message(15, "The next line you say to ". $npc->GetCleanName() ." will be assessed as a potential new name. If it is valid and you have the Echoes of Memory available, your name will be changed. This state will remain active for 1 minute.");
-        $client->SetBucket("namechange_active", 1, '60s');
+        if (plugin::SpendEOM($client, $name_change_cost)) {
+            $client->Message(15, "The next line you say to ". $npc->GetCleanName() ." will be assessed as a potential new name. 
+                                If it is valid and you have the Echoes of Memory available, your name will be changed. 
+                                This state will remain active indefinitely, say 'Cancel' to get a refund of your EoM.");
+            $client->SetBucket("namechange_active", 1);
+        } else {
+            quest::say("Sadly, $name, you do not have sufficient Echoes of Memory to properly anchor yourself for this change. Perhaps you will return later.");
+        }
     }
 
     elsif ($text eq $sex_word) {
@@ -78,6 +84,12 @@ if ($client->GetGM()) {
     }
 
     elsif ($client->GetBucket("namechange_active")) {
+        if (lc($text) eq 'cancel') {
+            $client->DeleteBucket("namechange_active");
+            $client->Message(15, "Your namechange has been cancelled.");
+            plugin::RefundEOM($client, $name_change_cost);
+        }
+
         my @banlist = (
             'asshole', 'dick', 'bastard', 'whore', 'slut',
             'fag', 'dyke', 'cock', 'pussy', 
@@ -85,7 +97,7 @@ if ($client->GetGM()) {
             'twat', 'wanker', 'prick', 'jizz', 'sperm', 'orgasm',
             'rape', 'molest', 'abuse', 'grope', 'murder', 'kill', 'suicide', 'death',
             'drug', 'cocaine', 'heroin', 'meth', 
-            'motherfucker', 'clit', 'bullshit', 'retard', 'retarded',
+            'motherfucker', 'clit', 'bullshit', 'retard',
             'douchebag', 'shithead', 'fuckface', 'asshat', 'cumshot', 'dildo', 
             'masturbate', 'masturbation', 'nazi', 'hitler', 'satan', 'satanic',
             'incest', 'pedophile', 'pedo', 'snuff', 'asslick', 'rimjob', 'blowjob',
