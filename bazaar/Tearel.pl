@@ -144,7 +144,7 @@ sub EVENT_ENTER {
         if ($destination_id && exists $destination_messages{$destination_id}) {
             # Extract the destination name using the saved ID
             my $destination_name = $destination_messages{$destination_id}[0];
-            $pc->Message(5, $npc->GetCleanName() . " says 'The Magic Map is currently aligned to " . $destination_name . ".'");
+            $pc->Message(0, $npc->GetCleanName() . " says 'The Magic Map is currently aligned to " . $destination_name . ".'");
         }
     }
 }
