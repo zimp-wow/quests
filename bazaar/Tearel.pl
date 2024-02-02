@@ -10,17 +10,17 @@ sub EVENT_SAY {
     quest::say("Greetings $name! I can help you get to almost anywhere! I sell
                     [teleportion stones] which, when handed back to me, will attune this magic map 
                     to several notable places that I've visted before. If you are a more experienced adventurer however, 
-                    I can [transport you] or your [group] to places that you have visted, in this life or in others, 
+                    I can [transport you] or [your group] to places that you have visted, in this life or in others, 
                     and attuned yourself to by discovering Rune Circles.");
   }
 
-  if ($text=~/teleportion stones/i) {
+  elsif ($text=~/teleportion stones/i) {
     quest::say("Absolutely. The process is simple! Purchase the teleportation stone of your choosing 
                     then give it to me. I will then enchant the map to take you to your destination! 
                     Simply click on the map afterwards and you will be off!");
   }
 
-  if ($text=~/transport you/i || $text=~/group/i) {
+  elsif ($text=~/transport you/i || $text=~/your group/i) {
     $client->Message(257, " ------- Select a Continent ------- ");
     # Check for each suffix and add entries if valid zone data exists
     foreach my $suffix (plugin::get_suffixes()) {
@@ -33,7 +33,7 @@ sub EVENT_SAY {
   }
 
   # Assuming this block is adjusted to generate saylinks with transport mode indicators
-  if ($continent_data && ref($continent_data) eq 'HASH') {
+  elsif ($continent_data && ref($continent_data) eq 'HASH') {
       $client->Message(257, " ------- Select a Location ------- ");
       foreach my $key (keys %{$continent_data}) {
           my $mode_indicator = $is_group_transport ? ":group" : "";
@@ -42,7 +42,7 @@ sub EVENT_SAY {
   }
 
   # Adjusted transport execution block
-  if ($text =~ /^(.+?)(:group)?$/) { # Capture the location and optional group indicator
+  elsif ($text =~ /^(.+?)(:group)?$/) { # Capture the location and optional group indicator
       my $location = $1;
       my $is_group_transport = defined $2; # True if it's a group transport
 
