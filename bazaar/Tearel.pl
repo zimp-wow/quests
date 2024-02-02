@@ -5,7 +5,7 @@ sub EVENT_SAY {
 
   quest::debug($continent_regex);
   
-  if ($client-GetGM()) {
+  if ($client->GetGM()) {
   if ($text=~/hail/i) { 
     quest::say("Greetings $name! I can help you get to almost anywhere! I sell
                     [teleportion stones] which, when handed back to me, will attune this magic map 
