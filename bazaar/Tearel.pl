@@ -8,9 +8,6 @@ sub EVENT_SAY {
 
   my $cost            = 1000 * get_cost_for_level();
 
-  quest::debug($continent_regex);
-  
-  if ($client->GetGM()) {
   if ($text=~/hail/i) { 
     quest::say("Greetings $name! I can help you get to almost anywhere! I sell
                     [teleportion stones] which, when handed back to me, will attune this magic map 
@@ -60,97 +57,53 @@ sub EVENT_SAY {
   }
 
   elsif ($text =~ /^(.+?)(:group)?$/) { # Capture the location and optional group indicator
-      my $location = $1; # This captures the actual location name
-      my $is_group_transport = defined $2; # True if it's a group transport
+    my $location = $1; # This captures the actual location name
+    my $is_group_transport = defined $2; # True if it's a group transport
 
-      if (!$is_group_transport || $group_flg) {
-        if ($text =~ /^($continent_regex)(:group)?$/i) {
-          my $continent = ucfirst(lc($1));
-          my $suffix = plugin::get_suffix_by_continent($continent);
-          my $continent_data = $zone_data->{$suffix};
-        
-          # Check if we're in the stage of selecting a location
-          if ($continent_data && ref($continent_data) eq 'HASH') {
-              $client->Message(257, " ------- Select a Location ------- ");
-              foreach my $key (keys %{$continent_data}) {
-                  my $mode_indicator = $is_group_transport ? ":group" : "";
-                  $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 0, $key));
-              }
-          }
-        }
-        
-        # Execute transport when a specific location is selected
-        if (exists($flat_data->{$location})) {
-            my $zone_id = quest::GetZoneID($flat_data->{$location}[0]);
-            my $x = $flat_data->{$location}[1];
-            my $y = $flat_data->{$location}[2];
-            my $z = $flat_data->{$location}[3];
-            my $heading = $flat_data->{$location}[4];
-            
-            my $group = $client->GetGroup();
-
-            if ($client->TakeMoneyFromPP($cost, 1)) { 
-              if ($is_group_transport && $group) {
-                  # Iterate over group members and transport them, excluding the client for now
-                  for (my $count = 0; $count < $group->GroupCount(); $count++) {
-                      my $player = $group->GetMember($count);
-                      if ($player && $client->CharacterID() != $player->CharacterID()) {
-                          $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
-                      }
-                  }
-                  # Move the client last to avoid premature script termination
-                  #$client->MovePC($zone_id, $x, $y, $z, $heading);
-              } else {
-                  # Individual transport for the client
-                  $client->MovePC($zone_id, $x, $y, $z, $heading);
-              }
-            } else {
-              quest::say("I'm sorry, but you don't have enough platinum to pay for this transport.");
-            }
-        }
-      }
-  }
-
-  }  else {
-    if ($text=~/hail/i) { 
-      quest::say("Greetings $name! I can help you get to almost anywhere! I sell
-                      [teleportion stones] which, when handed back to me, will attune this magic map 
-                      to several notable places that I've visted before. If you are a more experienced adventurer however, 
-                      I can [transport] you to places that YOU have visted and attuned yourself to by discovering Runes.");
-    }
-
-    if ($text=~/teleportion stones/i) {
-      quest::say("Absolutely. The process is simple! Purchase the teleportation stone of your choosing 
-                      then give it to me. I will then enchant the map to take you to your destination! 
-                      Simply click on the map afterwards and you will be off!");
-    }
-    if ($text=~/transport/i) {
-      quest::say("Very good! Tell me about this place that you remember.");
-      $client->Message(257, " ------- Select a Continent ------- ");
-      # Check for each suffix and add entries if valid zone data exists
-      foreach my $suffix (plugin::get_suffixes()) {
-          if (exists($zone_data->{$suffix}) && %{ $zone_data->{$suffix} }) {
-              $client->Message(257, "-[ " . quest::saylink(plugin::get_continent_by_suffix($suffix), 1));
-          }
-      }
-    }
-
-    if ($text =~ /^($continent_regex)$/i) {
+    if (!$is_group_transport || $group_flg) {
+      if ($text =~ /^($continent_regex)(:group)?$/i) {
         my $continent = ucfirst(lc($1));
         my $suffix = plugin::get_suffix_by_continent($continent);
         my $continent_data = $zone_data->{$suffix};
-
+      
+        # Check if we're in the stage of selecting a location
         if ($continent_data && ref($continent_data) eq 'HASH') {
             $client->Message(257, " ------- Select a Location ------- ");
             foreach my $key (keys %{$continent_data}) {
-                my $value = $continent_data->{$key};
-                $client->Message(257, "-[ " . quest::saylink($key, 0));
+                my $mode_indicator = $is_group_transport ? ":group" : "";
+                $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 1, $key));
             }
         }
-    }
-
-    if (exists($flat_data->{$text})) {
-      $client->MovePC(quest::GetZoneID($flat_data->{$text}[0]), $flat_data->{$text}[1], $flat_data->{$text}[2], $flat_data->{$text}[3], $flat_data->{$text}[4]);
+      }
+      
+      # Execute transport when a specific location is selected
+      if (exists($flat_data->{$location})) {
+        my $zone_id = quest::GetZoneID($flat_data->{$location}[0]);
+        my $x = $flat_data->{$location}[1];
+        my $y = $flat_data->{$location}[2];
+        my $z = $flat_data->{$location}[3];
+        my $heading = $flat_data->{$location}[4];        
+        my $group = $client->GetGroup();
+        
+        if ($client->TakeMoneyFromPP($cost, 1)) { 
+          if ($is_group_transport && $group) {
+              # Iterate over group members and transport them, excluding the client for now
+              for (my $count = 0; $count < $group->GroupCount(); $count++) {
+                  my $player = $group->GetMember($count);
+                  if ($player && $client->CharacterID() != $player->CharacterID()) {
+                      $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
+                  }
+              }
+              # Move the client last to avoid premature script termination
+              $client->MovePC($zone_id, $x, $y, $z, $heading);
+          } else {
+              # Individual transport for the client
+              $client->MovePC($zone_id, $x, $y, $z, $heading);
+          }
+        } else {
+          quest::say("I'm sorry, but you don't have enough platinum to pay for this transport.");
+        }
+      }
     }
   }
 }
