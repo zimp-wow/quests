@@ -10,7 +10,7 @@ sub EVENT_TIMER {
 }
 
 sub EVENT_CLICKDOOR {
-    my %portal_destinations = %{ get_portal_destinations() };
+    my %portal_destinations = %{ plugin::get_portal_destinations() };
     my $destination         = quest::get_data("magic_map_target");
     if ($doorid == 146) {
         if ($destination && exists $portal_destinations{$destination}) {
@@ -21,7 +21,7 @@ sub EVENT_CLICKDOOR {
 }
 
 sub EVENT_POPUPRESPONSE {
-    my %portal_destinations = %{ get_portal_destinations() };
+    my %portal_destinations = %{ plugin::get_portal_destinations() };
     
     foreach my $info (values %portal_destinations) {
         my ($destination_name, $popup_id, $zone_id, $x, $y, $z, $heading) = @$info;
