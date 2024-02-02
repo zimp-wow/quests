@@ -32,32 +32,32 @@ sub EVENT_SAY {
     }
   }
 
-  # Assuming this block is adjusted to generate saylinks with transport mode indicators
-  elsif ($continent_data && ref($continent_data) eq 'HASH') {
-      $client->Message(257, " ------- Select a Location ------- ");
-      foreach my $key (keys %{$continent_data}) {
-          my $mode_indicator = $is_group_transport ? ":group" : "";
-          $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 0, $key));
-      }
-  }
-
-  # Adjusted transport execution block
   elsif ($text =~ /^(.+?)(:group)?$/) { # Capture the location and optional group indicator
-      my $location = $1;
+      my $location = $1; # This captures the actual location name
       my $is_group_transport = defined $2; # True if it's a group transport
-
+      
+      # Check if we're in the stage of selecting a location
+      if ($continent_data && ref($continent_data) eq 'HASH') {
+          $client->Message(257, " ------- Select a Location ------- ");
+          foreach my $key (keys %{$continent_data}) {
+              my $mode_indicator = $is_group_transport ? ":group" : "";
+              $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 0, $key));
+          }
+      }
+      
+      # Execute transport when a specific location is selected
       if (exists($flat_data->{$location})) {
           if ($is_group_transport) {
-              # Handle group transport logic here
-              # For example, iterate over a group of players and move them
+              # Group transport logic
               $client->Message(257, "Transporting group to $location");
-              # Placeholder for group transport logic
+              # Implement the actual group transport logic here
           } else {
               # Individual transport
               $client->MovePC(quest::GetZoneID($flat_data->{$location}[0]), $flat_data->{$location}[1], $flat_data->{$location}[2], $flat_data->{$location}[3], $flat_data->{$location}[4]);
           }
       }
   }
+
   }  else {
     if ($text=~/hail/i) { 
       quest::say("Greetings $name! I can help you get to almost anywhere! I sell
