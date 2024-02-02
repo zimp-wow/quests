@@ -95,7 +95,7 @@ if ($client->GetGM()) {
             'homo', 'lesbo', 'lesbian', 'gay', 
         );
 
-        if (length($text) > 2) {
+        if (length(lc($text)) > 2) {
             my $contains_banned = 0;
             foreach my $banned (@banlist) {
                 if (index($text, $banned) != -1) {
@@ -106,7 +106,8 @@ if ($client->GetGM()) {
 
             if (!$contains_banned && $text =~ /^[a-zA-Z]+$/) {
                 $text = ucfirst(lc($text));
-                quest::debug($text);
+                $client->DeleteBucket("namechange_active");
+                quest::rename($text);
             }
         }
     }
