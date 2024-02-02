@@ -1,3 +1,11 @@
+sub EVENT_SPAWN {
+    $x = $npc->GetX();
+    $y = $npc->GetY();
+    $z = $npc->GetZ();
+
+    quest::set_proximity($x - 10, $x + 10, $y - 10, $y + 10);
+}
+
 sub EVENT_SAY {
   my $continent_regex = join('|', map { my $continent = plugin::get_continent_by_suffix($_); $continent =~ s/\s+//g; quotemeta($continent) } plugin::get_suffixes());
   my $zone_data       = plugin::get_zone_data($client->AccountID());
@@ -84,7 +92,7 @@ sub EVENT_SAY {
         my $z = $flat_data->{$location}[3];
         my $heading = $flat_data->{$location}[4];        
         my $group = $client->GetGroup();
-        
+
         if ($client->TakeMoneyFromPP($cost, 1)) { 
           if ($is_group_transport && $group) {
               # Iterate over group members and transport them, excluding the client for now
@@ -108,184 +116,64 @@ sub EVENT_SAY {
   }
 }
 
-sub EVENT_ITEM {
-  if(plugin::check_handin(\%itemcount, 10092 => 1)){
-    quest::setglobal("ghport$uguild_id",10092,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to The Plane of Hate');
-  } elsif(plugin::check_handin(\%itemcount, 10094 => 1)){
-    quest::setglobal("ghport$uguild_id",10094,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to The Plane of Sky');
-  } elsif(plugin::check_handin(\%itemcount, 64191 => 1)){
-    quest::setglobal("ghport$uguild_id",64191,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Dragonscale Hills');
-  } elsif(plugin::check_handin(\%itemcount, 876000 => 1)){
-    quest::setglobal("ghport$uguild_id",876000,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to The Northern Plains of Karana');
-  } elsif(plugin::check_handin(\%itemcount, 876001 => 1)){
-    quest::setglobal("ghport$uguild_id",876001,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to East Commonlands');
-  } elsif(plugin::check_handin(\%itemcount, 876002 => 1)){
-    quest::setglobal("ghport$uguild_id",876002,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to The Lavastorm Mountains');
-  } elsif(plugin::check_handin(\%itemcount, 876003 => 1)){
-    quest::setglobal("ghport$uguild_id",876003,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Toxxulia Forest');
-  } elsif(plugin::check_handin(\%itemcount, 876004 => 1)){
-    quest::setglobal("ghport$uguild_id",876004,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to The Greater Faydark');
-  } elsif(plugin::check_handin(\%itemcount, 876005 => 1)){
-    quest::setglobal("ghport$uguild_id",876005,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to The Dreadlands');
-  } elsif(plugin::check_handin(\%itemcount, 876006 => 1)){
-    quest::setglobal("ghport$uguild_id",876006,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to The Iceclad Ocean');
-  } elsif(plugin::check_handin(\%itemcount, 876007 => 1)){
-    quest::setglobal("ghport$uguild_id",876007,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Cobalt Scar');
-  } elsif(plugin::check_handin(\%itemcount, 876009 => 1)){
-    quest::setglobal("ghport$uguild_id",876009,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to The Twilight Sea');
-  } elsif(plugin::check_handin(\%itemcount, 876010 => 1)){
-    quest::setglobal("ghport$uguild_id",876010,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Stonebrunt Mountains');
-  } elsif(plugin::check_handin(\%itemcount, 876011 => 1)){
-    quest::setglobal("ghport$uguild_id",876011,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Wall of Slaughter');
-  } elsif(plugin::check_handin(\%itemcount, 876012 => 1)){
-    quest::setglobal("ghport$uguild_id",876012,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Barindu, Hanging Gardens');
-  } elsif(plugin::check_handin(\%itemcount, 876070 => 1)){
-    quest::setglobal("ghport$uguild_id",876070,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to The Undershore');
-  } elsif(plugin::check_handin(\%itemcount, 88735 => 1)){
-    quest::setglobal("ghport$uguild_id",88735,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Arcstone, Isle of Spirits');
-  } elsif(plugin::check_handin(\%itemcount, 88736 => 1)){
-    quest::setglobal("ghport$uguild_id",88736,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Goru`kar Mesa');
-  } elsif(plugin::check_handin(\%itemcount, 88737 => 1)){
-    quest::setglobal("ghport$uguild_id",88737,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to your guild banner');
-  } elsif(plugin::check_handin(\%itemcount, 88738 => 1)){
-    quest::setglobal("ghport$uguild_id",88738,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Katta Castrum');
-  } elsif(plugin::check_handin(\%itemcount, 88739 => 1)){
-    quest::setglobal("ghport$uguild_id",88739,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to The Plane of Time');
-  } elsif(plugin::check_handin(\%itemcount, 88740 => 1)){
-    quest::setglobal("ghport$uguild_id",88740,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Brell\'s Rest');
-  }
-
-  elsif(plugin::check_handin(\%itemcount, 976015 => 1)){
-    quest::setglobal("ghport$uguild_id",976015,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Field of Bone');
-  }
-
- elsif(plugin::check_handin(\%itemcount, 976014 => 1)){
-    quest::setglobal("ghport$uguild_id",976014,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Western Wastes');
-  }
-
- elsif(plugin::check_handin(\%itemcount, 976013 => 1)){
-    quest::setglobal("ghport$uguild_id",976013,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Scarlet Desert');
-  }
-
-  elsif(plugin::check_handin(\%itemcount, 976010 => 1)){
-    quest::setglobal("ghport$uguild_id",976010,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Everfrost');
-  }
-
-  elsif(plugin::check_handin(\%itemcount, 976016 => 1)){
-    quest::setglobal("ghport$uguild_id",976016,3,"H24");
-    quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-    quest::ze(15,'The Guildhall Portal has been aligned to Barindu');
-  }  
-
-  plugin::return_items(\%itemcount);
+# Define a subroutine to return the shared portal destinations map
+sub get_portal_destinations {
+    return {
+        10092   => 'The Plane of Hate',
+        10094   => 'The Plane of Sky',
+        876000  => 'The Northern Plains of Karana',
+        876001  => 'East Commonlands',
+        876002  => 'The Lavastorm Mountains',
+        876003  => 'Toxxulia Forest',
+        876004  => 'The Greater Faydark',
+        876005  => 'The Dreadlands',
+        876006  => 'The Iceclad Ocean',
+        876007  => 'Cobalt Scar',
+        876009  => 'The Twilight Sea',
+        876010  => 'Stonebrunt Mountains',
+        876011  => 'Wall of Slaughter',
+        876012  => 'Barindu, Hanging Gardens',
+        88739   => 'The Plane of Time',
+        976015  => 'Field of Bone',
+        976014  => 'Western Wastes',
+        976013  => 'Scarlet Desert',
+        976010  => 'Everfrost',
+        976016  => 'Barindu',
+    };
 }
 
-#[Sat May 05 10:12:10 2012] LOADING, PLEASE WAIT...
-#[Sat May 05 10:12:19 2012] You have entered Guild Hall.
-#[Sat May 05 10:12:20 2012] Zeflmin Werlikanin says 'The teleport stone is currently aligned to Greater Faydark.'
-
-sub EVENT_SIGNAL {
-  my $pc = $entity_list->GetClientByCharID($signal);
-  if ($pc) {
-    $uguild_id = $pc->GuildID();
-    if(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 10092) { #hateplane
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Plane of Hate.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 10094) { #airplane
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Plane of Sky.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 64191) { #dragonscale
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Dragonscale Hills.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876000) { #karana
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Northern Plains of Karana.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876001) { #ecommons
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to East Commonlands.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876002) { #lavastorm
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Lavastorm Mountains.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876003) { #toxxulia
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Toxxulia Forest.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876004) { #faydark
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Greater Faydark.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876005) { #dreadlands
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Dreadlands.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876006) { #iceclad
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Iceclad Ocean.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876007) { #cobaltscar
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Cobalt Scar.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876009) { #twilight
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Twilight Sea.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876010) { #stonebrunt
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Stonebrunt Mountains.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876011) { #slaughter
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Wall of Slaughter.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 976016) { #barindu
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Barindu, Hanging Gardens.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 876070) { #eastkorlach
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Undershore.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 88735) { #arcstone
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Arcstone, Isle of Spirits.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 88736) { #goru
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Goru`kar Mesa.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 88737) { #guild banner
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to your guild banner.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 88738) { #kattacastrum
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Katta Castrum.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 88739) { #potimea
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to The Plane of Time.\'');
-    } elsif(defined $qglobals{"ghport$uguild_id"} && $qglobals{"ghport$uguild_id"} == 88740) { #brellsrest
-      $pc->Message(5, $npc->GetCleanName().' says \'The teleport stone is currently aligned to Brell\'s Rest.\'');  
+sub EVENT_ITEM {
+    my %portal_destinations = %{ get_portal_destinations() };
+    
+    foreach my $item (keys %portal_destinations) {
+        if (plugin::check_handin(\%itemcount, $item => 1)) {
+            quest::setglobal("ghport$uguild_id", $item, 3, "H24");
+            quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
+            quest::ze(15, "The Magic Map has been aligned to " . $portal_destinations{$item});
+            plugin::return_items(\%itemcount);
+            return;
+        }
     }
-  }
+
+    plugin::return_items(\%itemcount); # Ensure items are returned if no matching case is found
+}
+
+sub EVENT_ENTER {
+    my %destination_messages = %{ get_portal_destinations() };
+    
+    my $pc = $entity_list->GetClientByCharID($signal);
+    if ($pc) {
+        my $uguild_id = $pc->GuildID();
+        my $global_name = "ghport$uguild_id";
+        
+        if (defined $qglobals{$global_name}) {
+            my $destination_id = $qglobals{$global_name};
+            if (exists $destination_messages{$destination_id}) {
+                my $destination_name = $destination_messages{$destination_id};
+                $pc->Message(5, $npc->GetCleanName() . " says 'The Magic Map is currently aligned to " . $destination_name . ".'");
+            }
+        }
+    }
 }
 
 sub get_cost_for_level {
