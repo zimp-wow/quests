@@ -17,7 +17,7 @@ if ($client->GetGM()) {
             $client->Message(257, " ------- Select a Race ------- ");
             my $races = get_races();
             foreach my $id (sort { $a <=> $b } keys %$races) {
-                my $race_name = $races{$id};
+                my $race_name = $races->{$id};
                 $client->Message(257, "-[ " . quest::saylink("Change race to $race_name", 1, $race_name) . " ]");
             }
         }
