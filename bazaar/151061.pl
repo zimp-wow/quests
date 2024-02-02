@@ -7,14 +7,14 @@ my $sex_change_cost = 5;
 sub EVENT_SAY {
 if ($client->GetGM()) {
 
+    my $sex_word;
     if ($client->GetGender()) {
         $sex_word = "masculinity";
     } else {
         $sex_word = "femininity";
     }
 
-    if ($text=~/hail/i) {        
-        my $sex_word;
+    if ($text=~/hail/i) {
         quest::say("Greetings, $name. Do you seek perfection? Are you [unhappy with your form]? Are you interested in embracing [$sex_word]? Perhaps, instead you simply desire a [new identity] altogether?");
     }
 
