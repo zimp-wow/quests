@@ -90,24 +90,33 @@ sub EVENT_SAY {
         my $x = $flat_data->{$location}[1];
         my $y = $flat_data->{$location}[2];
         my $z = $flat_data->{$location}[3];
-        my $heading = $flat_data->{$location}[4];        
-        my $group = $client->GetGroup();
+        my $heading = $flat_data->{$location}[4];  
 
         if ($client->TakeMoneyFromPP($cost, 1)) { 
-          if ($is_group_transport && $group) {
-              # Iterate over group members and transport them, excluding the client for now
-              for (my $count = 0; $count < $group->GroupCount(); $count++) {
-                  my $player = $group->GetMember($count);
-                  if ($player && $client->CharacterID() != $player->CharacterID()) {
-                      $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
+
+          if ($is_group_transport) {
+            my $raid = $client->GetRaid();
+            if($raid) {
+              for($count = 0; $count < $raid->RaidCount(); $count++) {
+                my $player = $raid->GetMember($count);
+                if($player) {
+                  if($player->IsClient() && $client->CharacterID() != $player->CharacterID()) {
+                    $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
                   }
+                }
               }
-              # Move the client last to avoid premature script termination
-              $client->MovePC($zone_id, $x, $y, $z, $heading);
-          } else {
-              # Individual transport for the client
-              $client->MovePC($zone_id, $x, $y, $z, $heading);
+            }
+
+            my $group = $client->GetGroup();
+            for (my $count = 0; $count < $group->GroupCount(); $count++) {
+                my $player = $group->GetMember($count);
+                if ($player && $client->CharacterID() != $player->CharacterID()) {
+                    $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
+                }
+            }
           }
+
+          $client->MovePC($zone_id, $x, $y, $z, $heading);
         } else {
           quest::say("I'm sorry, but you don't have enough platinum to pay for this transport.");
         }
