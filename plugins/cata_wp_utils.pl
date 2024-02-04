@@ -30,7 +30,7 @@ sub get_portal_destinations {
         876009  => ['The Twilight Sea', 3615, 170, -1028, 1338, 39],
         876010  => ['Stonebrunt Mountains', 3794, 100, 673, -4531, 0],
         876011  => ['Wall of Slaughter', 6180, 300, -943, 13, 130],
-        876012  => ['Barindu, Hanging Gardens', 5733, 283, 590, -1457, -123],
+        976016  => ['Barindu, Hanging Gardens', 5733, 283, 590, -1457, -123],
         88739   => ['The Plane of Time', 20543, 219, 0, 110, 8],
         976015  => ['Field of Bone', 11178, 78, 2802, 1194, -7],
         976014  => ['Western Wastes', 111120, 120, 2307, 889, -21],
