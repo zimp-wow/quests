@@ -108,11 +108,13 @@ sub EVENT_SAY {
             }
 
             my $group = $client->GetGroup();
-            for (my $count = 0; $count < $group->GroupCount(); $count++) {
-                my $player = $group->GetMember($count);
-                if ($player && $client->CharacterID() != $player->CharacterID()) {
-                    $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
-                }
+            if ($group) {
+              for (my $count = 0; $count < $group->GroupCount(); $count++) {
+                  my $player = $group->GetMember($count);
+                  if ($player && $client->CharacterID() != $player->CharacterID()) {
+                      $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
+                  }
+              }
             }
           }
 
