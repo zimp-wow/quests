@@ -421,8 +421,8 @@ sub EVENT_COMBINE_SUCCESS {
             }
         );
         my $type = plugin::ClassType($class);
-        quest::summonitem($reward{$type}{$recipe_id});
-        quest::summonitem(67704); # Item: Vaifan's Clockwork Gemcutter Tools
+        quest::summonfixeditem($reward{$type}{$recipe_id});
+        quest::summonfixeditem(67704); # Item: Vaifan's Clockwork Gemcutter Tools
         $client->Message(1,"Success");
     }
 }
