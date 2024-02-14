@@ -2,6 +2,35 @@ my $eom_id = 6;
 my $eom_item_id = 46779;
 my $eom_log = "total-eom-spend";
 
+sub CheckPetWorldWideBuffs {
+    if ($npc->IsPet() && $npc->HasOwner() && $npc->GetOwner()->IsClient()) {
+        for my $value (43002 .. 43008) {
+            my $data = quest::get_data("eom_$value");
+
+            if ($data) {               
+                $npc->ApplySpellBuff($value, quest::get_data_remaining("eom_$value")/6);                
+            } else {
+                $npc->BuffFadeBySpellID($value);
+            }
+        }
+    }
+}
+
+sub CheckWorldWideBuffs {
+    for my $value (43002 .. 43008) {
+        my $data = quest::get_data("eom_$value");
+
+		if ($data) {
+			$client->ApplySpell($value, quest::get_data_remaining("eom_$value")/6);
+			if ($client->HasPet()) {
+				$client->GetPet()->ApplySpellBuff($value, quest::get_data_remaining("eom_$value")/6);
+			}
+		} else {
+			$client->BuffFadeBySpellID($value);
+		}
+    }
+}
+
 # Spend EOM. Returns true on success, false on failure
 # usage: plugin::SpendEOM($client, $amount)
 sub SpendEOM {

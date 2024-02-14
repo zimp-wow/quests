@@ -1,29 +1,11 @@
-
-sub EVENT_SIGNAL {
-	quest::debug("signal " . $signal);
-	
+sub EVENT_SIGNAL {	
 	# Serverwide Donator buffs
-	CheckWorldWideBuffs();
-}
-
-sub CheckWorldWideBuffs {
-    for my $value (43002 .. 43008) {
-        my $data = quest::get_data("eom_$value");
-
-		if ($data) {
-			$client->ApplySpell($value, quest::get_data_remaining("eom_$value")/6);
-			if ($client->HasPet()) {
-				$client->GetPet()->ApplySpellBuff($value, quest::get_data_remaining("eom_$value")/6);
-			}
-		} else {
-			$client->BuffFadeBySpellID($value);
-		}
-    }
+	plugin::CheckWorldWideBuffs();
 }
 
 sub EVENT_CONNECT {
 
-	CheckWorldWideBuffs();
+	plugin::CheckWorldWideBuffs();
 
 	my $PCRace = $client->GetRace();
 	my $PCClass = $client->GetClass();
@@ -61,7 +43,7 @@ sub EVENT_CONNECT {
 		}
 	}
 
-$bazkey = $client->CharacterID() . "baz";
+	$bazkey = $client->CharacterID() . "baz";
 
 	if (!quest::get_data($bazkey)) {
 		quest::summonitem(18471);
@@ -85,10 +67,10 @@ $bazkey = $client->CharacterID() . "baz";
 		
 	}
 
-	$maxlvl = $client->GetBucket("CharMaxLevel"); #Code for Max Level
+	$maxlvl = $client->GetBucket("CharMaxLevel");
 
 	if (!$maxlvl) {
-		$client->SetBucket("CharMaxlevel", 51); #By default, on initial log in (first time) we are setting Max Level to 51.
+		$client->SetBucket("CharMaxlevel", 51);
 	}
 
 	if($PCClass == 1){ #War AA
@@ -330,7 +312,7 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 }
 
 sub EVENT_ZONE {
-	CheckWorldWideBuffs();
+	plugin::CheckWorldWideBuffs();
 
 	my $PCRace  = $client->GetRace();
 	my $PCClass = $client->GetClass();
@@ -370,7 +352,7 @@ sub EVENT_DISCOVER_ITEM {
 
 
 sub EVENT_ENTERZONE {
-	CheckWorldWideBuffs();  
+	plugin::CheckWorldWideBuffs();
 }
 
 sub EVENT_COMBINE_VALIDATE {
@@ -420,9 +402,32 @@ sub EVENT_COMBINE_SUCCESS {
                 10334 => 67656
             }
         );
-        my $type = plugin::ClassType($class);
+        my $type = ClassType($class);
         quest::summonfixeditem($reward{$type}{$recipe_id});
         quest::summonfixeditem(67704); # Item: Vaifan's Clockwork Gemcutter Tools
         $client->Message(1,"Success");
     }
+}
+
+sub ClassType {
+    my $client = plugin::val('$client');
+    my $class  = $client->GetClass();
+
+    my %melee_classes = map { $_ => 1 } (1, 7, 9, 16);
+    my %caster_classes = map { $_ => 1 } (11, 12, 13, 14);
+    my %priest_classes = map { $_ => 1 } (2, 6, 10);
+
+    if (exists $melee_classes{$class}) {
+        return "melee";
+    }
+
+    if (exists $caster_classes{$class}) {
+        return "caster";
+    }
+
+    if (exists $priest_classes{$class}) {
+        return "priest";
+    }
+
+    return "hybrid";
 }
