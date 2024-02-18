@@ -51,7 +51,7 @@ sub GetRandomResult() {
     }
     elsif (($random_result >= 82) && ($random_result < 88)) #82 to 87 - 5% chance - Illusions
     {
-        quest::summonfixeditem(quest::ChooseRandom(37954,67008,43993,37999,40638,50872,40714,40686,50854,40656, 31861)); #Illusions
+        quest::summonfixeditem(quest::ChooseRandom(37954,67008,43993,37999,40638,40714,40686,50854,40656, 31861)); #Illusions
         quest::say("An illusion?! In case I don't recognize you next time, congratulations $name!");
     }
     elsif (($random_result >= 88) && ($random_result < 91)) #88,90,90 - 3% chance - Mounts
