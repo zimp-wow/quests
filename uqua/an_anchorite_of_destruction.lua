@@ -22,6 +22,7 @@ function event_signal(e)
 	e.self:SetSpecialAbility(25, 0); --turn off immune to aggro
 	e.self:SetSpecialAbility(24, 0); --turn off anti aggro
 	e.self:SetSpecialAbility(35, 0); --turn off immunity
+	e.self:AddToHateList(eq.get_entity_list():GetRandomClient(),1);
 end
 
 function event_timer(e)

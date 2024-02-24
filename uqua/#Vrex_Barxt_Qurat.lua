@@ -29,10 +29,10 @@ function event_timer(e)
 		eq.signal(292086, 1);
 
 		-- Spawn
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-813,-74,59,472):AddToHateList(e.self:GetHateRandom());	-- SW 1st
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-902,-83,59,26):AddToHateList(e.self:GetHateRandom());		-- SE 1st
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-904,109,59,226):AddToHateList(e.self:GetHateRandom());	-- NE 1st
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-827,110,59,270):AddToHateList(e.self:GetHateRandom());	-- NW 1st
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-813,-74,59,472);	-- SW 1st
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-902,-83,59,26);	-- SE 1st
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-904,109,59,226);	-- NE 1st
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-827,110,59,270);	-- NW 1st
 	elseif e.timer == "add_phase_2" then
 		eq.stop_timer("add_phase_2");
 		eq.set_timer("add_phase_3", 1 * 180 * 1000) -- 1 Minute Timer
@@ -41,10 +41,10 @@ function event_timer(e)
 		eq.signal(292087, 1);
 
 		-- Spawn
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-822,-77,59,474):AddToHateList(e.self:GetHateRandom());	-- SW 2nd
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-911,-79,59,22):AddToHateList(e.self:GetHateRandom());		-- SE 2nd
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-895,112,59,228):AddToHateList(e.self:GetHateRandom());	-- NE 2nd
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-817,106,59,282):AddToHateList(e.self:GetHateRandom());	-- NW 2nd
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-822,-77,59,474);	-- SW 2nd
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-911,-79,59,22);	-- SE 2nd
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-895,112,59,228);	-- NE 2nd
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-817,106,59,282);	-- NW 2nd
 	elseif e.timer == "add_phase_3" then
 		eq.stop_timer("add_phase_3");
 
@@ -52,10 +52,10 @@ function event_timer(e)
 		eq.signal(292088, 1);
 
 		-- Spawn
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-830,-83,59,478):AddToHateList(e.self:GetHateRandom());	-- SW 3rd
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-921,-76,59,32):AddToHateList(e.self:GetHateRandom());		-- SE 3rd
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-886,117,59,226):AddToHateList(e.self:GetHateRandom());	-- NE 3rd
-		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-808,102,59,290):AddToHateList(e.self:GetHateRandom());	-- NW 3rd
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-830,-83,59,478);	-- SW 3rd
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-921,-76,59,32);	-- SE 3rd
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-886,117,59,226);	-- NE 3rd
+		eq.spawn2(eq.ChooseRandom(292072,292083),0,0,-808,102,59,290);	-- NW 3rd
 		
 		mob_count = 12;
 
