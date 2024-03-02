@@ -127,6 +127,7 @@ sub check_handin {
 }
 
 sub return_items {
+	quest::debug("Entering return_items");
 	my $hashref = plugin::var('$itemcount');
 	my $client = plugin::val('$client');
 	my $name = plugin::val('$name');
@@ -142,6 +143,7 @@ sub return_items {
 	my %return_data = ();	
 
 	foreach my $k (keys(%{$hashref})) {
+		quest::debug("trying to return $k");
 		next if ($k eq "copper" || $k eq "silver" || $k eq "gold" || $k eq "platinum" || $k == 0);
 		my $rcount = $hashref->{$k};
 		my $r;
@@ -151,17 +153,20 @@ sub return_items {
 					my $inst = $item_data{$r}[3];
 					my $return_count = $inst->RemoveTaskDeliveredItems();
 					if ($return_count > 0) {
-						$client->SummonItem($k, $inst->GetCharges(), $item_data{$r}[2]);
+						#$client->SummonItem($k, $inst->GetCharges(), $item_data{$r}[2]);
+						quest::summonfixeditem($k);						
 						$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
 						$items_returned = 1;
 						next;
 					}
 					$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
-					$client->SummonItem($k, $item_data{$r}[1], $item_data{$r}[2]);
+					#$client->SummonItem($k, $item_data{$r}[1], $item_data{$r}[2]);
+					quest::summonfixeditem($k);
 					$items_returned = 1;
 				} else {
 					$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
-					quest::summonitem($k, 0);
+					#quest::summonfixeditem($k, 0);
+					quest::summonfixeditem($k);
 					$items_returned = 1;
 				}
 				$rcount--;
@@ -232,11 +237,11 @@ sub return_bot_items {
 					my $return_count = $inst->RemoveTaskDeliveredItems();
 
 					if ($return_count > 0) {
-						$client->SummonItem($k, $inst->GetCharges(), $item_data{$r}[2]);
+						quest::summonfixeditem($k);
 						$items_returned = 1;
 					}
 				} else {
-					quest::summonitem($k, 0);
+					quest::summonfixeditem($k);
 					$items_returned = 1;
 				}
 				$rcount--;
