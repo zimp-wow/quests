@@ -1,5 +1,36 @@
 local items = {}
 
+function get_base_id(item)
+    local base_item_id = nil
+    local item_name = eq.get_item_name(item)
+    
+    if string.sub(item_name, 1, 12) == "Rose Colored " then
+        local stripped_name = string.sub(item_name, 13) -- Remove "Rose Colored " prefix
+        eq.debug("Test [" .. stripped_name .. "]")
+        if eq.get_item_name(item - 70000) == stripped_name then
+            base_item_id = item - 70000 -- Store the matching item's ID
+        elseif eq.get_item_name(item - 700000) == stripped_name then
+            base_item_id = item - 700000 -- Store the matching item's ID
+        end
+    elseif string.sub(item_name, 1, 11) == "Apocryphal " then
+        local stripped_name = string.sub(item_name, 12) -- Remove "Apocryphal " prefix
+        eq.debug("Test [" .. stripped_name .. "]")
+        if eq.get_item_name(item - 80000) == stripped_name then
+            base_item_id = item - 80000 -- Store the matching item's ID
+        elseif eq.get_item_name(item - 800000) == stripped_name then
+            base_item_id = item - 800000 -- Store the matching item's ID
+        end
+    end
+
+    if base_item_id then
+        item = base_item_id
+    end
+
+    eq.debug("Returning " .. item)
+
+    return item
+end
+
 function items.check_turn_in(trade, trade_check)
 	--create trade_return table == trade
 	--shallow copy
@@ -7,47 +38,66 @@ function items.check_turn_in(trade, trade_check)
 	for key, value in pairs(trade) do
 		trade_return[key] = value;
 	end
+
+	-- Handin table for source
+	local handin_data = {};
+	for x = 1, 4 do
+		local inst = trade["item" .. x];
+		if (inst.valid) then
+			local is_attuned = 0;
+			if inst:IsInstNoDrop() then
+				is_attuned = 1;
+			end
+
+			handin_data[x] = string.format("%d|%d|%d", inst:GetID(), inst:GetCharges(), is_attuned);
+		else
+			handin_data[x] = "0|0|0";
+		end
+	end
+
+	-- Create a backup copy of trade_return for restoration
+	local original_trade_return = {};
+	for key, value in pairs(trade_return) do
+		original_trade_return[key] = value;
+	end
+
+	-- Replace all the IDs in trade_return with their base versions
+	for i = 1, 4 do
+		if trade_return["item" .. i] and trade_return["item" .. i].valid then
+			-- Assuming get_base_id function exists and ItemInst() can accept an ID
+			local base_id = get_base_id(trade_return["item" .. i]:GetID());
+			trade_return["item" .. i] = ItemInst(base_id); -- Replace with base item instance
+		end
+	end
+
+	trade.other:SetEntityVariable("HANDIN_ITEMS", items.get_handin_items_serialized(handin_data))
+
+	trade.other:SetEntityVariable("HANDIN_MONEY", string.format("%d|%d|%d|%d", trade.copper, trade.silver, trade.gold, trade.platinum))
 	
+	--for every item in trade_check check trade_return
+		--if item exists in trade_return then 
+			--remove that item from trade_return
+		--else
+			--failure
 	for i = 1, 4 do
 		local key = "item" .. i;
-		if trade_check[key] ~= nil and trade_check[key] ~= 0 then
+		if(trade_check[key] ~= nil and trade_check[key] ~= 0) then
 			local found = false;
 			for j = 1, 4 do
-				local inst = trade_return["item" .. j];
-				if inst.valid then
-					local item_id = inst:GetID()
-					local item_name = eq.get_item_name(item_id)
-					local base_item_id = nil -- Variable to store the ID of the base item if adjustments are needed
-					
-					-- Check for 'Rose Colored ' prefix and adjust item ID if necessary
-					if string.sub(item_name, 1, 13) == "Rose Colored " then
-						local stripped_name = string.sub(item_name, 14)
-						if eq.get_item_name(item_id - 70000) == stripped_name then
-							base_item_id = item_id - 70000
-						elseif eq.get_item_name(item_id - 700000) == stripped_name then
-							base_item_id = item_id - 700000
-						end
-					-- Check for 'Apocryphal ' prefix and adjust item ID if necessary
-					elseif string.sub(item_name, 1, 11) == "Apocryphal " then
-						local stripped_name = string.sub(item_name, 12)
-						if eq.get_item_name(item_id - 80000) == stripped_name then
-							base_item_id = item_id - 80000
-						elseif eq.get_item_name(item_id - 800000) == stripped_name then
-							base_item_id = item_id - 800000
-						end
-					end
-					
-					-- Check if the original or adjusted item ID matches what's required in trade_check
-					if trade_check[key] == item_id or trade_check[key] == base_item_id then
-						trade_return["item" .. j] = ItemInst(); -- Invalidate the found item
-						found = true
-						break
-					end
+				local inst = trade_return["item" .. j];			
+				if(inst.valid and trade_check[key] == inst:GetID()) then
+					trade_return["item" .. j] = ItemInst();
+					found = true;
+					break;
 				end
 			end
 			
-			if not found then
-				return false
+			if(not found) then
+                -- Restore original IDs since an item required was not found
+                for k, v in pairs(original_trade_return) do
+                    trade_return[k] = v;
+                end
+                return false;
 			end
 		end
 	end
@@ -103,26 +153,43 @@ end
 function items.return_items(npc, client, trade, text)
 	text = text or true;
 	local returned = false;
+
+	-- Handin table for source
+	local return_data = {};
 	for i = 1, 4 do
 		local inst = trade["item" .. i];
 		if(inst.valid) then
-			if(eq.is_disc_tome(inst:GetID()) and npc:GetClass() > 19 and npc:GetClass() < 36) then
+			local is_attuned = 0;
+			if inst:IsInstNoDrop() then
+				is_attuned = 1;
+			end
+
+			-- remove delivered task items from return for this slot
+			local return_count = inst:RemoveTaskDeliveredItems()
+
+			if(eq.is_disc_tome(inst:GetID()) and npc:GetClass() >= 19 and npc:GetClass() < 36) then
 				if(client:GetClass() == npc:GetClass() - 19) then
 					client:TrainDisc(inst:GetID());
 				else
+					return_data[#return_data+1] = string.format("%d|%d|%d", inst:GetID(), inst:GetCharges(), is_attuned);
 					npc:Say(string.format("You are not a member of my guild. I will not train you!"));
-					client:PushItemOnCursor(inst);
-					returned = true;
+					if return_count > 0 then
+						client:PushItemOnCursor(inst);
+						returned = true;
+					end
 				end
-			else
+			elseif return_count > 0 then
+				return_data[#return_data+1] = string.format("%d|%d|%d", inst:GetID(), inst:GetCharges(), is_attuned);
 				client:PushItemOnCursor(inst);
-				if(text == true) then
+				if text then
 					npc:Say(string.format("I have no need for this %s, you can have it back.", client:GetCleanName()));
 				end
 				returned = true;
 			end
 		end
 	end
+
+	client:SetEntityVariable("RETURN_ITEMS", items.get_handin_items_serialized(return_data))
 	
 	local money = false;
 	if(trade.platinum ~= 0) then
@@ -145,11 +212,145 @@ function items.return_items(npc, client, trade, text)
 		money = true;
 	end
 	
-	if(money == true) then
+	if money then
+		client:SetEntityVariable("RETURN_MONEY", string.format("%d|%d|%d|%d", trade.copper, trade.silver, trade.gold, trade.platinum));
 		client:AddMoneyToPP(trade.copper, trade.silver, trade.gold, trade.platinum, true);
+	end
+
+	eq.send_player_handin_event();
+	
+	return returned;
+end
+
+function items.return_bot_items(bot, client, trade, text)
+	text = text or true;
+	local returned = false;
+	for i = 1, 8 do
+		local inst = trade["item" .. i];
+		if (inst.valid) then
+			client:PushItemOnCursor(inst);
+			returned = true;
+		end
+	end
+	
+	local money = false;
+	if (trade.platinum ~= 0) then
+		returned = true;
+		money = true;
+	end
+	
+	if (trade.gold ~= 0) then
+		returned = true;
+		money = true;
+	end
+	
+	if (trade.silver ~= 0) then
+		returned = true;
+		money = true;
+	end
+	
+	if (trade.copper ~= 0) then
+		returned = true;
+		money = true;
+	end
+	
+	if (money) then
+		client:AddMoneyToPP(trade.copper, trade.silver, trade.gold, trade.platinum, true);
+	end
+
+	if (text and returned) then
+		bot:OwnerMessage("I have no need for this, you can have it back.")
 	end
 	
 	return returned;
+end
+
+function items.check_bot_turn_in(trade, trade_check)
+	--create trade_return table == trade
+	--shallow copy
+	local trade_return = {};
+	for key, value in pairs(trade) do
+		trade_return[key] = value;
+	end
+	
+	--for every item in trade_check check trade_return
+		--if item exists in trade_return then 
+			--remove that item from trade_return
+		--else
+			--failure
+	for i = 1, 8 do
+		local key = "item" .. i;
+		if(trade_check[key] ~= nil and trade_check[key] ~= 0) then
+			local found = false;
+			for j = 1, 8 do
+				local inst = trade_return["item" .. j];			
+				if(inst.valid and trade_check[key] == inst:GetID()) then
+					trade_return["item" .. j] = ItemInst();
+					found = true;
+					break;
+				end
+			end
+			
+			if(not found) then
+				return false;
+			end
+		end
+	end
+	
+	--convert our money into copper then check that we have enough then convert change back
+	local trade_check_money = 0;
+	local return_money = 0;
+	
+	if(trade_check["platinum"] ~= nil and trade_check["platinum"] ~= 0) then
+		trade_check_money = trade_check_money + (trade_check["platinum"] * 1000);
+	end
+	
+	if(trade_check["gold"] ~= nil and trade_check["gold"] ~= 0) then
+		trade_check_money = trade_check_money + (trade_check["gold"] * 100);
+	end
+	
+	if(trade_check["silver"] ~= nil and trade_check["silver"] ~= 0) then
+		trade_check_money = trade_check_money + (trade_check["silver"] * 10);
+	end
+	
+	if(trade_check["copper"] ~= nil and trade_check["copper"] ~= 0) then
+		trade_check_money = trade_check_money + trade_check["copper"];
+	end
+	
+	return_money = return_money + trade_return["platinum"] * 1000 + trade_return["gold"] * 100;
+	return_money = return_money + trade_return["silver"] * 10 + trade_return["copper"];
+	
+	if(return_money < trade_check_money) then
+		return false;
+	else
+		return_money = return_money - trade_check_money;
+	end
+	
+	--replace trade with trade_return
+	trade.item1 = trade_return.item1;
+	trade.item2 = trade_return.item2;
+	trade.item3 = trade_return.item3;
+	trade.item4 = trade_return.item4;
+	trade.item5 = trade_return.item5;
+	trade.item6 = trade_return.item6;
+	trade.item7 = trade_return.item7;
+	trade.item8 = trade_return.item8;
+	
+	trade.platinum = math.floor(return_money / 1000);
+	return_money = return_money - (trade.platinum * 1000);
+	
+	trade.gold = math.floor(return_money / 100);
+	return_money = return_money - (trade.gold * 100);
+	
+	trade.silver = math.floor(return_money / 10);
+	return_money = return_money - (trade.silver * 10);
+	
+	trade.copper = return_money;
+	return true;
+end
+
+function items.get_handin_items_serialized(handin_table)
+	return table.concat(handin_table, ",")
 end
 	
 return items;
