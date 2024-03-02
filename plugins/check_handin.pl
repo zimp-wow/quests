@@ -80,7 +80,18 @@ sub check_handin {
 		$client->SetEntityVariable("HANDIN_ITEMS", plugin::GetHandinItemsSerialized("Handin", %$hashref));
 	}
 
+	# Make a copy of the original hashref
+    my $original_hashref = { %$hashref };
 
+    # Iterate over the hashref and replace each key with its get_base_id(key) version
+    foreach my $item (keys %$hashref) {
+        my $base_id = get_base_id($item);  # Assuming get_base_id() returns original id if base id does not exist
+        if ($base_id && $base_id ne $item) {  # Check if base ID is different from original
+            $hashref->{$base_id} += $hashref->{$item} if exists $hashref->{$base_id};  # Add to existing base ID count
+            $hashref->{$base_id} = $hashref->{$item} unless exists $hashref->{$base_id};  # Or create a new entry
+            delete $hashref->{$item};  # Remove the original entry
+        }
+    }
 
 	# -----------------------------
 	# handin formatting examples
@@ -92,9 +103,10 @@ sub check_handin {
 	# "platinum" => platinum_amount
 	# -----------------------------
 	my %required = @_;
+	my $retval = 1;
 	foreach my $req (keys %required) {
 		if (!defined $hashref->{$req} || $hashref->{$req} != $required{$req}) {
-			return 0;
+			$retval = 0;
 		}
 	}
 
@@ -105,8 +117,13 @@ sub check_handin {
 			delete $hashref->{$req};
 		}
 	}
+	    
+    if (!$retval) {  # Replace conditions_not_met with your actual condition
+        %$hashref = %$original_hashref;  # Restore original hashref
+        return 0;  # Return 0 as required
+    }
 
-	return 1;
+	return $retval;
 }
 
 sub return_items {
