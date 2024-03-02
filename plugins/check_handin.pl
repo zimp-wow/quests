@@ -142,6 +142,7 @@ sub return_items {
 	my %return_data = ();	
 
 	foreach my $k (keys(%{$hashref})) {
+		quest::debug("trying to return $k");
 		next if ($k eq "copper" || $k eq "silver" || $k eq "gold" || $k eq "platinum" || $k == 0);
 		my $rcount = $hashref->{$k};
 		my $r;
@@ -152,7 +153,7 @@ sub return_items {
 					my $return_count = $inst->RemoveTaskDeliveredItems();
 					if ($return_count > 0) {
 						#$client->SummonItem($k, $inst->GetCharges(), $item_data{$r}[2]);
-						quest::summonfixeditem($k);
+						quest::summonfixeditem($k);						
 						$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
 						$items_returned = 1;
 						next;
