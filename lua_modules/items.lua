@@ -8,26 +8,46 @@ function items.check_turn_in(trade, trade_check)
 		trade_return[key] = value;
 	end
 	
-	--for every item in trade_check check trade_return
-		--if item exists in trade_return then 
-			--remove that item from trade_return
-		--else
-			--failure
 	for i = 1, 4 do
 		local key = "item" .. i;
-		if(trade_check[key] ~= nil and trade_check[key] ~= 0) then
+		if trade_check[key] ~= nil and trade_check[key] ~= 0 then
 			local found = false;
 			for j = 1, 4 do
-				local inst = trade_return["item" .. j];			
-				if(inst.valid and trade_check[key] == inst:GetID()) then
-					trade_return["item" .. j] = ItemInst();
-					found = true;
-					break;
+				local inst = trade_return["item" .. j];
+				if inst.valid then
+					local item_id = inst:GetID()
+					local item_name = eq.get_item_name(item_id)
+					local base_item_id = nil -- Variable to store the ID of the base item if adjustments are needed
+					
+					-- Check for 'Rose Colored ' prefix and adjust item ID if necessary
+					if string.sub(item_name, 1, 13) == "Rose Colored " then
+						local stripped_name = string.sub(item_name, 14)
+						if eq.get_item_name(item_id - 70000) == stripped_name then
+							base_item_id = item_id - 70000
+						elseif eq.get_item_name(item_id - 700000) == stripped_name then
+							base_item_id = item_id - 700000
+						end
+					-- Check for 'Apocryphal ' prefix and adjust item ID if necessary
+					elseif string.sub(item_name, 1, 11) == "Apocryphal " then
+						local stripped_name = string.sub(item_name, 12)
+						if eq.get_item_name(item_id - 80000) == stripped_name then
+							base_item_id = item_id - 80000
+						elseif eq.get_item_name(item_id - 800000) == stripped_name then
+							base_item_id = item_id - 800000
+						end
+					end
+					
+					-- Check if the original or adjusted item ID matches what's required in trade_check
+					if trade_check[key] == item_id or trade_check[key] == base_item_id then
+						trade_return["item" .. j] = ItemInst(); -- Invalidate the found item
+						found = true
+						break
+					end
 				end
 			end
 			
-			if(not found) then
-				return false;
+			if not found then
+				return false
 			end
 		end
 	end

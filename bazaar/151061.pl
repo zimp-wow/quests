@@ -1,13 +1,11 @@
 #Sulentia, Polymorphist
 #(Body Modification)
 
-my $race_change_cost = 10;
-my $sex_change_cost  = 10;
+my $race_change_cost = 5;
+my $sex_change_cost  = 5;
 my $name_change_cost = 10;
 
 sub EVENT_SAY {
-if ($client->GetGM()) {
-
     my $sex_word;
     if ($client->GetGender()) {
         $sex_word = "masculinity";
@@ -18,8 +16,7 @@ if ($client->GetGM()) {
     if ($text=~/hail/i) {
         quest::say("Greetings, $name. Do you seek perfection? Are you [". quest::saylink("unhappy with your form", 1) ."]? 
                     Are you interested in embracing [". quest::saylink($sex_word, 1) ."]? 
-                    Perhaps, instead you simply desire a [". quest::saylink("new identity", 1) ."] altogether? 
-                    Or... lastly, maybe you just seek to [". quest::saylink("name your companion", 1) ."]?");
+                    ");
     }
 
     elsif ($text=~/unhappy with your form/i) {
@@ -39,15 +36,15 @@ if ($client->GetGM()) {
         }
     }
     
-    elsif ($text=~/new identity/i) {
-        quest::say("Sometimes, the memories of our past call to us. We can assume the names of our past or future selves, anchored in time.
-                    For a pittance, ". plugin::num2en($name_change_cost) ." [". plugin::EOMLink() ."], I can change the name that you present 
-                    to the world. Be aware, all will be made aware of this change for posterity. Do you [". quest::saylink("wish to continue", 1) ."]?");
-    }
+#    elsif ($text=~/new identity/i) {
+#        quest::say("Sometimes, the memories of our past call to us. We can assume the names of our past or future selves, anchored in time.
+#                    For a pittance, ". plugin::num2en($name_change_cost) ." [". plugin::EOMLink() ."], I can change the name that you present 
+#                    to the world. Be aware, all will be made aware of this change for posterity. Do you [". quest::saylink("wish to continue", 1) ."]?");
+#    }
 
-    elsif ($text=~/name your companion/i) {
-        
-    }
+#    elsif ($text=~/name your companion/i) {
+#        
+#    }
 
     elsif ($text=~/wish to continue/i) {
         if (plugin::SpendEOM($client, $name_change_cost)) {
@@ -101,7 +98,7 @@ if ($client->GetGM()) {
         }
     }
 
-    elsif ($client->GetBucket("namechange_active")) {
+    elsif ($client->GetBucket("namechange_active") && $client->GetGM()) {
         if (lc($text) eq 'cancel') {
             plugin::RefundEOM($client, $name_change_cost * $client->GetBucket("namechange_active"));
             $client->Message(15, "Your namechange has been cancelled.");            
@@ -109,21 +106,7 @@ if ($client->GetGM()) {
             return;
         }
 
-        my @banlist = (
-            'asshole', 'dick', 'bastard', 'whore', 'slut',
-            'fag', 'dyke', 'cock', 'pussy', 
-            'nigger', 'chink', 'spic', 'gook', 'kike', 'faggot', 'queer', 'tranny',
-            'twat', 'wanker', 'prick', 'jizz', 'sperm', 'orgasm',
-            'rape', 'molest', 'abuse', 'grope', 'murder', 'kill', 'suicide', 'death',
-            'drug', 'cocaine', 'heroin', 'meth', 
-            'motherfucker', 'clit', 'bullshit', 'retard',
-            'douchebag', 'shithead', 'fuckface', 'asshat', 'cumshot', 'dildo', 
-            'masturbate', 'masturbation', 'nazi', 'hitler', 'satan', 'satanic',
-            'incest', 'pedophile', 'pedo', 'snuff', 'asslick', 'rimjob', 'blowjob',
-            'handjob', 'analsex', 'sodomize', 'sodomy', 'scum', 'prostitute', 
-            'porn', 'erotic', 'hooker', 'stripper',
-            'gangbang', 'threesome', 'sextoy', 'vibrator',
-            'homo', 'lesbo', 'lesbian', 'gay', 
+        my @banlist = (            
         );
 
         if (length(lc($text)) > 2) {
@@ -163,7 +146,6 @@ if ($client->GetGM()) {
         }
     }
 
-}
 }
 
 sub get_races {
