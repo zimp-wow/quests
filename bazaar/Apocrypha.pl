@@ -7,8 +7,8 @@
 my $duration_override = 1200; #set this value to override 'regular' buffs duration
 
 my $buff_map = {
-    1 => [2525, 314, 278, 145, 356, 170], # Free - Harnessing of Spirit, Resolution, Spirit of Wolf, Chloroplast, Shield of Thorns, Alacrity
-    20 => [2525, 314, 278, 145, 356, 170], # 10pp - Harnessing of Spirit, Resolution, Spirit of Wolf, Chloroplast, Shield of Thorns, Alacrity
+    1 => [2525, 314, 278, 145, 170], # Free - Harnessing of Spirit, Resolution, Spirit of Wolf, Chloroplast, Alacrity
+    20 => [2525, 314, 278, 145, 170], # 10pp - Harnessing of Spirit, Resolution, Spirit of Wolf, Chloroplast, Alacrity
     46 => [2530, 2510, 2524, 2528, 2895, 2570], # 250pp - Khura's Focus, Blessing of Aegolism, Spirit of Bih'li, Regrowth of Dark Khura, Speed of the Brood, Koadics Endless Intellect
     61 => [3397, 3479, 2524, 3441, 3178, 3360], # 500pp - Voice of Quellious, Vallons Quickening, Blessing of Replenishment, Spirit of Bih'li, Hand of Virtue, Focus of the Seventh
     # ... more ...
@@ -17,8 +17,8 @@ my $buff_map = {
 my $price_map = {
     1  => 0,
     20 => 10,
-    46 => 250,
-    61 => 500,
+    46 => 100,
+    61 => 250,
 };
 
 sub get_level_breakpoint {
