@@ -127,6 +127,7 @@ sub check_handin {
 }
 
 sub return_items {
+	quest::debug("Entering return_items");
 	my $hashref = plugin::var('$itemcount');
 	my $client = plugin::val('$client');
 	my $name = plugin::val('$name');
