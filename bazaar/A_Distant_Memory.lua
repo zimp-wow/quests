@@ -75,7 +75,7 @@ function event_trade(e)
         end
     end
 
-	if not item_lib.check_turn_in_exact_in(e.trade, {item1 = item_id, item2 = item_id, item3 = item_id, item4 = item_id, platinum = platinum}) then
+	if not item_lib.check_turn_in_exact(e.trade, {item1 = item_id, item2 = item_id, item3 = item_id, item4 = item_id, platinum = platinum}) then
         e.self:Say(string.format("I require %d platinum to upgrade this item.", platinum))
         item_lib.return_items(e.self, e.other, e.trade)
         return
