@@ -4,8 +4,8 @@ function get_base_id(item)
     local base_item_id = nil
     local item_name = eq.get_item_name(item)
     
-    if string.sub(item_name, 1, 12) == "Rose Colored " then
-        local stripped_name = string.sub(item_name, 13) -- Remove "Rose Colored " prefix
+    if string.sub(item_name, 1, 13) == "Rose Colored " then
+        local stripped_name = string.sub(item_name, 14) -- Remove "Rose Colored " prefix
         eq.debug("Test [" .. stripped_name .. "]")
         if eq.get_item_name(item - 70000) == stripped_name then
             base_item_id = item - 70000 -- Store the matching item's ID
