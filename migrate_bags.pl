@@ -48,7 +48,7 @@ my $dbh = DBI->connect($dsn, $user, $password, { RaiseError => 1, AutoCommit => 
 update_bag_slots($dbh, 251, 350, 4010, "GENERAL_BAGS");
 
 # Update logic for BANK_BAGS
-update_bag_slots($dbh, 2031, 2270, 6209, "BANK_BAGS");
+update_bag_slots($dbh, 2031, 2270, 6210, "BANK_BAGS");
 
 # Update logic for SHARED_BAGS
 update_bag_slots($dbh, 2531, 2550, 11010, "SHARED_BAGS");
