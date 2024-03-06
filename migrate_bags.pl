@@ -42,7 +42,7 @@ sub update_shared_bag_slots {
     $fetch_sql->execute($old_start, $old_end);
 
     while (my $row = $fetch_sql->fetchrow_hashref) {
-        my $charid = $row->{charid};
+        my $charid = $row->{acctid};
         my $old_slotid = $row->{slotid};
 
         # Determine the primary_slot_offset based on the old slot range
