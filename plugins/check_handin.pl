@@ -166,7 +166,7 @@ sub return_items {
 				} else {
 					$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
 					#quest::summonfixeditem($k, 0);
-					quest::summonfixeditem($k, 0);
+					$client->SummonFixedItem($k, 0);
 					$items_returned = 1;
 				}
 				$rcount--;
