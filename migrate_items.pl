@@ -101,9 +101,6 @@ sub update_secondary_table_item_ids {
 sub update_secondary_table_item_ids_with_augs {
     my ($dbh, $table_Name, $column_Name) = @_;
 
-    # Start transaction
-    $dbh->begin_work;
-
     # List of all columns that need to be updated including the original column
     my @columns_to_update = ($column_Name, 'augslot1', 'augslot2', 'augslot3', 'augslot4', 'augslot5', 'augslot6');
 
@@ -119,16 +116,14 @@ sub update_secondary_table_item_ids_with_augs {
 
         # Check for errors
         if ($update_sth->err) {
-            # Roll back transaction and report error
-            $dbh->rollback;
             warn "Error updating $table_Name for $current_column: " . $update_sth->errstr;
             return; # Exit the subroutine early due to error
+        } else {
+             print "Updated item IDs in $table_Name successfully.\n";
         }
     }
 
-    # If no errors, commit transaction
-    $dbh->commit;
-    print "Updated item IDs in $table_Name successfully.\n";
+   
 }
 
 
