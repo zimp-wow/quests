@@ -98,36 +98,6 @@ sub update_secondary_table_item_ids {
     }
 }
 
-sub update_secondary_table_item_ids_with_augs {
-    my ($dbh, $table_Name, $column_Name) = @_;
-
-    # List of all columns that need to be updated including the original column
-    my @columns_to_update = ($column_Name, 'augslot1', 'augslot2', 'augslot3', 'augslot4', 'augslot5', 'augslot6');
-    my @updates = ();
-
-    # Create SQL fragments for each column to be updated
-    foreach my $col (@columns_to_update) {
-        push @updates, "$col = COALESCE((SELECT new_id FROM item_id_mapping WHERE old_id = $table_Name.$col), $col)";
-    }
-
-    # Join all update fragments into one SQL statement
-    my $updates_sql = join ', ', @updates;
-    my $update_sql = "UPDATE $table_Name SET $updates_sql";
-
-    # Prepare and execute the update statement
-    print "Attempting [$update_sql]";
-    my $update_sth = $dbh->prepare($update_sql);
-    $update_sth->execute();
-
-    # Check for errors
-    if ($update_sth->err) {
-        warn "Error updating $table_Name: " . $update_sth->errstr;
-        return; # Exit the subroutine early due to error
-    } else {
-        print "Updated item IDs in $table_Name successfully for all columns.\n";
-    }
-}
-
 # Database connection details
 my $dbName = 'peq';
 my $host = 'mariadb';
@@ -144,8 +114,20 @@ my $dbh = DBI->connect($dsn, $user, $password, { RaiseError => 1, AutoCommit => 
 add_new_item_rows($dbh,'Rose Colored');
 add_new_item_rows($dbh,'Apocryphal');
 
-update_secondary_table_item_ids_with_augs($dbh,'sharedbank', 'itemid');
-update_secondary_table_item_ids_with_augs($dbh,'inventory', 'itemid');
+update_secondary_table_item_ids($dbh,'sharedbank', 'itemid');
+update_secondary_table_item_ids($dbh,'sharedbank', 'augslot1');
+update_secondary_table_item_ids($dbh,'sharedbank', 'augslot2');
+update_secondary_table_item_ids($dbh,'sharedbank', 'augslot3');
+update_secondary_table_item_ids($dbh,'sharedbank', 'augslot4');
+update_secondary_table_item_ids($dbh,'sharedbank', 'augslot5');
+update_secondary_table_item_ids($dbh,'sharedbank', 'augslot6');
+update_secondary_table_item_ids($dbh,'inventory', 'itemid');
+update_secondary_table_item_ids($dbh,'inventory', 'augslot1');
+update_secondary_table_item_ids($dbh,'inventory', 'augslot2');
+update_secondary_table_item_ids($dbh,'inventory', 'augslot3');
+update_secondary_table_item_ids($dbh,'inventory', 'augslot4');
+update_secondary_table_item_ids($dbh,'inventory', 'augslot5');
+update_secondary_table_item_ids($dbh,'inventory', 'augslot6');
 update_secondary_table_item_ids($dbh,'lootdrop_entries', 'item_id');
 
 # Commit the changes and clean up
