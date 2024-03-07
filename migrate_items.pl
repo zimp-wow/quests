@@ -98,6 +98,40 @@ sub update_secondary_table_item_ids {
     }
 }
 
+sub update_secondary_table_item_ids_with_augs {
+    my ($dbh, $table_Name, $column_Name) = @_;
+
+    # Start transaction
+    $dbh->begin_work;
+
+    # List of all columns that need to be updated including the original column
+    my @columns_to_update = ($column_Name, 'augslot1', 'augslot2', 'augslot3', 'augslot4', 'augslot5', 'augslot6');
+
+    # Loop through each column and prepare, execute the update statements
+    foreach my $current_column (@columns_to_update) {
+        # Prepare the SQL statement for updating the table
+        my $update_sql = "UPDATE $table_Name 
+                          SET $current_column = COALESCE((SELECT new_id FROM item_id_mapping WHERE old_id = $table_Name.$current_column), $current_column)";
+        my $update_sth = $dbh->prepare($update_sql);
+
+        # Execute the update
+        $update_sth->execute();
+
+        # Check for errors
+        if ($update_sth->err) {
+            # Roll back transaction and report error
+            $dbh->rollback;
+            warn "Error updating $table_Name for $current_column: " . $update_sth->errstr;
+            return; # Exit the subroutine early due to error
+        }
+    }
+
+    # If no errors, commit transaction
+    $dbh->commit;
+    print "Updated item IDs in $table_Name successfully.\n";
+}
+
+
 # Database connection details
 my $dbName = 'peq';
 my $host = 'mariadb';
@@ -114,8 +148,8 @@ my $dbh = DBI->connect($dsn, $user, $password, { RaiseError => 1, AutoCommit => 
 add_new_item_rows($dbh,'Rose Colored');
 add_new_item_rows($dbh,'Apocryphal');
 
-update_secondary_table_item_ids($dbh,'sharedbank', 'itemid');
-update_secondary_table_item_ids($dbh,'inventory', 'itemid');
+update_secondary_table_item_ids_with_augs($dbh,'sharedbank', 'itemid');
+update_secondary_table_item_ids_with_augs($dbh,'inventory', 'itemid');
 update_secondary_table_item_ids($dbh,'lootdrop_entries', 'item_id');
 
 # Commit the changes and clean up
