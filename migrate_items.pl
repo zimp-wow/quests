@@ -115,6 +115,7 @@ sub update_secondary_table_item_ids_with_augs {
     my $update_sql = "UPDATE $table_Name SET $updates_sql";
 
     # Prepare and execute the update statement
+    print "Attempting [$update_sql]";
     my $update_sth = $dbh->prepare($update_sql);
     $update_sth->execute();
 
