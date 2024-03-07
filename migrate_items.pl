@@ -79,25 +79,22 @@ sub add_new_item_rows {
 }
 
 sub update_secondary_table_item_ids {
-    my ($dbh, $table_name, @column_names) = @_;
+    my ($dbh,$table_Name, $column_Name) = @_;
 
-    # Iterate through each column name provided
-    foreach my $column_name (@column_names) {
-        # Prepare the SQL statement for updating the table for each column
-        my $update_sql = "UPDATE $table_name 
-                          SET $column_name = COALESCE((SELECT new_id FROM item_id_mapping WHERE old_id = $table_name.$column_name), $column_name)";
+    # Prepare the SQL statement for updating the table
+    my $update_sql = "UPDATE $table_Name 
+                  SET $column_Name = COALESCE((SELECT new_id FROM item_id_mapping WHERE old_id = $table_Name.$column_Name), $column_Name)";
 
-        my $update_sth = $dbh->prepare($update_sql);
+    my $update_sth = $dbh->prepare($update_sql);
 
-        # Execute the update for each column
-        $update_sth->execute();
+    # Execute the update
+    $update_sth->execute();
 
-        # Check for errors for each column
-        if ($update_sth->err) {
-            warn "Error updating $column_name in $table_name: " . $update_sth->errstr;
-        } else {
-            print "Updated item IDs in $column_name of $table_name successfully.\n";
-        }
+    # Check for errors
+    if ($update_sth->err) {
+        warn "Error updating $table_Name: " . $update_sth->errstr;
+    } else {
+        print "Updated item IDs in $table_Name successfully.\n";
     }
 }
 
@@ -117,8 +114,8 @@ my $dbh = DBI->connect($dsn, $user, $password, { RaiseError => 1, AutoCommit => 
 add_new_item_rows($dbh,'Rose Colored');
 add_new_item_rows($dbh,'Apocryphal');
 
-update_secondary_table_item_ids($dbh, 'inventory', 'itemid', 'augslot1', 'augslot2', 'augslot3', 'augslot4', 'augslot5', 'augslot6');
-update_secondary_table_item_ids($dbh, 'sharedbank', 'itemid', 'augslot1', 'augslot2', 'augslot3', 'augslot4', 'augslot5', 'augslot6');
+update_secondary_table_item_ids($dbh,'sharedbank', 'itemid');
+update_secondary_table_item_ids($dbh,'inventory', 'itemid');
 update_secondary_table_item_ids($dbh,'lootdrop_entries', 'item_id');
 
 # Commit the changes and clean up
