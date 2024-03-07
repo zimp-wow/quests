@@ -103,29 +103,29 @@ sub update_secondary_table_item_ids_with_augs {
 
     # List of all columns that need to be updated including the original column
     my @columns_to_update = ($column_Name, 'augslot1', 'augslot2', 'augslot3', 'augslot4', 'augslot5', 'augslot6');
+    my @updates = ();
 
-    # Loop through each column and prepare, execute the update statements
-    foreach my $current_column (@columns_to_update) {
-        # Prepare the SQL statement for updating the table
-        my $update_sql = "UPDATE $table_Name 
-                          SET $current_column = COALESCE((SELECT new_id FROM item_id_mapping WHERE old_id = $table_Name.$current_column), $current_column)";
-        my $update_sth = $dbh->prepare($update_sql);
-
-        # Execute the update
-        $update_sth->execute();
-
-        # Check for errors
-        if ($update_sth->err) {
-            warn "Error updating $table_Name for $current_column: " . $update_sth->errstr;
-            return; # Exit the subroutine early due to error
-        } else {
-             print "Updated item IDs in $table_Name successfully.\n";
-        }
+    # Create SQL fragments for each column to be updated
+    foreach my $col (@columns_to_update) {
+        push @updates, "$col = COALESCE((SELECT new_id FROM item_id_mapping WHERE old_id = $table_Name.$col), $col)";
     }
 
-   
-}
+    # Join all update fragments into one SQL statement
+    my $updates_sql = join ', ', @updates;
+    my $update_sql = "UPDATE $table_Name SET $updates_sql";
 
+    # Prepare and execute the update statement
+    my $update_sth = $dbh->prepare($update_sql);
+    $update_sth->execute();
+
+    # Check for errors
+    if ($update_sth->err) {
+        warn "Error updating $table_Name: " . $update_sth->errstr;
+        return; # Exit the subroutine early due to error
+    } else {
+        print "Updated item IDs in $table_Name successfully for all columns.\n";
+    }
+}
 
 # Database connection details
 my $dbName = 'peq';
