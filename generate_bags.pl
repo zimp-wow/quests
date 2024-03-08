@@ -68,4 +68,4 @@ sub duplicate_and_modify_items {
     $dbh->disconnect();
 }
 
-duplicate_and_modify_items(LoadMySql());
+duplicate_and_modify_items(LoadMysql());
