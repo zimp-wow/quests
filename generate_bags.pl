@@ -4,7 +4,7 @@ use warnings;
 use DBI;
 use POSIX;
 use JSON;
-use List::Util qw(max);
+use List::Util qw(max min);
 
 # Ensure that 'strict' is used to enforce good programming practices.
 
