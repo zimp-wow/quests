@@ -98,6 +98,25 @@ sub update_secondary_table_item_ids {
     }
 }
 
+sub ensure_table_exists {
+    my ($dbh) = @_;
+
+    # SQL to create the table if it doesn't exist
+    my $create_table_sql = q{
+        CREATE TABLE IF NOT EXISTS item_id_mapping (
+            old_id INT NOT NULL,
+            new_id INT NOT NULL,
+            PRIMARY KEY (old_id),
+            UNIQUE (new_id)
+        )
+    };
+
+    # Execute the SQL statement
+    my $sth = $dbh->prepare($create_table_sql);
+    $sth->execute();
+}
+
+
 # Database connection details
 my $dbName = 'peq';
 my $host = 'mariadb';
@@ -110,6 +129,8 @@ my $dsn = "DBI:mysql:database=$dbName;host=$host;port=$port";
 
 # Connect to the database
 my $dbh = DBI->connect($dsn, $user, $password, { RaiseError => 1, AutoCommit => 0 }) or die $DBI::errstr;
+
+ensure_table_exists($dbh);
 
 add_new_item_rows($dbh,'Rose Colored');
 add_new_item_rows($dbh,'Apocryphal');
