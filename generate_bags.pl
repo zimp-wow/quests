@@ -62,9 +62,9 @@ sub duplicate_and_modify_items {
             my $isth = $dbh->prepare($sql) or die "Failed to prepare insert: $DBI::errstr";
             $isth->execute() or die "Failed to execute insert: $DBI::errstr";
         }
-    } else {
-        print "Error";
     }
+
+    
 
     $sth->finish();
     $dbh->disconnect();
