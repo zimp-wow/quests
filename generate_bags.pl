@@ -40,7 +40,7 @@ sub duplicate_and_modify_items {
     my $dbh = LoadMysql();
     die "Failed to connect to database." unless $dbh;
 
-    my $sth = $dbh->prepare("SELECT * FROM items WHERE itemtype = 11 AND bagslots > 0 AND itemclass = 1 AND bagtype IN (0, 1, 3, 4, 5, 6, 7) AND id <= 999999");
+    my $sth = $dbh->prepare("SELECT * FROM items WHERE itemtype = 11 AND bagslots > 0 AND itemclass = 1 AND bagtype IN (0, 1, 3, 4, 5, 6, 7) AND id <= 999999 AND id NOT IN (199999, 17423)");
     $sth->execute() or die $DBI::errstr;
 
     while (my $original_row = $sth->fetchrow_hashref()) {
