@@ -1,34 +1,7 @@
 local items = {}
 
 function get_base_id(item)
-    local base_item_id = nil
-    local item_name = eq.get_item_name(item)
-    
-    if string.sub(item_name, 1, 13) == "Rose Colored " then
-        local stripped_name = string.sub(item_name, 14) -- Remove "Rose Colored " prefix
-        eq.debug("Test [" .. stripped_name .. "]")
-        if eq.get_item_name(item - 70000) == stripped_name then
-            base_item_id = item - 70000 -- Store the matching item's ID
-        elseif eq.get_item_name(item - 700000) == stripped_name then
-            base_item_id = item - 700000 -- Store the matching item's ID
-        end
-    elseif string.sub(item_name, 1, 11) == "Apocryphal " then
-        local stripped_name = string.sub(item_name, 12) -- Remove "Apocryphal " prefix
-        eq.debug("Test [" .. stripped_name .. "]")
-        if eq.get_item_name(item - 80000) == stripped_name then
-            base_item_id = item - 80000 -- Store the matching item's ID
-        elseif eq.get_item_name(item - 800000) == stripped_name then
-            base_item_id = item - 800000 -- Store the matching item's ID
-        end
-    end
-
-    if base_item_id then
-        item = base_item_id
-    end
-
-    eq.debug("Returning " .. item)
-
-    return item
+	return item % 1000000
 end
 
 function items.check_turn_in(trade, trade_check)

@@ -1,35 +1,6 @@
 sub get_base_id {
 	my $item = shift;
-	my $base_item_id = undef;
-	if (quest::getitemname($item) =~ /^Rose Colored /) {
-		my $stripped_name = substr(quest::getitemname($item), 13); # Remove "Rose Colored " prefix
-		quest::debug("Test [$stripped_name]");
-		if (quest::getitemname($item-70000) eq $stripped_name) {
-			$base_item_id = $item - 70000; # Store the matching item's ID
-			# Add your code here for when a match is found
-		} elsif (quest::getitemname($item-700000) eq $stripped_name) {
-			$base_item_id = $item - 700000; # Store the matching item's ID
-			# Add your code here for when a match is found
-		}
-		} elsif (quest::getitemname($item) =~ /^Apocryphal /) {
-		my $stripped_name = substr(quest::getitemname($item), 11); # Remove "Apocryphal " prefix
-		quest::debug("Test [$stripped_name]");
-		if (quest::getitemname($item-80000) eq $stripped_name) {
-			$base_item_id = $item - 80000; # Store the matching item's ID
-			# Add your code here for when a match is found
-		} elsif (quest::getitemname($item-800000) eq $stripped_name) {
-			$base_item_id = $item - 800000; # Store the matching item's ID
-			# Add your code here for when a match is found
-		}
-	}
-
-	if (defined $base_item_id) {
-		$item = $base_item_id
-	}
-
-	quest::debug("Returning $item");
-
-	return $item;
+	return $item % 1000000
 }
 
 # plugin::check_handin($item1 => #required_amount,...);
