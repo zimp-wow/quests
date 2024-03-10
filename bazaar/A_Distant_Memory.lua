@@ -47,7 +47,7 @@ function event_trade(e)
 
     if item_name:find("Rose Colored") == 1 then
         platinum = 2000
-        reward_item_id = item_id + 2000000
+        reward_item_id = item_id + 1000000
         local apoc_name = eq.get_item_name(reward_item_id)
         if apoc_name:find("Apocryphal") ~= 1 then
             e.self:Say("I am unable to upgrade this Rose Colored item to Apocryphal.")
