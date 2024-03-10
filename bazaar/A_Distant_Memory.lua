@@ -47,8 +47,7 @@ function event_trade(e)
 
     if item_name:find("Rose Colored") == 1 then
         platinum = 2000
-        reward_item_id = item_id+100000
-        if item_id < 80000 then reward_item_id = item_id+10000 end
+        reward_item_id = item_id + 2000000
         local apoc_name = eq.get_item_name(reward_item_id)
         if apoc_name:find("Apocryphal") ~= 1 then
             e.self:Say("I am unable to upgrade this Rose Colored item to Apocryphal.")
@@ -65,8 +64,7 @@ function event_trade(e)
     end
 
     if reward_item_id == 0 then
-        reward_item_id = item_id+700000
-        if item_id < 10000 then reward_item_id = item_id+70000 end
+        reward_item_id = item_id + 1000000
         local rose_name = eq.get_item_name(reward_item_id)
         if rose_name:find("Rose Colored") ~= 1 then
             e.self:Say("I am unable to upgrade this normal item to Rose Colored.")
