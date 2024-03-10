@@ -54,7 +54,7 @@ sub duplicate_and_modify_items {
 
 
             $row{bagwr} = min(100,  $row{bagwr} + (10 * (max(1,($row{bagsize} - 4)/2)) * $multiplier)); 
-            $row{bagslots} = $row{bagslots} + (4 * (max(1,($row{bagsize} - 4)/2)) * $multiplier); 
+            $row{bagslots} = ($row{bagslots} + (4 * $multiplier) - (($row{bagsize} - 4) * ($row{bagwr} / 100)) + 1) & ~1;
 
             my $columns = join(",", map { $dbh->quote_identifier($_) } keys %row);
             my $values  = join(",", map { $dbh->quote($row{$_}) } keys %row);
