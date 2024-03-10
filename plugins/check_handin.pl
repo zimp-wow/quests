@@ -161,6 +161,7 @@ sub check_handin_fixed {
 	my %required = @_;
 	my $retval = 1;
 	foreach my $req (keys %required) {
+		quest::debug("Req: $req");
 		if (!defined $hashref->{$req} || $hashref->{$req} != $required{$req}) {
 			$retval = 0;
 		}
