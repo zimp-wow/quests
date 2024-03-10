@@ -52,7 +52,7 @@ sub duplicate_and_modify_items {
             $row{id} += 1000000 * $multiplier;  
             $row{Name} = ($multiplier == 1 ? "Rose Colored " : "Apocryphal ") . $original_row->{Name};
             
-            $row{bagslots} += ($multiplier * 4) + (12 * $row{bagwr}/100);
+            $row{bagslots} += ($multiplier * 4) + (6 * $multiplier * $row{bagwr}/100);
             $row{bagwr} = min(100,  $row{bagwr} + (10 * (max(1,($row{bagsize} - 4)/2)) * $multiplier)); 
 
             my $columns = join(",", map { $dbh->quote_identifier($_) } keys %row);
