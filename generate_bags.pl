@@ -51,10 +51,10 @@ sub duplicate_and_modify_items {
 
             $row{id} += 1000000 * $multiplier;  
             $row{Name} = ($multiplier == 1 ? "Rose Colored " : "Apocryphal ") . $original_row->{Name};
-
+            
+            $row{bagslots} += ($multiplier * 4) + (8 * $row{bagwr}/100);
 
             $row{bagwr} = min(100,  $row{bagwr} + (10 * (max(1,($row{bagsize} - 4)/2)) * $multiplier)); 
-            $row{bagslots} = $row{bagslots} + (4 * $multiplier) + (8 * $row{bagwr} / 100);
 
             my $columns = join(",", map { $dbh->quote_identifier($_) } keys %row);
             my $values  = join(",", map { $dbh->quote($row{$_}) } keys %row);
