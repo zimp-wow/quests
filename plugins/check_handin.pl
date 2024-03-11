@@ -209,19 +209,19 @@ sub return_items {
 					my $return_count = $inst->RemoveTaskDeliveredItems();
 					if ($return_count > 0) {
 						quest::debug("(1) Returning $k, " . $inst->GetCharges() . " : " . $item_data{$r}[2]);
-						#$client->SummonFixedItem($k, $inst->GetCharges(), $item_data{$r}[2]);
+						$client->SummonFixedItem($k, $inst->GetCharges(), $item_data{$r}[2]);
 						$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
 						$items_returned = 1;
 						next;
 					}
 					$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
 					quest::debug("(2) Returning $k");
-					#$client->SummonFixedItem($k, $item_data{$r}[1], $item_data{$r}[2]);
+					$client->SummonFixedItem($k, $item_data{$r}[1], $item_data{$r}[2]);
 					$items_returned = 1;
 				} else {
 					$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
 					quest::debug("(3) Returning $k");
-					#quest::summonfixeditem($k, 0);
+					quest::summonfixeditem($k, 0);
 					$items_returned = 1;
 				}
 				$rcount--;
