@@ -184,17 +184,10 @@ sub check_handin_fixed {
 }
 
 sub return_items {
-	quest::debug("Entering return_items");
 	my $hashref = plugin::var('$itemcount');
 	my $client = plugin::val('$client');
 	my $name = plugin::val('$name');
 	my $items_returned = 0;
-
-	quest::debug("ri check 1");
-	# for some reason the source is sending this, we'll clean it up
-	if ($hashref->{0}) {
-		delete $hashref->{0};
-	}
 
 	my %item_data = (
 		0 => [ plugin::val('$item1'), plugin::val('$item1_charges'), plugin::val('$item1_attuned'), plugin::val('$item1_inst') ],
@@ -203,36 +196,29 @@ sub return_items {
 		3 => [ plugin::val('$item4'), plugin::val('$item4_charges'), plugin::val('$item4_attuned'), plugin::val('$item4_inst') ],
 	);
 
-	quest::debug("ri check 2");
 	my %return_data = ();	
 
 	foreach my $k (keys(%{$hashref})) {
-		quest::debug("trying to return $k");
 		next if ($k eq "copper" || $k eq "silver" || $k eq "gold" || $k eq "platinum" || $k == 0);
 		my $rcount = $hashref->{$k};
 		my $r;
 		for ($r = 0; $r < 4; $r++) {
-			quest::debug("ri check 3");
 			if ($rcount > 0 && $item_data{$r}[0] && $item_data{$r}[0] == $k) {
-				quest::debug("ri check 4");
 				if ($client) {
 					my $inst = $item_data{$r}[3];
 					my $return_count = $inst->RemoveTaskDeliveredItems();
 					if ($return_count > 0) {
-						#$client->SummonItem($k, $inst->GetCharges(), $item_data{$r}[2]);
-						$client->SummonFixedItem($k, $inst->GetCharges(), $item_data{$r}[2]);				
+						$client->SummonItem($k, $inst->GetCharges(), $item_data{$r}[2]);
 						$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
 						$items_returned = 1;
 						next;
 					}
 					$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
-					#$client->SummonItem($k, $item_data{$r}[1], $item_data{$r}[2]);
-					$client->SummonFixedItem($k, $inst->GetCharges(), $item_data{$r}[2]);
+					$client->SummonItem($k, $item_data{$r}[1], $item_data{$r}[2]);
 					$items_returned = 1;
 				} else {
 					$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
-					quest::summonfixeditem($k, 0);
-					#$client->SummonFixedItem($k, 0);
+					quest::summonitem($k, 0);
 					$items_returned = 1;
 				}
 				$rcount--;
