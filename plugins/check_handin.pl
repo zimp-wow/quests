@@ -1,36 +1,37 @@
 sub get_base_id {
-	my $item = shift;
-	return $item % 1000000
+	my $item_id = shift;
+	$item_id = $item_id % 1000000;
+	return $item_id
 }
 
 # plugin::check_handin($item1 => #required_amount,...);
 # autoreturns extra unused items on success
 sub check_handin {
-	use Scalar::Util qw(looks_like_number);
-	my $client = plugin::val('client');
-	my $copper = plugin::val('copper');
-	my $silver = plugin::val('silver');
-	my $gold = plugin::val('gold');
-	my $platinum = plugin::val('platinum');
-	my $hashref = shift;
+    use Scalar::Util qw(looks_like_number);
+    my $client     = plugin::val('client');
+    my $copper     = plugin::val('copper') // 0;
+    my $silver     = plugin::val('silver') // 0;
+    my $gold       = plugin::val('gold') // 0;
+    my $platinum   = plugin::val('platinum') // 0;
+    my $hashref    = shift;
 
-	my $return_copper   = 0;
-	my $return_silver   = 0;
-	my $return_gold     = 0;
-	my $return_platinum = 0;
+    my $return_copper   = 0;
+    my $return_silver   = 0;
+    my $return_gold     = 0;
+    my $return_platinum = 0;
 
-	if ($copper > 0) {
-		$hashref->{"copper"} = $copper;
-	}
-	if ($silver > 0) {
-		$hashref->{"silver"} = $silver;
-	}
-	if ($gold > 0) {
-		$hashref->{"gold"} = $gold;
-	}
-	if ($platinum > 0) {
-		$hashref->{"platinum"} = $platinum;
-	}
+    if ($copper > 0) {
+        $hashref->{"copper"} = $copper;
+    }
+    if ($silver > 0) {
+        $hashref->{"silver"} = $silver;
+    }
+    if ($gold > 0) {
+        $hashref->{"gold"} = $gold;
+    }
+    if ($platinum > 0) {
+        $hashref->{"platinum"} = $platinum;
+    }
 
 	$client->SetEntityVariable("HANDIN_MONEY", "$copper|$silver|$gold|$platinum");
 
@@ -101,11 +102,11 @@ sub check_handin {
 # autoreturns extra unused items on success
 sub check_handin_fixed {
 	use Scalar::Util qw(looks_like_number);
-	my $client = plugin::val('client');
-	my $copper = plugin::val('copper');
-	my $silver = plugin::val('silver');
-	my $gold = plugin::val('gold');
-	my $platinum = plugin::val('platinum');
+    my $client     = plugin::val('client');
+    my $copper     = plugin::val('copper') // 0;
+    my $silver     = plugin::val('silver') // 0;
+    my $gold       = plugin::val('gold') // 0;
+    my $platinum   = plugin::val('platinum') // 0;
 	my $hashref = shift;
 
 	my $return_copper   = 0;
