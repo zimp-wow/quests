@@ -208,7 +208,7 @@ sub return_items {
 					my $inst = $item_data{$r}[3];
 					my $return_count = $inst->RemoveTaskDeliveredItems();
 					if ($return_count > 0) {
-						quest::debug("(1) Returning $k");
+						quest::debug("(1) Returning $k, " . $inst->GetCharges() . " : " . $item_data{$r}[2]);
 						#$client->SummonFixedItem($k, $inst->GetCharges(), $item_data{$r}[2]);
 						$return_data{$r} = [$k, $item_data{$r}[1], $item_data{$r}[2]];
 						$items_returned = 1;
