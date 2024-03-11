@@ -186,7 +186,8 @@ sub return_items {
 	my $name = plugin::val('$name');
 	my $items_returned = 0;
 
-		# for some reason the source is sending this, we'll clean it up
+	quest::debug("ri check 1");
+	# for some reason the source is sending this, we'll clean it up
 	if ($hashref->{0}) {
 		delete $hashref->{0};
 	}
@@ -198,6 +199,7 @@ sub return_items {
 		3 => [ plugin::val('$item4'), plugin::val('$item4_charges'), plugin::val('$item4_attuned'), plugin::val('$item4_inst') ],
 	);
 
+	quest::debug("ri check 2");
 	my %return_data = ();	
 
 	foreach my $k (keys(%{$hashref})) {
@@ -206,7 +208,9 @@ sub return_items {
 		my $rcount = $hashref->{$k};
 		my $r;
 		for ($r = 0; $r < 4; $r++) {
+			quest::debug("ri check 3");
 			if ($rcount > 0 && $item_data{$r}[0] && $item_data{$r}[0] == $k) {
+				quest::debug("ri check 4");
 				if ($client) {
 					my $inst = $item_data{$r}[3];
 					my $return_count = $inst->RemoveTaskDeliveredItems();
