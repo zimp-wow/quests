@@ -186,6 +186,11 @@ sub return_items {
 	my $name = plugin::val('$name');
 	my $items_returned = 0;
 
+		# for some reason the source is sending this, we'll clean it up
+	if ($hashref->{0}) {
+		delete $hashref->{0};
+	}
+
 	my %item_data = (
 		0 => [ plugin::val('$item1'), plugin::val('$item1_charges'), plugin::val('$item1_attuned'), plugin::val('$item1_inst') ],
 		1 => [ plugin::val('$item2'), plugin::val('$item2_charges'), plugin::val('$item2_attuned'), plugin::val('$item2_inst') ],
