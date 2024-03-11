@@ -55,6 +55,8 @@ sub check_handin {
 	# Make a copy of the original hashref
     my $original_hashref = { %$hashref };
 
+	quest::debug("ch check 1");
+
     # Iterate over the hashref and replace each key with its get_base_id(key) version
     foreach my $item (keys %$hashref) {
         my $base_id = get_base_id($item);  # Assuming get_base_id() returns original id if base id does not exist
@@ -64,6 +66,8 @@ sub check_handin {
             delete $hashref->{$item};  # Remove the original entry
         }
     }
+
+	quest::debug("ch check 2");
 
 	# -----------------------------
 	# handin formatting examples
