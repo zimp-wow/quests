@@ -31,7 +31,7 @@ sub EVENT_SAY {
 sub EVENT_ITEM {
 
   #bracers turn in
-  if(plugin::check_handin(\%itemcount,16507 => 2, 19010 => 1, 19009 => 1)) {
+  if(($itemcount{16507} == 2) && ($itemcount{19010} == 1) && ($itemcount{19009} == 1)) {
     quest::say("Well done! You are truly a skilled cleric. I have crafted you a bracer - take it.");
     quest::summonitem(4925); # Item: Bracers of the Reverent
     quest::faction("415","15");
@@ -40,7 +40,7 @@ sub EVENT_ITEM {
   }
 
   # Caduceus of Sacrament
-  if(plugin::check_handin(\%itemcount,16507 => 2, 19016 => 1, 19015 => 1)) {
+  if(($itemcount{16507} == 2) && ($itemcount{19016} == 1) && ($itemcount{19015} == 1)) {
     quest::say("Well done! You are truly a skilled cleric. I have crafted you a weapon - take it.");
     quest::summonitem(6407); # Item: Caduceus of Sacrament
     quest::faction("415","15");
@@ -49,7 +49,7 @@ sub EVENT_ITEM {
   }
 
   #chestplate turn in
-  if(plugin::check_handin(\%itemcount,19047 => 2, 19011 => 1, 19012 => 1)) {
+  if(($itemcount{19047} == 2) && ($itemcount{19011} == 1) && ($itemcount{19012} == 1)) {
     quest::say("Well done! You are truly a skilled cleric. I have crafted you a chestplate - take it.");
     quest::summonitem(4926); # Item: Chestplate of the Constant
     quest::faction("415","15");
@@ -58,7 +58,7 @@ sub EVENT_ITEM {
   }
 
   #shield turn in
-  if(plugin::check_handin(\%itemcount,19048 => 2, 19013 => 1, 19014 => 1)) {
+  if(($itemcount{19048} == 2) && ($itemcount{19013} == 1) && ($itemcount{19014} == 1)) {
     quest::say("Well done! You are truly a skilled cleric. I have crafted you a shield - take it.");
     quest::summonitem(9427); # Item: Shield of the Devout
     quest::faction("415","15");

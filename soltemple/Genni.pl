@@ -28,8 +28,7 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-
-  if(plugin::check_handin(\%itemcount, 10032 => 2, 10000 => 1)) {
+  if(($itemcount{10032} == 2) && ($itemcount{10000} == 1)) {
     quest::say("Here is your prize - a lambent star ruby.");
     quest::summonitem(10117); # Item: Lambent Star Ruby
     quest::faction(415,1); # Faction: Temple of Solusek Ro
@@ -41,7 +40,7 @@ sub EVENT_ITEM {
     quest::faction(415,1); # Faction: Temple of Solusek Ro
     quest::faction(416,-1); # Faction: Shadowed Men
   }
-  elsif(plugin::check_handin(\%itemcount, 16507 => 1)) {
+  elsif(($itemcount{16507} == 1)) {
     quest::say("I see that Gavel has sent you to me. Very well, I have galvanized your platinum bar - take it.");
     quest::summonitem(19047); #Galvanized Platinum
   }

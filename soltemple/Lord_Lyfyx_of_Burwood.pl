@@ -16,7 +16,7 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  if (plugin::check_handin(\%itemcount, 10028 => 1, 12831 => 1)){
+  if(($itemcount{10028} == 1) && ($itemcount{12831} == 1)) {
     quest::emote("places the gems inside an ornate metal box.  He begins to tug at his skin.  Your vision blurs as he performs his magic. 'This is what you seek.  Now leave and bother me no further.' ");
     quest::faction(415,15);        # Temple of Solusek Ro better
     quest::faction(416,-15);       # Shadow Men worse

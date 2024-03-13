@@ -20,15 +20,15 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  if(plugin::check_handin(\%itemcount, 12292 => 1, 12291 => 1, 16507 => 1)) {
+  if(($itemcount{12292} == 1) && ($itemcount{12291} == 1) && ($itemcount{16507} == 1)) {
     quest::say("Well done, $name, here is your reward.");
     quest::summonitem(3144); # Item: Darkforge Gauntlets
   }
-  elsif(plugin::check_handin(\%itemcount, 12294 => 1, 12293 => 1, 12297 => 2)) {
+  elsif(($itemcount{12294} == 1) && ($itemcount{12293} == 1) && ($itemcount{12297} == 2)) {
     quest::say("Well done, $name, here is your reward.");
     quest::summonitem(3145); # Item: Darkforge Greaves
   }
-  elsif(plugin::check_handin(\%itemcount, 12296 => 1, 12295 => 1, 12106 => 2)) {
+  elsif(($itemcount{12296} == 1) && ($itemcount{12295} == 1) && ($itemcount{12106} == 2)) {
     quest::say("Well done, $name, here is your reward.");
     quest::summonitem(3146); # Item: Darkforge Boots
   }
