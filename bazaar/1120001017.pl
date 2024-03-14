@@ -22,7 +22,8 @@ sub EVENT_ITEM
     {
         quest::say("Mmmph!!.. *Pop!!* Ouch, my thumb!! Here you are.");
         quest::say("Cabilis welcomes you.");
-        $client->SetBaseRace(128);
+        quest::permarace(128);
+        #$client->SetBaseRace(128);
         quest::faction(440,2000);
         quest::faction(441,2000);
         quest::faction(442,2000);
