@@ -44,7 +44,7 @@ sub CheckCashPayment {
 
     quest::debug("total_value: $total_value");
 
-    if ($remaining_value >= 0) {
+    if ($remaining_value >= 0 && $target_value > 0) {
         # Calculate the change to give back as well as the actual amounts spent        
         my $change_platinum = int($remaining_value / 1000);
         $remaining_value %= 1000;
@@ -88,7 +88,7 @@ sub CheckCashPayment {
         quest::debug("change_value: $change_value");
 
         return 1;
-    } else {
+    } elsif ($total_value > 0) {
         # Refund all the money since the target value was not met
         $client->AddMoneyToPP($initial{copper}, $initial{silver}, $initial{gold}, $initial{platinum}, 1);
         my $refund_message = "You have been refunded ";
