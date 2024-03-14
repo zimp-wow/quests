@@ -62,6 +62,48 @@ sub check_handin {
 	return $retval;
 }
 
+sub check_handin_fixed {
+    use Scalar::Util qw(looks_like_number);
+    my $client     = plugin::val('client');
+    my $hashref    = shift;
+
+	# These are the empty IDs
+	if ($hashref->{0}) {
+		delete $hashref->{0};
+	}
+
+	if (!$client->EntityVariableExists("HANDIN_ITEMS")) {
+		$client->SetEntityVariable("HANDIN_ITEMS", plugin::GetHandinItemsSerialized("Handin", %$hashref));
+	}	
+
+	# -----------------------------
+	# handin formatting examples
+	# -----------------------------
+	# item_id    => required_count eg (1001 => 1)
+	# -----------------------------
+	my %required = @_;
+	my $retval = 1;
+	foreach my $req (keys %required) {
+		if (!defined $hashref->{$req} || $hashref->{$req} != $required{$req}) {
+			$retval = 0;
+		}
+	}
+
+	foreach my $req (keys %required) {
+		if ($required{$req} < $hashref->{$req}) {
+			$hashref->{$req} -= $required{$req};
+		} else {
+			delete $hashref->{$req};
+		}
+	}
+	    
+    if (!$retval) {       
+        return 0;
+    }
+
+	return $retval;
+}
+
 sub return_items {
 	my $hashref = shift;
 	my $silent = shift || 0;
