@@ -76,18 +76,18 @@ sub EVENT_ITEM {
   $expansion = quest::get_data($key);
 
   if ($expansion < 20){
-    if (plugin::takeItems(827200 => 1, 84189 => 1, 825319 => 1, 824741 =>1)) {
+    if (plugin::check_handin_fixed(\%itemcount, 2027200 => 1, 2004189 => 1, 2025319 => 1, 2024741 => 1)) {
       plugin::Whisper("Here are three tokens. Hand one back to me for your flag!");
-      quest::summonfixeditem(99102);
-      quest::summonfixeditem(99102);
-      quest::summonfixeditem(99102);
+      quest::summonfixeditem(2019102);
+      quest::summonfixeditem(2019102);
+      quest::summonfixeditem(2019102);
 
       quest::ding();
       quest::exp(1000000);
     }
 
     if ($expansion >= 6){
-    if (plugin::takeItems(99102 => 1)){
+    if (plugin::check_handin_fixed(\%itemcount, 2019102 => 1)) {
       plugin::Whisper("Beware of the evils that lurk Luclin $name!");
       quest::ding();
       quest::set_data($client->AccountID() . "sky", 1);
@@ -103,7 +103,8 @@ sub EVENT_ITEM {
     }       
   }
 
-  plugin::returnUnusedItems();
+  plugin::return_items(\%itemcount);
+  plugin::CheckCashPayment(0, $copper, $silver, $gold, $platinum);
 
 }
 }

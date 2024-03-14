@@ -55,15 +55,15 @@ sub EVENT_ITEM {
     $voxkey = $client->AccountID() . "vox";
 
     if ($expansion < 20){
-        if (plugin::takeItems(828043 => 1, 810366 => 1, 810142 => 1, 826997 =>1)) {
+        if (plugin::check_handin_fixed(\%itemcount, 2028043 => 1, 2010366 => 1, 2010142 => 1, 20826997 => 1)) {
 		    plugin::Whisper("Here are three tokens. Hand them back to me for your flag!");
             quest::ding();
             quest::exp(100000);
-            quest::summonfixeditem(99100);
-            quest::summonfixeditem(99100);
-            quest::summonfixeditem(99100);
+            quest::summonfixeditem(2019100);
+            quest::summonfixeditem(2019100);
+            quest::summonfixeditem(2019100);
         }
-        if (plugin::takeItems(99100 => 1)) {
+        if (plugin::check_handin_fixed(\%itemcount, 2019100 => 1)) {
 		    plugin::Whisper("Beware of the evils that lurk Kunark $name!");
             quest::ding();
             quest::set_data($key, 2);
@@ -73,5 +73,6 @@ sub EVENT_ITEM {
 	    #:: Return unused items
     }
     
-	    plugin::returnUnusedItems();
+	    plugin::return_items(\%itemcount);
+        plugin::CheckCashPayment(0, $copper, $silver, $gold, $platinum);
 }

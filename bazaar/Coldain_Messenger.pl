@@ -56,11 +56,11 @@ sub EVENT_ITEM {
   $expansion = quest::get_data($key);
 
   if ($expansion < 20){
-    if (plugin::takeItems(85772 => 1, 83201 => 1, 81414 => 1, 84578 =>1)) {
+    if (plugin::check_handin_fixed(\%itemcount, 2005772 => 1, 2003201 => 1, 2001414 => 1, 2004578 => 1)) {
       plugin::Whisper("Here are three tokens. Hand them back to me for your flag!");
-      quest::summonfixeditem(99101);
-      quest::summonfixeditem(99101);
-      quest::summonfixeditem(99101);
+      quest::summonfixeditem(2019101);
+      quest::summonfixeditem(2019101);
+      quest::summonfixeditem(2019101);
 
       quest::ding();
       quest::exp(1000000);
@@ -68,7 +68,7 @@ sub EVENT_ITEM {
 
 
     if ($expansion >= 2){
-    if (plugin::takeItems(99101 => 1)){
+    if (plugin::check_handin_fixed(\%itemcount, 2019101 => 1)) {
       plugin::Whisper("Beware of the evils that lurk Velious $name!");
       quest::ding();
       quest::set_data($client->AccountID() . "trak", 1);
@@ -79,5 +79,6 @@ sub EVENT_ITEM {
     }       
   }
   plugin::return_items(\%itemcount);
+  plugin::CheckCashPayment(0, $copper, $silver, $gold, $platinum);
 }
 }
