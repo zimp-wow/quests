@@ -58,19 +58,19 @@ sub EVENT_ITEM {
   $expansion = quest::get_data($key);
 
   if ($expansion < 20){
-    if (plugin::takeItems(17324 => 1, 828708 => 1, 826826 => 1, 861227 =>1)) {
+    if(($itemcount{2017324} == 1) && ($itemcount{2028708} == 1) && ($itemcount{2026826} == 1) && ($itemcount{2061227} == 1)) {
       plugin::Whisper("Here are three tokens. Hand one back to me for your flag!");
-      quest::summonfixeditem(99103);
-      quest::summonfixeditem(99103);
-      quest::summonfixeditem(99103);
+      quest::summonfixeditem(2019103);
+      quest::summonfixeditem(2019103);
+      quest::summonfixeditem(2019103);
       quest::summonfixeditem(22198);
 
       quest::ding();
       quest::exp(1000000);
     }
 
-  if ($expansion >= 14){  
-    if (plugin::takeItems(99103 => 1)){
+  if ($expansion >= 14){
+    if(($itemcount{2019103} == 1)) {  
       plugin::Whisper("Well done! Beware of the evils that lurk in the Planes $name!");
       quest::ding();
       quest::set_data($client->AccountID() . "akh", 1);
