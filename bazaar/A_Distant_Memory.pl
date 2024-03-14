@@ -48,6 +48,10 @@ sub EVENT_ITEM {
                 return;
             } else {
                 quest::say("You did not give me enough money to pay for this infusion.");
+                $copper   = 0;
+                $silver   = 0;
+                $gold     = 0;
+                $platinum = 0;
             }
         }
     }
