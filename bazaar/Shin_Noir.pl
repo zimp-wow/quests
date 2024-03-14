@@ -22,7 +22,8 @@ sub EVENT_ITEM
     {
         quest::say("Mmmph!!.. *Pop!!* Ouch, my thumb!! Here you are.");
         quest::say("(Log out to see your changes)");
-        $client->SetBaseRace(6);
+        quest::permarace(6);
+        #$client->SetBaseRace(6);
     }
     plugin::return_items(\%itemcount);
 }
