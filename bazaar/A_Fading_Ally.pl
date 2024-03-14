@@ -70,7 +70,7 @@ sub EVENT_ITEM {
 			}
 		} elsif (!$client->GetBucket("guktan-mask-obtained")) {
 			$client->SetBucket("guktan-mask-obtained", 1);
-			$client->SummonItem(854884);
+			$client->SummonFixedItem(2054884);
 			delete $itemcount{$item_id};
 			quest::emote("The memory of a guktan conjures a ghostly mask.");	
 		} else {
