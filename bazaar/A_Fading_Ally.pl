@@ -92,7 +92,7 @@ sub EVENT_ITEM {
 
 	$client->AddMoneyToPP($copper_remainder, $silver_remainder, $gold_remainder, $platinum_remainder, 1);
 	#Return any unwanted items
-	plugin::return_items(\%itemcount); 
+	#plugin::return_items(\%itemcount);
 	
 	set_unlock_progress($unlock_progress);
 	
