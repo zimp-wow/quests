@@ -6,26 +6,25 @@ sub GetUpgrades {
     my $sth = $dbh->prepare("SELECT * FROM items WHERE id % 1000000 = ? ORDER BY id ASC");
     $sth->execute($base_id);
 
-    # Initialize an array to hold the items. Start with undefined values.
-    my @items = (undef, undef, undef); 
+    my @items;
 
     while (my $row = $sth->fetchrow_hashref) {
-        if ($row->{'id'} % 1000000 == $base_id) {
+        if ($row->{'id'} % 1000000 == $base_id && $row->{'id'} < 1000000) {
             # Base item
-            $items[0] = $row;
-        } elsif ($row->{'id'} % 1000000 == $base_id and $row->{'id'} >= 1000000 and $row->{'id'} < 2000000) {
+            $items[0] = $row->{'id'};
+        } elsif ($row->{'id'} % 1000000 == $base_id && $row->{'id'} >= 1000000 && $row->{'id'} < 2000000) {
             # First upgrade (1 million range)
-            $items[1] = $row;
-        } elsif ($row->{'id'} % 1000000 == $base_id and $row->{'id'} >= 2000000) {
+            $items[1] = $row->{'id'};
+        } elsif ($row->{'id'} % 1000000 == $base_id && $row->{'id'} >= 2000000) {
             # Second upgrade (2 million range)
-            $items[2] = $row;
+            $items[2] = $row->{'id'};
         }
     }
 
     $sth->finish();
     $dbh->disconnect();
-
-    return \@items; # Return a reference to the array of items
+    
+    return @items;
 }
 
 sub IsItemTier0 {
