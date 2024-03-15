@@ -1,5 +1,5 @@
 sub EVENT_SAY {
-	if (plugin::check_hasitem($client, 29165)){
+	if (plugin::check_hasitem($client, 29165) || plugin::check_hasitem($client, 1029165) || plugin::check_hasitem($client, 2029165)) {
 		if ($text=~/Hail/i) {
 			quest::say("Acquisition of power completed. Would you like to be transported to the time-projection chamber?");
 		}
