@@ -58,7 +58,7 @@ sub EVENT_ITEM {
   $expansion = quest::get_data($key);
 
   if ($expansion < 20){
-    if (plugin::check_handin_fixed(\%itemcount, 2017324 => 1, 2028708 => 1, 2026826 => 1, 2061227 => 1)) {
+    if (plugin::check_handin_fixed(\%itemcount, 17324 => 1, 2028708 => 1, 2026826 => 1, 2061227 => 1)) {
       plugin::Whisper("Here are three tokens. Hand one back to me for your flag!");
       quest::summonfixeditem(2019103);
       quest::summonfixeditem(2019103);
