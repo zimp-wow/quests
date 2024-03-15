@@ -2,6 +2,21 @@ my $eom_id = 6;
 my $eom_item_id = 46779;
 my $eom_log = "total-eom-spend";
 
+sub CheckWorldWideBuffs {
+    my $target = shift;
+    if($target->IsClient() || ($target->IsPet() && $target->HasOwner() && $target->GetOwner()->IsClient())) {
+        for my $spell_id (43002 .. 43008) {
+            my $data = quest::get_data("eom_$spell_id");
+
+            if ($data) {               
+                $target->ApplySpellBuff($spell_id, quest::get_data_remaining("eom_$spell_id")/6);                
+            } else {
+                $target->BuffFadeBySpellID($spell_id);
+            }
+        }
+    }
+}
+
 # Spend EOM. Returns true on success, false on failure
 # usage: plugin::SpendEOM($client, $amount)
 sub SpendEOM {

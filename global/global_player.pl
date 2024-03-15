@@ -1,35 +1,15 @@
 
 sub EVENT_SIGNAL {
-	quest::debug("signal " . $signal);
-	
-	# Serverwide Donator buffs
-	CheckWorldWideBuffs();
-}
-
-sub CheckWorldWideBuffs {
-    for my $value (43002 .. 43008) {
-        my $data = quest::get_data("eom_$value");
-
-		if ($data) {
-			$client->ApplySpell($value, quest::get_data_remaining("eom_$value")/6);
-			if ($client->HasPet()) {
-				$client->GetPet()->ApplySpellBuff($value, quest::get_data_remaining("eom_$value")/6);
-			}
-		} else {
-			$client->BuffFadeBySpellID($value);
-		}
-    }
+	plugin::CheckWorldWideBuffs();
 }
 
 sub EVENT_CONNECT {
 
-	CheckWorldWideBuffs();
+	plugin::CheckWorldWideBuffs();
+	plugin::ConvertFlags();
 
 	my $PCRace = $client->GetRace();
 	my $PCClass = $client->GetClass();
-	my $global_bucket_key 	= "froglok-unlock";
-	my $unlock_progress = quest::get_data($global_bucket_key);
-
 
 	if($PCRace == 128){ 
 		$key = $client->AccountID() . "-kunark-flag";
@@ -330,7 +310,7 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 }
 
 sub EVENT_ZONE {
-	CheckWorldWideBuffs();
+	plugin::CheckWorldWideBuffs();
 
 	my $PCRace  = $client->GetRace();
 	my $PCClass = $client->GetClass();
@@ -370,7 +350,7 @@ sub EVENT_DISCOVER_ITEM {
 
 
 sub EVENT_ENTERZONE {
-	CheckWorldWideBuffs();  
+	plugin::CheckWorldWideBuffs();  
 }
 
 sub EVENT_COMBINE_VALIDATE {

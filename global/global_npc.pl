@@ -26,19 +26,5 @@ sub EVENT_KILLED_MERIT {
 }
 
 sub EVENT_SPAWN {
-    CheckWorldWideBuffs();
-}
-
-sub CheckWorldWideBuffs {
-    if ($npc->IsPet() && $npc->HasOwner() && $npc->GetOwner()->IsClient()) {
-        for my $value (43002 .. 43008) {
-            my $data = quest::get_data("eom_$value");
-
-            if ($data) {               
-                $npc->ApplySpellBuff($value, quest::get_data_remaining("eom_$value")/6);                
-            } else {
-                $npc->BuffFadeBySpellID($value);
-            }
-        }
-    }
+    plugin::CheckWorldWideBuffs();
 }
