@@ -6,7 +6,7 @@ sub EVENT_SIGNAL {
 sub EVENT_CONNECT {
 
 	plugin::CheckWorldWideBuffs($client);
-	plugin::ConvertFlags();
+	plugin::ConvertFlags($client);
 
 	my $PCRace = $client->GetRace();
 	my $PCClass = $client->GetClass();
@@ -311,6 +311,7 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 
 sub EVENT_ZONE {
 	plugin::CheckWorldWideBuffs($client);
+	plugin::ConvertFlags($client);
 
 	my $PCRace  = $client->GetRace();
 	my $PCClass = $client->GetClass();
