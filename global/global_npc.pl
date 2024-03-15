@@ -26,5 +26,5 @@ sub EVENT_KILLED_MERIT {
 }
 
 sub EVENT_SPAWN {
-    plugin::CheckWorldWideBuffs();
+    plugin::CheckWorldWideBuffs($npc);
 }

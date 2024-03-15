@@ -1,11 +1,11 @@
 
 sub EVENT_SIGNAL {
-	plugin::CheckWorldWideBuffs();
+	plugin::CheckWorldWideBuffs($client);
 }
 
 sub EVENT_CONNECT {
 
-	plugin::CheckWorldWideBuffs();
+	plugin::CheckWorldWideBuffs($client);
 	plugin::ConvertFlags();
 
 	my $PCRace = $client->GetRace();
@@ -310,7 +310,7 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 }
 
 sub EVENT_ZONE {
-	plugin::CheckWorldWideBuffs();
+	plugin::CheckWorldWideBuffs($client);
 
 	my $PCRace  = $client->GetRace();
 	my $PCClass = $client->GetClass();
@@ -350,7 +350,7 @@ sub EVENT_DISCOVER_ITEM {
 
 
 sub EVENT_ENTERZONE {
-	plugin::CheckWorldWideBuffs();  
+	plugin::CheckWorldWideBuffs($client);  
 }
 
 sub EVENT_COMBINE_VALIDATE {
