@@ -1,5 +1,5 @@
 sub EVENT_SAY {
-	if (plugin::check_hasitem($client, 29165)){
+	if (plugin::check_hasitem($client, 29165) || plugin::check_hasitem($client, 1029165) || plugin::check_hasitem($client, 2029165) || plugin::check_hasitem($client, 18637) || plugin::check_hasitem($client, 1018637) || plugin::check_hasitem($client, 2018637)) {
 		if ($text=~/Hail/i) {
 			quest::emote("fidgets about with excitement, 'So here you are, this is quite impressive. I cannot wait to see the results of this impressive machine! I have coordinated with the clockworks here that have not gone mad. We have set the machine to tear a point of time open that should be equal to that based on the cipher and history that we have [researched].'");
 		}
