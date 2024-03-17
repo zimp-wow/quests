@@ -10,6 +10,7 @@ sub EVENT_SAY {
 		$client->Message(12,"The Planar Projection seems to flicker in and out of existence. It seems to be impressed and grateful for the death of Saryrn.");
 		$client->Message(4,"You receive a character flag!");
 		quest::set_data($client->AccountID() . "-saryrn-flag", 1);
+		$client->Message(12,"Truly an incredible feat... You may be ready to venture through the Gates of Discord, if you think you're ready.");
 		$client->Message(4, "You have gained a progression flag!");
 	}
 
