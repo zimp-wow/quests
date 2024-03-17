@@ -230,8 +230,8 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  if (plugin::check_hasitem($client, 60252)) {
-    if (plugin::check_handin(\%itemcount, 60174 => 1)){
+  if (plugin::check_handin(\%itemcount, 60174 => 1)){
+    if (plugin::check_hasitem($client, 60252)) {
       quest::say("You have done great things for us, but your journey is not yet over.");  #need live text
       $client->Message(4, "Finished! - You've recovered the Sliver of the High Temple! Congratulations!");
       $client->Message(4, "You feel the magic protecting Qvic has softened.");
