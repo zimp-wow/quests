@@ -1,5 +1,3 @@
-
-
 sub EVENT_SAY {
 
 
@@ -18,13 +16,13 @@ if($text=~/guided meditation/i) {
 
 
 
-		$client->Message(1,"You converse with Seer Mal Nae`Shi as she guides your meditation... You feel a power within your being, pulling your thougts left and right.  After some time, your mind clears, and Seer Mal Nae`Shi speaks.");
+		plugin::NPCTell("You converse with Seer Mal Nae`Shi as she guides your meditation... You feel a power within your being, pulling your thougts left and right.  After some time, your mind clears, and Seer Mal Nae`Shi speaks.");
 
-		$client->Message(1,"Now that your thoughts have calmed, tell me where you have traveled... There are many planes, try to think about your past, and your adventures in: [Plane of Justice] [Plane of Nightmare] [Plane of Innovation] [Plane of Disease] [Plane of Valor] [Plane of Storms] [Plane of Torment] [Ruins of Lxanvom] [Doomfire, the Burning Lands] [Drunder, Fortress of Zek] [Eryslai, the Kingdom of Wind] [Halls of Honor] [Lair of Terris Thule] [Bastion of Thunder] [Reef of Coirnav] [Tower of Solusek Ro] [Vegarlson, the Earthen Badlands] [Ragrax, Stronghold of the Twelve] [Temple of Marr].  If you have completed your elemental flag, say [elemental flag]");
+		plugin::NPCTell("Now that your thoughts have calmed, tell me where you have traveled... There are many planes, try to think about your past, and your adventures in: [Plane of Justice] [Plane of Nightmare] [Plane of Innovation] [Plane of Disease] [Plane of Valor] [Plane of Storms] [Plane of Torment] [Ruins of Lxanvom] [Doomfire, the Burning Lands] [Drunder, Fortress of Zek] [Eryslai, the Kingdom of Wind] [Halls of Honor] [Lair of Terris Thule] [Bastion of Thunder] [Reef of Coirnav] [Tower of Solusek Ro] [Vegarlson, the Earthen Badlands] [Ragrax, Stronghold of the Twelve] [Temple of Marr]. If you have completed your elemental flag, say [elemental flag]");
 
-		$client->Message(1,"If one option does not give you the information you need, you may be missing experience from some zones.  To find the credit you currently have, please just [unlock memories].");
+		plugin::NPCTell("If one option does not give you the information you need, you may be missing experience from some zones.  To find the credit you currently have, please just [unlock memories].");
 
-		$client->Message(1,"There are special restrictions for the Temple of Marr, elemental planes, and Plane of Torment.  If you need assistance, say [special zones].");
+		plugin::NPCTell("There are special restrictions for the Temple of Marr, elemental planes, and Plane of Torment.  If you need assistance, say [special zones].");
 
 		}
 
@@ -36,7 +34,7 @@ if($text=~/special zones/i) {
 
 
 
-		$client->Message(9,"The Temple of Marr is a special access zone.  To access the Temple of Marr you must kill Bertox, Terris Thule, complete the three trials within Halls of Honor, and defeat Saryrn. The other special access zones are the elemental planes. These planes are Plane of Air, Plane of Water and Plane of Earth. To inquire about access to elemental planes, say [elemental planes]. To access the elemental planes: Plane of Fire is obtained by killing through the plane of innovation, to Drunder, Fortress of Zek, then to the Tower of Soluesk Ro, where you must kill Solusek Ro himself.  To access the other elemental planes, you must have completed ALL zone flags in lower zones, and kill Agnarr the storm lord, and Mithaniel Marr. To inquire about access to the Temple of Marr, say [Access to Temple of Marr]. The last special access zone is the Plane of Torment. You must have killed Terris Thule and Bertox before you can enter to kill Saryrn. To inquire about the Plane of Torment, say [Access to Torment]."); 
+		plugin::NPCTell("The Temple of Marr is a special access zone.  To access the Temple of Marr you must kill Bertox, Terris Thule, complete the three trials within Halls of Honor, and defeat Saryrn. The other special access zones are the elemental planes. These planes are Plane of Air, Plane of Water and Plane of Earth. To inquire about access to elemental planes, say [elemental planes]. To access the elemental planes: Plane of Fire is obtained by killing through the plane of innovation, to Drunder, Fortress of Zek, then to the Tower of Soluesk Ro, where you must kill Solusek Ro himself.  To access the other elemental planes, you must have completed ALL zone flags in lower zones, and kill Agnarr the storm lord, and Mithaniel Marr. To inquire about access to the Temple of Marr, say [Access to Temple of Marr]. The last special access zone is the Plane of Torment. You must have killed Terris Thule and Bertox before you can enter to kill Saryrn. To inquire about the Plane of Torment, say [Access to Torment]."); 
 
 
 
@@ -64,7 +62,7 @@ if($text=~/unlock memories/i) {
 
 
 
-		$client->Message(9,"At the moment, your credit is as follows");
+		plugin::NPCTell("At the moment, your credit is as follows");
 
 		
 
@@ -82,7 +80,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT spoken to Jezith within the Plane of Tranquility for the Hedge preflag by saying tormented by nightmares.");
+		plugin::NPCTell("You have NOT spoken to Jezith within the Plane of Tranquility for the Hedge preflag by saying tormented by nightmares.");
 
 		}
 
@@ -100,7 +98,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT killed the Construct of Nightmares.");
+		plugin::NPCTell("You have NOT killed the Construct of Nightmares.");
 
 		}
 
@@ -118,7 +116,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT killed Terris Thule.");
+		plugin::NPCTell("You have NOT killed Terris Thule.");
 
 		}
 
@@ -136,7 +134,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Poxbourne in the Plane of Tranquility after defeating Terris Thule.");
+		plugin::NPCTell("You have NOT talked to Poxbourne in the Plane of Tranquility after defeating Terris Thule.");
 
 		}
 
@@ -154,7 +152,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT killed the dragon within the Plane of Innovation.");
+		plugin::NPCTell("You have NOT killed the dragon within the Plane of Innovation.");
 
 		}
 
@@ -172,7 +170,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT talked to the Gnome within the Plane of Innovation factory.");
+		plugin::NPCTell("You have NOT talked to the Gnome within the Plane of Innovation factory.");
 
 		}
 
@@ -190,7 +188,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated the Behemoth within the Plane of Innovation and then QUICKLY hailed the Gnome in the factory.");
+		plugin::NPCTell("You have NOT defeated the Behemoth within the Plane of Innovation and then QUICKLY hailed the Gnome in the factory.");
 
 		}
 
@@ -208,7 +206,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Adler Fuirstel outside of the Plane of Disease.");
+		plugin::NPCTell("You have NOT talked to Adler Fuirstel outside of the Plane of Disease.");
 
 		}
 
@@ -226,7 +224,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Grummus.");
+		plugin::NPCTell("You have NOT defeated Grummus.");
 
 		}
 
@@ -244,7 +242,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Elder Fuirstel in the Plane of Tranquility.");
+		plugin::NPCTell("You have NOT talked to Elder Fuirstel in the Plane of Tranquility.");
 
 		}
 
@@ -262,7 +260,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Mavuin, and agreed to plea his case to The Tribunal.");
+		plugin::NPCTell("You have NOT talked to Mavuin, and agreed to plea his case to The Tribunal.");
 
 		}
 
@@ -280,7 +278,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT shown the Tribunal the mark from the trial you have completed.");
+		plugin::NPCTell("You have NOT shown the Tribunal the mark from the trial you have completed.");
 
 		}
 
@@ -298,7 +296,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT returned to mavuin to tell him the tribunal will hear his case.");
+		plugin::NPCTell("You have NOT returned to mavuin to tell him the tribunal will hear his case.");
 
 		}
 
@@ -316,7 +314,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Trial of Execution.");
+		plugin::NPCTell("You have NOT completed the Trial of Execution.");
 
 		}
 
@@ -334,7 +332,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Trial of Flame.");
+		plugin::NPCTell("You have NOT completed the Trial of Flame.");
 
 		}
 
@@ -352,7 +350,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Trial of Hanging.");
+		plugin::NPCTell("You have NOT completed the Trial of Hanging.");
 
 		}
 
@@ -370,7 +368,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Trial of Lashing.");
+		plugin::NPCTell("You have NOT completed the Trial of Lashing.");
 
 		}
 
@@ -388,7 +386,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Trial of Stoning.");
+		plugin::NPCTell("You have NOT completed the Trial of Stoning.");
 
 		}
 
@@ -406,7 +404,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Trial of Torture.");
+		plugin::NPCTell("You have NOT completed the Trial of Torture.");
 
 		}
 
@@ -424,7 +422,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated the prismatic dragon, Aerin`Dar, within the Plane of Valor.");
+		plugin::NPCTell("You have NOT defeated the prismatic dragon, Aerin`Dar, within the Plane of Valor.");
 
 		}
 
@@ -442,7 +440,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed part one of Askr's task within the Plane of Storms.");
+		plugin::NPCTell("You have NOT completed part one of Askr's task within the Plane of Storms.");
 
 		}
 
@@ -462,7 +460,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT killed the giants within the Plane of Storms to complete Askr's task.");
+		plugin::NPCTell("You have NOT killed the giants within the Plane of Storms to complete Askr's task.");
 
 		}
 
@@ -480,7 +478,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Carprin Cycle within Ruins of Laxanvom.");
+		plugin::NPCTell("You have NOT completed the Carprin Cycle within Ruins of Laxanvom.");
 
 		}
 
@@ -498,7 +496,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT killed Bertox and hailed the planar projection.");
+		plugin::NPCTell("You have NOT killed Bertox and hailed the planar projection.");
 
 		}
 
@@ -516,7 +514,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Adler Fuirstel after killing Bertox.");
+		plugin::NPCTell("You have NOT talked to Adler Fuirstel after killing Bertox.");
 
 		}
 
@@ -534,7 +532,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Shadyglade within the Plane of Tranquility.");
+		plugin::NPCTell("You have NOT talked to Shadyglade within the Plane of Tranquility.");
 
 		}
 
@@ -552,7 +550,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT killed the Keeper of Sorrows.");
+		plugin::NPCTell("You have NOT killed the Keeper of Sorrows.");
 
 		}
 
@@ -570,7 +568,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT killed Saryrn and hailed the planar projection.");
+		plugin::NPCTell("You have NOT killed Saryrn and hailed the planar projection.");
 
 		}
 
@@ -588,7 +586,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Shadyglade after killing Saryrn.");
+		plugin::NPCTell("You have NOT talked to Shadyglade after killing Saryrn.");
 
 		}
 
@@ -606,7 +604,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Halls of Honor trial given by Faye.");
+		plugin::NPCTell("You have NOT completed the Halls of Honor trial given by Faye.");
 
 		}
 
@@ -624,7 +622,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Halls of Honor trial given by Rhaliq Trell.");
+		plugin::NPCTell("You have NOT completed the Halls of Honor trial given by Rhaliq Trell.");
 
 		}
 
@@ -642,7 +640,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Halls of Honor trial given by Alekson Garn.");
+		plugin::NPCTell("You have NOT completed the Halls of Honor trial given by Alekson Garn.");
 
 		}
 
@@ -660,7 +658,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Lord Marr within his Temple.");
+		plugin::NPCTell("You have NOT defeated Lord Marr within his Temple.");
 
 		}
 
@@ -678,7 +676,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Agnarr, the Storm Lord.");
+		plugin::NPCTell("You have NOT defeated Agnarr, the Storm Lord.");
 
 		}
 
@@ -698,7 +696,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT killed Tallon Zek");
+		plugin::NPCTell("You have NOT killed Tallon Zek");
 
 		}
 
@@ -716,7 +714,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT killed Vallon Zek.");
+		plugin::NPCTell("You have NOT killed Vallon Zek.");
 
 		}
 
@@ -734,7 +732,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT killed Rallos Zek the Warlord.");
+		plugin::NPCTell("You have NOT killed Rallos Zek the Warlord.");
 
 		}
 
@@ -752,7 +750,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT spoken with the grand librarian to receive access to the Elemental Planes.");
+		plugin::NPCTell("You have NOT spoken with the grand librarian to receive access to the Elemental Planes.");
 
 		}
 
@@ -770,7 +768,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Arlyxir within the Tower of Solusek Ro.");
+		plugin::NPCTell("You have NOT defeated Arlyxir within the Tower of Solusek Ro.");
 
 		}
 
@@ -788,7 +786,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated The Protector of Dresolik within the Tower of Solusek Ro.");
+		plugin::NPCTell("You have NOT defeated The Protector of Dresolik within the Tower of Solusek Ro.");
 
 		}
 
@@ -808,7 +806,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Jiva within the Tower of Solusek Ro.");
+		plugin::NPCTell("You have NOT defeated Jiva within the Tower of Solusek Ro.");
 
 		}
 
@@ -826,7 +824,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Rizlona within the Tower of Solusek Ro.");
+		plugin::NPCTell("You have NOT defeated Rizlona within the Tower of Solusek Ro.");
 
 		}
 
@@ -844,7 +842,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Xuzl within the Tower of Solusek Ro.");
+		plugin::NPCTell("You have NOT defeated Xuzl within the Tower of Solusek Ro.");
 
 		}
 
@@ -862,7 +860,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Solusek Ro within the Tower of Solusek Ro.");
+		plugin::NPCTell("You have NOT defeated Solusek Ro within the Tower of Solusek Ro.");
 
 		}
 
@@ -880,7 +878,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Fennin Ro, the Tyrant of Fire.");
+		plugin::NPCTell("You have NOT defeated Fennin Ro, the Tyrant of Fire.");
 
 		}
 
@@ -898,7 +896,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Xegony, the Queen of Air.");
+		plugin::NPCTell("You have NOT defeated Xegony, the Queen of Air.");
 
 		}
 
@@ -916,7 +914,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Coirnav, the Avatar of Water.");
+		plugin::NPCTell("You have NOT defeated Coirnav, the Avatar of Water.");
 
 		}
 
@@ -936,7 +934,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated the Arbitor of Earth within Plane of Earth A");
+		plugin::NPCTell("You have NOT defeated the Arbitor of Earth within Plane of Earth A");
 
 		}
 
@@ -954,7 +952,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated the Rathe Council within Plane of Earth B");
+		plugin::NPCTell("You have NOT defeated the Rathe Council within Plane of Earth B");
 
 		}
 
@@ -974,7 +972,7 @@ if($text=~/unlock memories/i) {
 
 		else {
 
-		$client->Message(9,"You have NOT completed your Plane of Time flag.");
+		plugin::NPCTell("You have NOT completed your Plane of Time flag.");
 
 		}
 
@@ -1032,7 +1030,7 @@ if($text=~/Plane of Nightmare/i && (!defined $qglobals{pop_pon_hedge_jezith} || 
 
 		else {
 
-		$client->Message(9,"You have not spoken to Jezith within the Plane of Tranquility for the Hedge Preflag by saying tormented by nightmares.");
+		plugin::NPCTell("You have not spoken to Jezith within the Plane of Tranquility for the Hedge Preflag by saying tormented by nightmares.");
 
 		}
 
@@ -1050,7 +1048,7 @@ if($text=~/Plane of Nightmare/i && (!defined $qglobals{pop_pon_hedge_jezith} || 
 
 		else {
 
-		$client->Message(9,"You have NOT killed the Construct of Nightmares.");
+		plugin::NPCTell("You have NOT killed the Construct of Nightmares.");
 
 		
 
@@ -1120,7 +1118,7 @@ if($text=~/Plane of Innovation/i && (!defined $qglobals{pop_poi_dragon} || !defi
 
 		else {
 
-		$client->Message(9,"You have NOT killed the dragon within the Plane of Innovation.");
+		plugin::NPCTell("You have NOT killed the dragon within the Plane of Innovation.");
 
 		}
 
@@ -1138,7 +1136,7 @@ if($text=~/Plane of Innovation/i && (!defined $qglobals{pop_poi_dragon} || !defi
 
 		else {
 
-		$client->Message(9,"You have NOT talked to the Gnome within the plane of innovation factory.");
+		plugin::NPCTell("You have NOT talked to the Gnome within the plane of innovation factory.");
 
 		}
 
@@ -1156,7 +1154,7 @@ if($text=~/Plane of Innovation/i && (!defined $qglobals{pop_poi_dragon} || !defi
 
 		else {
 
-		$client->Message(9,"You have NOT defeated the Behemoth within Plane of Innovation and then QUICKLY hailed the gnome within the factory.");
+		plugin::NPCTell("You have NOT defeated the Behemoth within Plane of Innovation and then QUICKLY hailed the gnome within the factory.");
 
 		}
 
@@ -1216,7 +1214,7 @@ if($text=~/Plane of Disease/i && (!defined $qglobals{pop_pod_alder_fuirstel} || 
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Adler Fuirstel outside of the Plane of Disease.");
+		plugin::NPCTell("You have NOT talked to Adler Fuirstel outside of the Plane of Disease.");
 
 		}
 
@@ -1234,7 +1232,7 @@ if($text=~/Plane of Disease/i && (!defined $qglobals{pop_pod_alder_fuirstel} || 
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Grummus.");
+		plugin::NPCTell("You have NOT defeated Grummus.");
 
 		}
 
@@ -1252,7 +1250,7 @@ if($text=~/Plane of Disease/i && (!defined $qglobals{pop_pod_alder_fuirstel} || 
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Elder Fuirstel in the Plane of Tranquility.");
+		plugin::NPCTell("You have NOT talked to Elder Fuirstel in the Plane of Tranquility.");
 
 		}
 
@@ -1320,7 +1318,7 @@ if($text=~/Plane of Justice/i && (!defined $qglobals{pop_poj_mavuin} || !defined
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Mavuin, and agreed to plea his case to The Tribunal.");
+		plugin::NPCTell("You have NOT talked to Mavuin, and agreed to plea his case to The Tribunal.");
 
 		}
 
@@ -1338,7 +1336,7 @@ if($text=~/Plane of Justice/i && (!defined $qglobals{pop_poj_mavuin} || !defined
 
 		else {
 
-		$client->Message(9,"You have NOT shown the Tribunal the mark from the trial you have completed.");
+		plugin::NPCTell("You have NOT shown the Tribunal the mark from the trial you have completed.");
 
 		}
 
@@ -1356,7 +1354,7 @@ if($text=~/Plane of Justice/i && (!defined $qglobals{pop_poj_mavuin} || !defined
 
 		else {
 
-		$client->Message(9,"You have NOT returned to Mavuin to tell him the tribunal will hear his case.");
+		plugin::NPCTell("You have NOT returned to Mavuin to tell him the tribunal will hear his case.");
 
 		}
 
@@ -1420,7 +1418,7 @@ if($text=~/Plane of Valor/i && (!defined $qglobals{pop_pov_aerin_dar})) {
 
 		else {
 
-		$client->Message(9,"You have NOT defeated the prismatic dragon, Aerin`Dar, within the Plane of Valor.  Make sure you have completed a [Plane of Justice] Trial.");
+		plugin::NPCTell("You have NOT defeated the prismatic dragon, Aerin`Dar, within the Plane of Valor.  Make sure you have completed a [Plane of Justice] Trial.");
 
 		}
 
@@ -1488,7 +1486,7 @@ if($text=~/Plane of Storms/i && (!defined $qglobals{pop_pos_askr_the_lost} || !d
 
 		else {
 
-		$client->Message(9,"You have NOT completed part one of Askr's task within the Plane of Storms.  Make sure you have completed a [Plane of Justice] Trial.");
+		plugin::NPCTell("You have NOT completed part one of Askr's task within the Plane of Storms.  Make sure you have completed a [Plane of Justice] Trial.");
 
 		}
 
@@ -1508,7 +1506,7 @@ if($text=~/Plane of Storms/i && (!defined $qglobals{pop_pos_askr_the_lost} || !d
 
 		else {
 
-		$client->Message(9,"You have NOT killed the giants within the Plane of Storms to complete Askr's task. Make sure you have completed a [Plane of Justice] Trial.");
+		plugin::NPCTell("You have NOT killed the giants within the Plane of Storms to complete Askr's task. Make sure you have completed a [Plane of Justice] Trial.");
 
 		}
 
@@ -1572,7 +1570,7 @@ if($text=~/Lair of Terris Thule/i && (!defined $qglobals{pop_ponb_terris} || !de
 
 		else {
 
-		$client->Message(9,"You have NOT killed Terris Thule.  Make sure you have completed the events within the [Plane of Nightmare].");
+		plugin::NPCTell("You have NOT killed Terris Thule.  Make sure you have completed the events within the [Plane of Nightmare].");
 
 		}
 
@@ -1590,7 +1588,7 @@ if($text=~/Lair of Terris Thule/i && (!defined $qglobals{pop_ponb_terris} || !de
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Poxbourne in the Plane of Tranquility after defeating Terris Thule.  Make sure you have completed the events within the [Plane of Nightmare].");
+		plugin::NPCTell("You have NOT talked to Poxbourne in the Plane of Tranquility after defeating Terris Thule.  Make sure you have completed the events within the [Plane of Nightmare].");
 
 		}
 
@@ -1658,7 +1656,7 @@ if($text=~/Ruins of Lxanvom/i && (!defined $qglobals{pop_cod_preflag} || !define
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Carprin Cycle within Ruins of Laxanvom.  Make sure you have completed the events within [Plane of Disease]");
+		plugin::NPCTell("You have NOT completed the Carprin Cycle within Ruins of Laxanvom.  Make sure you have completed the events within [Plane of Disease]");
 
 		}
 
@@ -1676,7 +1674,7 @@ if($text=~/Ruins of Lxanvom/i && (!defined $qglobals{pop_cod_preflag} || !define
 
 		else {
 
-		$client->Message(9,"You have NOT killed Bertox and hailed the planar projection.  Make sure you have completed the events within [Plane of Disease]");
+		plugin::NPCTell("You have NOT killed Bertox and hailed the planar projection.  Make sure you have completed the events within [Plane of Disease]");
 
 		}
 
@@ -1694,7 +1692,7 @@ if($text=~/Ruins of Lxanvom/i && (!defined $qglobals{pop_cod_preflag} || !define
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Adler Fuirstel after killing Bertox.  Make sure you have completed the events within [Plane of Disease]");
+		plugin::NPCTell("You have NOT talked to Adler Fuirstel after killing Bertox.  Make sure you have completed the events within [Plane of Disease]");
 
 		}
 
@@ -1756,7 +1754,7 @@ if($text=~/Plane of Torment/i && (!defined $qglobals{pop_pot_shadyglade} || !def
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Shadyglade within the Plane of Tranquility.");
+		plugin::NPCTell("You have NOT talked to Shadyglade within the Plane of Tranquility.");
 
 		}
 
@@ -1774,7 +1772,7 @@ if($text=~/Plane of Torment/i && (!defined $qglobals{pop_pot_shadyglade} || !def
 
 		else {
 
-		$client->Message(9,"You have NOT killed the Keeper of Sorrows.");
+		plugin::NPCTell("You have NOT killed the Keeper of Sorrows.");
 
 		}
 
@@ -1792,7 +1790,7 @@ if($text=~/Plane of Torment/i && (!defined $qglobals{pop_pot_shadyglade} || !def
 
 		else {
 
-		$client->Message(9,"You have NOT killed Saryrn and hailed the planar projection.");
+		plugin::NPCTell("You have NOT killed Saryrn and hailed the planar projection.");
 
 		}
 
@@ -1810,7 +1808,7 @@ if($text=~/Plane of Torment/i && (!defined $qglobals{pop_pot_shadyglade} || !def
 
 		else {
 
-		$client->Message(9,"You have NOT talked to Shadyglade after killing Saryrn. Please make sure you have completed events within [Plane of Nightmare] [Plane of Disease] [Halls of Honor] [Lair of Terris Thule] [Ruins of Lxanvom] [Plane of Storms] to advance to the Temple of Marr.");
+		plugin::NPCTell("You have NOT talked to Shadyglade after killing Saryrn. Please make sure you have completed events within [Plane of Nightmare] [Plane of Disease] [Halls of Honor] [Lair of Terris Thule] [Ruins of Lxanvom] [Plane of Storms] to advance to the Temple of Marr.");
 
 		}
 
@@ -1880,7 +1878,7 @@ if($text=~/Halls of Honor/i && (!defined $qglobals{pop_hoh_faye} || !defined $qg
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Halls of Honor trial given by Faye.");
+		plugin::NPCTell("You have NOT completed the Halls of Honor trial given by Faye.");
 
 		}
 
@@ -1898,7 +1896,7 @@ if($text=~/Halls of Honor/i && (!defined $qglobals{pop_hoh_faye} || !defined $qg
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Halls of Honor trial given by Rhaliq Trell.");
+		plugin::NPCTell("You have NOT completed the Halls of Honor trial given by Rhaliq Trell.");
 
 		}
 
@@ -1916,7 +1914,7 @@ if($text=~/Halls of Honor/i && (!defined $qglobals{pop_hoh_faye} || !defined $qg
 
 		else {
 
-		$client->Message(9,"You have NOT completed the Halls of Honor trial given by Alekson Garn.");
+		plugin::NPCTell("You have NOT completed the Halls of Honor trial given by Alekson Garn.");
 
 		}
 
@@ -1980,7 +1978,7 @@ if($text=~/Fortress of Zek/i && (!defined $qglobals{pop_tactics_tallon} || !defi
 
 		else {
 
-		$client->Message(9,"You have NOT killed Tallon Zek");
+		plugin::NPCTell("You have NOT killed Tallon Zek");
 
 		}
 
@@ -1998,7 +1996,7 @@ if($text=~/Fortress of Zek/i && (!defined $qglobals{pop_tactics_tallon} || !defi
 
 		else {
 
-		$client->Message(9,"You have NOT killed Vallon Zek.");
+		plugin::NPCTell("You have NOT killed Vallon Zek.");
 
 		}
 
@@ -2016,7 +2014,7 @@ if($text=~/Fortress of Zek/i && (!defined $qglobals{pop_tactics_tallon} || !defi
 
 		else {
 
-		$client->Message(9,"You have NOT killed Rallos Zek the Warlord.  Make sure you have completed the [Plane of Innovation] flags");
+		plugin::NPCTell("You have NOT killed Rallos Zek the Warlord.  Make sure you have completed the [Plane of Innovation] flags");
 
 		}
 
@@ -2080,7 +2078,7 @@ if($text=~/Tower of Solusek Ro/i && (!defined $qglobals{pop_sol_ro_arlyxir} || !
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Arlyxir within the Tower of Solusek Ro.");
+		plugin::NPCTell("You have NOT defeated Arlyxir within the Tower of Solusek Ro.");
 
 		}
 
@@ -2098,7 +2096,7 @@ if($text=~/Tower of Solusek Ro/i && (!defined $qglobals{pop_sol_ro_arlyxir} || !
 
 		else {
 
-		$client->Message(9,"You have NOT defeated The Protector of Dresolik within the Tower of Solusek Ro.");
+		plugin::NPCTell("You have NOT defeated The Protector of Dresolik within the Tower of Solusek Ro.");
 
 		}
 
@@ -2118,7 +2116,7 @@ if($text=~/Tower of Solusek Ro/i && (!defined $qglobals{pop_sol_ro_arlyxir} || !
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Jiva within the Tower of Solusek Ro.");
+		plugin::NPCTell("You have NOT defeated Jiva within the Tower of Solusek Ro.");
 
 		}
 
@@ -2136,7 +2134,7 @@ if($text=~/Tower of Solusek Ro/i && (!defined $qglobals{pop_sol_ro_arlyxir} || !
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Rizlona within the Tower of Solusek Ro.");
+		plugin::NPCTell("You have NOT defeated Rizlona within the Tower of Solusek Ro.");
 
 		}
 
@@ -2154,7 +2152,7 @@ if($text=~/Tower of Solusek Ro/i && (!defined $qglobals{pop_sol_ro_arlyxir} || !
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Xuzl within the Tower of Solusek Ro.");
+		plugin::NPCTell("You have NOT defeated Xuzl within the Tower of Solusek Ro.");
 
 		}
 
@@ -2172,7 +2170,7 @@ if($text=~/Tower of Solusek Ro/i && (!defined $qglobals{pop_sol_ro_arlyxir} || !
 
 		else {
 
-		$client->Message(9,"You have NOT defeated Solusek Ro within the Tower of Solusek Ro.  Please make sure youve completed events in the [Plane of Innovation] and [Drunder, Fortress of Zek].");
+		plugin::NPCTell("You have NOT defeated Solusek Ro within the Tower of Solusek Ro.  Please make sure youve completed events in the [Plane of Innovation] and [Drunder, Fortress of Zek].");
 
 		}
 
