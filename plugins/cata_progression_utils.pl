@@ -27,7 +27,10 @@ my %atlas = (
     'charasis'       => 'RoK',
     'kaesora'        => 'RoK',
     'kurn'           => 'RoK',
+    'nurga'          => 'RoK',
+    'droga'          => 'RoK',
     'sebilis'        => 'RoK',
+    'veeshan'        => 'RoK', # Assuming 1.0
 
     'cobaltscar'     => 'SoV',
     'crystal'        => 'SoV',
@@ -51,12 +54,11 @@ my %atlas = (
     'dulak'          => 'LoY',
     'hatesfury'      => 'LoY',
     'torgiran'       => 'LoY',
-    'soldungc'       => 'LoY',
-
+    'veksar'         => 'LoY', 
+    
+    'soldungc'       => 'PoM',
     'mischiefplane'  => 'PoM',
-    'veksar'         => 'PoM',
-    'nurga'          => 'PoM',
-    'droga'          => 'PoM',    
+      
 
     'acrylia'        => 'SoL',
     'akheva'         => 'SoL',
@@ -81,7 +83,6 @@ my %atlas = (
     'vexthal'        => 'SoL',
     'nexus'          => 'SoL',
 
-    'veeshan'        => 'PoP', # Out of Era
     'poknowledge'    => 'PoP',
     'potranquility'  => 'PoP',
     'ponightmare'    => 'PoP',
@@ -162,8 +163,8 @@ my %STAGE_PREREQUISITES = (
     'EQC' => ['Phinigel Autropos'],
     'RoK' => ['Lord Nagafen', 'Lady Vox'],
     'SoV' => ['Trakanon', 'Gorenaire', 'Severilous', 'Talendor'],
-    'LoY' => ['Tunare'],
-    'PoM' => ['Avatar of War'],
+    'LoY' => ['Phara`Dar'],
+    'PoM' => ['Vulak'],
     'SoL' => ['Lord Yelinak', 'Tukaarak the Warder', 'Nanzata the Warder', 'Ventani the Warder', 'Hraasha the Warder', 'Wuoshi', 'Klandicar', 'Zlandicar'],
     'PoP' => ['Thought Horror Overfiend', 'The Insanity Crawler', 'Greig Veneficus', 'Xerkizh the Creator', 'Emperor Ssraeshza'],
     'GoD' => ['Saryrn'],
