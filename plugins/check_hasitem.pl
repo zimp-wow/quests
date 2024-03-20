@@ -4,7 +4,7 @@ sub check_hasitem {
 	my $client = shift;
 	my $itemid = shift;
 
-	my @slots = (0..30, 251..340, 2000..2023, 2030..2270, 2500..2501, 2531..2550, 9999);
+	my @slots = (0..30, 251..340, 2000..2023, 4010..6009, 6210..11009, 11010..11409, 9999);
 	foreach $slot (@slots) {
 		if ($client->GetItemIDAt($slot) == $itemid) {
 			return 1;
