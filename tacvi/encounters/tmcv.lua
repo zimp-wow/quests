@@ -72,7 +72,7 @@ function Tunat_Second_HP(e)
 		-- Phase Spells
 		eq.set_timer("Spell_PKK_DV", 2 * 1000);	-- 2s Start Timer
 		eq.set_timer("Spell_PKK_SC", 5 * 1000);	-- 5s Start Timer
-		eq.set_timer("Spell_PKK_WOTI", 10 * 1000);	-- 10s Start Timer
+		eq.set_timer("Spell_PKK_WOTI", 30 * 1000);	-- 30s Start Timer
 
 		-- Set next phase
 		eq.set_next_hp_event(70);
@@ -99,7 +99,7 @@ function Tunat_Second_HP(e)
 
 		-- Phase Spells
 		eq.set_timer("Spell_PRT_DV", 2 * 1000);	-- 2s Start Timer
-		eq.set_timer("Spell_PRT_WOTI", math.random(10,20) * 1000);	-- 10s-20 Start Timer
+		eq.set_timer("Spell_PRT_WOTI", math.random(30,60) * 1000);	-- 30s-60 Start Timer
 
 		-- Set next phase
 		eq.set_next_hp_event(60);
@@ -213,7 +213,7 @@ function Tunat_Second_HP(e)
 
 		-- Rage Timer
 		eq.set_timer("tunat_rage", 30 * 1000);
-		eq.set_timer("Spell_Tunat_Haste",2 * 1000); -- 2s Start Timer
+		eq.set_timer("Spell_Tunat_Haste",60 * 1000); -- 2s Start Timer
 
 		-- Phase Spells
 		e.self:CastSpell(4740, e.self:GetID());	-- Spell: Haste of the Tunat`Muram
@@ -356,7 +356,7 @@ function Tunat_Second_Timer(e)
 		if (e.self:GetHPRatio() > 90 or e.self:GetHPRatio() < 20) then
 			e.self:CastSpell(4740, e.self:GetID()); -- Spell: Haste of the Tunat`Muram
 		end
-		eq.set_timer("Spell_Tunat_Haste",30 * 1000); -- 30s Timer
+		eq.set_timer("Spell_Tunat_Haste",60 * 1000); -- 30s Timer
 
 	-- PXK 90%	
 	elseif e.timer == "Spell_PXK_SC" then
@@ -430,7 +430,7 @@ end
 function Tunat_Second_Combat(e)
 	if e.joined then
 		eq.stop_timer("wipe_check2");
-		eq.set_timer("Spell_Tunat_Haste", 2 * 1000); -- 2s Start Timer
+		eq.set_timer("Spell_Tunat_Haste", 60 * 1000); -- 60s Start Timer
 	else
 		eq.set_timer("wipe_check2", 300 * 1000);
 	end

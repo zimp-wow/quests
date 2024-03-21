@@ -66,7 +66,7 @@ function PXK_Hp(e)
 		eq.modify_npc_stat("max_hit", "5945");
 		e.self:SetSpecialAbility(SpecialAbility.flurry, 0);
 		e.self:SetSpecialAbility(SpecialAbility.area_rampage, 1);
-		e.self:SetSpecialAbilityParam(SpecialAbility.area_rampage, 2, 85); -- 15 % mitigated dmg
+		e.self:SetSpecialAbilityParam(SpecialAbility.area_rampage, 2, 70); -- 30 % mitigated dmg
 		eq.set_timer("cleaver", 90 * 1000);
 		eq.set_next_hp_event(50);
 	elseif e.hp_event == 50 then
