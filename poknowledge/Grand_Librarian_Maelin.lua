@@ -13,7 +13,31 @@ function event_say(e)
 		if(e.message:findi("hail")) then
 			e.self:Say("The Quintessence! Oh my this is amazing! I have come into contact with Chronographer Muon in the realm of innovation. Go to him, show him you have the power to activate machine. I shall meet you there, this I must see!");
 		end
-	elseif(true) then --Elemental Pre-Flagging
+	elseif(qglobals["pop_hohb_marr"] == "1" and 
+	 	   qglobals["pop_bot_agnarr"] == "1" and 
+		   qglobals["pop_pon_hedge_jezith"] == "1" and 
+		   qglobals["pop_pon_construct"] == "1" and 
+		   qglobals["pop_ponb_terris"] == "1" and 
+		   qglobals["pop_ponb_poxbourne"] == "1" and 
+		   qglobals["pop_pod_alder_fuirstel"] == "1" and 
+		   qglobals["pop_pod_grimmus_planar_projection"] == "1" and 
+		   qglobals["pop_pod_elder_fuirstel"] == "1" and 
+		   qglobals["pop_poj_mavuin"] == "1" and 
+		   qglobals["pop_poj_tribunal"] == "1" and 
+		   qglobals["pop_poj_valor_storms"] == "1" and 
+		   qglobals["pop_pov_aerin_dar"] == "1" and 
+		   qglobals["pop_pos_askr_the_lost"] == "3" and 
+		   qglobals["pop_pos_askr_the_lost_final"] == "1" and 
+		   qglobals["pop_cod_preflag"] == "1" and 
+		   qglobals["pop_cod_bertox"] == "1" and 
+		   qglobals["pop_cod_final"] == "1" and 
+		   qglobals["pop_pot_shadyglade"] == "1" and 
+		   qglobals["pop_pot_saryrn"] == "1" and 
+		   qglobals["pop_pot_saryrn_final"] == "1" and 
+		   qglobals["pop_hoh_faye"] == "1" and 
+		   qglobals["pop_hoh_trell"] == "1" and 
+		   qglobals["pop_hoh_garn"] == "1" and 
+		   qglobals["pop_tactics_ralloz"] == "1") then --Elemental Pre-Flagging
 		if(e.message:findi("hail")) then
 			e.self:Say("'Welcome back my friends. I assure you that I have been studying the Cipher of Druzzil very diligently. Did you happen to find any [" .. eq.say_link("lore",false,"lore") .. "] or [" .. eq.say_link("information",false,"information") .. "] that I could look at?'");
 		elseif(e.message:findi("lore")) then
