@@ -2,20 +2,20 @@
 -- items: 84091, 84092, 84093, 84087, 52950, 55900, 20520
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);
-	if(eq.is_task_active(220)) then
+	if(eq.is_task_active(500220)) then
 		if(e.message:findi("trick or treat")) then
 			e.self:Say("Ah, here you go. Fresh from the Sugar Assembalage 2000.");
 			e.other:SummonItem(eq.ChooseRandom(84091,84092,84093,84087,84087,84087,84087,84087,84087)); -- Item(s): Sand (84091), Chunk of Coal (84092), Pocket Lint (84093), Jawbreaker (84087), Jawbreaker (84087), Jawbreaker (84087), Jawbreaker (84087), Jawbreaker (84087), Jawbreaker (84087)
-			eq.update_task_activity(220,1,1);
+			eq.update_task_activity(500220,1,1);
 		end
 	end
 	if(e.other:HasItem(29165)) then --Quintessence of Elements
 		if(e.message:findi("hail")) then
 			e.self:Say("The Quintessence! Oh my this is amazing! I have come into contact with Chronographer Muon in the realm of innovation. Go to him, show him you have the power to activate machine. I shall meet you there, this I must see!");
 		end
-	elseif(qglobals["pop_hohb_marr"] == "1" and qglobals["pop_bot_agnarr"] == "1" and qglobals["pop_pon_hedge_jezith"] == "1" and qglobals["pop_pon_construct"] == "1" and qglobals["pop_ponb_terris"] == "1"	and qglobals["pop_ponb_poxbourne"] == "1" and qglobals["pop_pod_alder_fuirstel"] == "1" and qglobals["pop_pod_grimmus_planar_projection"] == "1" and qglobals["pop_pod_elder_fuirstel"] == "1" and qglobals["pop_poj_mavuin"] == "1" and qglobals["pop_poj_tribunal"] == "1" and qglobals["pop_poj_valor_storms"] == "1" and qglobals["pop_pov_aerin_dar"] == "1" and qglobals["pop_pos_askr_the_lost"] == "3" and qglobals["pop_pos_askr_the_lost_final"] == "1" and qglobals["pop_cod_preflag"] == "1" and qglobals["pop_cod_bertox"] == "1" and qglobals["pop_cod_final"] == "1" and qglobals["pop_pot_shadyglade"] == "1" and qglobals["pop_pot_saryrn"] == "1" and qglobals["pop_pot_saryrn_final"] == "1" and qglobals["pop_hoh_faye"] == "1" and qglobals["pop_hoh_trell"] == "1" and qglobals["pop_hoh_garn"] == "1" and qglobals["pop_tactics_ralloz"] == "1") then --Elemental Pre-Flagging
+	elseif(true) then --Elemental Pre-Flagging
 		if(e.message:findi("hail")) then
-			-- e.self:Say("'Welcome back my friends. I assure you that I have been studying the Cipher of Druzzil very diligently. Did you happen to find any [" .. eq.say_link("lore",false,"lore") .. "] or [" .. eq.say_link("information",false,"information") .. "] that I could look at?'");
+			e.self:Say("'Welcome back my friends. I assure you that I have been studying the Cipher of Druzzil very diligently. Did you happen to find any [" .. eq.say_link("lore",false,"lore") .. "] or [" .. eq.say_link("information",false,"information") .. "] that I could look at?'");
 		elseif(e.message:findi("lore")) then
 			e.self:Say("'A parchment of Rallos'? Let me read it, it says that Rallos was not alone in his feelings about mortals. Solusek Ro also holds stake in the war to be led on Norrath. Not only this but he is channeling power from his father's plane into his own. He is taking that power and intensifying it through an artifact of great power, and then focusing it onto one point. It is a detailed as a crystal that burns with all the powers of the plane of fire. It is said to have the ability to turn the face of Norrath into a charred wasteland. They plan for a manaetic behemoth to carry and deposit it upon Norrath. You must stop these plans, you must stop Solusek!'");
 		elseif(e.message:findi("information")) then
@@ -23,7 +23,7 @@ function event_say(e)
 			e.self:Emote("Maelin takes a deep breath and continues");
 			e.self:Say("I can see now that he was not joking at all. Let us suppose that you travelers could venture into the Elemental Planes and retrieve this essence; and form it into one powerful conglomeration. You could open a tear into the period of time before Zebuxoruk was imprisoned. There is no way you can free him from his stasis now, but if you were to halt the Pantheon at the time of imprisonment. Hah! It could work I do believe. Forgive me, but my old gnomish heart is alive with the excitement of possibilities. Gather up your strength friends, travel into the deep elements. You will need all of your wits about you. Find the very essence of the elementals, and fuse them into one. How to combine them I do not know, and can only wish you luck on finding that information. If you can accomplish this please come get me. I would like to record the events as they take place!'");
 			eq.set_global("pop_elemental_grand_librarian","1",5,"F");
-			e.message:other(4,"You receive a character flag!");
+			e.other:Message(MT.LightBlue,"You receive a character flag!");
 		end
 	end
 	if(qglobals["shadowknight_epic"] == "1") then
@@ -46,5 +46,5 @@ function event_trade(e)
 		e.self:Say("I knew they were egg-layers! Ha, this is one gnome who hates losing a bet and thanks to you I wont! This is the tome you seek. Please bring it back to me when you are done.");
 		e.other:SummonItem(20520); --The Silent Gods
 	end
-	--item_lib.return_items(e.self, e.other, e.trade);
+	item_lib.return_items(e.self, e.other, e.trade);
 end
