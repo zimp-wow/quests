@@ -558,3 +558,32 @@ sub UpdateRaceClassLocks {
         quest::set_data($client->AccountID() . "-account-progression", 7);
     }
 }
+
+sub ConvertQGlobalFlags {
+    my $client = shift;
+
+    # Define a list of all qglobal flags
+    my @qglobal_flags = qw(
+        pop_pon_hedge_jezith pop_pon_construct pop_ponb_terris pop_ponb_poxbourne
+        pop_poi_dragon pop_poi_behometh_preflag pop_poi_behometh_flag pop_pod_alder_fuirstel
+        pop_pod_grimmus_planar_projection pop_pod_elder_fuirstel pop_poj_mavuin pop_poj_tribunal
+        pop_poj_valor_storms pop_poj_execution pop_poj_flame pop_poj_hanging pop_poj_lashing
+        pop_poj_stoning pop_poj_torture pop_pov_aerin_dar pop_pos_askr_the_lost pop_pos_askr_the_lost_final
+        pop_cod_preflag pop_cod_bertox pop_cod_final pop_pot_shadyglade pop_pot_newleaf
+        pop_pot_saryrn pop_pot_saryrn_final pop_hoh_faye pop_hoh_trell pop_hoh_garn pop_hohb_marr
+        pop_bot_agnarr pop_bot_karana pop_tactics_tallon pop_tactics_vallon pop_tactics_ralloz
+        pop_elemental_grand_librarian pop_sol_ro_arlyxir pop_sol_ro_dresolik pop_sol_ro_jiva
+        pop_sol_ro_rizlona pop_sol_ro_xuzl pop_sol_ro_solusk pop_fire_fennin_projection
+        pop_wind_xegony_projection pop_water_coirnav_projection pop_eartha_arbitor_projection
+        pop_earthb_rathe pop_time_maelin
+    );
+
+    # Iterate over each flag, set the bucket if the qglobal is defined
+    foreach my $flag (@qglobal_flags) {
+        my $flag_val = $client->GetGlobal($flag) || 0;
+        if ($flag_val) {
+            $client->SetBucket($flag, $flag_val);
+        }
+    }
+}
+

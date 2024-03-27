@@ -7,6 +7,7 @@ sub EVENT_CONNECT {
 
 	plugin::CheckWorldWideBuffs($client);
 	plugin::ConvertFlags($client);
+	plugin::ConvertQGlobalFlags($client);
 
 	my $PCRace = $client->GetRace();
 	my $PCClass = $client->GetClass();
