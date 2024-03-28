@@ -28,3 +28,16 @@ sub EVENT_KILLED_MERIT {
 sub EVENT_SPAWN {
     plugin::CheckWorldWideBuffs($npc);
 }
+
+sub EVENT_DAMAGE_GIVEN 
+{
+    # Special aggro events for player pets; if they are not taunting then add their owner to any
+    # mob that they attack's aggro list. If they are taunting, then give them some bonus aggro.
+    if ($npc->IsPet() && $npc->GetOwner()->IsClient()) {
+        if ($npc->IsTaunting()) {
+            $entity_list->GetMobByID($entity_id)->AddToHateList($npc->GetOwner());
+        } else {
+            $entity_list->GetMobByID($entity_id)->AddToHateList($npc, 100);
+        }
+    }
+}
