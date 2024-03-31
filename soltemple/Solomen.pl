@@ -14,15 +14,19 @@ quest::say("Here you are, then.  Good luck on your journey.");
 quest::summonitem("18088");
 }
 }
+
 sub EVENT_ITEM {
-	if($itemcount{14340} == 1){
-		quest::say("You actually did it! I never would have thought that anyone could have truly followed this path. This is a tribute to your intelligence and patience. Here, take this staff and know that you have made Solusek Ro and all the wizards of the world proud this day.");
-		quest::summonfixeditem(2014341); # Item: Staff of the Four
-		quest::faction(404, -100); #truespirit, resets the +100 in gains from quest start up to this point.
-	} else {
-		plugin::returnUnusedItems();
-	}
+    # Check for Staff of the Four components
+    if (plugin::check_handin(\%itemcount, 14340 => 1)) {
+        quest::say("You actually did it! I never would have thought that anyone could have truly followed this path. This is a tribute to your intelligence and patience. Here, take this staff and know that you have made Solusek Ro and all the wizards of the world proud this day.");
+        quest::summonfixeditem(2014341); # Staff of the Four
+        quest::faction(404, -100); # Truespirit, resets the +100 in gains from quest start up to this point.
+    }
+
+    # Return unused items
+    plugin::returnUnusedItems();
 }
+
 
 #END of FILE Zone:soltemple  ID:80023 -- Solomen 
 

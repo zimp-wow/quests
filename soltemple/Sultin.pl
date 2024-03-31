@@ -26,43 +26,46 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  # Rod of Insidious Glamour
-  if(($itemcount{10087} == 1) && ($itemcount{6337} == 1)) {
+  # Check for Rod of Insidious Glamour components
+  if (plugin::check_handin(\%itemcount, 10087 => 1, 6337 => 1)) {
     quest::say("Well done, adventurer. You have kept your part of the bargain, so I keep mine. Here is your rod.");
-    quest::summonitem(6329); # Item: Rod of Insidious Glamour
-    quest::faction("415","5");
-    quest::faction("416","-1");
+    quest::summonitem(6329); # Rod of Insidious Glamour
+    quest::faction(415, 5);
+    quest::faction(416, -1);
     quest::exp(1000);
   }
 
-  # Incandescent Wand
-  if(($itemcount{12240} == 1) && ($itemcount{6340} == 1)) {
+  # Check for Incandescent Wand components
+  elsif (plugin::check_handin(\%itemcount, 12240 => 1, 6340 => 1)) {
     quest::say("I see that you are resourceful... you have earned your incandescent wand.");
-    quest::summonitem(6334); # Item: Incandescent Wand
-    quest::faction("415","5");
-    quest::faction("416","-1");
+    quest::summonitem(6334); # Incandescent Wand
+    quest::faction(415, 5);
+    quest::faction(416, -1);
     quest::exp(1000);
   }
 
-  # Incandescent Gloves
-  if(($itemcount{2353} == 1) && ($itemcount{2354} == 1) && ($itemcount{2355} == 1) && ($itemcount{2356} == 1)) {
+  # Check for Incandescent Gloves components
+  elsif (plugin::check_handin(\%itemcount, 2353 => 1, 2354 => 1, 2355 => 1, 2356 => 1)) {
     quest::say("Four pairs of gloves you have given me ? I will give you one pair in return. We shall see who had the better deal.");
-    quest::summonitem(2351); # Item: Incandescent Gloves
-    quest::faction("415","5");
-    quest::faction("416","-1");
+    quest::summonitem(2351); # Incandescent Gloves
+    quest::faction(415, 5);
+    quest::faction(416, -1);
     quest::exp(1000);
   }
 
-  # Incandescent Mask
-  if(($itemcount{2352} == 1) && ($itemcount{10530} == 1) && ($itemcount{10531} == 1) && ($itemcount{10532} == 1)) {
+  # Check for Incandescent Mask components
+  elsif (plugin::check_handin(\%itemcount, 2352 => 1, 10530 => 1, 10531 => 1, 10532 => 1)) {
     quest::say("Fortune favors you .. as will this mask.");
-    quest::summonitem(2350); # Item: Incandescent Mask
-    quest::faction("415","5");
-    quest::faction("416","-1");
+    quest::summonitem(2350); # Incandescent Mask
+    quest::faction(415, 5);
+    quest::faction(416, -1);
     quest::exp(1000);
   }
 
+  # Return unused items
+  plugin::return_items(\%itemcount);
 }
+
 
 # Quest by mystic414
 

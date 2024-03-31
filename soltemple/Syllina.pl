@@ -32,42 +32,29 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
+    if ($gold >= 50) {
+        quest::say("You will need to give the following components to a tailor: a Shadow Wolf Pelt, a Silk Swatch and a Scroll of Gather Shadows. Have the tailor weave them together and she will make you Shadow Silk. To make large shadow silk add an extra shadow wolf pelt. To make inky shadow silk, add an extra scroll.");
+        quest::faction(415, 15);
+        quest::faction(416, -15);
+    } elsif (plugin::check_handin(\%itemcount, 16484 => 1, 13239 => 1, 2309 => 1, 10535 => 1)) {
+        quest::say("Well done, $name! Here is your robe, as promised.");
+        quest::summonitem(1355); # Robe of Enshroudment
+        quest::faction(415, 15);
+        quest::faction(416, -15);
+        quest::exp(1000);
+    } elsif (plugin::check_handin(\%itemcount, 14363 => 1, 13234 => 1, 10534 => 1, 16485 => 1)) {
+        quest::say("Well done, $name! Here are your gloves, as promised.");
+        quest::summonitem(3318); # ShadowBound Gloves
+        quest::faction(415, 15);
+        quest::faction(416, -15);
+        quest::exp(1000);
+    } elsif (plugin::check_handin(\%itemcount, 14364 => 1, 13180 => 1, 10533 => 1, 16483 => 1)) {
+        quest::say("Well done, $name! Here are your boots, as promised.");
+        quest::summonitem(3317); # ShadowBound Boots
+        quest::faction(415, 15);
+        quest::faction(416, -15);
+        quest::exp(1000);
+    }
 
-  # Shadow Silk info
-  if($gold >= 50) {
-    quest::say("You will need to give the following components to a tailor: a Shadow Wolf Pelt, a Silk Swatch and a Scroll of Gather Shadows. Have the tailor weave them together and she will make you Shadow Silk. To make large shadow silk add an extra shadow wolf pelt. To make inky shadow silk, add an extra scroll.");
-    quest::faction("415","15");
-    quest::faction("416","-15");
-  }
-
-  # Robe of Enshroudment
-  if(($itemcount{16484} == 1) && ($itemcount{13239} == 1) && ($itemcount{2309} == 1) && ($itemcount{10535} == 1)) {
-    quest::say("Well done, $name!  Here is your robe, as promised."); # Made this text up
-    quest::summonitem(1355); # Item: Robe of Enshroudment
-    quest::faction("415","15");
-    quest::faction("416","-15");
-    quest::exp(1000);
-  }
-
-  # Shadowbound Gloves
-  if(($itemcount{14363} == 1) && ($itemcount{13234} == 1) && ($itemcount{10534} == 1) && ($itemcount{16485} == 1)) {
-    quest::say("Well done, $name!  Here are your gloves, as promised."); # Made this text up
-    quest::summonitem(3318); # Item: ShadowBound Gloves
-    quest::faction("415","15");
-    quest::faction("416","-15");
-    quest::exp(1000);
-  }
-
-  # Shadowbound Boots
-  if(($itemcount{14364} == 1) && ($itemcount{13180} == 1) && ($itemcount{10533} == 1) && ($itemcount{16483} == 1)) {
-    quest::say("Well done, $name!  Here are your boots, as promised."); # Made this text up
-    quest::summonitem(3317); # Item: ShadowBound Boots
-    quest::faction("415","15");
-    quest::faction("416","-15");
-    quest::exp(1000);
-  }
-
+    plugin::return_items(\%itemcount);
 }
-
-# Quest by mystic414
-

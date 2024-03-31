@@ -21,45 +21,34 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-	#:: Match a 2318 - Firewalker Boots, a 10119 - Lambent Sapphire, and a 10561 - Rune of the One Eye
-	if (plugin::takeItems(2318 => 1, 10119 => 1, 10561 =>1)) {
-		quest::say("'Quality boots for a quality bard. Well done, $name.");
-		#:: Give a 4159 - Lambent Boots
-		quest::summonitem(14159);
-		#:: Ding!
-		quest::ding();
-		#:: Set factions
-		quest::faction(415, 10);		#:: + Temple of Solusek Ro
-		quest::faction(416, -1);		#:: - Shadowed Men
-		#:: Grant a small amount of experience
-		quest::exp(1000);
-	}
-	#:: Match a 2319 - Black Silk Gloves, a 10117 - Lambent Star Ruby, and a 4114 - Shin Gauntlets
-	elsif (plugin::takeItems(2319 => 1, 10117 => 1, 4114 => 1)) {
-		quest::say("Well done, $name, you have justly earned your pair of lambent gauntlets.");
-		#:: Give a 4157 - Lambent Gauntlets
-		quest::summonitem(14157);
-		#:: Ding!
-		quest::ding();
-		#:: Set factions
-		quest::faction(415, 10);		#:: + Temple of Solusek Ro
-		quest::faction(416, -1);		#:: - Shadowed Men
-		#:: Grant a small amount of experience
-		quest::exp(1000);
-	}
-	#:: Match a 4115 - Icy Greaves, a 10128 - Lambent Fire Opal, and a 4116 - Shin Greaves
-	elsif (plugin::takeItems(4115 => 1, 10128 => 1, 4116 => 1)) {
-		quest::say("I always knew that you would earn these lambent greaves, $name, you just had that look about you. Well done!");
-		#:: Give a 4158 - Lambent Greaves
-		quest::summonitem(14158);
-		#:: Ding!
-		quest::ding();
-		#:: Set factions
-		quest::faction(415, 10);		#:: + Temple of Solusek Ro
-		quest::faction(416, -1);		#:: - Shadowed Men
-		#:: Grant a small amount of experience
-		quest::exp(1000);
-	}
-	#:: Return unused items
-	plugin::returnUnusedItems();
+    # Match a 2318 - Firewalker Boots, a 10119 - Lambent Sapphire, and a 10561 - Rune of the One Eye
+    if (plugin::check_handin(\%itemcount, 2318 => 1, 10119 => 1, 10561 => 1)) {
+        quest::say("'Quality boots for a quality bard. Well done, $name.");
+        quest::summonitem(14159); # Lambent Boots
+        quest::ding();
+        quest::faction(415, 10); # + Temple of Solusek Ro
+        quest::faction(416, -1); # - Shadowed Men
+        quest::exp(1000);
+    }
+    # Match a 2319 - Black Silk Gloves, a 10117 - Lambent Star Ruby, and a 4114 - Shin Gauntlets
+    elsif (plugin::check_handin(\%itemcount, 2319 => 1, 10117 => 1, 4114 => 1)) {
+        quest::say("Well done, $name, you have justly earned your pair of lambent gauntlets.");
+        quest::summonitem(14157); # Lambent Gauntlets
+        quest::ding();
+        quest::faction(415, 10); # + Temple of Solusek Ro
+        quest::faction(416, -1); # - Shadowed Men
+        quest::exp(1000);
+    }
+    # Match a 4115 - Icy Greaves, a 10128 - Lambent Fire Opal, and a 4116 - Shin Greaves
+    elsif (plugin::check_handin(\%itemcount, 4115 => 1, 10128 => 1, 4116 => 1)) {
+        quest::say("I always knew that you would earn these lambent greaves, $name, you just had that look about you. Well done!");
+        quest::summonitem(14158); # Lambent Greaves
+        quest::ding();
+        quest::faction(415, 10); # + Temple of Solusek Ro
+        quest::faction(416, -1); # - Shadowed Men
+        quest::exp(1000);
+    }
+
+    plugin::return_items(\%itemcount);
 }
+
