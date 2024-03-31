@@ -21,39 +21,44 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  if($itemcount{10035} == 1) {
-    quest::say("..hear me? Ah, you seem to be coming out of your stupor. I think you have been exposed to the crystal long enough. By the time you leave the temple, your memories should have faded. Do you have the [fifty gold] coins that you owe me?");
-    quest::faction("415","1");
-    quest::faction("416","-1");
-    foreach $skill (43, 44, 45, 46, 47) {
-      if($client->GetSkill($skill) > 49) {
-        $client->SetSkill($skill, 49);
-      }
+    # Check for item 10035
+    if (plugin::check_handin(\%itemcount, 10035 => 1)) {
+        quest::say("..hear me? Ah, you seem to be coming out of your stupor. I think you have been exposed to the crystal long enough. By the time you leave the temple, your memories should have faded. Do you have the [fifty gold] coins that you owe me?");
+        quest::faction(415, 1);
+        quest::faction(416, -1);
+        foreach $skill (43, 44, 45, 46, 47) {
+            if ($client->GetSkill($skill) > 49) {
+                $client->SetSkill($skill, 49);
+            }
+        }
+        quest::me("Your specialize skills have all been set to 49.");
+        quest::exp(1000);
     }
-    quest::me("Your specialize skills have all been set to 49.");
-    quest::exp(1000);
-  }
 
-  if($gold == 50) {
-    quest::say("Thank you.");
-    quest::faction("415","1");
-    quest::faction("416","-1");
-  }
+    # Check for 50 gold payment
+    if (plugin::CheckCashPayment(5000, $copper, $silver, $gold, $platinum)) {
+        quest::say("Thank you.");
+        quest::faction(415, 1);
+        quest::faction(416, -1);
+    }
 
-  #Lambent Fire Opal
-  if(($itemcount{10031} == 2) && ($itemcount{10000} == 1)) {
-    quest::say("Ahh, Genni must have sent you to me.  Very well, here is your Lambent Fire Opal.");
-    quest::summonitem(10128); # Item: Lambent Fire Opal
-    quest::faction("415","1");
-    quest::faction("416","-1");
-  }
+    # Check for Lambent Fire Opal components
+    if (plugin::check_handin(\%itemcount, 10031 => 2, 10000 => 1)) {
+        quest::say("Ahh, Genni must have sent you to me. Very well, here is your Lambent Fire Opal.");
+        quest::summonitem(10128); # Lambent Fire Opal
+        quest::faction(415, 1);
+        quest::faction(416, -1);
+    }
 
-  #magnetized platinum
-  if($itemcount{16507} == 1) {
-    quest::say("I see that Gavel has sent you to me.  Very well, I have magnetized your platinum bar - take it.");
-    quest::summonitem(19049); # Item: Magnetized Platinum Bar
-  }
+    # Check for magnetized platinum
+    if (plugin::check_handin(\%itemcount, 16507 => 1)) {
+        quest::say("I see that Gavel has sent you to me. Very well, I have magnetized your platinum bar - take it.");
+        quest::summonitem(19049); # Magnetized Platinum Bar
+    }
+
+    plugin::return_items(\%itemcount);
 }
+
 
 # Quest by mystic414
 

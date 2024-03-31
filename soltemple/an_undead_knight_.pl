@@ -20,29 +20,26 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  if(($itemcount{12283} == 1) && ($itemcount{12284} == 1) && ($itemcount{13921} == 2)) {
-    quest::say("Well done, $name, here is your reward.");
-    quest::summonitem(3140); # Item: Darkforge Helm
-  }
-  elsif(($itemcount{12285} == 1) && ($itemcount{12286} == 1) && ($itemcount{16507} == 2)) {
-    quest::say("Well done, $name, here is your reward.");
-    quest::summonitem(3141); # Item: Darkforge Breastplate
-  }
-  elsif(($itemcount{12288} == 1) && ($itemcount{12287} == 1) && ($itemcount{9023} == 1)) {
-    quest::say("Well done, $name, here is your reward.");
-    quest::summonitem(3142); # Item: Darkforge Vambraces
-  }
-  elsif(($itemcount{12290} == 1) && ($itemcount{12289} == 1) && ($itemcount{19075} == 1)) {
-    quest::say("Well done, $name, here is your reward.");
-    quest::summonitem(3143); # Item: Darkforge Bracer
-  }
-  else {
-    if($platinum != 0 || $gold !=0 || $silver != 0 || $copper != 0) {
-      quest::givecash($copper, $silver, $gold, $platinum);
+    if (plugin::check_handin(\%itemcount, 12283 => 1, 12284 => 1, 13921 => 2)) {
+        quest::say("Well done, $name, here is your reward.");
+        quest::summonitem(3140); # Darkforge Helm
+    } elsif (plugin::check_handin(\%itemcount, 12285 => 1, 12286 => 1, 16507 => 2)) {
+        quest::say("Well done, $name, here is your reward.");
+        quest::summonitem(3141); # Darkforge Breastplate
+    } elsif (plugin::check_handin(\%itemcount, 12288 => 1, 12287 => 1, 9023 => 1)) {
+        quest::say("Well done, $name, here is your reward.");
+        quest::summonitem(3142); # Darkforge Vambraces
+    } elseif (plugin::check_handin(\%itemcount, 12290 => 1, 12289 => 1, 19075 => 1)) {
+        quest::say("Well done, $name, here is your reward.");
+        quest::summonitem(3143); # Darkforge Bracer
+    } else {
+        if ($platinum != 0 || $gold != 0 || $silver != 0 || $copper != 0) {
+            quest::givecash($copper, $silver, $gold, $platinum);
+        }
     }
-  }
-  plugin::return_items(\%itemcount);
+    plugin::return_items(\%itemcount);
 }
+
 
 # Edited and updated by mystic414
 # END of FILE Zone:soltemple  ID:80001 -- an_undead_knight_

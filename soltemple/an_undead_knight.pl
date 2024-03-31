@@ -20,24 +20,22 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  if(($itemcount{12292} == 1) && ($itemcount{12291} == 1) && ($itemcount{16507} == 1)) {
-    quest::say("Well done, $name, here is your reward.");
-    quest::summonitem(3144); # Item: Darkforge Gauntlets
-  }
-  elsif(($itemcount{12294} == 1) && ($itemcount{12293} == 1) && ($itemcount{12297} == 2)) {
-    quest::say("Well done, $name, here is your reward.");
-    quest::summonitem(3145); # Item: Darkforge Greaves
-  }
-  elsif(($itemcount{12296} == 1) && ($itemcount{12295} == 1) && ($itemcount{12106} == 2)) {
-    quest::say("Well done, $name, here is your reward.");
-    quest::summonitem(3146); # Item: Darkforge Boots
-  }
-  else {
-    if($platinum != 0 || $gold !=0 || $silver != 0 || $copper != 0) {
-      quest::givecash($copper, $silver, $gold, $platinum);
+    if (plugin::check_handin(\%itemcount, 12292 => 1, 12291 => 1, 16507 => 1)) {
+        quest::say("Well done, $name, here is your reward.");
+        quest::summonitem(3144); # Darkforge Gauntlets
+    } elsif (plugin::check_handin(\%itemcount, 12294 => 1, 12293 => 1, 12297 => 2)) {
+        quest::say("Well done, $name, here is your reward.");
+        quest::summonitem(3145); # Darkforge Greaves
+    } elsif (plugin::check_handin(\%itemcount, 12296 => 1, 12295 => 1, 12106 => 2)) {
+        quest::say("Well done, $name, here is your reward.");
+        quest::summonitem(3146); # Darkforge Boots
+    } else {
+        if ($platinum != 0 || $gold != 0 || $silver != 0 || $copper != 0) {
+            quest::givecash($copper, $silver, $gold, $platinum);
+        }
     }
-  }
-  plugin::return_items(\%itemcount);
+    plugin::return_items(\%itemcount);
 }
+
 # Updated and corrected by mystic414
 # END of FILE Zone:soltemple  ID:80000 -- an_undead_knight

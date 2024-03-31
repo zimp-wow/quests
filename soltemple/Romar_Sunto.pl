@@ -24,51 +24,36 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-	#:: Match 50 gold pieces
-	if (plugin::takeCoin(0, 0, 50, 0)) {
-		quest::say("Once you combine the coins within the pouch, you must take the Coin of Tash to Tarn Vislin in the HighKeep library to get it enchanted.  Give him the coin and he will enchant it for you.");
-		#:: Give a 18032 - Tome of Tesh
-		quest::summonitem(118032);
-		#:: Ding!
-		quest::ding();
-		#:: Set factions
-		quest::faction(415, 1);			#:: + Temple of Solusek Ro
-		quest::faction(416, -1);		#:: - Shadowed Men
-		#:: Grant a small amount of experience
-		quest::exp(1000);
-	}
-	#:: Match a 10000 - Lambent Stone
-	elsif (plugin::takeItems(10000 => 1)) {
-		quest::say("A stone for a staff - very well.");
-		#:: Give a 6048 - Darkwood Staff
-		quest::summonitem(16048);
-		#:: Ding!
-		quest::ding();
-		#:: Set factions
-		quest::faction(415, 1);			#:: + Temple of Solusek Ro
-		quest::faction(416, -1);		#:: - Shadowed Men
-		#:: Grant a small amount of experience
-		quest::exp(1000);
-	}
-	#:: Match a 10793 - Radiant Coin of Tash
-	elsif (plugin::takeItems(10793 => 1)) {
-		quest::say("The Coin of Tash - fully enchanted! I am in your debt. Here is the scroll of Tashania that was promised to you.");
-		#:: Give a 15678 - Spell: Tashania
-		quest::summonitem(115678);
-		#:: Ding!
-		quest::ding();
-		#:: Set factions
-		quest::faction(415, 1);			#:: + Temple of Solusek Ro
-		quest::faction(416, -1);		#:: - Shadowed Men
-		#:: Grant a small amount of experience
-		quest::exp(1000);
-	}
-	#:: Match a 10790 - Coin of Tash
-	elsif (plugin::takeItems(10790 => 1)) {
-		quest::say("The Coin of Tash. It is of no use to me like this. You must take the coin to Tarn Visilin in High Keep to get it enchanted.");
-		#:: Return a 10790 - Coin of Tash
-		quest::summonitem(110790);
-	}
-	#:: Return unused items
-	plugin::returnUnusedItems();
+    #:: Match 50 gold pieces using CheckCashPayment
+    if (plugin::CheckCashPayment(5000, $copper, $silver, $gold, $platinum)) {
+        quest::say("Once you combine the coins within the pouch, you must take the Coin of Tash to Tarn Vislin in the HighKeep library to get it enchanted.  Give him the coin and he will enchant it for you.");
+        quest::summonitem(118032); # Tome of Tesh
+        quest::ding();
+        quest::faction(415, 1); # + Temple of Solusek Ro
+        quest::faction(416, -1); # - Shadowed Men
+        quest::exp(1000);
+    }
+    elsif (plugin::check_handin(\%itemcount, 10000 => 1)) {
+        quest::say("A stone for a staff - very well.");
+        quest::summonitem(16048); # Darkwood Staff
+        quest::ding();
+        quest::faction(415, 1); # + Temple of Solusek Ro
+        quest::faction(416, -1); # - Shadowed Men
+        quest::exp(1000);
+    }
+    elsif (plugin::check_handin(\%itemcount, 10793 => 1)) {
+        quest::say("The Coin of Tash - fully enchanted! I am in your debt. Here is the scroll of Tashania that was promised to you.");
+        quest::summonitem(115678); # Spell: Tashania
+        quest::ding();
+        quest::faction(415, 1); # + Temple of Solusek Ro
+        quest::faction(416, -1); # - Shadowed Men
+        quest::exp(1000);
+    }
+    elsif (plugin::check_handin(\%itemcount, 10790 => 1)) {
+        quest::say("The Coin of Tash. It is of no use to me like this. You must take the coin to Tarn Visilin in High Keep to get it enchanted.");
+        quest::summonitem(110790); # Coin of Tash
+    }
+
+    #:: Return unused items
+    plugin::returnUnusedItems();
 }
