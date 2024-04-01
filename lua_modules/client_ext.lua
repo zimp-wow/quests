@@ -236,7 +236,6 @@ function Client:HasItem(itemid, trade)
 			return true;
 		end
 	end
-		
 	return false;
 end
 
