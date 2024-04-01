@@ -43,22 +43,22 @@ function Protector_Timer(e)
 						if(ent:CastToMob():GetClass()==16 and damage > 0) then --berserker
 							local currclient=ent:CastToClient();
 							if(math.random(3)==1) then 
-								if(currclient:GetItemIDAt(Slot.Primary)==16779) then
+								if(currclient:GetItemIDAt(Slot.Primary) % 1000000 ==16779) then
 									eq.target_global("berserk_epic_test17759", "1", "F", 0,currclient:CharacterID(),0);
 									currclient:Message(15,"After several heavy swings, the axe shatters into many fine pieces. Time for a new axe!");
 									currclient:DeleteItemInInventory(Slot.Primary, 1, true);
 									currclient:SummonItem(17833); -- Item: Broken Trial Taelosian Blood Axe
-								elseif(currclient:GetItemIDAt(Slot.Primary)== 17759 ) then
+								elseif(currclient:GetItemIDAt(Slot.Primary) % 1000000 == 17759 ) then
 									eq.target_global("berserk_epic_test17370", "1", "F", 0,currclient:CharacterID(),0);
 									currclient:Message(15,"After raining down nearly two dozen blows you begin to notice small hairline fractures developing in the axe head. You think testing for this axe has been completed.");
 									currclient:DeleteItemInInventory(Slot.Primary, 1, true);
 									currclient:SummonItem(17898); -- Item: Damaged Trial Taelosian Blood Axe
-								elseif(currclient:GetItemIDAt(Slot.Primary)==17700) then
+								elseif(currclient:GetItemIDAt(Slot.Primary) % 1000000 ==17700) then
 									eq.target_global("berserk_epic_test17700", "1", "F", 0,currclient:CharacterID(),0);
 									currclient:Message(15,"After many swings you can feel this axe is failing and think that it will fall apart at any moment. You think that testing for this axe has been completed.");
 									currclient:DeleteItemInInventory(Slot.Primary, 1, true);
 									currclient:SummonItem(17399); -- Item: Damaged Trial Taelosian Blood Axe
-								elseif(currclient:GetItemIDAt(Slot.Primary)== 17370) then
+								elseif(currclient:GetItemIDAt(Slot.Primary) % 1000000 == 17370) then
 									eq.target_global("berserk_epic_test16779", "1", "F", 0,currclient:CharacterID(),0);
 									currclient:Message(15,"The rigors of battle have had no effect of this axe. Keras should be very pleased with the result of this particular axe.");
 									currclient:DeleteItemInInventory(Slot.Primary, 1, true);

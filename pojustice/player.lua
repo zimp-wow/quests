@@ -11,7 +11,7 @@ function event_click_door(e)
 	if (door_id >= 8 and door_id <= 13) then
 		e.self:MovePCInstance(201, instance_id, 456, 825, 9, 360); -- Zone: pojustice DZ
 	elseif (door_id >= 1 and door_id <= 6) then
-		if (e.self:GetItemIDAt(Slot.Cursor) == 31599) then
+		if (e.self:GetItemIDAt(Slot.Cursor) % 1000000 == 31599) then
 			-- make sure these are reset
 			player_list = nil;
 			player_list_count = nil;

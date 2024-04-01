@@ -34,8 +34,8 @@ function auracast(e)
 	local qglobals = eq.get_qglobals(e.self); 
 	local instance_id = eq.get_zone_instance_id();
 
-	local rangeditem   = isItemValid(e.self:GetItemIDAt(Slot.Range))
-	local secondaryitem = isItemValid(e.self:GetItemIDAt(Slot.Secondary))
+	local rangeditem   = isItemValid(e.self:GetItemIDAt(Slot.Range) % 1000000)
+	local secondaryitem = isItemValid(e.self:GetItemIDAt(Slot.Secondary)% 1000000)
 	local hasbuff		= e.self:FindBuff(756);
 
 	if qglobals[instance_id.. '_destper'] ~= nil then
@@ -66,7 +66,7 @@ function event_click_door(e)
 
 	-- Keys: | Cracked = 67707 | Dusty = 67708 | Polished = 67709 | Jagged = 67710 |
 	if door == 9 then
-		local cursor_check = e.self:GetItemIDAt(Slot.Cursor)
+		local cursor_check = e.self:GetItemIDAt(Slot.Cursor) % 1000000
 		local keycheck = tonumber(qglobals[instance_id.. '_gaschmb1']) or 999999
 		local is_complete = qglobals[instance_id.. '_gaschmb1complete'] ~= nil
 		local is_gm = (e.self:Admin() > 80)
@@ -140,7 +140,7 @@ function event_click_door(e)
 			eq.zone_emote(MT.Yellow,"You heave at the stone slab, but it does not budge. Without more people to assist you it will be impossible to open.");
 		end
 	elseif door == 12 then
-		local cursor_check = e.self:GetItemIDAt(Slot.Cursor)
+		local cursor_check = e.self:GetItemIDAt(Slot.Cursor) % 1000000
 		local keycheck = tonumber(qglobals[instance_id.. '_gaschmb2']) or 999999
 		local is_complete = qglobals[instance_id.. '_gaschmb2complete'] ~= nil
 		local is_gm = (e.self:Admin() > 80)
