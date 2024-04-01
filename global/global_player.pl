@@ -310,6 +310,14 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 
 }
 
+sub EVENT_SAY {
+	 if ($text=~/enable seasonal/i) {
+		$client->SetBucket("SeasonalCharacter", 1);
+	 } elsif ($text=~/disable seasonal/i) {
+		$client->SetBucket("SeasonalCharacter", 0);
+	 }
+}
+
 sub EVENT_DISCONNECT {
 	plugin::ConvertFlags($client);
 }
