@@ -313,8 +313,10 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 sub EVENT_SAY {
 	 if ($text=~/enable seasonal/i) {
 		$client->SetBucket("SeasonalCharacter", 1);
+		$client->Message(15, "Seasonal Enabled");
 	 } elsif ($text=~/disable seasonal/i) {
 		$client->SetBucket("SeasonalCharacter", 0);
+		$client->Message(15, "Seasonal Disabled");
 	 }
 }
 
