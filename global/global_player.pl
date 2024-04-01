@@ -310,6 +310,10 @@ if (($text =~ /Expansions/i) && ($expansion == 0)) {
 
 }
 
+sub EVENT_DISCONNECT {
+	plugin::ConvertFlags($client);
+}
+
 sub EVENT_ZONE {
 	plugin::CheckWorldWideBuffs($client);
 	plugin::ConvertFlags($client);
