@@ -4,7 +4,6 @@ sub EVENT_SIGNAL {
 }
 
 sub EVENT_CONNECT {
-
 	plugin::CheckWorldWideBuffs($client);
 	plugin::ConvertFlags($client);
 	plugin::set_default_attunement($client->AccountID(), $client->GetRace());
