@@ -161,7 +161,7 @@ my %VALID_STAGES = map { $_ => 1 } @STAGES;
 
 # Global hash of stage prerequisites
 my %STAGE_PREREQUISITES = (
-    'RoK' => ['Lord Nagafen', 'Lady Vox'],  # Objectives with spaces
+    'RoK' => ['Lord Nagafen', 'Lady Vox'],  
     'SoV' => ['Trakanon', 'Gorenaire', 'Severilous', 'Talendor'],
     'SoL' => ['Lord Yelinak', 'Tukaarak the Warder', 'Nanzata the Warder', 'Ventani the Warder', 'Hraashna the Warder', 'Wuoshi', 'Klandicar', 'Zlandicar'],
     'PoP' => ['Thought Horror Overfiend', 'The Insanity Crawler', 'Greig Veneficus', 'Xerkizh the Creator', 'Emperor Ssraeshza'],
@@ -434,11 +434,11 @@ sub ConvertFlags {
     if ($expansion) {
         # Kunark
         if ($expansion > 2 || quest::get_data($client->AccountID() . "nag") > 0) {
-            set_subflag($client, 'Rok', 'Lord Nagafen', 1);
+            set_subflag($client, 'RoK', 'Lord Nagafen', 1);
         }
 
         if ($expansion > 2 || quest::get_data($client->AccountID() . "vox") > 0) {
-            set_subflag($client, 'Rok', 'Lady Vox', 1);
+            set_subflag($client, 'RoK', 'Lady Vox', 1);
         }
         
         # Velious
