@@ -165,7 +165,7 @@ my %STAGE_PREREQUISITES = (
     'SoV' => ['Trakanon', 'Gorenaire', 'Severilous', 'Talendor'],
     'SoL' => ['Lord Yelinak', 'Tukaarak the Warder', 'Nanzata the Warder', 'Ventani the Warder', 'Hraashna the Warder', 'Wuoshi', 'Klandicar', 'Zlandicar'],
     'PoP' => ['Thought Horror Overfiend', 'The Insanity Crawler', 'Greig Veneficus', 'Xerkizh the Creator', 'Emperor Ssraeshza'],
-    'GoD' => ['Quarm'],
+    'GoD' => ['Saryrn'],
     'OoW' => ['Disabled'],
     'DoN' => ['Disabled'],
     # ... and so on for each stage
