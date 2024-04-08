@@ -9,7 +9,7 @@ sub EVENT_SAY {
     my $akhkey = $client->AccountID() . "akh";
 
     if ($text =~ /hail/i) {
-        if (quest::get_data($akhkey) == "") {
+        if (quest::get_data($akhkey)) {
             quest::set_data($akhkey, 1);
             quest::say("The Planes of Power need your help! Hurry along!");
             $client->Message(4, "You have gained an expansion flag!");
