@@ -21,7 +21,7 @@ sub EVENT_SAY {
     }
 
     # Set new flag system data
-    plugins::set_subflag($client, 'PoP', 'The Insanity Crawler', 1);
+    plugin::set_subflag($client, 'PoP', 'The Insanity Crawler', 1);
 }
 
 sub EVENT_TIMER {
