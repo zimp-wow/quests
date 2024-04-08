@@ -17,47 +17,47 @@ sub EVENT_SAY {
             $progressionCount = 8;
 		        $progressCount = 0;
             $progressText = "";
-            if (quest::get_data($client->AccountID() . "sky") > 0) {
+            if (quest::get_data($client->AccountID() . "sky")) {
             $progressCount++;
             $progressText .= "Yelinak in Skyshrine, ";
             }
 
-            if (quest::get_data($client->AccountID() . "sleepers") > 0) {
+            if (quest::get_data($client->AccountID() . "sleepers")) {
             $progressCount++;
             $progressText .= "Tukaarak the Warder in Sleepers Tomb, ";
             }
 
-            if (quest::get_data($client->AccountID() . "sle") > 0) {
+            if (quest::get_data($client->AccountID() . "sle")) {
             $progressCount++;
             $progressText .= "Nanzata the Warder in Sleepers Tomb, ";
             }
 
-            if (quest::get_data($client->AccountID() . "slee") > 0) {
+            if (quest::get_data($client->AccountID() . "slee")) {
             $progressCount++;
             $progressText .= "Ventani the Warder in Sleepers Tomb, ";
             }
 
-            if (quest::get_data($client->AccountID() . "sleep") > 0) {
+            if (quest::get_data($client->AccountID() . "sleep")) {
             $progressCount++;
             $progressText .= "Hraasha the Warder in Sleepers Tomb, ";
             }
 
-            if (quest::get_data($client->AccountID() . "wuo") > 0) {
+            if (quest::get_data($client->AccountID() . "wuo")) {
             $progressCount++;
             $progressText .= "Wuoshi in Wakening Lands, ";
             }
 
-            if (quest::get_data($client->AccountID() . "kla") > 0) {
+            if (quest::get_data($client->AccountID() . "kla")) {
             $progressCount++;
             $progressText .= "Klandicar in the Western Wastes, ";
             }
 
-            if (quest::get_data($client->AccountID() . "zla") > 0) {
+            if (quest::get_data($client->AccountID() . "zla")) {
             $progressCount++;
             $progressText .= "Zlandicar in Dragon Necropolis, ";
             }
 
-            if ($progressCount > 0) {
+            if ($progressCount) {
             $progressText = substr($progressText, 0, -2);
             plugin::Whisper("You have defeated $progressCount of $progressionCount targets: $progressText.");
             }
