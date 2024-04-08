@@ -20,22 +20,6 @@ sub EVENT_SAY {
         }
     }
 
-    if ($text =~ /Expansions/i) {
-        if ($expansion == 0) {
-            quest::say("You don't have any expansions unlocked!");
-        } elseif ($expansion == 1) {
-            quest::say("You don't have any expansions unlocked!");
-        } elseif ($expansion >= 2 && $expansion < 6) {
-            quest::say("Expansions Unlocked: Kunark");
-        } elseif ($expansion >= 6 && $expansion < 14) {
-            quest::say("Expansions Unlocked: Velious");
-        } elseif ($expansion >= 14 && $expansion < 19) {
-            quest::say("Expansions Unlocked: Luclin");
-        } elseif ($expansion >= 19) {
-            quest::say("Expansions Unlocked: Planes of Power");
-        }
-    }
-
     # Set new flag system data
     set_subflag($client, 'PoP', 'The Insanity Crawler', 1);
 }
