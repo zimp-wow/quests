@@ -17,8 +17,6 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         my $ReturnZone = $client->GetBucket("Return-Zone");
         my $ReturnInstance = $client->GetBucket("Return-Instance") || 0;
 
-        $client->GetStartZone()
-
         if ($ReturnX && $ReturnY && $ReturnZ && $ReturnH) {
             if ($ReturnInstance) {
                 $client->MovePCInstance($ReturnZone, $ReturnInstance, $ReturnX, $ReturnY, $ReturnZ, $ReturnH);
