@@ -2,7 +2,10 @@
 sub EVENT_SPELL_EFFECT_CLIENT {
     my $client = plugin::val('$client');
 
+    quest::debug("Cast Bazaar Portal");
+
     if ($zoneid != 151) {
+        quest::debug("Not in Bazaar");
         $client->SetBucket("Return-X", $client->GetX());
         $client->SetBucket("Return-Y", $client->GetY());
         $client->SetBucket("Return-Z", $client->GetZ());
@@ -10,6 +13,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         $client->SetBucket("Return-Zone", $zoneid);
         $client->SetBucket("Return-Instance", $instanceid);
     } else {
+        quest::debug("We are in Bazaar");
         my $ReturnX = $client->GetBucket("Return-X");
         my $ReturnY = $client->GetBucket("Return-Y");
         my $ReturnZ = $client->GetBucket("Return-Z");
@@ -25,6 +29,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
             }            
         } else {
             plugin::move_startzone();
+            return -1;
         }
     }
 }
