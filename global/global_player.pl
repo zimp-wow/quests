@@ -56,15 +56,7 @@ sub EVENT_CLICKDOOR {
 }
 
 sub EVENT_ZONE {
-	plugin::CommonCharacterUpdate($client);
-	
-    my $ReturnX = $client->GetBucket("Return-X");
-    my $ReturnY = $client->GetBucket("Return-Y");
-    my $ReturnZ = $client->GetBucket("Return-Z");
-    my $ReturnH = $client->GetBucket("Return-H");
-    my $ReturnZone = $client->GetBucket("Return-Zone");
-
-    
+	plugin::CommonCharacterUpdate($client);   
 
     # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
 }
