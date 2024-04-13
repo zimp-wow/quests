@@ -14,15 +14,27 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         $client->SetBucket("Return-Instance", $instanceid);
     } else {
         quest::debug("We are in Bazaar");
-        my $ReturnX = $client->GetBucket("Return-X") || undef;
-        my $ReturnY = $client->GetBucket("Return-Y") || undef;
-        my $ReturnZ = $client->GetBucket("Return-Z") || undef;
-        my $ReturnH = $client->GetBucket("Return-H") || undef;
-        my $ReturnZone = $client->GetBucket("Return-Zone") || undef;
-        my $ReturnInstance = $client->GetBucket("Return-Instance") || 0;
+        my $ReturnX = $client->GetBucket("Return-X");
+        my $ReturnY = $client->GetBucket("Return-Y");
+        my $ReturnZ = $client->GetBucket("Return-Z");
+        my $ReturnH = $client->GetBucket("Return-H");
+        my $ReturnZone = $client->GetBucket("Return-Zone");
+        my $ReturnInstance = $client->GetBucket("Return-Instance");
 
-        if (defined($ReturnX) && defined($ReturnY) && defined($ReturnZ) && defined($ReturnH) && defined($ReturnZone)) {
-            quest::debug("Found a return location");            
+        if (defined($ReturnX) && $ReturnX ne '' && 
+            defined($ReturnY) && $ReturnY ne '' && 
+            defined($ReturnZ) && $ReturnZ ne '' && 
+            defined($ReturnH) && $ReturnH ne '' && 
+            defined($ReturnZone) && $ReturnZone ne '') {
+            quest::debug("Found a return location");
+
+            $client->DeleteBucket("Return-X");
+            $client->DeleteBucket("Return-Y");
+            $client->DeleteBucket("Return-Z");
+            $client->DeleteBucket("Return-H");
+            $client->DeleteBucket("Return-Zone");
+            $client->DeleteBucket("Return-Instance");            
+
             $client->MovePCInstance($ReturnZone, $ReturnInstance, $ReturnX, $ReturnY, $ReturnZ, $ReturnH);            
         } else {            
             quest::debug("Returning to default location");

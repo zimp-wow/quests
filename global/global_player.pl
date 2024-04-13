@@ -56,7 +56,7 @@ sub EVENT_CLICKDOOR {
 }
 
 sub EVENT_ZONE {
-	plugin::CommonCharacterUpdate($client);   
+	plugin::CommonCharacterUpdate($client);    
 
     # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
 }
