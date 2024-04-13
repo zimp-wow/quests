@@ -64,13 +64,7 @@ sub EVENT_ZONE {
     my $ReturnH = $client->GetBucket("Return-H");
     my $ReturnZone = $client->GetBucket("Return-Zone");
 
-    if (int($target_zone_id) != 151) {
-        $client->DeleteBucket("Return-X");
-        $client->DeleteBucket("Return-Y");
-        $client->DeleteBucket("Return-Z");
-        $client->DeleteBucket("Return-H");
-        $client->DeleteBucket("Return-Zone");
-    } 
+    
 
     # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
 }
