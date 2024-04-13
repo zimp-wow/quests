@@ -563,7 +563,7 @@ sub ConvertFlags {
 
         # Gates of Discord
         if (!is_stage_complete($client, 'GoD')) {
-            if ($expansion > 20 || quest::get_data($client->AccountID() . "-saryrn-flag")) {
+            if ($expansion >= 20 || quest::get_data($client->AccountID() . "-saryrn-flag") || quest::get_data($client->AccountID() . "-quarm-kill")) {
                 set_subflag($client, 'GoD', 'Saryrn', 1);
             }
         }
