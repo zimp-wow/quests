@@ -21,13 +21,15 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         my $ReturnZone = $client->GetBucket("Return-Zone");
         my $ReturnInstance = $client->GetBucket("Return-Instance") || 0;
 
-        if ($ReturnX && $ReturnY && $ReturnZ && $ReturnH) {
+        if ($ReturnX && $ReturnY && $ReturnZ && $ReturnH && $ReturnZone) {
+            quest::debug("Found a return location");
             if ($ReturnInstance) {
                 $client->MovePCInstance($ReturnZone, $ReturnInstance, $ReturnX, $ReturnY, $ReturnZ, $ReturnH);
             } else {
                 $client->MovePC($ReturnZone, $ReturnX, $ReturnY, $ReturnZ, $ReturnH);
             }            
         } else {
+            quest::debug("Returning to default location");
             plugin::move_startzone();
             return -1;
         }
