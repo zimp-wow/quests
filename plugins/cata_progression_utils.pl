@@ -628,3 +628,68 @@ sub handle_killed_merit {
         plugin::set_subflag($client, plugin::get_subflag_stage($npc->GetCleanName()), $npc->GetCleanName());
     }
 }
+
+sub move_startzone {
+    my $client = plugin::val('$client');
+    my $s_zone = $client->GetStartZone();
+    if ($s_zone == 9) {
+        quest::movepc(9, -60.9, -61.5, -24.9); # Zone: freportw
+    }
+    elsif ($s_zone == 19) {
+        quest::movepc(19, -98.4, 11.5, 3.1); # Zone: rivervale
+    }
+    elsif ($s_zone == 24) {
+        quest::movepc(24, -309.8, 109.6, 23.1); # Zone: erudnext
+    }
+    elsif ($s_zone == 25) {
+        quest::movepc(25, -965.3, 2434.5, 5.6); # Zone: nektulos
+    }
+    elsif ($s_zone == 29) {
+        quest::movepc(29, 12.2, -32.9, 3.1); # Zone: halas
+    }
+    elsif ($s_zone == 40) {
+        quest::movepc(40, 156.9, -2.9, 31.1); # Zone: neriaka
+    }
+    elsif ($s_zone == 41) {
+        quest::movepc(41, -499, 2.9, -10.9); # Zone: neriakb
+    }
+    elsif ($s_zone == 42) {
+        quest::movepc(42, -968.9, 891.9, -52.8); # Zone: neriakc
+    }
+    elsif ($s_zone == 45) {
+        quest::movepc(45, -343, 189, -38.22); # Zone: qcat
+    }
+    elsif ($s_zone == 49) {
+        quest::movepc(49, 520.1, 235.4, 59.1); # Zone: oggok
+    }
+    elsif ($s_zone == 50) {
+        quest::movepc(50, 560, -2234, 3); # Zone: rathemtn
+    }
+    elsif ($s_zone == 52) {
+        quest::movepc(52, 1.1, 14.5, 3.1); # Zone: grobb
+    }
+    elsif ($s_zone == 54) {
+        quest::movepc(54, -197, 27, -0.7); # Zone: gfaydark
+    }
+    elsif ($s_zone == 55) {
+        quest::movepc(55, 7.6, 489.0, -24.9); # Zone: akanon
+    }
+    elsif ($s_zone == 61) {
+        quest::movepc(61, 26.3, 14.9, 3.1); # Zone: felwithea
+    }
+    elsif ($s_zone == 68) {
+        quest::movepc(68, -214.5, 2940.1, 0.1); # Zone: butcher
+    }
+    elsif ($s_zone == 75) {
+        quest::movepc(75, 200, 800, 3.39); # Zone: paineel
+    }
+    elsif ($s_zone == 106) {
+        quest::movepc(106, -415.7, 1276.6, 3.1); # Zone: cabeast
+    }
+    elsif ($s_zone == 155) {
+        quest::movepc(155, 105.6, -850.8, -190.4); # Zone: sharvahl
+    }
+    else {
+        quest::movepc(202, -55, 44, -158.81); # Zone: poknowledge
+    }  
+}

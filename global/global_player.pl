@@ -72,26 +72,7 @@ sub EVENT_ZONE {
         $client->DeleteBucket("Return-Zone");
     } 
 
-    if ($ReturnX && $ReturnY && $ReturnZ && $ReturnZone) {
-        if ($from_zone_id == 151 && ($target_zone_id == 152 || $target_zone_id == 150)) {
-            $client->MovePC($ReturnZone, $ReturnX, $ReturnY, $ReturnZ, ($ReturnH || 0));
-            return int($ReturnZone);
-        }
-    }     
-
-    if (!plugin::is_eligible_for_zone($client, quest::GetZoneShortName($target_zone_id))) {
-        if ($from_zone_id == 151 && ($target_zone_id == 152 || $target_zone_id == 150)) {
-            $client->MovePC($client->GetBindZoneID(), 
-							$client->GetBindX(), 
-							$client->GetBindY(),
-							$client->GetBindZ(), 
-							$client->GetBindHeading()); # Bind Point
-            return int($client->GetBindZoneID());
-        } else {
-            $client->MovePC(151, 185, -835, 4, 390); # Bazaar Safe Location.
-            return int(151);
-        }
-    }    
+    # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
 }
 
 sub EVENT_DISCOVER_ITEM {
