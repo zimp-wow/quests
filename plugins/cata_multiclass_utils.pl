@@ -234,7 +234,7 @@ sub GrantGeneralAA {
     
     foreach my $aa_id (keys %general_aa) {
         quest::debug("attempting: $aa_id");
-        if ($client->GetAA($aa_id) < $general_aa{$aa_id}) {
+        while ($client->GetAA($aa_id) < $general_aa{$aa_id}) {
             quest::debug("incrementing: $aa_id");
             $client->IncrementAA($aa_id);
         }
