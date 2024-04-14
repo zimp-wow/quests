@@ -172,6 +172,12 @@ my %STAGE_PREREQUISITES = (
     # ... and so on for each stage
 );
 
+# Normalize the objectives to lowercase for case-insensitive handling
+foreach my $stage (keys %STAGE_PREREQUISITES) {
+    next if $STAGE_PREREQUISITES{$stage}[0] eq 'Disabled';  # Skip normalization if stage is disabled
+    @{$STAGE_PREREQUISITES{$stage}} = map { lc } @{$STAGE_PREREQUISITES{$stage}};
+}
+
 my %STAGE_DESCRIPTIONS = (
     'RoK' => "Ruins of Kunark",
     'SoV' => "Scars of Velious",
@@ -218,21 +224,21 @@ sub list_stage_prereq {
 }
 
 sub get_subflag_stage {
-    my ($subflag_name) = @_;  # The name of the subflag to search for
+    my ($subflag_name) = @_;
+    $subflag_name = lc($subflag_name);  # Normalize the subflag name
 
-    # Iterate through each stage in the hash
     foreach my $stage (keys %STAGE_PREREQUISITES) {
-        # Check if the subflag name is in the list of prerequisites for this stage
-        if (grep { $_ eq $subflag_name } @{$STAGE_PREREQUISITES{$stage}}) {
-            return $stage; # Return the stage name if found
+        if (grep { lc($_) eq $subflag_name } @{$STAGE_PREREQUISITES{$stage}}) {
+            return $stage;  # Return the stage name if found
         }
     }
-    return undef; # Return undefined if the subflag name is not found in any stage
+    return undef;  # Return undefined if the subflag name is not found in any stage
 }
 
 sub subflag_exists {
     my ($search_term) = @_;
-    return $DIRECT_LOOKUP{$search_term} // 0; # Returns 1 if present, 0 otherwise
+    $search_term = lc($search_term);  # Normalize the search term
+    return $DIRECT_LOOKUP{$search_term} // 0;  # Returns 1 if present, 0 otherwise
 }
 
 # Subroutine to find the next stage
@@ -264,16 +270,26 @@ sub get_next_stage {
 
 sub get_subflag {
     my ($client, $stage, $objective) = @_;
+    $objective = lc($objective);  # Normalize the objective to lowercase
 
-    my %flag = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
+    # Deserialize the hash containing flags
+    my %original_flag = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
 
-    return $flag{$objective};
+    # Create a new hash with all keys normalized to lowercase
+    my %normalized_flag;
+    foreach my $key (keys %original_flag) {
+        $normalized_flag{lc($key)} = $original_flag{$key};
+    }
+
+    # Return the value using the normalized objective key
+    return $normalized_flag{$objective};
 }
 
 #usage plugin::set_subflag($client, 'Rok', 'Lord Nagafen', 1); flags $client for Lord Nagafen in RoK stage.
 sub set_subflag {
     my ($client, $stage, $objective, $value) = @_;
     $value //= 1; # Default value is 1 if not otherwise defined
+    $objective = lc($objective);  # Normalize the objective
 
     # Check if the stage is valid
     return 0 unless exists $VALID_STAGES{$stage};
