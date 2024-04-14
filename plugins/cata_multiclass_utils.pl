@@ -1,6 +1,7 @@
 sub CommonCharacterUpdate {    
     my $client = shift || plugin::val('$client');
-    GrantClassesAA();
+    GrantClassesAA($client);
+    GrantGeneralAA($client); # Grant the general here too
 
     plugin::CheckWorldWideBuffs($client);
     plugin::UpdateCharMaxLevel($client);
@@ -343,9 +344,7 @@ sub GrantClassAA {
 
 sub GrantClassesAA {
     my $client = shift || plugin::val('$client');
-    my $class_bitmask = $client->GetClassesBitmask();
-
-    GrantGeneralAA($client); # Grant the general here too
+    my $class_bitmask = $client->GetClassesBitmask();    
 
     # Iterate through each class ID (bit position)
     for (my $i = 0; $i < 16; $i++) { 
