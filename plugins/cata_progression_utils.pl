@@ -342,24 +342,16 @@ sub is_stage_complete {
 
     quest::debug("Valid Stage: $stage");
 
-    # Deserialize and lower-case the progress flags
-    my %objective_progress = map { lc($_) => $objective_progress{$_} } 
-                             plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
-
-                                 # Debug output for the deserialized and lower-cased progress flags
-    foreach my $key (keys %objective_progress) {
-        quest::debug("Progress flag for $key: $objective_progress{$key}");
-    }
-
     # Check prerequisites
     foreach my $prerequisite (@{$STAGE_PREREQUISITES{$stage}}) {
-        # Convert prerequisite to lowercase for the comparison
-        my $lc_prerequisite = lc($prerequisite);
+        # Deserialize and then convert keys to lower-case
+        my %raw_objective_progress = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
+        my %objective_progress = map { lc($_) => $raw_objective_progress{$_} } keys %raw_objective_progress;
 
-        unless ($objective_progress{$lc_prerequisite}) {
+        unless ($objective_progress{$prerequisite}) {
             quest::debug("Prerequisite not met: $prerequisite");
             if ($inform) {
-                $client->Message(263, "You are not yet ready to experience that memory.");
+                 $client->Message(263, "You are not yet ready to experience that memory.");
             }
             return 0;
         }
