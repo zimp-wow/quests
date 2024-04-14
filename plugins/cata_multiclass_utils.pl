@@ -232,7 +232,7 @@ sub GrantGeneralAA {
     );
     
     foreach my $aa_id (keys %{$general_aa}) {
-        if ($client->GetAA($aa_id) < $general_aa{$aa_id}) {
+        while ($client->GetAA($aa_id) < $general_aa{$aa_id}) {
             $client->IncrementAA($aa_id);
         }
     } 
