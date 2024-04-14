@@ -5,9 +5,12 @@ sub EVENT_SLAY {
 }
 
 sub EVENT_DEATH_COMPLETE {
-    plugin::handle_death($npc, $x, $y, $z, $entity_list);
+  quest::debug("Event Death Complete");
+  plugin::handle_death($npc, $x, $y, $z, $entity_list);
 }
 
 sub EVENT_KILLED_MERIT {
-    plugin::handle_killed_merit($npc, $client, $entity_list);
+  my $name = $npc->GetCleanName();
+  quest::debug("Event Killed Merit $name");
+  plugin::handle_killed_merit($npc, $client, $entity_list);
 }
