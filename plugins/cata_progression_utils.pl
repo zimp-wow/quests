@@ -372,6 +372,8 @@ sub delete_all_progress {
         quest::debug("Deleted progress flag data for stage: $stage");
     }
 
+    delete_all_flags($client);
+
     # Notify client if necessary
     $client->Message(15, "All your progression flags have been reset.");  # Message 15 is typically a yellow text in EQ
 }
@@ -610,6 +612,43 @@ sub ConvertFlags {
         UpdateRaceClassLocks($client);
     }    
 }
+
+sub delete_all_flags {
+    my $client = shift;
+
+    # List all stages and their specific subflags used in ConvertFlags
+    my %flags_to_delete = (
+        "kunark-flag" => 1,
+        "nag" => 1,
+        "vox" => 1,
+        "trak" => 1,
+        "tal" => 1,
+        "goren" => 1,
+        "sev" => 1,
+        "sky" => 1,
+        "sleepers" => 1,
+        "sle" => 1,
+        "slee" => 1,
+        "sleep" => 1,
+        "wuo" => 1,
+        "kla" => 1,
+        "zla" => 1,
+        "deep" => 1,
+        "akh" => 1,
+        "griegs" => 1,
+        "ssraone" => 1,
+        "ssratwo" => 1,
+        "saryrn-flag" => 1,
+        "quarm-kill" => 1
+    );
+
+    # Go through each flag and delete it
+    foreach my $flag_suffix (keys %flags_to_delete) {
+        my $key = $client->AccountID() . "-" . $flag_suffix;
+        quest::delete_data($key);  # Assuming quest::delete_data is the correct method to remove data
+    }
+}
+
 
 sub UpdateRaceClassLocks {
     my $client = shift;
