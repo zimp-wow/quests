@@ -210,9 +210,7 @@ sub list_stage_prereq {
         
         if ($prereqs && @$prereqs ne 'Disabled') {
             foreach my $objective (@$prereqs) {
-                # Convert objective to lowercase for case-insensitive comparison
-                my $objective_lower = lc($objective);
-                my $completed = get_subflag($client, $target_stage, $objective_lower) ? "completed" : "not completed";
+                my $completed = get_subflag($client, $target_stage, $objective) ? "completed" : "not completed";
                 plugin::YellowText("$objective: $completed");
             }
         }
@@ -221,12 +219,11 @@ sub list_stage_prereq {
 
 sub get_subflag_stage {
     my ($subflag_name) = @_;  # The name of the subflag to search for
-    my $lc_subflag_name = lc($subflag_name);  # Convert to lowercase for comparison
 
     # Iterate through each stage in the hash
     foreach my $stage (keys %STAGE_PREREQUISITES) {
         # Check if the subflag name is in the list of prerequisites for this stage
-        if (grep { lc($_) eq $lc_subflag_name } @{$STAGE_PREREQUISITES{$stage}}) {
+        if (grep { $_ eq $subflag_name } @{$STAGE_PREREQUISITES{$stage}}) {
             return $stage; # Return the stage name if found
         }
     }
@@ -268,13 +265,8 @@ sub get_next_stage {
 sub get_subflag {
     my ($client, $stage, $objective) = @_;
 
-    # Normalize the input data to ensure case-insensitive comparison
-    $stage = lc($stage);             # Normalize the stage to lowercase
-    $objective = lc($objective);     # Normalize the objective to lowercase
-
     my %flag = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
 
-    # Retrieve the value using the normalized key
     return $flag{$objective};
 }
 
@@ -348,6 +340,7 @@ sub is_stage_complete {
     quest::debug("All prerequisites for stage $stage have been met");
     return 1;
 }
+
 
 sub is_eligible_for_race {
     my $client = shift;
