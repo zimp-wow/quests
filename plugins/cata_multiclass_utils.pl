@@ -232,6 +232,7 @@ sub GrantGeneralAA {
     );
     
     foreach my $aa_id (keys %{$general_aa}) {
+        $client->GrantAlternateAdvancementAbility($aa_id, $general_aa{$aa_id}, 1);
         if ($client->GetAA($aa_id) < $general_aa{$aa_id}) {
             $client->GrantAlternateAdvancementAbility($aa_id, $general_aa{$aa_id}, 1);
         }
