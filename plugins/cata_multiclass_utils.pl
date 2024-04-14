@@ -227,14 +227,13 @@ sub GrantGeneralAA {
 
     my %general_aa = (
         1000 => 1,  # Bazaar Gate
-        938 => 8, # Eyes Wide Open
+        12636 => 8, # Eyes Wide Open
         1021 => 5,  # Mystical Attuning 
     );
     
     foreach my $aa_id (keys %{$general_aa}) {
-        $client->GrantAlternateAdvancementAbility($aa_id, $general_aa{$aa_id}, 1);
         if ($client->GetAA($aa_id) < $general_aa{$aa_id}) {
-            $client->GrantAlternateAdvancementAbility($aa_id, $general_aa{$aa_id}, 1);
+            $client->IncrementAA($aa_id);
         }
     } 
 }
@@ -344,7 +343,7 @@ sub GrantClassesAA {
     my $client = shift || plugin::val('$client');
     my $class_bitmask = $client->GetClassesBitmask();
 
-    GrantGeneralAA(); # Grant the general here too
+    GrantGeneralAA($client); # Grant the general here too
 
     # Iterate through each class ID (bit position)
     for (my $i = 0; $i < 16; $i++) { 
