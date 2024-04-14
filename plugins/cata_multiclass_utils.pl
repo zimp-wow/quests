@@ -227,7 +227,7 @@ sub GrantGeneralAA {
 
     my %general_aa = (
         1000 => 1,  # Bazaar Gate
-        12636 => 8, # Eyes Wide Open
+        938 => 8, # Eyes Wide Open
         1021 => 5,  # Mystical Attuning 
     );
     
