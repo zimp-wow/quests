@@ -644,7 +644,7 @@ sub delete_all_flags {
 
     # Go through each flag and delete it
     foreach my $flag_suffix (keys %flags_to_delete) {
-        my $key = $client->AccountID() . "-" . $flag_suffix;
+        my $key = $client->AccountID() . $flag_suffix;
         quest::delete_data($key);  # Assuming quest::delete_data is the correct method to remove data
     }
 }
