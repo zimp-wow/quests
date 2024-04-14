@@ -357,6 +357,24 @@ sub is_stage_complete {
     return 1;
 }
 
+sub delete_all_progress {
+    my ($client) = @_;
+
+    # Assuming you have a list of all valid stages stored in an array or directly in %VALID_STAGES
+    foreach my $stage (keys %VALID_STAGES) {
+        # Construct the key for the data store
+        my $key = $client->AccountID() . "-progress-flag-$stage";
+        
+        # Delete the data associated with this key
+        quest::delete_data($key);
+        
+        # Optional: Log or inform the operation
+        quest::debug("Deleted progress flag data for stage: $stage");
+    }
+
+    # Notify client if necessary
+    $client->Message(15, "All your progression flags have been reset.");  # Message 15 is typically a yellow text in EQ
+}
 
 sub is_eligible_for_race {
     my $client = shift;
