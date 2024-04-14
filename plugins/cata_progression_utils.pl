@@ -475,6 +475,7 @@ sub UpdateCharMaxLevel
     my $client = shift;
     my $update = 0;
     my $CharMaxLevel = $client->GetBucket("CharMaxLevel");
+    quest::debug("CharMaxlevel: $CharMaxLevel");
 
     if (!$CharMaxLevel) {
 		$CharMaxLevel = 51;
@@ -497,7 +498,7 @@ sub UpdateCharMaxLevel
     }    
 
     if ($updated) {
-        $client->SetBucket("CharMaxlevel", $CharMaxLevel);
+        $client->SetBucket("CharMaxlevel", $CharMaxLevel);        
         plugin::YellowText("Your Level Cap has been set to $CharMaxLevel.");
     }
 }
