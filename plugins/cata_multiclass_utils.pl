@@ -232,7 +232,7 @@ sub GrantGeneralAA {
         1021 => 5,  # Mystical Attuning 
     );
     
-    foreach my $aa_id (keys %{$general_aa}) {
+    foreach my $aa_id (keys %general_aa) {
         quest::debug("attempting: $aa_id");
         if ($client->GetAA($aa_id) < $general_aa{$aa_id}) {
             quest::debug("incrementing: $aa_id");
