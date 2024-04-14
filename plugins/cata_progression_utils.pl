@@ -346,6 +346,11 @@ sub is_stage_complete {
     my %objective_progress = map { lc($_) => $objective_progress{$_} } 
                              plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
 
+                                 # Debug output for the deserialized and lower-cased progress flags
+    foreach my $key (keys %objective_progress) {
+        quest::debug("Progress flag for $key: $objective_progress{$key}");
+    }
+
     # Check prerequisites
     foreach my $prerequisite (@{$STAGE_PREREQUISITES{$stage}}) {
         # Convert prerequisite to lowercase for the comparison
