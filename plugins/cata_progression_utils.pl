@@ -172,6 +172,10 @@ my %STAGE_PREREQUISITES = (
     # ... and so on for each stage
 );
 
+foreach my $key (keys %STAGE_PREREQUISITES) {
+    @{$STAGE_PREREQUISITES{$key}} = map { lc } @{$STAGE_PREREQUISITES{$key}};
+}
+
 # Normalize the objectives to lowercase for case-insensitive handling
 foreach my $stage (keys %STAGE_PREREQUISITES) {
     next if $STAGE_PREREQUISITES{$stage}[0] eq 'Disabled';  # Skip normalization if stage is disabled
@@ -340,7 +344,9 @@ sub is_stage_complete {
 
     # Check prerequisites
     foreach my $prerequisite (@{$STAGE_PREREQUISITES{$stage}}) {
-        my %objective_progress = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
+        # Deserialize and then convert keys to lower-case
+        my %raw_objective_progress = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
+        my %objective_progress = map { lc($_) => $raw_objective_progress{$_} } keys %raw_objective_progress;
 
         unless ($objective_progress{$prerequisite}) {
             quest::debug("Prerequisite not met: $prerequisite");
