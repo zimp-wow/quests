@@ -482,7 +482,6 @@ sub UpdateCharMaxLevel
     my $client = shift;
     my $update = 0;
     my $CharMaxLevel = $client->GetBucket("CharMaxLevel");
-    quest::debug("CharMaxlevel: $CharMaxLevel");
 
     if (!$CharMaxLevel) {
 		$CharMaxLevel = 51;
