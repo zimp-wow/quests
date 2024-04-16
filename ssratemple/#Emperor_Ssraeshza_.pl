@@ -30,7 +30,7 @@ sub EVENT_DEATH_COMPLETE {
   #quest::signalwith(162260,2,0); #EmpCycle
 
   plugin::handle_death($npc, $x, $y, $z, $entity_list);
-  quest::debug($npc->GetCleanName());
+  quest::debug($npc->GetCleanName() . " - "  . plugin::subflag_exists($npc->GetCleanName()) . " - " . plugin::get_subflag_stage($npc->GetCleanName()));
 }
 
 sub EVENT_KILLED_MERIT {
