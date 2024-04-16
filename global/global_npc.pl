@@ -1,5 +1,5 @@
 sub EVENT_SAY {
-    if (quest::get_rule("Custom:MulticlassingEnabled") eq "false") {
+    if (quest::get_rule("Custom:MulticlassingEnabled") ne "false") {
         my $classes = $client->GetClassesBitmask();
         my $player_class_id = $npc->GetClass() - 19;
         my $class_name = quest::getclassname($player_class_id);
@@ -89,7 +89,7 @@ sub EVENT_TICK {
     CHECK_CHARM_STATUS();
     
     # TODO: Gate this behind your owner actually having an eligible pet bag
-    if (quest::get_rule("Custom:MulticlassingEnabled") eq "false") {  
+    if (quest::get_rule("Custom:MulticlassingEnabled") ne "false") {  
         if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
             UPDATE_PET_BAG($npc);
         }
@@ -119,7 +119,7 @@ sub EVENT_SPAWN {
 sub EVENT_ITEM
 {
     # TODO: Gate this behind your owner actually having an eligible pet bag
-    if (quest::get_rule("Custom:MulticlassingEnabled") eq "false") {  
+    if (quest::get_rule("Custom:MulticlassingEnabled") ne "false") {  
         if ($npc->IsPet() and $npc->GetOwner()->IsClient() and not $npc->Charmed()) {
             plugin::YellowText("You must use a Summoner's Syncrosatchel to equip your pet.");
             plugin::return_items(\%itemcount);
@@ -322,7 +322,7 @@ sub GET_BAG_CONTENTS {
 
 sub CHECK_CHARM_STATUS
 {
-    if (quest::get_rule("Custom:MulticlassingEnabled") eq "false") {
+    if (quest::get_rule("Custom:MulticlassingEnabled") ne "false") {
         if ($npc->Charmed() && !plugin::REV($npc, "is_charmed")) {     
             my @lootlist = $npc->GetLootList();
             my @inventory;
