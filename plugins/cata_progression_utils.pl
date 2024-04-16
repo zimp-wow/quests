@@ -693,20 +693,28 @@ sub UpdateRaceClassLocks {
 
 sub handle_death {
     my ($npc, $x, $y, $z, $entity_list) = @_;
-    if (plugin::subflag_exists($npc->GetCleanName())) {        
+
+    my $npc_name = lc($npc->GetCleanName());
+    $npc_name =~ s/^[#\s]+|[#\s]+$//g;
+
+    if (plugin::subflag_exists($npc_name)) {        
         my $flag_mob = quest::spawn2(26000, 0, 0, $x, $y, ($z + 10), 0); # Spawn a flag mob
         my $new_npc = $entity_list->GetNPCByID($flag_mob);       
         
-        $new_npc->SetEntityVariable("Flag-Name", $npc->GetCleanName());
-        $new_npc->SetEntityVariable("Stage-Name", plugin::get_subflag_stage($npc->GetCleanName()));
+        $new_npc->SetEntityVariable("Flag-Name", $npc_name);
+        $new_npc->SetEntityVariable("Stage-Name", plugin::get_subflag_stage($npc_name));
     }    
 }
 
 sub handle_killed_merit {
     my $npc   = shift;
     my $client = shift;
-    if (plugin::subflag_exists($npc->GetCleanName())) {
-        plugin::set_subflag($client, plugin::get_subflag_stage($npc->GetCleanName()), $npc->GetCleanName());
+
+    my $npc_name = lc($npc->GetCleanName());
+    $npc_name =~ s/^[#\s]+|[#\s]+$//g;
+
+    if (plugin::subflag_exists($npc_name)) {
+        plugin::set_subflag($client, plugin::get_subflag_stage($npc_name), $npc_name);
     }
 }
 
