@@ -1,4 +1,5 @@
 sub EVENT_SAY {
+    quest::debug("Flag: " . quest::get_rule("Custom:MulticlassingEnabled"));
     if (quest::get_rule("Custom:MulticlassingEnabled")) {
         my $classes = $client->GetClassesBitmask();
         my $player_class_id = $npc->GetClass() - 19;
