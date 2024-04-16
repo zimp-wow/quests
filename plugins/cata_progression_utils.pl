@@ -242,6 +242,7 @@ sub get_subflag_stage {
 sub subflag_exists {
     my ($search_term) = @_;
     $search_term = lc($search_term);  # Normalize the search term
+    quest::debug("Searching for '$search_term'");
     return $DIRECT_LOOKUP{$search_term} // 0;  # Returns 1 if present, 0 otherwise
 }
 
