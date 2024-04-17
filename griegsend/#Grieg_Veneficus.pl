@@ -1,5 +1,5 @@
 sub EVENT_DEATH_COMPLETE {
-    quest::debug("name: " . $npc->GetCleanName());
+    quest::debug("name: " . $npc->GetCleanName() . " : " . plugin::subflag_exists(npc->GetCleanName()));
     plugin::handle_death($npc, $x, $y, $z, $entity_list);
 }
 
