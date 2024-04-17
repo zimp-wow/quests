@@ -25,7 +25,7 @@ sub EVENT_SAY {
     }
     else {
       quest::say("Would you like to [" . quest::saylink("request") . "] the expedition?");
-	  if($expansion >=20) {
+	  if(plugin::is_stage_complete($client, 'FNagafen')) {
 		quest::say("I also see you are prepared for something more. Would you like to [" . quest::saylink("fabled request") . "] the expedition?");
  	  }
     }
