@@ -612,7 +612,7 @@ sub ConvertFlags {
         }
 
         # Fabled Nagafen
-        if (!is_stage_complete($client, 'FNagafen') && $expansion > 20) {
+        if (!is_stage_complete($client, 'FNagafen') && $expansion >= 20) {
             set_subflag($client, 'FNagafen', 'Quarm', 1);
         }
 
