@@ -25,9 +25,10 @@ sub EVENT_SAY {
     }
     else {
       quest::say("Would you like to [" . quest::saylink("request") . "] the expedition?");
-	  if(plugin::is_stage_complete($client, 'FNagafen')) {
-		quest::say("I also see you are prepared for something more. Would you like to [" . quest::saylink("fabled request") . "] the expedition?");
- 	  }
+      quest::debug(plugin::is_stage_complete($client, 'FNagafen') ? 1 : 0);
+      if(plugin::is_stage_complete($client, 'FNagafen')) {
+        quest::say("I also see you are prepared for something more. Would you like to [" . quest::saylink("fabled request") . "] the expedition?");
+      }
     }
   }
   elsif ($text =~ /fabled request/i && plugin::is_stage_complete($client, 'FNagafen')) {
