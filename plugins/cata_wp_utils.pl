@@ -209,3 +209,27 @@ sub set_zone_data_for_account {
 
     quest::set_data($charKey, $charDataString);
 }
+
+sub update_zone_entry {
+    my ($accountID, $zone_name, $new_zone_data, $suffix) = @_;
+
+    # Fetch the current zone data
+    my $teleport_zones = get_zone_data_for_account($accountID, $suffix);
+    
+    # Check if the zone already exists and if the data is different from the new data
+    if (exists $teleport_zones->{$zone_name}) {
+        # Compare the existing data with the new data
+        my $current_data = $teleport_zones->{$zone_name};
+        if (join('+', @$current_data) eq join('+', @$new_zone_data)) {
+            # The data is the same, return falsey
+            return 0;
+        }
+    }
+
+    # Update the data, whether it is new or a modification of existing data
+    $teleport_zones->{$zone_name} = $new_zone_data;
+    set_zone_data_for_account($accountID, $teleport_zones, $suffix);
+    
+    # Since data was added or changed, return truthy
+    return 1;
+}

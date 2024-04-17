@@ -12,8 +12,13 @@ sub EVENT_ENTER {
     my @tokens = split /:/, $npc->GetLastName();
     my $suffix = $tokens[0];
     my $accountID   = $client->AccountID();
-
     my $TLDesc = "";
+
+    if ($suffix eq "") {
+        quest::debug("Configuration Error.");
+        return;
+    }
+
     if (!$tokens[1] || $tokens[1] eq "") {
         $TLDesc = quest::GetZoneLongNameByID($npc->GetZoneID());
     } else {
@@ -23,14 +28,7 @@ sub EVENT_ENTER {
     # Use $TLDesc as key and structure our data with zone short name, coordinates, and heading
     my $locData = [quest::GetZoneShortName($npc->GetZoneID()), $npc->GetX(), $npc->GetY(), $npc->GetZ(), $npc->GetHeading()];
 
-    if (!plugin::has_zone_entry($accountID, $TLDesc, $suffix) && !($suffix eq "")) {
+    if (plugin::update_zone_entry($accountID, $TLDesc, $locData, $suffix)) {
         quest::message(15, "This place seems familiar. You are sure to remember it later.");
-        quest::ding();
-
-        # Adding the new attunement location to the character's data
-        plugin::add_zone_entry($accountID, $TLDesc, $locData, $suffix);
-
-    } elsif ($suffix eq "") {
-        quest::debug("Configuration Error.");
-    }    
+    }
 }

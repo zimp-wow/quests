@@ -242,6 +242,7 @@ sub get_subflag_stage {
 sub subflag_exists {
     my ($search_term) = @_;
     $search_term = lc($search_term);  # Normalize the search term
+    quest::debug("Searching for '$search_term'");
     return $DIRECT_LOOKUP{$search_term} // 0;  # Returns 1 if present, 0 otherwise
 }
 
@@ -332,7 +333,7 @@ sub is_stage_complete {
     my ($client, $stage, $inform) = @_;
     $inform //= 0; # Set to 0 if not defined
 
-    quest::debug("Checking if stage is complete: $stage");
+    #quest::debug("Checking if stage is complete: $stage");
 
     # Return false if the stage is not valid
     unless (exists $VALID_STAGES{$stage}) {
@@ -340,7 +341,7 @@ sub is_stage_complete {
         return 0;
     }
 
-    quest::debug("Valid Stage: $stage");
+    #quest::debug("Valid Stage: $stage");
 
     # Check prerequisites
     foreach my $prerequisite (@{$STAGE_PREREQUISITES{$stage}}) {
@@ -349,17 +350,17 @@ sub is_stage_complete {
         my %objective_progress = map { lc($_) => $raw_objective_progress{$_} } keys %raw_objective_progress;
 
         unless ($objective_progress{$prerequisite}) {
-            quest::debug("Prerequisite not met: $prerequisite");
+            #quest::debug("Prerequisite not met: $prerequisite");
             if ($inform) {
                  $client->Message(263, "You are not yet ready to experience that memory.");
             }
             return 0;
         }
-        quest::debug("Prerequisite met: $prerequisite");
+        #quest::debug("Prerequisite met: $prerequisite");
     }
 
     # If all prerequisites are met
-    quest::debug("All prerequisites for stage $stage have been met");
+    #quest::debug("All prerequisites for stage $stage have been met");
     return 1;
 }
 
@@ -481,7 +482,6 @@ sub UpdateCharMaxLevel
     my $client = shift;
     my $update = 0;
     my $CharMaxLevel = $client->GetBucket("CharMaxLevel");
-    quest::debug("CharMaxlevel: $CharMaxLevel");
 
     if (!$CharMaxLevel) {
 		$CharMaxLevel = 51;
@@ -692,20 +692,28 @@ sub UpdateRaceClassLocks {
 
 sub handle_death {
     my ($npc, $x, $y, $z, $entity_list) = @_;
-    if (plugin::subflag_exists($npc->GetCleanName())) {        
+
+    my $npc_name = lc($npc->GetCleanName());
+    $npc_name =~ s/^[#\s]+|[#\s]+$//g;
+
+    if (plugin::subflag_exists($npc_name)) {        
         my $flag_mob = quest::spawn2(26000, 0, 0, $x, $y, ($z + 10), 0); # Spawn a flag mob
         my $new_npc = $entity_list->GetNPCByID($flag_mob);       
         
-        $new_npc->SetEntityVariable("Flag-Name", $npc->GetCleanName());
-        $new_npc->SetEntityVariable("Stage-Name", plugin::get_subflag_stage($npc->GetCleanName()));
+        $new_npc->SetEntityVariable("Flag-Name", $npc_name);
+        $new_npc->SetEntityVariable("Stage-Name", plugin::get_subflag_stage($npc_name));
     }    
 }
 
 sub handle_killed_merit {
     my $npc   = shift;
     my $client = shift;
-    if (plugin::subflag_exists($npc->GetCleanName())) {
-        plugin::set_subflag($client, plugin::get_subflag_stage($npc->GetCleanName()), $npc->GetCleanName());
+
+    my $npc_name = lc($npc->GetCleanName());
+    $npc_name =~ s/^[#\s]+|[#\s]+$//g;
+
+    if (plugin::subflag_exists($npc_name)) {
+        plugin::set_subflag($client, plugin::get_subflag_stage($npc_name), $npc_name);
     }
 }
 
