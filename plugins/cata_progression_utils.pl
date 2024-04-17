@@ -164,7 +164,7 @@ my %STAGE_PREREQUISITES = (
     'RoK' => ['Lord Nagafen', 'Lady Vox'],  
     'SoV' => ['Trakanon', 'Gorenaire', 'Severilous', 'Talendor'],
     'SoL' => ['Lord Yelinak', 'Tukaarak the Warder', 'Nanzata the Warder', 'Ventani the Warder', 'Hraashna the Warder', 'Wuoshi', 'Klandicar', 'Zlandicar'],
-    'PoP' => ['Thought Horror Overfiend', 'The Insanity Crawler', 'Greig Veneficus', 'Xerkizh the Creator', 'Emperor Ssraeshza'],
+    'PoP' => ['Thought Horror Overfiend', 'The Insanity Crawler', 'Grieg Veneficus', 'Xerkizh the Creator', 'Emperor Ssraeshza'],
     'GoD' => ['Saryrn'],
     'OoW' => ['Disabled'],
     'DoN' => ['Disabled'],
@@ -592,7 +592,7 @@ sub ConvertFlags {
             }
 
             if ($expansion > 19 || quest::get_data($client->AccountID() . "griegs")) {
-                set_subflag($client, 'PoP', 'Greig Veneficus', 1);
+                set_subflag($client, 'PoP', 'Grieg Veneficus', 1);
             }
 
             if ($expansion > 19 || quest::get_data($client->AccountID() . "ssraone")) {

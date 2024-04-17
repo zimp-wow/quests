@@ -11,7 +11,7 @@ my $stage_key   = "PoP";
 my @target_list = (
     'Thought Horror Overfiend',
     'The Insanity Crawler',
-    'Greig Veneficus',
+    'Grieg Veneficus',
     'Xerkizh the Creator',
     'Emperor Ssraeshza'
 );
