@@ -124,11 +124,11 @@ sub EVENT_ITEM
             plugin::YellowText("You must use a Summoner's Syncrosatchel to equip your pet.");
             plugin::return_items(\%itemcount);
         } else {
-            return 1;
+            return 0;
         }
     }
 
-    return 1;   
+    return 0;   
 }
 
 sub EVENT_DAMAGE_GIVEN 
