@@ -119,14 +119,16 @@ sub EVENT_SPAWN {
 sub EVENT_ITEM
 {
     # TODO: Gate this behind your owner actually having an eligible pet bag
-    if (quest::get_rule("Custom:MulticlassingEnabled") ne "false") {  
-        if ($npc->IsPet() and $npc->GetOwner()->IsClient() and not $npc->Charmed()) {
+    if ($npc->IsPet() and $npc->GetOwner()->IsClient() and not $npc->Charmed()) {
+        if (quest::get_rule("Custom:MulticlassingEnabled") ne "false") {          
             plugin::YellowText("You must use a Summoner's Syncrosatchel to equip your pet.");
             plugin::return_items(\%itemcount);
+        } else {
+            return 1;
         }
     }
 
-    return 1;
+    return 1;   
 }
 
 sub EVENT_DAMAGE_GIVEN 
