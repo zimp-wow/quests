@@ -125,6 +125,8 @@ sub EVENT_ITEM
             plugin::return_items(\%itemcount);
         }
     }
+
+    return;
 }
 
 sub EVENT_DAMAGE_GIVEN 
