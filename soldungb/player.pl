@@ -40,7 +40,7 @@ sub EVENT_ENTERZONE {
 	$bindz = $client->GetBindZ;
 
 	
-	if ($expansion <20){ #Kunark
+	if (!plugin::is_stage_complete($client, 'FNagafen')) {
 		$client->Message(7, "You don't belong here!");
 		$client->MovePC($bind, $bindx, $bindy, $bindz, $bindh);
 	 }
