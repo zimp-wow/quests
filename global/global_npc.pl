@@ -116,21 +116,6 @@ sub EVENT_SPAWN {
     }
 }
 
-sub EVENT_ITEM
-{
-    # TODO: Gate this behind your owner actually having an eligible pet bag
-    if ($npc->IsPet() and $npc->GetOwner()->IsClient() and not $npc->Charmed()) {
-        if (quest::get_rule("Custom:MulticlassingEnabled") ne "false") {          
-            plugin::YellowText("You must use a Summoner's Syncrosatchel to equip your pet.");
-            plugin::return_items(\%itemcount);
-        } else {
-            return 0;
-        }
-    }
-
-    return 0;   
-}
-
 sub EVENT_DAMAGE_GIVEN 
 {
     # Special aggro events for player pets; if they are not taunting then add their owner to any
