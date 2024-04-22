@@ -132,7 +132,7 @@ sub EVENT_DEATH_COMPLETE {
         my $item_id = 7007;
         my $corpse = $entity_list->GetCorpseByID($killed_corpse_id);
 
-        $corpse->AddItem($item_id); # Add the item to the NPC's inventory
+        $corpse->AddItem($item_id, 1); # Add the item to the NPC's inventory
         quest::debug("item should be added " . quest::get_data_remaining("eom_EnhancedLoot"));    
     }
 }
