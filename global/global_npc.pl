@@ -111,7 +111,8 @@ sub EVENT_KILLED_MERIT {
     }
 
     if (quest::get_data("eom_EnhancedLoot")) {
-        $npc->AddItem(7007); # Add the item to the NPC's inventory       
+        $npc->AddItem(7007); # Add the item to the NPC's inventory
+        quest::debug("item should be added");    
     }
 }
 
