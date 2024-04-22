@@ -4,7 +4,7 @@ sub EVENT_SAY {
       quest::emote("laughs");
       quest::say("Oh my, you really don’t remember me do you? I could never forget a comrade in arms! 
                   Hail $name! Let me see that faded writ and I’ll give you something to jog your memory");
-      if (plugin::check_hasitem($client, 18471)) {
+      if (!plugin::check_hasitem($client, 18471)) {
         $client->SummonItem(18471);
         $client->Message(263, "You find a small note in your pocket.");
       }
