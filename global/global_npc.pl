@@ -110,7 +110,7 @@ sub EVENT_KILLED_MERIT {
         }
     }
 
-    if (!$npc->GetEntityVariable("extra_loot") && quest::get_data("eom_EnhancedLoot")) {
+    if (quest::get_data("eom_EnhancedLoot")) {
         $npc->AddItem(7007); # Add the item to the NPC's inventory
         quest::ding(); # Play the 'ding' sound, indicating an item drop or another significant event
         $npc->SetEntityVariable("extra_loot", "1");
