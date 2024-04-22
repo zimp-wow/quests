@@ -81,7 +81,7 @@ function ACMDeath(e)
 end
 
 function ACMTimer(e)
-	if e.timer == "hatchling" then
+	if e.timer == "hatchling" and entity_list:IsMobSpawnedByNpcTypeID(297050) then
 		x = e.self:GetX()
 		y = e.self:GetY()
 		z = e.self:GetZ()
@@ -421,7 +421,7 @@ function ShieldingDeath(e)
 end
 
 function ACHSpawn(e)
-	eq.set_timer("leash", 1);
+	eq.set_timer("leash", 1000);
 end
 
 function ACHDeath(e)
