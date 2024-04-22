@@ -81,7 +81,7 @@ function ACMDeath(e)
 end
 
 function ACMTimer(e)
-	if e.timer == "hatchling" and entity_list:IsMobSpawnedByNpcTypeID(297050) then
+	if e.timer == "hatchling" then
 		x = e.self:GetX()
 		y = e.self:GetY()
 		z = e.self:GetZ()
