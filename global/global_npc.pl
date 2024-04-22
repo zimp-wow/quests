@@ -109,10 +109,30 @@ sub EVENT_KILLED_MERIT {
             }
         }
     }
+}
+
+sub EVENT_DEATH_COMPLETE {
+    quest::debug("killer_id " . $killer_id);
+    quest::debug("killer_damage " . $killer_damage);
+    quest::debug("killer_spell " . $killer_spell);
+    quest::debug("killer_skill " . $killer_skill);
+    quest::debug("killed_entity_id " . $killed_entity_id);
+    quest::debug("combat_start_time " . $combat_start_time);
+    quest::debug("combat_end_time " . $combat_end_time);
+    quest::debug("damage_received " . $damage_received);
+    quest::debug("healing_received " . $healing_received);
+    quest::debug("killed_corpse_id " . $killed_corpse_id);
+    quest::debug("killed_npc_id " . $killed_npc_id);
+    quest::debug("killed_x " . $killed_x);
+    quest::debug("killed_y " . $killed_y);
+    quest::debug("killed_z " . $killed_z);
+    quest::debug("killed_h " . $killed_h);
 
     if (quest::get_data("eom_EnhancedLoot")) {
         my $item_id = 7007;
-        $npc->AddItem($item_id); # Add the item to the NPC's inventory
+        my $corpse = $entity_list->GetCorpseByID($killed_corpse_id);
+
+        $corpse->AddItem($item_id); # Add the item to the NPC's inventory
         quest::debug("item should be added " . quest::get_data_remaining("eom_EnhancedLoot"));    
     }
 }
