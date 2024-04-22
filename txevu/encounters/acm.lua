@@ -480,7 +480,7 @@ function event_encounter_load(e)
 	eq.register_npc_event("acm", Event.spawn, 297191, ShieldingSpawn)
 	eq.register_npc_event("acm", Event.death_complete, 297191, ShieldingDeath)
 
-	eq.register_npc_event("acm", Event.spawn, 297210, ACHSpawn)
-	eq.register_npc_event("acm", Event.timer, 297210, ACHTimer)
-	eq.register_npc_event("acm", Event.death_complete, 297210, ACHDeath)
+	--eq.register_npc_event("acm", Event.spawn, 297210, ACHSpawn)
+	--eq.register_npc_event("acm", Event.timer, 297210, ACHTimer)
+	--eq.register_npc_event("acm", Event.death_complete, 297210, ACHDeath)
 end
