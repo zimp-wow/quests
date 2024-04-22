@@ -199,9 +199,12 @@ sub EVENT_SAY {
             my $timer = quest::get_data_remaining("eom_EnhancedLoot") || 0;
 
             if ($timer) {
-
+                quest::set_data("eom_EnhancedLoot", 1, quest::get_data_remaining("eom_EnhancedLoot") + (4 * 60 * 60));
+                my ($hours, $minutes, $seconds) = convert_seconds(quest::get_data_remaining("eom_EnhancedLoot"));
+                plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to increase the drop rate of upgraded items. This will endure for $hours Hours and $minutes Minutes.");
             } else {
-                quest::set_data("eom_EnhancedLoot", 1, H4);
+                quest::set_data("eom_EnhancedLoot", 20, H4);
+                plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to increase the drop rate of upgraded items. This will endure for 4 Hours.");
             }
 
         } else {
