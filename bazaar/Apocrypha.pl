@@ -109,6 +109,8 @@ sub EVENT_SAY {
 
     elsif ($text=~/exotic payment/i) {
         $response = "In exchange for five [Echo of Memory], I can enchant the entire world! Each should co-exist with over versions of this type of effect, and will last four hours. If the world is already enchanted in this way, purchasing additional enhancement will extend the duration of the current enchantment. Would you like to enhance the [Experience Gain], [Hit Points and Armor Class], [Combat Statistics], [Movement Speed], [Mana Regeneration], [Attack Speed], or [Health Regeneration]? Alternatively, for twenty-five Echoes, I can cast [all of these enchantments]!";
+
+        $response = $response . " For merely twenty-five Echoes, I can [influence the tides of fate] in order to increase the rate that adventurers find rare items in the world!"
     }
 
     elsif ($text=~/experience gain/i) {        
@@ -119,6 +121,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
+
     elsif ($text=~/hit points and armor class/i) {
         my $buff_id = 43003;
         if (ApplyWorldWideBuff($buff_id)) {
@@ -127,6 +130,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
+
     elsif ($text=~/combat statistics/i) {
         my $buff_id = 43004;
         if (ApplyWorldWideBuff($buff_id)) {
@@ -135,6 +139,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
+
     elsif ($text=~/movement speed/i) {
         my $buff_id = 43005;
         if (ApplyWorldWideBuff($buff_id)) {
@@ -143,6 +148,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
+
     elsif ($text=~/mana regeneration/i) {
         my $buff_id = 43006;
         if (ApplyWorldWideBuff($buff_id)) {
@@ -151,6 +157,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
+
     elsif ($text=~/attack speed/i) {
         my $buff_id = 43007;
         if (ApplyWorldWideBuff($buff_id)) {
@@ -159,6 +166,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
+
     elsif ($text=~/health regeneration/i) {
         my $buff_id = 43008;
         if (ApplyWorldWideBuff($buff_id)) {
@@ -167,6 +175,7 @@ sub EVENT_SAY {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
     }
+
     elsif ($text=~/all of these enchantments/i) {
         my $eom_avail = $client->GetAlternateCurrencyValue(6);
         if ($eom_avail >= 25) {
@@ -177,6 +186,24 @@ sub EVENT_SAY {
             }
 
             quest::worldwidesignalclient(1);
+        } else {
+            $response = "You do not have enough [Echo of Memory] to afford that.";
+        }
+    }
+
+    # TODO make this not gross at some point
+    elsif ($text=~/influence the tides of fate/i) {
+        if (plugin::SpendEOM($client, 25)) {
+            $response = "Excellent! Your fellow adventurers will appreciate this!";
+
+            my $timer = quest::get_data_remaining("eom_EnhancedLoot") || 0;
+
+            if ($timer) {
+
+            } else {
+                quest::set_data("eom_EnhancedLoot", 1, H4);
+            }
+
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
