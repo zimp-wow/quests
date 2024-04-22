@@ -1,199 +1,86 @@
 sub EVENT_SAY {
   if ($text=~/hail/i) {
-    quest::emote("laughs");
-    quest::say("Oh my, you really don’t remember me do you? I could never forget a comrade in arms! Hail $name! Let me see that faded writ and I’ll give you something to jog your memory");
-  }
-  if($text=~/denizens of this realm/i){
-    quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. Every quest you endeavor will reward you with Rose Colored or Apocryphal items like I have. Go see Apocrypha toward the back of the main building for his blessing, then use Tearel and his magic map to choose where to begin your adventure! Good luck $name.");
+    if (!$client->GetBucket('newbieRewardBits')) {
+      quest::emote("laughs");
+      quest::say("Oh my, you really don’t remember me do you? I could never forget a comrade in arms! 
+                  Hail $name! Let me see that faded writ and I’ll give you something to jog your memory");
+    } else {
+      quest::emote("laughs");
+      quest::say("I'm so glad to see you again!");
+      RewardItems($client);
     }
+  }  
+  if($text=~/denizens of this realm/i){
+    quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Why not start by choosing your second and third class paths. 
+               To do this, simply talk with the class trainer whose path you wish to follow.
+               Once you have chosen, feel free to come back to me for items befitting your new choices. 
+               You may return to wherever you were when you opened your portal here by simply leaving the bazaar. 
+               Conversely, you may return to any place which you have attuned by speaking with Tearel! Good luck $name.");
+  }
 }
 
-
 sub EVENT_ITEM {
-my $PCRace = $client->GetRace();
-my $PCClass = $client->GetClass();
-  if(plugin::check_handin(\%itemcount, 18471 => 1)){
-    if($PCClass == 1){ #War
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2009998); #Apocryphal Short Sword
-    quest::summonfixeditem(2013514); #Apocryphal Dusty Tunic
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
+    if (plugin::check_handin(\%itemcount, 18471 => 1)) {
+      quest::debug("TEST");
+      RewardItems($client);
+      quest::givecash(0,6,2,0);
+    } else {
+        quest::say("I don't need this item, $name. Perhaps you should keep it.");
+    }  
+    # Return items that are not used
+    plugin::return_items(\%itemcount);
+}
+
+sub RewardItems {
+    my ($client) = @_;
+
+    my %classRewards = (
+        1     => { items => [17423, 89998, 813514], cash => 3 }, # Warrior, 3 silver
+        2     => { items => [17423, 89999, 813542], cash => 3 }, # Cleric, 3 silver
+        4     => { items => [17423, 855623, 813514], cash => 3 }, # Paladin, 3 silver
+        8     => { items => [17423, 89998, 88009, 88500, 88500, 813514], cash => 3 }, # Ranger, 3 silver
+        16    => { items => [17423, 855623, 813514, 199999], cash => 3 }, # Shadow Knight, 3 silver
+        32    => { items => [17423, 89999, 813542, 199999], cash => 3 }, # Druid, 3 silver
+        64    => { items => [17423, 867133, 813514], cash => 3 }, # Monk, 3 silver
+        128   => { items => [17423, 89998, 813514, 9992, 15703, 199999], cash => 3 }, # Bard, 3 silver
+        256   => { items => [17423, 89997, 813514, 44531], cash => 3 }, # Rogue, 3 silver
+        512   => { items => [17423, 89999, 813542, 199999], cash => 3 }, # Shaman, 3 silver
+        1024  => { items => [17423, 86012, 813566, 199999], cash => 3 }, # Necromancer, 3 silver
+        2048  => { items => [17423, 86012, 813566], cash => 3 }, # Wizard, 3 silver
+        4096  => { items => [17423, 86012, 813566, 199999], cash => 3 }, # Magician, 3 silver
+        8192  => { items => [17423, 86012, 813566, 199999], cash => 3 }, # Enchanter, 3 silver
+        16384 => { items => [17423, 867133, 813514, 199999], cash => 3 }, # Beastlord, 3 silver
+        32768 => { items => [17423, 855623, 813514], cash => 3 }, # Berserker, 3 silver
+    );
+
+    foreach my $class (keys %classRewards) {
+      foreach my $index (0 .. $#{$classRewards{$class}->{items}}) {
+        if ($classRewards{$class}->{items}[$index] >= 80000 && $classRewards{$class}->{items}[$index] <= 89999) {
+          $classRewards{$class}->{items}[$index] = $classRewards{$class}->{items}[$index] - 80000 + 2000000;
+        } elsif ($classRewards{$class}->{items}[$index] >= 800000 && $classRewards{$class}->{items}[$index] <= 899999) {
+          $classRewards{$class}->{items}[$index] = $classRewards{$class}->{items}[$index] - 800000 + 2000000;
+        }
+      }
     }
 
-    if($PCClass == 2){ #Clr
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2009999); #Apocryphal Club
-    quest::summonfixeditem(2013542); #Apocryphal Faded Blue Robe
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
+    my $playerClassBitmask = $client->GetClassesBitmask();
+    my $rewardedClassesBitmask = $client->GetBucket('newbieRewardBits') || 0;
+    my $rewardGiven = 0;
+
+    foreach my $classBitmask (keys %classRewards) {
+        if (($playerClassBitmask & $classBitmask) && !($rewardedClassesBitmask & $classBitmask)) { 
+            # Summon the fixed items for the class
+            foreach my $item (@{$classRewards{$classBitmask}->{items}}) {
+                $client->SummonItem($item);
+            }
+            
+            $rewardedClassesBitmask |= $classBitmask; 
+            $rewardGiven = 1;
+        }
     }
 
-    if($PCClass == 3){ #Pal
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2055623); #Apocryphal Dull Axe
-    quest::summonfixeditem(2013514); #Apocryphal Dusty Tunic
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
+    if ($rewardGiven) {
+        $client->SetBucket('newbieRewardBits', $rewardedClassesBitmask);
+        quest::say("Hmmm… Does this refresh your memory at all? I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
     }
-    }
-
-    if($PCClass == 4){ #Rng
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2009998); #Apocryphal Short Sword
-    quest::summonfixeditem(2008009); #Apocryphal Short Bow* 
-    quest::summonfixeditem(2008500); #Apocryphal Class 1 Wood Point Arrow
-    quest::summonfixeditem(2008500); #Apocryphal Class 1 Wood Point Arrow
-    quest::summonfixeditem(2013514); #Apocryphal Dusty Tunic
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-
-    if($PCClass == 5){ #Sk
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2055623); #Apocryphal Dull Axe
-    quest::summonfixeditem(2013514); #Apocryphal Dusty Tunic
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-
-    if($PCClass == 6){ #Dru
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2009999); #Apocryphal Club
-    quest::summonfixeditem(2013542); #Apocryphal Faded Blue Robe
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-
-    if($PCClass == 7){ #Mnk
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2067133); #Apocryphal Iron Tekko*
-    quest::summonfixeditem(2013514); #Apocryphal Dusty Tunic*
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-    
-    if($PCClass == 8){ #Bard
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2009998); #Apocryphal Short Sword
-    quest::summonfixeditem(2013514); #Apocryphal Dusty Tunic
-    quest::summonfixeditem(9992); #Chant of Battle
-    quest::summonfixeditem(15703);#Chords of Dissonance
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-
-    if($PCClass == 9){ #Rogue
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2009997); #Apocryphal Dagger
-    quest::summonfixeditem(213514); #Apocryphal Dusty Tunic
-    quest::summonfixeditem(44531); #Bite of the Shissar I
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-
-    if($PCClass == 10){ #Shm
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2009999); #Apocryphal Club
-    quest::summonfixeditem(2013542); #Apocryphal Faded Blue Robe
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-
-    if($PCClass == 11){ #Nec
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2006012); #Apocryphal Worn Great Staff*
-    quest::summonfixeditem(2013566); #Apocryphal Blood Spotted Robe*
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-
-    if($PCClass == 12){ #Wiz
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2006012); #Apocryphal Worn Great Staff*
-    quest::summonfixeditem(2013566); #Apocryphal Blood Spotted Robe*
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-
-    if($PCClass == 13){ #Mag
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2006012); #Apocryphal Worn Great Staff*
-    quest::summonfixeditem(2013566); #Apocryphal Blood Spotted Robe*
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-    
-    if($PCClass == 14){ #Enc
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2006012); #Apocryphal Worn Great Staff*
-    quest::summonfixeditem(2013566); #Apocryphal Blood Spotted Robe*
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-
-    if($PCClass == 15){ #Bl
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2067133); #Apocryphal Iron Tekko*
-    quest::summonfixeditem(2013514); #Apocryphal Dusty Tunic*
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-
-    if($PCClass == 16){ #Zerker
-    quest::summonfixeditem(17423); #Adventurer's Pack
-    quest::summonfixeditem(2055623); #Apocryphal Dull Axe
-    quest::summonfixeditem(2013514); #Apocryphal Dusty Tunic
-    quest::givecash(0, 0, 3, 0);
-    quest::say("Hmmm… Does this refresh your memory at all?. I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
-    if($text=~/denizens of this realm/i){
-    #quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Just do what feels natural and try to remember who needs your help and whose demise you must bring about. When you’ve regained your bearings, there are many important memories to be re-lived in the Temple of Sol Ro. Good luck $name.");
-    }
-    }
-  plugin::returnUnusedItems();
-  }
 }
