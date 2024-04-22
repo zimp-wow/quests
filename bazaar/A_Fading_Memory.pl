@@ -39,43 +39,40 @@ sub RewardItems {
     my ($client) = @_;
 
     my %classRewards = (
-        1     => { items => [17423, 89998, 813514], cash => 3 }, # Warrior, 3 silver
-        2     => { items => [17423, 89999, 813542], cash => 3 }, # Cleric, 3 silver
-        4     => { items => [17423, 855623, 813514], cash => 3 }, # Paladin, 3 silver
-        8     => { items => [17423, 89998, 88009, 88500, 88500, 813514], cash => 3 }, # Ranger, 3 silver
-        16    => { items => [17423, 855623, 813514, 199999], cash => 3 }, # Shadow Knight, 3 silver
-        32    => { items => [17423, 89999, 813542, 199999], cash => 3 }, # Druid, 3 silver
-        64    => { items => [17423, 867133, 813514], cash => 3 }, # Monk, 3 silver
-        128   => { items => [17423, 89998, 813514, 9992, 15703, 199999], cash => 3 }, # Bard, 3 silver
-        256   => { items => [17423, 89997, 813514, 44531], cash => 3 }, # Rogue, 3 silver
-        512   => { items => [17423, 89999, 813542, 199999], cash => 3 }, # Shaman, 3 silver
-        1024  => { items => [17423, 86012, 813566, 199999], cash => 3 }, # Necromancer, 3 silver
-        2048  => { items => [17423, 86012, 813566], cash => 3 }, # Wizard, 3 silver
-        4096  => { items => [17423, 86012, 813566, 199999], cash => 3 }, # Magician, 3 silver
-        8192  => { items => [17423, 86012, 813566, 199999], cash => 3 }, # Enchanter, 3 silver
-        16384 => { items => [17423, 867133, 813514, 199999], cash => 3 }, # Beastlord, 3 silver
-        32768 => { items => [17423, 855623, 813514], cash => 3 }, # Berserker, 3 silver
+        1     => { items => [2009998, 2013514], cash => 3 }, # Warrior, 3 silver
+        2     => { items => [2009999, 2013542], cash => 3 }, # Cleric, 3 silver
+        4     => { items => [2055623, 2013514], cash => 3 }, # Paladin, 3 silver
+        8     => { items => [2009998, 2008009, 2008500, 2008500, 2013514], cash => 3 }, # Ranger, 3 silver
+        16    => { items => [2055623, 2013514], cash => 3 }, # Shadow Knight, 3 silver
+        32    => { items => [2009999, 2013542], cash => 3 }, # Druid, 3 silver
+        64    => { items => [2067133, 2013514], cash => 3 }, # Monk, 3 silver
+        128   => { items => [2009998, 2013514, 9992, 15703], cash => 3 }, # Bard, 3 silver
+        256   => { items => [2009997, 213514, 44531], cash => 3 }, # Rogue, 3 silver
+        512   => { items => [2009999, 2013542], cash => 3 }, # Shaman, 3 silver
+        1024  => { items => [2006012, 2013566, 199999], cash => 3 }, # Necromancer, 3 silver
+        2048  => { items => [2006012, 2013566], cash => 3 }, # Wizard, 3 silver
+        4096  => { items => [2006012, 2013566, 199999], cash => 3 }, # Magician, 3 silver
+        8192  => { items => [2006012, 2013566, 199999], cash => 3 }, # Enchanter, 3 silver
+        16384 => { items => [2067133, 2013514, 199999], cash => 3 }, # Beastlord, 3 silver
+        32768 => { items => [2055623, 2013514], cash => 3 }, # Berserker, 3 silver
     );
-
-    foreach my $class (keys %classRewards) {
-      foreach my $index (0 .. $#{$classRewards{$class}->{items}}) {
-        if ($classRewards{$class}->{items}[$index] >= 80000 && $classRewards{$class}->{items}[$index] <= 89999) {
-          $classRewards{$class}->{items}[$index] = $classRewards{$class}->{items}[$index] - 80000 + 2000000;
-        } elsif ($classRewards{$class}->{items}[$index] >= 800000 && $classRewards{$class}->{items}[$index] <= 899999) {
-          $classRewards{$class}->{items}[$index] = $classRewards{$class}->{items}[$index] - 800000 + 2000000;
-        }
-      }
-    }
 
     my $playerClassBitmask = $client->GetClassesBitmask();
     my $rewardedClassesBitmask = $client->GetBucket('newbieRewardBits') || 0;
     my $rewardGiven = 0;
 
+    if ($rewardedClassesBitmask == 0) {
+      $client->SummonFixedItem(17423);
+    }
+
     foreach my $classBitmask (keys %classRewards) {
         if (($playerClassBitmask & $classBitmask) && !($rewardedClassesBitmask & $classBitmask)) { 
             # Summon the fixed items for the class
             foreach my $item (@{$classRewards{$classBitmask}->{items}}) {
-                $client->SummonItem($item);
+                # Do not summon the item if it's item ID 199999 and multiclassing is not enabled
+                if (!($item == 199999 && quest::get_rule("Custom:MulticlassingEnabled") eq "false")) {
+                    $client->SummonFixedItem($item);
+                }
             }
             
             $rewardedClassesBitmask |= $classBitmask; 
