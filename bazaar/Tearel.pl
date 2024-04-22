@@ -2,8 +2,6 @@ sub EVENT_SPAWN {
     $x = $npc->GetX();
     $y = $npc->GetY();
     $z = $npc->GetZ();
-
-    quest::set_proximity($x - 20, $x + 20, $y - 20, $y + 20);
 }
 
 sub EVENT_SAY {
@@ -143,23 +141,6 @@ sub EVENT_ITEM {
 
     plugin::return_items(\%itemcount); # Ensure items are returned if no matching case is found
 }
-
-sub EVENT_ENTER {
-    my %destination_messages = %{ plugin::get_portal_destinations() };
-
-    quest::debug("Trying proximity notification.");
-    
-    my $pc = $client;
-    if ($pc) {
-        my $destination_id = quest::get_data("magic_map_target");
-        if ($destination_id && exists $destination_messages{$destination_id}) {
-            # Extract the destination name using the saved ID
-            my $destination_name = $destination_messages{$destination_id}[0];
-            $pc->Message(0, $npc->GetCleanName() . " says 'The Magic Map is currently aligned to " . $destination_name . ".'");
-        }
-    }
-}
-
 
 sub get_cost_for_level {
   my $client = plugin::val('$client');
