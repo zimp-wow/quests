@@ -120,3 +120,15 @@ sub EVENT_COMBINE_SUCCESS {
         $client->Message(1,"Success");
     }
 }
+
+sub EVENT_SAY {
+	if ($client->GetGM()) {
+		if ($text=~/enable seasonal/i) {
+			$client->SetBucket("SeasonalCharacter", 1);
+			$client->Message(15, "Seasonal Enabled");
+		} elsif ($text=~/disable seasonal/i) {
+			$client->SetBucket("SeasonalCharacter", 0);
+			$client->Message(15, "Seasonal Disabled");
+		}
+	}
+}
