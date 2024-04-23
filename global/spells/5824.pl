@@ -36,14 +36,18 @@ sub EVENT_SPELL_EFFECT_CLIENT {
             $client->DeleteBucket("Return-H");
             $client->DeleteBucket("Return-Zone");
             $client->DeleteBucket("Return-Instance");            
-
-            $client->MovePCInstance($ReturnZone, $ReturnInstance, $ReturnX, $ReturnY, $ReturnZ, $ReturnH);
-            return 0;
         } else {            
             quest::debug("Returning to default location");
-            plugin::move_startzone();
-            return 0;
+
+            $ReturnX = $client->GetBindX();
+            $ReturnY = $client->GetBindY();
+            $ReturnZ = $client->GetBindZ();
+            $ReturnH = $client->GetBindHeading();
+            $ReturnZone = $client->GetBindZoneID();
+            $ReturnInstance = 0;          
         }
+
+        $client->MovePCInstance($ReturnZone, $ReturnInstance, $ReturnX, $ReturnY, $ReturnZ, $ReturnH);
     }
 }
 
