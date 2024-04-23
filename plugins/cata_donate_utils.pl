@@ -61,7 +61,6 @@ sub EOMLink {
 sub ApplyWorldWideBuff {
     my $buff_id = shift;
     my $cost = shift || 5;
-    my $eom_avail = $client->GetAlternateCurrencyValue(6);
 
     if (!defined($buff_id)) {
         quest::debug("ERROR: NO VALID BUFF ID IN ApplyWorldWideBuff")
