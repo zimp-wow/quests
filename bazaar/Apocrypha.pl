@@ -146,7 +146,7 @@ sub EVENT_SAY {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
             $client->SetAlternateCurrencyValue(6, $eom_avail - 25);
             for my $value (43002 .. 43008) {
-                ApplyWorldWideBuff($value, 0);                
+                plugin::ApplyWorldWideBuff($value, 0);                
             }
 
             quest::worldwidesignalclient(1);
