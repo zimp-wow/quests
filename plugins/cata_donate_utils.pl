@@ -91,6 +91,8 @@ sub ApplyWorldWideBuff {
         );
         my $buff_type = $buff_types{$buff_id} // "Unknown Buff";  # Fallback for unknown buff IDs
 
+        if ($cost == 0) { $cost = 1 };
+
         if (quest::get_data("eom_$buff_id")) {            
             quest::set_data("eom_$buff_id", $cost, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));
             my ($hours, $minutes, $seconds) = plugin::convert_seconds(quest::get_data_remaining("eom_$buff_id"));
