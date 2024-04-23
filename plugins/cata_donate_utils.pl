@@ -70,7 +70,7 @@ sub EOMLink {
 
 sub ApplyWorldWideBuff {
     my $buff_id = shift;
-    my $cost = shift || 5;
+    my $cost = shift || 0;
 
     my $client = plugin::val('$client');
 
@@ -92,11 +92,11 @@ sub ApplyWorldWideBuff {
         my $buff_type = $buff_types{$buff_id} // "Unknown Buff";  # Fallback for unknown buff IDs
 
         if (quest::get_data("eom_$buff_id")) {            
-            quest::set_data("eom_$buff_id", 25, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));
+            quest::set_data("eom_$buff_id", $cost, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));
             my ($hours, $minutes, $seconds) = plugin::convert_seconds(quest::get_data_remaining("eom_$buff_id"));
             plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to extend your enhanced $buff_type. This buff will endure for $hours Hours and $minutes Minutes.");
         } else {
-            quest::set_data("eom_$buff_id", 25, H4);
+            quest::set_data("eom_$buff_id", $cost, H4);
             plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to enhance your $buff_type. This buff will endure for 4 Hours.");
         }
         

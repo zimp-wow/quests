@@ -90,6 +90,7 @@ sub EVENT_SAY {
     my $response = "";
     my $clientName = $client->GetCleanName();
     my $buff_id = 0;
+    my $cost = 5;
 
     if ($text=~/hail/i) {   
         $response = "Hail, Adventurer. I seek to empower your ilk for my own profit. For a [modest fee], I will enhance the power of your group for a time. In exchange for more [exotic payment], I will enhance the power of all adventurers in the world.";
@@ -135,16 +136,10 @@ sub EVENT_SAY {
     elsif ($text=~/health regeneration/i) {
         $buff_id = 43008;
     }
-    elsif ($text=~/influence the tides of fate/i) {
-        #Echo of Luck
-        $buff_id = 17779;     
-    }
 
     elsif ($text=~/all of these enchantments/i) {
-        my $eom_avail = $client->GetAlternateCurrencyValue(6);
-        if ($eom_avail >= 25) {
-            $response = "Excellent! Your fellow adventurers will appreciate this!";
-            $client->SetAlternateCurrencyValue(6, $eom_avail - 25);
+        if (plugin::SpendEOM($client, 25)) {
+            $response = "Excellent! Your fellow adventurers will appreciate this!";            
             for my $value (43002 .. 43008) {
                 plugin::ApplyWorldWideBuff($value, 0);                
             }
@@ -155,6 +150,12 @@ sub EVENT_SAY {
         }
     }
 
+    elsif ($text=~/influence the tides of fate/i) {
+        #Echo of Luck
+        $buff_id = 17779;
+        $cost = 25;
+    }
+
     elsif ($text=~/buffs/i) {        
         handle_buff_for_level();
     }
@@ -163,7 +164,7 @@ sub EVENT_SAY {
         handle_buff_for_level(2, 3);
     }
 
-    if ($buff_id) {
+    if ($buff_id && plugin::SpendEOM($client, $cost)) {
         if (plugin::ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
         } else {
