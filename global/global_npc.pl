@@ -111,8 +111,8 @@ sub EVENT_DEATH_COMPLETE {
             }
         }
     }
-
-    if (quest::get_data("eom_17779")) {
+    #1
+    if (1) {
         my @lootlist = $corpse->GetLootList();
         foreach my $item (@lootlist) {
             quest::debug($item);           
