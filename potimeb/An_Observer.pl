@@ -9,7 +9,7 @@ sub EVENT_SAY {
             quest::say("I have been watching you... since the great before...");
             quest::emote("An Observer beams a smile at you.");
             quest::say("Did you know? Your great deeds are [" . quest::saylink("fabled") . "] even among my kind.");
-            set_subflag($client, 'FNagafen', 'Quarm', 1);
+            plugin::set_subflag($client, 'FNagafen', 'Quarm', 1);
         } else {
             quest::say("Did you know? Your great deeds are [" . quest::saylink("fabled") . "] even among my kind.");
         }
