@@ -85,6 +85,7 @@ sub EVENT_SAY {
 }
 
 sub EVENT_DEATH_COMPLETE {
+    quest::debug("EVENT_DEATH_COMPLETE");
     my $corpse = $entity_list->GetCorpseByID($killed_corpse_id);
     
     my %item_drops = (
@@ -111,6 +112,7 @@ sub EVENT_DEATH_COMPLETE {
             }
         }
     }
+
     #1
     if (1) {
         my @lootlist = $corpse->GetLootList();
