@@ -92,10 +92,11 @@ function Client:Class()
 	end
 end
 
---function Client:HasClass(classID)
---   	local bitmask = self:GetClassesBitmask()
---	return ((bitmask & (1 << (classID - 1))) ~= 0)
---end
+function Client:HasClass(classID)
+	local bit = require("bit")
+    local bitmask = self:GetClassesBitmask()
+    return (bit.band(bitmask, bit.lshift(1, classID - 1)) ~= 0)
+end
 
 function Client:Race()
 	local race = self:GetRace();
