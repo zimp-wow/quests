@@ -111,9 +111,6 @@ sub EVENT_DEATH_COMPLETE {
             }
         }
     }
-
-    my @lootlist = $corpse->GetLootList();
-    for
 }
 
 sub EVENT_TICK {    
