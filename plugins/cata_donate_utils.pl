@@ -4,14 +4,14 @@ my $eom_log = "total-eom-spend";
 
 sub CheckWorldWideBuffs {
     my $client = plugin::val('$client');
-    _CheckWorldWideBuffs($client);
+    DoCheckWorldWideBuffs($client);
 
     if ($client->GetPet()) {
-        _CheckWorldWideBuffs($client->GetPet());
+        DoCheckWorldWideBuffs($client->GetPet());
     }
 }
 
-sub _CheckWorldWideBuffs {
+sub DoCheckWorldWideBuffs {
     my $target = shift;
     if($target && $target->IsClient() || ($target->IsPet() && $target->HasOwner() && $target->GetOwner()->IsClient())) {
         for my $spell_id (43002..43008, 17779) {
