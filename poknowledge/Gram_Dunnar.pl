@@ -16,8 +16,8 @@ sub EVENT_SAY
 
 		for my $classID (1..16) {        
 			if (plugin::HasClass($classID, $client)) {
-				my $itemId = 35000 + $classID;
-				$client->SummonItem($itemId);
+				my $itemId = 2035000 + $classID;
+				$client->SummonFixedItem($itemId);
 			}
 		}
 	}
