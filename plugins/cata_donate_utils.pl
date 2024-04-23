@@ -62,6 +62,8 @@ sub ApplyWorldWideBuff {
     my $buff_id = shift;
     my $cost = shift || 5;
 
+    my $client = plugin::val('$client');
+
     if (!defined($buff_id)) {
         quest::debug("ERROR: NO VALID BUFF ID IN ApplyWorldWideBuff")
     }
