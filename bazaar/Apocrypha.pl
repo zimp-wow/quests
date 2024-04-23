@@ -163,7 +163,7 @@ sub EVENT_SAY {
         handle_buff_for_level(2, 3);
     }
 
-    if ($buff_id && !$text=~/all of these enchantments/i) {
+    if ($buff_id) {
         if (plugin::ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
         } else {
