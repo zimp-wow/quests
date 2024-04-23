@@ -70,22 +70,17 @@ sub HasMeleeClass {
 }
 
 sub HasClass {
-    my $class = shift;
+    my $classID = shift;
     my $client = shift || plugin::val('$client');
-    my %class_map = GetClassMap();  # Get the full class map
     my $class_bits = $client->GetClassesBitmask();
 
-    # Iterate through each possible class ID
-    foreach my $class_id (keys %class_map) {
-        # Check if the class bit is set in the bitmask and that the class matches the check we're checking
-        if ($class_bits & (1 << ($class_id - 1)) && $class_map{$class_id} == $class) {
-            # Check if the class matches the provided class
-            return 1
-        }
+    # Check if the bit corresponding to the class ID is set in the bitmask
+    # Shift 1 left by (classID - 1) positions to create the bitmask for the specific class
+    if ($class_bits & (1 << ($classID - 1))) {
+        return 1;  # True, class ID is present
+    } else {
+        return 0;  # False, class ID is not present
     }
-
-    # Return 0 if the class isn't in there
-    return 0;
 }
 
 sub AddClass {
