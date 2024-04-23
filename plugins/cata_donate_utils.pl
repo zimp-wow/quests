@@ -17,7 +17,7 @@ sub DoCheckWorldWideBuffs {
         for my $spell_id (43002..43008, 17779) {
             my $data = quest::get_data("eom_$spell_id");
 
-            if ($data && ) {               
+            if ($data) {               
                 $target->ApplySpellBuff($spell_id, quest::get_data_remaining("eom_$spell_id")/6);                
             } else {
                 $target->BuffFadeBySpellID($spell_id);
@@ -44,6 +44,7 @@ sub SpendEOM {
         }
         return 1;
     }
+
     return 0;
 }
 
