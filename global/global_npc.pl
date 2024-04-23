@@ -139,8 +139,7 @@ sub EVENT_SPELL_FADE {
 sub EVENT_SPAWN {
     if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
         UPDATE_PET_BAG($npc);
-        CHECK_CHARM_STATUS(); 
-        plugin::CheckWorldWideBuffs($npc);       
+        CHECK_CHARM_STATUS();               
     }
 }
 
@@ -373,5 +372,4 @@ sub CHECK_CHARM_STATUS
             plugin::SEV($npc, "is_charmed", "");
         }
     }
-    plugin::CheckWorldWideBuffs($npc);
 }
