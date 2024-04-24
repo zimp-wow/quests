@@ -87,7 +87,7 @@ sub EVENT_SAY {
         if ($raid) {
           for($count = 0; $count < 72; $count++) {
             my $cur = $raid->GetMember($count);
-            if($cur && $cur->IsClient()) {
+            if($cur && $cur->IsClient() && $cur != $client) {
               $cur->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
             }            
           }
@@ -95,9 +95,9 @@ sub EVENT_SAY {
 
         if ($group) {
           for ($i = 0; $i < $client->GetGroup(); $i++) {
-            $member = $group->GetMember($i);
-            if ($member && $member->IsClient()) {
-              $member->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
+            $cur = $group->GetMember($i);
+            if ($cur && $cur->IsClient() && $cur != $client) {
+              $cur->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
             }
           }
         }
