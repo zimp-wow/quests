@@ -85,23 +85,13 @@ sub EVENT_SAY {
         my $group = $client->GetGroup();
 
         if ($raid) {
-          for($count = 0; $count < 72; $count++) {
-            my $cur = $raid->GetMember($count);
-            if($cur && $cur->IsClient() && $cur != $client) {
-              $cur->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
-            }            
-          }
+          $client->MoveZoneRaid($wp_id, $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
         }
 
         if ($group) {
-          for ($i = 0; $i < $client->GetGroup(); $i++) {
-            $cur = $group->GetMember($i);
-            if ($cur && $cur->IsClient() && $cur != $client) {
-              $cur->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
-            }
-          }
+          $client->MoveZoneGroup($wp_id, $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
         }
-      } 
+      }
       $client->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
     } else {
       quest::say("I'm sorry, but you don't have enough platinum to pay for this transport.");
