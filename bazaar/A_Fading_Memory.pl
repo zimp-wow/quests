@@ -13,13 +13,6 @@ sub EVENT_SAY {
       quest::say("I'm so glad to see you again!");
       RewardItems($client);
     }
-  }  
-  if($text=~/denizens of this realm/i){
-    quest::say("Hmmm I don’t want to risk sending you into shock or an existential crisis. Why not start by choosing your second and third class paths. 
-               To do this, simply talk with the class trainer whose path you wish to follow.
-               Once you have chosen, feel free to come back to me for items befitting your new choices. 
-               You may return to wherever you were when you opened your portal here by simply leaving the bazaar. 
-               Conversely, you may return to any place which you have attuned by speaking with Tearel! Good luck $name.");
   }
 }
 
@@ -82,6 +75,6 @@ sub RewardItems {
 
     if ($rewardGiven) {
         $client->SetBucket('newbieRewardBits', $rewardedClassesBitmask);
-        quest::say("Hmmm… Does this refresh your memory at all? I think you’ll find that if you look around here long enough, things will seem more and more like you remember. You see, you may have forgotten how strong you are, but the [denizens of this realm] could never.");
+        quest::say("Hmmm… Does this refresh your memory at all? I think you’ll find that if you look around here long enough, things will seem more and more like you remember.");
     }
 }
