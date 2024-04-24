@@ -95,7 +95,7 @@ sub EVENT_SAY {
 
         if ($group) {
           for ($i = 0; $i < $client->GetGroup(); $i++) {
-            $member = $client_group->GetMember($i);
+            $member = $group->GetMember($i);
             if ($member && $member->IsClient()) {
               $member->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
             }
