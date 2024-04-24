@@ -71,6 +71,76 @@ my %waypoints = (
     'txevu'         => ["Txevu, Lair of the Elite", 7, -316, -20, -420, 430],
 );
 
+sub AwardBonusUnlocks {
+    my $client = plugin::val('$client');
+    my $eligible = quest::get_data($client->AccountID() . "-TL-Account-A") ||
+                   quest::get_data($client->AccountID() . "-TL-Account-O") ||
+                   quest::get_data($client->AccountID() . "-TL-Account-F") ||
+                   quest::get_data($client->AccountID() . "-TL-Account-K") ||
+                   quest::get_data($client->AccountID() . "-TL-Account-V");
+
+    if ($eligible && !$client->IsSeasonal() && !$client->IsHardcore()) {
+        AddWaypoint('qeynos2');
+        AddWaypoint('qrg');
+        AddWaypoint('freportw');
+        AddWaypoint('rivervale');
+        AddWaypoint('qey2hh1');
+        AddWaypoint('northkarana');
+        AddWaypoint('southkarana');
+        AddWaypoint('eastkarana');
+        AddWaypoint('blackburrow');
+        AddWaypoint('commons');
+        AddWaypoint('erudnext');
+        AddWaypoint('lavastorm');
+        AddWaypoint('halas');
+        AddWaypoint('oasis');
+        AddWaypoint('hole');
+        AddWaypoint('neriakb');
+        AddWaypoint('feerrott');
+        AddWaypoint('cazicthule');
+        AddWaypoint('oggok');
+        AddWaypoint('grobb');
+        AddWaypoint('gfaydark');
+        AddWaypoint('akanon');
+        AddWaypoint('mistmoore');
+        AddWaypoint('kaladima');
+        AddWaypoint('felwithea');
+        AddWaypoint('oot');
+        AddWaypoint('cauldron');
+        AddWaypoint('paineel');
+        AddWaypoint('fieldofbone');
+        AddWaypoint('firiona');
+        AddWaypoint('lakeofillomen');
+        AddWaypoint('dreadlands');
+        AddWaypoint('karnor');
+        AddWaypoint('cityofmist');
+        AddWaypoint('skyfire');
+        AddWaypoint('overthere');
+        AddWaypoint('trakanon');
+        AddWaypoint('cabeast');
+        AddWaypoint('iceclad');
+        AddWaypoint('eastwastes');
+        AddWaypoint('cobaltscar');
+        AddWaypoint('wakening');
+        AddWaypoint('westwastes');
+        AddWaypoint('sharvahl');
+        AddWaypoint('ssratemple');
+        AddWaypoint('dawnshroud');
+        AddWaypoint('umbral');
+        AddWaypoint('hateplaneb');
+        AddWaypoint('airplane');
+        AddWaypoint('fearplane');
+        AddWaypoint('poknowledge');
+        AddWaypoint('potranquility');
+        AddWaypoint('gunthak');
+        AddWaypoint('natimbi');
+        AddWaypoint('barindu');
+        AddWaypoint('kodtaz');
+        AddWaypoint('qvic');
+        AddWaypoint('txevu');
+    }
+}
+
 sub AddDefaultAttunement {
     my $client = shift || plugin::val('$client');
     if ($client && !($client->IsSeasonal() || $client->IsHardcore())) {
@@ -90,10 +160,6 @@ sub AddDefaultAttunement {
         AddWaypoint('sharvahl');
         AddWaypoint('paineel');
     }
-}
-
-sub AwardBonusUnlocks {
-    
 }
 
 sub GetContinents {
@@ -147,8 +213,8 @@ sub AddWaypoint {
 
 
 sub GetWaypoints {
-    my $continent = shift || -1;  # Defaults to -1 if no argument is given
-    my $client = shift || plugin::val('$client');
+    my $continent = shift;
+    my $client = shift;
     my %data;
     my %return;
     

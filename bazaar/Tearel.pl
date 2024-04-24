@@ -2,8 +2,7 @@ sub EVENT_SAY {
   my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled");  
   my $eom_available   = $client->GetAlternateCurrencyValue(6);
   my $cost            = 1000 * get_cost_for_level();
-
-  my %waypoints       = plugin::GetWaypoints($client);
+  my %waypoints       = plugin::GetWaypoints(-1, $client);
 
   if ($text=~/hail/i) { 
     quest::say("Greetings $name! I can help you get to almost anywhere! I sell
@@ -51,14 +50,15 @@ sub EVENT_SAY {
       while (my ($index, $continent) = each @categories) {
           if (plugin::GetWaypoints($index, $client)) {  
               my $mode_indicator = $text =~ /group/i ? "group" : "single";
-              $client->Message(257, "-[ " . quest::saylink("select-continent-$index-$mode_indicator", 1, $continent));
+              $client->Message(257, "-[ " . quest::saylink("select-continent-$index-$mode_indicator", 0, $continent));
           }
       }
   }
 
   elsif ($text =~ /select-continent-(\d+)-(group|single)/) {
-    my $continent_id = $1;
+    my $continent_id = $1 || 0;
     my $mode = $2;
+    
     my %waypoints = plugin::GetWaypoints($continent_id, $client);
 
     $client->Message(257, " ------- Select a Location ------- ");
