@@ -1,18 +1,9 @@
-sub EVENT_SPAWN {
-    $x = $npc->GetX();
-    $y = $npc->GetY();
-    $z = $npc->GetZ();
-}
-
 sub EVENT_SAY {
-  my $continent_regex = join('|', map { my $continent = plugin::get_continent_by_suffix($_); $continent =~ s/\s+//g; quotemeta($continent) } plugin::get_suffixes());
-  my $zone_data       = plugin::get_zone_data($client->AccountID());
-  my $flat_data       = plugin::get_flat_data($client->AccountID());
-  my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled");
-  
+  my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled");  
   my $eom_available   = $client->GetAlternateCurrencyValue(6);
-
   my $cost            = 1000 * get_cost_for_level();
+
+  my %waypoints       = plugin::GetWaypoints($client);
 
   if ($text=~/hail/i) { 
     quest::say("Greetings $name! I can help you get to almost anywhere! I sell
@@ -31,7 +22,7 @@ sub EVENT_SAY {
   elsif ($text=~/your group/i && !$group_flg) {
     quest::say("If you'd like for me to transport your group, I'll need a stronger connection to your memories. Bring me five
                 [Echo of Memory], and I can transport all of you any time you ask.");
-    return; # Exit early.
+    return;
   }
 
   elsif ($text=~/Echo of Memory/i && !$group_flg) {
@@ -49,78 +40,71 @@ sub EVENT_SAY {
     }
   }
 
-  elsif ($text=~/transport you/i || ($text=~/your group/i  && $group_flg)) {
-    quest::say("Very good! Tell me about this place that you remember. This transportation will cost " . get_cost_for_level() . " platinum pieces.");
-    $client->Message(257, " ------- Select a Continent ------- ");
-    # Check for each suffix and add entries if valid zone data exists
-    foreach my $suffix (plugin::get_suffixes()) {
-        if (exists($zone_data->{$suffix}) && %{ $zone_data->{$suffix} }) {
-            my $link_text = plugin::get_continent_by_suffix($suffix);
-            my $mode_indicator = $text =~ /group/i ? ":group" : "";
-            $client->Message(257, "-[ " . quest::saylink($link_text . $mode_indicator, 1, $link_text));
-        }
+  elsif ($text =~ /transport you/i || ($text =~ /your group/i && $group_flg)) {
+      quest::say("Very good! Tell me about this place that you remember. This transportation will cost " . get_cost_for_level() . " platinum pieces.");
+      $client->Message(257, " ------- Select a Continent ------- ");   
+
+      # Get the list of all continents
+      my @categories = plugin::GetContinents();
+
+      # Display only those continents which have waypoints
+      while (my ($index, $continent) = each @categories) {
+          if (plugin::GetWaypoints($index, $client)) {  
+              my $mode_indicator = $text =~ /group/i ? "group" : "single";
+              $client->Message(257, "-[ " . quest::saylink("select-continent-$index-$mode_indicator", 1, $continent));
+          }
+      }
+  }
+
+  elsif ($text =~ /select-continent-(\d+)-(group|single)/) {
+    my $continent_id = $1;
+    my $mode = $2;
+    my %waypoints = plugin::GetWaypoints($continent_id, $client);
+
+    $client->Message(257, " ------- Select a Location ------- ");
+
+    if (keys %waypoints) {
+      foreach my $wp_id (keys %waypoints) {
+        $client->Message(257, "-[ " . quest::saylink("teleport-$wp_id-$2", 1, $waypoints{$wp_id}[0]));
+      }
     }
   }
 
-  elsif ($text =~ /^(.+?)(:group)?$/) { # Capture the location and optional group indicator
-    my $location = $1; # This captures the actual location name
-    my $is_group_transport = defined $2; # True if it's a group transport
+  elsif ($text =~ /teleport-([a-zA-Z0-9_]+)-(group|single)/) {
+    my $wp_id = $1;
+    my $mode = $2;
+    my %waypoints = plugin::GetWaypoints(-1, $client);
 
-    if (!$is_group_transport || $group_flg) {
-      if ($text =~ /^($continent_regex)(:group)?$/i) {
-        my $continent = ucfirst(lc($1));
-        my $suffix = plugin::get_suffix_by_continent($continent);
-        my $continent_data = $zone_data->{$suffix};
-      
-        # Check if we're in the stage of selecting a location
-        if ($continent_data && ref($continent_data) eq 'HASH') {
-            $client->Message(257, " ------- Select a Location ------- ");
-            foreach my $key (keys %{$continent_data}) {
-                my $mode_indicator = $is_group_transport ? ":group" : "";
-                $client->Message(257, "-[ " . quest::saylink($key . $mode_indicator, 1, $key));
-            }
+    quest::debug("Searching for $wp_id");
+
+    if (exists $waypoints{$wp_id} && $client->TakeMoneyFromPP($cost, 1)) {
+      my $destination = $waypoints{$wp_id};
+
+      if ($2 eq 'group') {
+        my $raid = $client->GetRaid();
+        my $group = $client->GetGroup();
+
+        if ($raid) {
+          for($count = 0; $count < 72; $count++) {
+            my $cur = $raid->GetMember($count);
+            if($cur && $cur->IsClient()) {
+              $cur->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
+            }            
+          }
         }
-      }
-      
-      # Execute transport when a specific location is selected
-      if (exists($flat_data->{$location})) {
-        my $zone_id = quest::GetZoneID($flat_data->{$location}[0]);
-        my $x = $flat_data->{$location}[1];
-        my $y = $flat_data->{$location}[2];
-        my $z = $flat_data->{$location}[3];
-        my $heading = $flat_data->{$location}[4];  
 
-        if ($client->TakeMoneyFromPP($cost, 1)) { 
-
-          if ($is_group_transport) {
-            my $raid = $client->GetRaid();
-            if($raid) {
-              for($count = 0; $count < $raid->RaidCount(); $count++) {
-                my $player = $raid->GetMember($count);
-                if($player) {
-                  if($player->IsClient() && $client->CharacterID() != $player->CharacterID()) {
-                    $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
-                  }
-                }
-              }
-            }
-
-            my $group = $client->GetGroup();
-            if ($group) {
-              for (my $count = 0; $count < $group->GroupCount(); $count++) {
-                  my $player = $group->GetMember($count);
-                  if ($player && $client->CharacterID() != $player->CharacterID()) {
-                      $player->CastToClient()->MovePC($zone_id, $x, $y, $z, $heading);
-                  }
-              }
+        if ($group) {
+          for ($i = 0; $i < $client->GetGroup(); $i++) {
+            $member = $client_group->GetMember($i);
+            if ($member && $member->IsClient()) {
+              $member->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
             }
           }
-
-          $client->MovePC($zone_id, $x, $y, $z, $heading);
-        } else {
-          quest::say("I'm sorry, but you don't have enough platinum to pay for this transport.");
         }
-      }
+      } 
+      $client->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
+    } else {
+      quest::say("I'm sorry, but you don't have enough platinum to pay for this transport.");
     }
   }
 }

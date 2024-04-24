@@ -6,8 +6,8 @@ sub CommonCharacterUpdate {
     plugin::CheckWorldWideBuffs($client);
     plugin::UpdateCharMaxLevel($client);
 	plugin::ConvertFlags($client);
-
-    plugin::set_default_attunement($client->AccountID(), $client->GetRace());
+    plugin::AddDefaultAttunement($client);
+    plugin::AwardBonusUnlocks($client);
 }
 
 sub GetClassMap {
