@@ -111,6 +111,62 @@ sub AwardBonusUnlocks {
             AddWaypoint($zone);
         }
     }
+
+    if (quest::get_data($client->AccountID() . "-TL-Account-F")) {
+        my %points = GetWaypoints(1);
+        foreach my $zone (keys %points) {
+            AddWaypoint($zone);
+        }
+    }
+
+    if (quest::get_data($client->AccountID() . "-TL-Account-O")) {
+        my %points = GetWaypoints(2);
+        foreach my $zone (keys %points) {
+            AddWaypoint($zone);
+        }
+    }
+
+    if (quest::get_data($client->AccountID() . "-TL-Account-K")) {
+        my %points = GetWaypoints(3);
+        foreach my $zone (keys %points) {
+            AddWaypoint($zone);
+        }
+    }
+
+    if (quest::get_data($client->AccountID() . "-TL-Account-V")) {
+        my %points = GetWaypoints(4);
+        foreach my $zone (keys %points) {
+            AddWaypoint($zone);
+        }
+    }
+
+    if (quest::get_data($client->AccountID() . "-TL-Account-L")) {
+        my %points = GetWaypoints(5);
+        foreach my $zone (keys %points) {
+            AddWaypoint($zone);
+        }
+    }
+
+    if (quest::get_data($client->AccountID() . "-TL-Account-P")) {
+        my %points = GetWaypoints(6);
+        foreach my $zone (keys %points) {
+            AddWaypoint($zone);
+        }
+    }
+
+    if (quest::get_data($client->AccountID() . "-TL-Account-T")) {
+        my %points = GetWaypoints(7);
+        foreach my $zone (keys %points) {
+            AddWaypoint($zone);
+        }
+    }
+
+    if (quest::get_data($client->AccountID() . "-TL-Account-G")) {
+        my %points = GetWaypoints(0);
+        foreach my $zone (keys %points) {
+            AddWaypoint($zone);
+        }
+    }
 }
 
 sub GetContinents {
