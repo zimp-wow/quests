@@ -105,7 +105,12 @@ sub AwardBonusUnlocks {
                    quest::get_data($client->AccountID() . "-TL-Account-T") ||
                    quest::get_data($client->AccountID() . "-TL-Account-D");
 
-
+    if (quest::get_data($client->AccountID() . "-TL-Account-A")) {
+        my %points = GetWaypoints(0);
+        foreach my $zone (keys %points) {
+            AddWaypoint($zone);
+        }
+    }
 }
 
 sub GetContinents {
