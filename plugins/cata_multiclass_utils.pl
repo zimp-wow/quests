@@ -271,7 +271,7 @@ sub GrantClassAA {
             '6375' => 1,  # Destructive Cascade
         },
         7 => { # Monk
-            '810' => 1,  # Stonewall
+            '611' => 1,  # Technique of Master Wu
             '1352' => 1, # Crippling Strike
         },
         8 => { # Bard
