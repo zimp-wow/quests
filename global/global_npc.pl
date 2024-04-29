@@ -107,8 +107,8 @@ sub EVENT_DEATH_COMPLETE {
             if ($npc->GetLevel() >= $item_drops{$item_id}{'min_level'} && 
                 $npc->GetLevel() <= $item_drops{$item_id}{'max_level'}) {                    
                 if (rand() < $item_drops{$item_id}{'drop_chance'}) {
-                    $corpse->AddItem($item_id); # Add the item to the NPC's inventory
-                    quest::ding(); # Play the 'ding' sound, indicating an item drop or another significant event
+                    $corpse->AddItem($item_id, 1);
+                    quest::ding();
                 }
             }
         }
