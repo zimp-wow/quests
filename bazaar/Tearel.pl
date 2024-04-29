@@ -50,7 +50,7 @@ sub EVENT_SAY {
       while (my ($index, $continent) = each @categories) {
           if (plugin::GetWaypoints($index, $client)) {  
               my $mode_indicator = $text =~ /group/i ? "group" : "single";
-              $client->Message(257, "-[ " . quest::saylink("select-continent-$index-$mode_indicator", 0, $continent));
+              $client->Message(257, "-[ " . quest::saylink("select-continent-$index-$mode_indicator", 1, $continent));
           }
       }
   }
@@ -85,23 +85,13 @@ sub EVENT_SAY {
         my $group = $client->GetGroup();
 
         if ($raid) {
-          for($count = 0; $count < 72; $count++) {
-            my $cur = $raid->GetMember($count);
-            if($cur && $cur->IsClient()) {
-              $cur->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
-            }            
-          }
+          $client->MoveZoneRaid($wp_id, $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
         }
 
         if ($group) {
-          for ($i = 0; $i < $client->GetGroup(); $i++) {
-            $member = $client_group->GetMember($i);
-            if ($member && $member->IsClient()) {
-              $member->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
-            }
-          }
+          $client->MoveZoneGroup($wp_id, $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
         }
-      } 
+      }
       $client->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
     } else {
       quest::say("I'm sorry, but you don't have enough platinum to pay for this transport.");
