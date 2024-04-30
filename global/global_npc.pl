@@ -116,7 +116,7 @@ sub EVENT_DEATH_COMPLETE {
 }
 
 sub EVENT_TICK {    
-    #CHECK_CHARM_STATUS();
+    CHECK_CHARM_STATUS();
     
     # TODO: Gate this behind your owner actually having an eligible pet bag
     if (quest::get_rule("Custom:MulticlassingEnabled") ne "false") {  
@@ -136,10 +136,6 @@ sub EVENT_AGGRO {
 
 sub EVENT_SPELL_FADE {
     CHECK_CHARM_STATUS();
-}
-
-sub EVENT_DEATH {
-    CHECK_CHARM_FADE();
 }
 
 sub EVENT_SPAWN {
@@ -364,22 +360,17 @@ sub CHECK_CHARM_STATUS
         my $data = @inventory ? join(",", @inventory) : "EMPTY";
         plugin::SEV($npc, "is_charmed", $data);
 
-    }
-}
-
-sub CHECK_CHARM_FADE
-{
-     if (!$npc->Charmed() && plugin::REV($npc, "is_charmed")) {
+    } elsif (!$npc->Charmed() && plugin::REV($npc, "is_charmed")) {
         
         my $data = plugin::REV($npc, "is_charmed");
         my @inventory = split(",", $data);
 
         my @lootlist = $npc->GetLootList();
-        while (@lootlist) {
+        while (@lootlist) { # While lootlist has elements
             foreach my $item_id (@lootlist) {
                 $npc->RemoveItem($item_id);
             }
-            @lootlist = $npc->GetLootList();
+            @lootlist = $npc->GetLootList(); # Update the lootlist after removing items
         }
 
         foreach my $item (@inventory) {
