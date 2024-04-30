@@ -8,11 +8,7 @@ sub CommonCharacterUpdate {
 	plugin::ConvertFlags($client);
     plugin::AddDefaultAttunement($client);
     plugin::AwardBonusUnlocks($client);
-
-    if ($client->GetBucket("EoM-Award")) {
-        plugin::AwardEOM($client, $client->GetBucket("EoM-Award"));
-        $client->DeleteBucket("EoM-Award");
-    }
+    plugin::UpdateEoMAward($client);
 }
 
 sub GetClassMap {

@@ -120,3 +120,11 @@ sub ApplyWorldWideBuff {
         return 0;
     }
 }
+
+sub UpdateEoMAward {
+    my $client = shift;
+    if ($client->GetBucket("EoM-Award")) {
+        plugin::AwardEOM($client, $client->GetBucket("EoM-Award"));
+        $client->DeleteBucket("EoM-Award");
+    }
+}

@@ -1,6 +1,10 @@
 
 sub EVENT_SIGNAL {
-	plugin::CommonCharacterUpdate($client);
+    if ($signal = 666) {
+        plugin::UpdateEoMAward($client);
+    } else {
+        plugin::CommonCharacterUpdate($client);
+    }	
 }
 
 sub EVENT_ENTERZONE { 
