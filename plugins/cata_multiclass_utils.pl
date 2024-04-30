@@ -10,7 +10,7 @@ sub CommonCharacterUpdate {
     plugin::AwardBonusUnlocks($client);
 
     if ($client->GetBucket("EoM-Award")) {
-        plugin::AwardEOM($client, $$client->GetBucket("EoM-Award"));
+        plugin::AwardEOM($client, $client->GetBucket("EoM-Award"));
         $client->DeleteBucket("EoM-Award");
     }
 }
