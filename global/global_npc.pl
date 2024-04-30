@@ -348,39 +348,37 @@ sub GET_BAG_CONTENTS {
 }
 
 sub CHECK_CHARM_STATUS
-{
-    if (quest::get_rule("Custom:MulticlassingEnabled") ne "false") {
-        if ($npc->Charmed() && !plugin::REV($npc, "is_charmed")) {     
-            my @lootlist = $npc->GetLootList();
-            my @inventory;
-            foreach my $item_id (@lootlist) {
-                my $quantity = $npc->CountItem($item_id);
-                push @inventory, "$item_id:$quantity";
-            }
-
-            my $data = @inventory ? join(",", @inventory) : "EMPTY";
-            plugin::SEV($npc, "is_charmed", $data);
-
-        } elsif (!$npc->Charmed() && plugin::REV($npc, "is_charmed")) {
-            
-            my $data = plugin::REV($npc, "is_charmed");
-            my @inventory = split(",", $data);
-
-            my @lootlist = $npc->GetLootList();
-            while (@lootlist) { # While lootlist has elements
-                foreach my $item_id (@lootlist) {
-                    $npc->RemoveItem($item_id);
-                }
-                @lootlist = $npc->GetLootList(); # Update the lootlist after removing items
-            }
-
-            foreach my $item (@inventory) {
-                my ($item_id, $quantity) = split(":", $item);
-                #quest::debug("Adding: $item_id x $quantity");
-                $npc->AddItem($item_id, $quantity);
-            }
-
-            plugin::SEV($npc, "is_charmed", "");
+{   
+    if ($npc->Charmed() && !plugin::REV($npc, "is_charmed")) {     
+        my @lootlist = $npc->GetLootList();
+        my @inventory;
+        foreach my $item_id (@lootlist) {
+            my $quantity = $npc->CountItem($item_id);
+            push @inventory, "$item_id:$quantity";
         }
-    }
+
+        my $data = @inventory ? join(",", @inventory) : "EMPTY";
+        plugin::SEV($npc, "is_charmed", $data);
+
+    } elsif (!$npc->Charmed() && plugin::REV($npc, "is_charmed")) {
+        
+        my $data = plugin::REV($npc, "is_charmed");
+        my @inventory = split(",", $data);
+
+        my @lootlist = $npc->GetLootList();
+        while (@lootlist) { # While lootlist has elements
+            foreach my $item_id (@lootlist) {
+                $npc->RemoveItem($item_id);
+            }
+            @lootlist = $npc->GetLootList(); # Update the lootlist after removing items
+        }
+
+        foreach my $item (@inventory) {
+            my ($item_id, $quantity) = split(":", $item);
+            #quest::debug("Adding: $item_id x $quantity");
+            $npc->AddItem($item_id, $quantity);
+        }
+
+        plugin::SEV($npc, "is_charmed", "");
+    }    
 }
