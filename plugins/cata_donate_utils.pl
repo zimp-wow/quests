@@ -54,7 +54,7 @@ sub AwardEOM {
     my $eom_available = $client->GetAlternateCurrencyValue($eom_id);
     $client->SetAlternateCurrencyValue($eom_id, $eom_available + $amount);
     $client->Message(15, "You have gained $amount [".quest::varlink($eom_item_id)."].");
-    quest::discordsend("admin", $client->GetCleanName() . " collected $amount EoM!");
+    quest::discordsend("admin", $client->GetCleanName() . " collected $amount EoM.");
     if (!$client->GetGM()) {
         quest::set_data($eom_award_log, (quest::get_data($eom_award_log) || 0) + $amount);
     }
