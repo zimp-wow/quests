@@ -299,11 +299,14 @@ sub takeCopper
 
 # Returns any unwanted items and coins to the user with an appropriate message.
 sub returnUnusedItems
-{    
+{
   my $name = plugin::assocName();
+  my $client = plugin::val('$client');
 
   my $itemcount = plugin::var('$itemcount');
   my $items = 0;
+
+  $client->Message(13, "If you are seeing this, this quest is outdated and needs to be updated. Please report this on discord as a bug.");
   
   foreach my $k (keys(%$itemcount))
   {
@@ -314,7 +317,7 @@ sub returnUnusedItems
     {
       $items++;
       
-      quest::summonfixeditem($k);
+      $client->ReturnItem($k);
     }
     
     delete $itemcount->{$k};
