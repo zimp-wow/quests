@@ -111,12 +111,3 @@ sub EVENT_ITEM {
 		quest::say($response);
 	}
 }
-
-# This should be a plugin function...
-# Add your discord webhook identifier
-sub WorldAnnounce {
-	#my $message = shift;
-	#quest::discordsend("ooc", $message);
-	quest::we(335, $message);
-	#quest::say("This is the world message. $message");
-}
