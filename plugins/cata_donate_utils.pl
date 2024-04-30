@@ -51,8 +51,7 @@ sub SpendEOM {
 
 sub AwardEOM {
     my ($client, $amount) = @_;
-    my $eom_available = $client->GetAlternateCurrencyValue($eom_id);
-    $client->SetAlternateCurrencyValue($eom_id, $eom_available + $amount);
+    $client->AddAlternateCurrencyValue($eom_id, $amount);
     $client->Message(15, "You have gained $amount [".quest::varlink($eom_item_id)."].");
     quest::discordsend("admin", $client->GetCleanName() . " collected $amount EoM.");
     if (!$client->GetGM()) {
@@ -62,8 +61,7 @@ sub AwardEOM {
 
 sub RefundEOM {
     my ($client, $amount) = @_;
-    my $eom_available = $client->GetAlternateCurrencyValue($eom_id);
-    $client->SetAlternateCurrencyValue($eom_id, $eom_available + $amount);
+    $client->AddAlternateCurrencyValue($eom_id, $amount);
     $client->Message(15, "You have gained $amount [".quest::varlink($eom_item_id)."].");
     if (!$client->GetGM()) {
         quest::set_data($eom_log, (quest::get_data($eom_log) || 0) - $amount);
