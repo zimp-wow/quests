@@ -1,6 +1,7 @@
 my $eom_id = 6;
 my $eom_item_id = 46779;
 my $eom_log = "total-eom-spend";
+my $eom_award_log = "total-eom-award";
 
 sub CheckWorldWideBuffs {
     my $client = plugin::val('$client');
@@ -46,6 +47,16 @@ sub SpendEOM {
     }
 
     return 0;
+}
+
+sub AwardEOM {
+    my ($client, $amount) = @_;
+    my $eom_available = $client->GetAlternateCurrencyValue($eom_id);
+    $client->SetAlternateCurrencyValue($eom_id, $eom_available + $amount);
+    $client->Message(15, "You have gained $amount [".quest::varlink($eom_item_id)."].");
+    if (!$client->GetGM()) {
+        quest::set_data($eom_award_log, (quest::get_data($eom_award_log) || 0) + $amount);
+    }
 }
 
 sub RefundEOM {
