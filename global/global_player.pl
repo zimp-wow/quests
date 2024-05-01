@@ -140,6 +140,8 @@ sub EVENT_SAY {
 			$client->SetBucket("SeasonalCharacter", 0);
 			$client->Message(15, "Seasonal Disabled");
             $client->Message(15, "IsSeasonal() == " . plugin::IsSeasonal($client));
-		}
+		} elsif ($text=~/diag/i) {
+            $client->Message(15, "Season: " . plugin::GetSeasonID());
+        }
 	}
 }
