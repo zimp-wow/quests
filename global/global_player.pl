@@ -133,11 +133,11 @@ sub EVENT_COMBINE_SUCCESS {
 sub EVENT_SAY {
 	if ($client->GetGM()) {
 		if ($text=~/enable seasonal/i) {
-			$client->SetBucket("SeasonalCharacter", 1);
+			plugin::EnableSeasonal($client);
 			$client->Message(15, "Seasonal Enabled");
             $client->Message(15, "IsSeasonal() == " . plugin::IsSeasonal($client));
 		} elsif ($text=~/disable seasonal/i) {
-			$client->SetBucket("SeasonalCharacter", 0);
+			plugin::DisableSeasonal($client);
 			$client->Message(15, "Seasonal Disabled");
             $client->Message(15, "IsSeasonal() == " . plugin::IsSeasonal($client));
 		} elsif ($text=~/diag/i) {
