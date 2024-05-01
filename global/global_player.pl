@@ -30,7 +30,9 @@ sub EVENT_CONNECT {
     }
 
     if (plugin::GetSeasonID()) {
-        
+        $client->EnableSeasonal();
+
+        plugin::AwardSeasonalItems($client);
     }
 
     if (!plugin::is_eligible_for_zone($client, $zonesn)) {
@@ -136,6 +138,8 @@ sub EVENT_SAY {
 		} elsif ($text=~/disable seasonal/i) {
 			$client->SetBucket("SeasonalCharacter", 0);
 			$client->Message(15, "Seasonal Disabled");
-		}
+		} elsif ($text=~/backpack/i) {
+            $client->GetInventory()->PutItem()
+        }
 	}
 }
