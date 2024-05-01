@@ -4,12 +4,12 @@ my $award_aug     = 199995;
 
 sub GetSeasonID 
 {
-    return quest::get_rule("Custom:Custom:EnableSeasonalCharacters");
+    return quest::get_rule("Custom:EnableSeasonalCharacters");
 }
 
 sub IsSeasonal {
     my $client = shift;
-    return quest::get_rule("Custom:Custom:EnableSeasonalCharacters") == $client->GetBucket("SeasonalCharacter");
+    return quest::get_rule("Custom:EnableSeasonalCharacters") == $client->GetBucket("SeasonalCharacter");
 }
 
 sub AwardSeasonalItems 
