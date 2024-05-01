@@ -18,7 +18,7 @@ sub IsSeasonal {
 sub EnableSeasonal {
     my $client = shift;
 
-    $client->SetBucket($seasonal_bucket);
+    $client->SetBucket($seasonal_bucket, 1);
 }
 
 sub DisableSeasonal {
