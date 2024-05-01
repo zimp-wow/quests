@@ -7,6 +7,11 @@ sub GetSeasonID
     return quest::get_rule("Custom:Custom:EnableSeasonalCharacters");
 }
 
+sub IsSeasonal {
+    my $client = shift;
+    return quest::get_rule("Custom:Custom:EnableSeasonalCharacters") == $client->GetBucket("SeasonalCharacter");
+}
+
 sub AwardSeasonalItems 
 {
     my $client = shift;
@@ -22,4 +27,18 @@ sub AwardSeasonalItems
 
 sub UpgradeSeasonalItems {
 
+}
+
+sub RegisterSeasonalLogin {
+    my $client = shift;
+    my $login_marker = $client->GetBucket("LoginMarker");
+
+    if ($client->IsSeasonal()) {
+        if (!$login_marker) {
+            my $login_count = $client->GetBucket("Season_LoginCount") || 0;
+
+            $client->SetBucket("Season_LoginCount", $login_count);
+            $client->SetBucket("LoginMarker", quest::GetTimeSeconds(), 3600 * 16); # Expires in 16 hours.
+        }
+    }
 }

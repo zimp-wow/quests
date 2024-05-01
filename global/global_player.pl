@@ -135,11 +135,11 @@ sub EVENT_SAY {
 		if ($text=~/enable seasonal/i) {
 			$client->SetBucket("SeasonalCharacter", 1);
 			$client->Message(15, "Seasonal Enabled");
+            $client->Message(15, "IsSeasonal() == " . plugin::IsSeasonal($client));
 		} elsif ($text=~/disable seasonal/i) {
 			$client->SetBucket("SeasonalCharacter", 0);
 			$client->Message(15, "Seasonal Disabled");
-		} elsif ($text=~/backpack/i) {
-            $client->GetInventory()->PutItem()
-        }
+            $client->Message(15, "IsSeasonal() == " . plugin::IsSeasonal($client));
+		}
 	}
 }

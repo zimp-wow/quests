@@ -9,6 +9,7 @@ sub CommonCharacterUpdate {
     plugin::AddDefaultAttunement($client);
     plugin::AwardBonusUnlocks($client);
     plugin::UpdateEoMAward($client);
+    plugin::RegisterSeasonalLogin($client);
 }
 
 sub GetClassMap {
