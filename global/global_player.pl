@@ -135,6 +135,7 @@ sub EVENT_SAY {
             $client->Message(15, "IsSeasonal() == " . plugin::IsSeasonal($client));
 		} elsif ($text=~/diag/i) {
             $client->Message(15, "Season: " . plugin::GetSeasonID());
+            $client->Message(15, "IsSeasonal? : " . plugin::IsSeasonal($client));
         }
 	}
 }
