@@ -22,7 +22,7 @@ function event_trade(e)
 		e.other:Faction(223,-3); 															--Circle of Unseen Hands
 		e.other:Faction(336,-3); 															--Coalition of Tradefolk Underground
 		e.other:Faction(5006,-3); 															--Hall of the Ebon Mask
-		if(e.other:Class() == "Shaman" or e.other:Class() == "Beastlord") then
+		if(e.other:HasClass(Class.SHAMAN) or e.other:HasClass(Class.BEASTLORD)) then
 			e.other:SummonItem(eq.ChooseRandom(15270,15275,15075,15271,15279,15212,15079));	--A Random Spell Listed Above
 		end
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 13969})) then							--Caster Beads
@@ -34,7 +34,7 @@ function event_trade(e)
 		e.other:Faction(223,-9); 															--Circle of Unseen Hands
 		e.other:Faction(336,-9); 															--Coalition of Tradefolk Underground
 		e.other:Faction(5006,-9); 															--Hall of the Ebon Mask
-		if(e.other:Class() == "Shaman" or e.other:Class() == "Beastlord") then
+		if(e.other:HasClass(Class.SHAMAN) or e.other:HasClass(Class.BEASTLORD)) then
 			e.other:SummonItem(6028); 														--Gavel of Justice
 		end
 	end

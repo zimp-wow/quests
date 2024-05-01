@@ -1,7 +1,7 @@
 -- items: 54313, 52947
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);
-	if(e.other:Class() == "Enchanter") then 
+	if(e.other:HasClass(Class.ENCHANTER)) then 
 		if(e.message:findi("are you aida") and qglobals["EnchPre"] == "1") then
 			e.self:Say("'How do you know my name?");
 		elseif(e.message:findi("bloodgill mimic") and qglobals["EnchPre"] == "1") then

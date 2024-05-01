@@ -3,7 +3,7 @@ function event_spawn(e)
 end
 
 function event_enter(e)
-	if(e.other:Class() == "Druid") then
+	if(e.other:HasClass(Class.DRUID)) then
 		local qglobals = eq.get_qglobals(e.self,e.other);
 		if(qglobals["druid_epic"] == "10" and qglobals["druid_qin"] == nil and not eq.get_entity_list():IsMobSpawnedByNpcTypeID(281089)) then	
 			eq.spawn2(281089, 0, 0, -886,-733,27.2,0); --#Mastruq_Commander_Gorlakt 

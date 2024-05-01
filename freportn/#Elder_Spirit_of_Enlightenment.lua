@@ -7,7 +7,7 @@ local client;
 
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);
-	if(e.other:Class() == "Shaman") then
+	if(e.other:HasClass(Class.SHAMAN)) then
 		if(e.other:HasItem(10651) or e.other:HasItem(36223) or qglobals["shaman_pre"] == "3") then --Have the Spear of Fate (two in db 36223 or 10651) or finished prequest
 			if(e.message:findi("hail")) then
 				e.self:Emote("eyes you with an ageless wisdom.");

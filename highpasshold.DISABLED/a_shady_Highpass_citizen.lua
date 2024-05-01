@@ -1,5 +1,5 @@
 function event_say(e)
-	if(e.other:Class() == "Rogue") then --untested if rogue only, need rejection text otherwise
+	if(e.other:HasClass(Class.ROGUE)) then --untested if rogue only, need rejection text otherwise
     
 		if(e.message:findi("hail")) then
 			e.self:Say("Take a load off and join me for awhile, ".. e.other:GetCleanName() ..".  The Tiger's Roar is the best watering hole in Antonica.  I come here every day to relax and take in the gorgeous view.'  He glances around at the other patrons of the tavern.  'See what I mean?  Like I said... Best bar this side of Norrath.  Now, if you are interested in talking business, I can't help but to assume that you are here because you wish to ingratiate yourself with Stanos and his lot.  It just so happens that I know of several jobs they need taken care of.  If you completed all three, then informed me when you were [done], I imagine it would get you in their good graces.  What will it be, hmm?  [One], [two], or [three]?");

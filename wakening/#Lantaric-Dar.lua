@@ -3,7 +3,7 @@
 -- items: 77608, 77612, 77613, 77600, 77601, 77602, 77604, 77605, 77606, 77607
 
 function event_say(e)
-    if e.other:Class() == "Bard" then
+    if e.other:HasClass(Class.BARD) then
         local qglobals = eq.get_qglobals(e.other)
         if e.message:findi("hail") then
             if qglobals["bard15"] == "1" then

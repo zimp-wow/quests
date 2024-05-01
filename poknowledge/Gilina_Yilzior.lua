@@ -3,7 +3,7 @@
 -- items: 11407, 20899, 16813, 16793, 20079, 22199, 20904, 55901, 50003, 19098, 24612, 23489, 24632, 24584
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);
-	if(e.other:Class() == "Shadow Knight") then
+	if(e.other:HasClass(Class.SHADOWKNIGHT)) then
 		if(e.message:findi("vision") and e.other:HasItem(50003)) then
 			if(qglobals["shadowknight_epic"] == nil or tonumber(qglobals["shadowknight_epic"]) < 9) then
 				eq.set_global("shadowknight_epic","9",5,"F");

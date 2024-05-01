@@ -13,7 +13,7 @@ function event_trade(e)
 local item_lib = require("items")
 local qglobals = eq.get_qglobals(e.other)
 
-  if(e.other:Class() == "Rogue") and qglobals["roguepre"] == nil and item_lib.check_turn_in(e.trade, {item1 = 9446}) then -- Gold-Leafed Urn
+  if(e.other:HasClass(Class.ROGUE)) and qglobals["roguepre"] == nil and item_lib.check_turn_in(e.trade, {item1 = 9446}) then -- Gold-Leafed Urn
 
     e.self:Emote("passes the urn to Guard Kovan for safekeeping.  She slides her left hand down her right sleeve and vice versa. 'Welcome to the High Keep Casino, Lepois.  The urn you brought is worth 1500 credits.  Let me know at any time if you want me to [deal you a hand], or if you'd rather [cash out].");
     e.other:AddEXP(10000); --made up live value
@@ -21,7 +21,7 @@ local qglobals = eq.get_qglobals(e.other)
     urn = 1;
   elseif (e.other:Class() ~= "Rogue") and item_lib.check_turn_in(e.trade, {item1 = 9446}) then -- Gold-Leafed Urn
     e.self:Emote("refuses to accept the urn. 'This is obviously stolen. Why don't you leave the thieving up to the rogues, since you're not very good at it, and get out of here before you land in real trouble?");
-  elseif(e.other:Class() == "Rogue") and qglobals["roguepre"] ~= nil and item_lib.check_turn_in(e.trade, {item1 = 9446}) then -- Gold-Leafed Urn
+  elseif(e.other:HasClass(Class.ROGUE)) and qglobals["roguepre"] ~= nil and item_lib.check_turn_in(e.trade, {item1 = 9446}) then -- Gold-Leafed Urn
     e.self:Say("Oh, it's you. I'm not falling for that again.");
   end
   item_lib.return_items(e.self, e.other, e.trade)
@@ -29,7 +29,7 @@ end
 
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other)
-  if(e.other:Class() == "Rogue" or e.other:GetGM()) then
+  if(e.other:HasClass(Class.ROGUE) or e.other:GetGM()) then
 
     if(e.message:findi("hail")) then
 		  e.self:Say("Greetings, " .. e.other:GetName() .. ".");

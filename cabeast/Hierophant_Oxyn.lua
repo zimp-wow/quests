@@ -5,9 +5,9 @@ function event_say(e)
 
 	if(e.message:findi("hail")) then
 		e.self:Say("Greetings, and may the pain of the ancients guide you. You have come to us for guidance, have you not? We are the Hierophants of Cabilis and we guide the young Scale Mystics. All petitioners shall speak with me of [temple tasks].");
-	elseif((e.message:findi("temple tasks")) and (e.other:GetFaction(e.self) <= 4) and (e.other:Class() == "Shaman")) then
+	elseif((e.message:findi("temple tasks")) and (e.other:GetFaction(e.self) <= 4) and (e.other:HasClass(Class.SHAMAN))) then
 		e.self:Say("The Temple of Terror requires all young Scaled Mystics to [perform daily tasks.]. The tasks are necessary to the upkeep of our order as well as that of our brothers, the Crusaders of Greenmist.");
-	elseif((e.message:findi("daily tasks")) and (e.other:GetFaction(e.self) <= 4) and (e.other:Class() == "Shaman")) then
+	elseif((e.message:findi("daily tasks")) and (e.other:GetFaction(e.self) <= 4) and (e.other:HasClass(Class.SHAMAN))) then
 		e.self:Say("We require many components for various rituals. Take this Component mortar and fill it with the following items - foraged [mud crabs]. two small mosquito wings and one portion of bone chips. You must then use the pestle and combine all the components. When you have a full component mortar, you may return to me and I shall pay you your wages, but most importantly, you shall prove your devotion to the Scaled Mystics.");
 		e.other:SummonItem(17020); -- Component Mortar
 	elseif(e.message:findi("mud crabs")) then 					--Cursed Wafers quest
@@ -45,7 +45,7 @@ function event_trade(e)
 		e.other:Faction(441,10); -- Faction: Legion of Cabilis
 		e.other:QuestReward(e.self,{items = {3893,3886},exp = 5000}); --Note to Librarian 	--Chunk of Tynnonium
 	--Cursed Wafers turn in
-	elseif(e.other:GetFaction(e.self) < 5 and e.other:Class() == "Shaman" and item_lib.check_turn_in(e.trade, {item1 = 12403},0)) then --Full Component Mortar
+	elseif(e.other:GetFaction(e.self) < 5 and e.other:HasClass(Class.SHAMAN) and item_lib.check_turn_in(e.trade, {item1 = 12403},0)) then --Full Component Mortar
 		e.self:Say("We appreciate your service. Take a few copper for your deed as well as some of our cursed waters. They will provide you with nourishment. As for future tasks, we are searching for a few [lost skulls] and i am sure you are searching for your [iron cudgel of the clairvoyant] And i also hear that the furscales are in need of some broodlings to do some manual labor. Tell them Oxyn sent you.");
 		e.other:Faction(445, 2); 				--Scaled Mystics
 		e.other:Faction(441, 1); 				--Legion of Cabilis

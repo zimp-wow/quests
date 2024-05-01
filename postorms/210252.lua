@@ -3,7 +3,7 @@ function event_spawn(e)
 end
 
 function event_enter(e)
-	if(e.other:Class() == "Shaman") then
+	if(e.other:HasClass(Class.SHAMAN)) then
 		local qglobals = eq.get_qglobals(e.self,e.other);
 		if(qglobals["shaman_epic"] == "10" and eq.get_entity_list():IsMobSpawnedByNpcTypeID(210250) == false ) then					
 			eq.spawn2(210250, 0, 0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading()); -- NPC: #Darkened_Chanting_Woodspirit

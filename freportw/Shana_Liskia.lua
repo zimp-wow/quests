@@ -6,7 +6,7 @@ function event_say(e)
 		e.self:Say("Wonderful! Let me be the first to tell you that your training here will be top notch and you will learn all that is to be known about being an enchanter should you put forth the willingness to learn. I will walk you through your early training and assist you in your hunting and gathering skills. I have created a [" .. eq.say_link("special sewing kit") .. "] that I present to all of the new initiates.");
 	elseif(e.message:findi("diseases of the mind")) then
 		e.self:Say("I study the mind. My most recent research deals with, well, I'd rather not discuss that. Unless you need something specific, I don't really have time for long random conversations right now.");
-	elseif(e.other:Class() == "Enchanter" or e.other:Class() == "Magician" or e.other:Class() == "Wizard") then
+	elseif(e.other:HasClass(Class.ENCHANTER) or e.other:HasClass(Class.MAGICIAN) or e.other:HasClass(Class.WIZARD)) then
 		if(e.message:findi("special sewing kit")) then
 			e.self:Say("This kit that I speak of is one that is able to magically infuse different components into materials used for creating Arcane Scientists Armor. The components that you use will be collected from numerous different areas and shops in Freeport. You will use these materials along with patterns that I will present you with to create your armor. Once you are [ready to begin] I will present you with your Enchanted Sewing Kit.");
 		elseif(e.message:findi("ready to begin")) then
@@ -44,7 +44,7 @@ end
 function event_trade(e)
 	local item_lib = require("items");
 
-	if(e.other:Class() == "Enchanter" or e.other:Class() == "Magician" or e.other:Class() == "Wizard") then
+	if(e.other:HasClass(Class.ENCHANTER) or e.other:HasClass(Class.MAGICIAN) or e.other:HasClass(Class.WIZARD)) then
 		if(item_lib.check_turn_in(e.trade, {item1 = 9917,item2 = 9917,item3 = 9933})) then -- Lion Tooth x 2, Shana's Necklace
 			e.self:Say("Thank you for bringing back one of my most valued possesion. You have proven yourself to be worthy to wield the Dagger of the Academy.");
 			e.other:SummonItem(9938); -- Dagger of the Academy

@@ -39,7 +39,7 @@ function event_trade(e)
 		e.other:Faction(223,-3); 															--Circle of Unseen Hands
 		e.other:Faction(336,-3); 															--Coalition of Tradefolk Underground
 		e.other:Faction(5006,-3); 															--Hall of the Ebon Mask
-		if(e.other:Class() == "Shaman" or e.other:Class() == "Beastlord") then
+		if(e.other:HasClass(Class.SHAMAN) or e.other:HasClass(Class.BEASTLORD)) then
 			-- : Drowsy : Frost Rift : Sicken : Fleting Fury : Spirit of Bear : Cure Blindness : Spirit Sight : In that order
 			local spellreward = eq.ChooseRandom(15270,15275,15075,15271,15279,15212,15079);
 			local dialog0;

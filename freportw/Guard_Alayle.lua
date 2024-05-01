@@ -2,7 +2,7 @@
 function event_say(e)
 	if(e.message:findi("hail")) then
 		e.self:Say("Greetings, citizen! You should not be in the Militia House. These are restricted grounds. Please leave at once unless you have business here.");
-	elseif(e.message:findi("truth is good") and e.other:Class() == "Paladin") then
+	elseif(e.message:findi("truth is good") and e.other:HasClass(Class.Paladin)) then
 		e.self:Say("Ssshhh!! Pipe down. The others might hear you. You must have something for me. Kalatrina must have given you something if you serve the Hall of Truth. If you have nothing please leave. You will blow my cover.");
 	end
 end
@@ -10,7 +10,7 @@ end
 function event_trade(e)
 	local item_lib = require("items");
 
-	if(e.other:Class() == "Paladin") then
+	if(e.other:HasClass(Class.Paladin)) then
 		if(item_lib.check_turn_in(e.trade, {item1 = 18817})) then -- Sealed Letter
 			e.self:Say("This is not good news. I must leave immediately. Here. Take this to Kala.. I mean my father. I found it on the floor of Sir Lucan D'Lere's quarters. Thanks again, messenger. I got this just in time.");
 			e.other:SummonItem(18818); -- A Tattered Flier

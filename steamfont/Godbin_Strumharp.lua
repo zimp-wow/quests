@@ -1,6 +1,6 @@
 -- items: 62637
 function event_say(e)
-  if (e.other:Class() == "Ranger") then
+  if (e.other:HasClass(Class.RANGER)) then
     local qglobals = eq.get_qglobals(e.other);
     if ( qglobals["ranger_epic15_pre"] == "9" ) then
       if (e.message:findi("mera")) then

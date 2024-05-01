@@ -2,7 +2,7 @@
 -- items: 62800, 62801, 62802, 62805, 62807, 62809
 function event_say(e)
 		local qglobals = eq.get_qglobals(e.other);
-		if (e.other:Class() == "Druid") then
+		if (e.other:HasClass(Class.DRUID)) then
 			if(e.message:findi("hail")) then
 				e.self:Say("No, I don't have anything for sale and no I don't want any of your filthy money. Can't you see I have important [" .. eq.say_link("Work") .. "] to do? Why don't you go talk to that banker and give it to him? There's been nothing but trouble since you all arrived. I'm sick and tired of you people traipsing through here like you own the place. Before you know it, this place will be a smelly den of inequity like Qeynos. I'd like to take that Banker Mardalson and all the rest and feed them to the [" .. eq.say_link("river") .. "]!");
 			elseif(e.message:findi("work")) then

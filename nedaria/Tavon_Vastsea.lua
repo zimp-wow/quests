@@ -3,7 +3,7 @@
 							
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);
-	if(e.other:Class() == "Cleric") then
+	if(e.other:HasClass(Class.CLERIC)) then
 		if(e.message:findi("hail")) then
 			if(e.other:HasItem(9955) and qglobals["cleric20"] ~= nil) then -- has 1.5 Harmony of the Soul, start 2.0
 				e.self:Say("I hear you were able to put that shield to some use. That is good to hear. I was able to find some news on the leader, someone matching his description has been seen on the other side of the Wayfarer's portal in the Realm of Discord. Please visit my friend Cryssa, at the camp in Discord. She has been working on tracking the Disciple's movement in Discord.");

@@ -3,7 +3,7 @@ function event_spawn(e)
 end
 
 function event_enter(e)
-	if(e.other:Class() == "Magician") then
+	if(e.other:HasClass(Class.MAGICIAN)) then
 		local qglobals = eq.get_qglobals(e.self,e.other);
 		if(qglobals["mage_epic"] == "10" and qglobals["mage_epic_ferubi"] == nil and not eq.get_entity_list():IsMobSpawnedByNpcTypeID(284105)) then	
 			if(e.self:GetY()==-810) then					

@@ -2,7 +2,7 @@
 function event_say(e)
 	if(e.message:findi("hail")) then
 		e.self:Say("Correct. Toxdil is my name. No last name. I swear allegiance to no house nor guild. What brings you down here? Perhaps you seek my [deadly liquid], perhaps not. Whatever your reasons, I warn you to keep an eye out for the militia. They have begun to patrol the sewers.");
-	elseif(e.other:Class() == "Rogue") then
+	elseif(e.other:HasClass(Class.ROGUE)) then
 		if(e.message:findi("deadly liquid")) then
 			e.self:Say("The deadly liquid I offer to rogues is called spider venom. I will be glad to make it for you, but first you must supply me with two snake venom sacs and my fee of 20 gold pieces. You may find the sacs upon the giant snakes of the Commonlands.");
 		elseif(e.message:findi("gem of righteousness")) then

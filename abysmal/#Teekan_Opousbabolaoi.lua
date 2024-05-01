@@ -2,7 +2,7 @@
 -- items: 18976, 11999, 18398
 
 function event_say(e)
-	if(e.message:findi("hail") and e.other:Class() == "Berserker") then
+	if(e.message:findi("hail") and e.other:HasClass(Class.BERSERKER)) then
 		e.self:Say("Hail to thee friend! No doubt you sought me out for my expertise in enchanting though I admit to wondering what need a bersrker like yourself would have of me. Pray tell how may I serve thee?");
 	end
 end

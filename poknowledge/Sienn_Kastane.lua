@@ -3,7 +3,7 @@
 -- items: 22944, 20520, 20426, 23492, 20497, 19025, 11407
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);
-	if(e.other:Class() == "Shadow Knight") then
+	if(e.other:HasClass(Class.SHADOWKNIGHT)) then
 		if(e.message:findi("hail")) then
 			if(e.other:HasItem(14383) or qglobals["shadowknight_pre"] == "2") then --Have Epic 1.0 Innoruuk's Curse or Pre_quest Complete
 				if(qglobals["shadowknight_epic"] == nil) then

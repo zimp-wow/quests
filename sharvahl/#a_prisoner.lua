@@ -15,7 +15,7 @@ function event_trade(e)
     local item_lib = require("items");
 	local qglobals = eq.get_qglobals(e.other);
 	
-	if (e.other:Class() == "Rogue") then 
+	if (e.other:HasClass(Class.ROGUE)) then 
 		if (item_lib.check_turn_in(e.trade, {item1 = 52008})) then -- shackle key
 			eq.set_timer("depop",6000);
 			e.self:SetAppearance(0);

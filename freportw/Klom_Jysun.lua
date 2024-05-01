@@ -2,7 +2,7 @@
 function event_say(e)
 	if(e.message:findi("hail")) then
 		e.self:Say("Pleasure to meet you "..e.other:GetName()..". I am Klom Jysun, Grandmaster of the Ashen Order. I have lived in the great city of Freeport for quite sometime now and have watched the city evolve and change. Nowadays though I am in charge of training new members of the Ashen Fist. If you are a young monk and are in need of some armor I might have some work for you. Are you a [monk]?");
-	elseif(e.other:Class() == "Monk") then
+	elseif(e.other:HasClass(Class.MONK)) then
 		if(e.message:findi("monk")) then
 			e.self:Say("I am always pleased when a new disciple visits our sacred halls. If you are [interested] in crafting your own armor I have a number of gathering tasks for you to do that will test both your navigational and fighting skills.");
 		elseif(e.message:findi("interested")) then
@@ -40,7 +40,7 @@ end
 function event_trade(e)
 	local item_lib = require("items");
 
-	if(e.other:Class() == "Monk") then
+	if(e.other:HasClass(Class.MONK)) then
 		if(item_lib.check_turn_in(e.trade, {item1 = 9934,item2 = 9920,item3 = 9920})) then
 			e.self:Say("Good work, "..e.other:GetName()..", try these knuckles.");
 			e.other:SummonItem(9939); -- Kloms Brass Knuckles
