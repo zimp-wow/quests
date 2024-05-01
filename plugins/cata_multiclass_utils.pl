@@ -99,13 +99,11 @@ sub AddClass {
         $client->Message(15, "You have permanently gained access to the $class_name class, and are now a $full_class_name.");
         GrantClassesAA();
 
-        if (CheckUniqueClass($client->GetClassesBitmask())) {
+        if (GetClassesCount() > 2 && CheckUniqueClass($client->GetClassesBitmask())) {
             my $class_bits          = $client->GetClassesBitmask();
             quest::set_data("class-$class_bits", $class_bits);
             plugin::WorldAnnounce("$name has become the FIRST $full_class_name.");            
-        } else {
-            plugin::WorldAnnounce("$name has become a $full_class_name.");
-        }        
+        }       
 
         if ($class_id == 8) {
             quest::permaclass(8);
