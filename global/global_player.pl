@@ -15,8 +15,7 @@ sub EVENT_ENTERZONE {
 	}
 }
 
-sub EVENT_CONNECT {
-    plugin::CommonCharacterUpdate($client);
+sub EVENT_CONNECT {    
     if (!$client->GetBucket("First-Login")) {
         $client->SetBucket("First-Login", 1);
 		$client->SummonItem(18471); #A Faded Writ
