@@ -277,8 +277,13 @@ sub get_subflag {
     my ($client, $stage, $objective) = @_;
     $objective = lc($objective);  # Normalize the objective to lowercase
 
-    # Deserialize the hash containing flags
-    my %original_flag = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
+    my %original_flag;
+
+    if (IsSeasonal()) {
+        %original_flag = plugin::DeserializeHash($client->GetBucket("progress-flag-$stage"));
+    } else {
+        %original_flag = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
+    }
 
     # Create a new hash with all keys normalized to lowercase
     my %normalized_flag;
@@ -300,16 +305,18 @@ sub set_subflag {
     return 0 unless exists $VALID_STAGES{$stage};
 
     # Deserialize the current account progress into a hash
-    my %account_progress = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
+    my %account_progress   = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
+    my %character_progress = plugin::DeserializeHash($client->GetBucket("progress-flag-$stage"));
+
+    $account_progress{$objective} = $value;
+    $character_progress{$objective} = $value;
+
+    quest::set_data($client->AccountID() . "-progress-flag-$stage", plugin::SerializeHash(%account_progress));
+    $client->SetBucket("progress-flag-$stage", plugin::SerializeHash(%account_progress));
 
     # Check if the objective value has changed
-    if (!exists $account_progress{$objective} || $account_progress{$objective} != $value) {
-        # Update the flag since the value has changed
-        $account_progress{$objective} = $value;
-
-        # Serialize and save the updated account progress
-        quest::set_data($client->AccountID() . "-progress-flag-$stage", plugin::SerializeHash(%account_progress));
-
+    if ((!exists $account_progress{$objective} || $account_progress{$objective} != $value) ||
+        (plugin::IsSeasonal($client) && (!exists $character_progress{$objective} || $character_progress{$objective} != $value))) {
         # Send messages only if there was a change
         plugin::YellowText("You have gained a progression flag!");
         plugin::BlueText("Your memories become more clear, you see the way forward drawing closer.");
@@ -346,7 +353,14 @@ sub is_stage_complete {
     # Check prerequisites
     foreach my $prerequisite (@{$STAGE_PREREQUISITES{$stage}}) {
         # Deserialize and then convert keys to lower-case
-        my %raw_objective_progress = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
+        my %raw_objective_progress;
+
+        if (plugin::IsSeasonal($client)) {
+            %raw_objective_progress = plugin::DeserializeHash($client->GetBucket("progress-flag-$stage"));
+        } else {
+            %raw_objective_progress = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
+        }        
+       
         my %objective_progress = map { lc($_) => $raw_objective_progress{$_} } keys %raw_objective_progress;
 
         unless ($objective_progress{$prerequisite}) {
@@ -515,7 +529,7 @@ sub ConvertFlags {
     # Old Flag Data
     $expansion = quest::get_data($client->AccountID() . "-kunark-flag") || 0;
 
-    if ($expansion) {
+    if ($expansion && !plugin::IsSeasonal($client)) {
         # Kunark
         if (!is_stage_complete($client, 'RoK')) {
             if ($expansion > 2 || quest::get_data($client->AccountID() . "nag")) {

@@ -1,6 +1,8 @@
+#Value of character-scoped bucket 'SeasonalCharacter' is Season ID. Season 0 is 'Not-Seasonal'. Any mistmatch between EnableSeasonalCharacters rule and SeasonalCharacter bucket is 'Not-Seasonal'
+
 my $seasonal_bucket = "SeasonalCharacter";
 my $seasonal_rule   = "Custom:EnableSeasonalCharacters";
-my $seasonal_count  = "Season_LoginCount";
+my $seasonal_count  = "Season-LoginCount";
 
 my $portable_hole = 199990;
 my $award_aug     = 199995;
@@ -36,12 +38,13 @@ sub AwardSeasonalItems
 {
     my $client = shift;
 
-    if (!plugin::check_hasitem($client, $portable_hole)) {
-        $client->SummonItem($portable_hole);
-    }
-
-    if (!plugin::check_hasitem($client, $award_aug)) {
-        $client->SummonItem($award_aug);
+    if (IsSeasonal($client)) {
+        if (!plugin::check_hasitem($client, $portable_hole)) {
+            $client->SummonItem($portable_hole);
+        }
+        if (!plugin::check_hasitem($client, $award_aug)) {
+            $client->SummonItem($award_aug);
+        }
     }
 }
 

@@ -29,12 +29,6 @@ sub EVENT_CONNECT {
         plugin::WorldAnnounce("$name ($full_class_name) has logged in for the first time.");
     }
 
-    if (plugin::GetSeasonID()) {
-        $client->EnableSeasonal();
-
-        plugin::AwardSeasonalItems($client);
-    }
-
     if (!plugin::is_eligible_for_zone($client, $zonesn)) {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
 		$client->MovePC(151, 185, -835, 4, 390); # Bazaar Safe Location.
