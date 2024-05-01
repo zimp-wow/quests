@@ -7,12 +7,17 @@ my $award_aug     = 199995;
 
 sub GetSeasonID 
 {
-    return quest::get_rule($seasonal_rule);
+    return quest::get_rule($seasonal_rule) || 0;
 }
 
 sub IsSeasonal {
     my $client = shift;
-    return GetSeasonID() == $client->GetBucket($seasonal_bucket);
+    my $season = ($client->GetBucket($seasonal_bucket) || 0)
+    if ($season != 0) {
+        return GetSeasonID() == ($client->GetBucket($seasonal_bucket) || 0);
+    } else {
+        return 0;
+    }
 }
 
 sub EnableSeasonal {
