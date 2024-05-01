@@ -205,7 +205,7 @@ sub AddWaypoint {
                 }
             }
         } else {
-            quest::debug("Attempted to add an invalid or undefined waypoint to " . $client->GetName());
+            quest::debug("Attempted to add an invalid or undefined waypoint ($waypoint) to " . $client->GetName());
         }
     } else {
         quest::debug("Attempted to add a waypoint to a nonspecified client.");
