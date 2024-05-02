@@ -32,6 +32,34 @@ sub GetClassMap {
     );
 }
 
+sub GetClassID {
+    my ($class_name) = @_;
+    my %class_map = (
+        "Warrior" => 1,
+        "Cleric" => 2,
+        "Paladin" => 3,
+        "Ranger" => 4,
+        "Shadow Knight" => 5,
+        "Druid" => 6,
+        "Monk" => 7,
+        "Bard" => 8,
+        "Rogue" => 9,
+        "Shaman" => 10,
+        "Necromancer" => 11,
+        "Wizard" => 12,
+        "Magician" => 13,
+        "Enchanter" => 14,
+        "Beastlord" => 15,
+        "Berserker" => 16,
+    );
+    return $class_map{$class_name};
+}
+
+# Example usage:
+my $class_id = GetClassID("Wizard");
+print "Wizard's ID is $class_id\n"; # Output: Wizard's ID is 12
+
+
 sub GetClassBitmask {
     my ($class_id) = @_;
     if ($class_id < 1 || $class_id > 16) {
@@ -215,6 +243,20 @@ sub IsValidToAddClass {
 
     # Determine if eligible to add: less than 3 classes and doesn't already have this class
     return ($classes_count < 3 && !$has_class_already);
+}
+
+sub HasClass {
+    my $client   = shift;
+    my $class_id = shift;
+
+    return = ($class_bits & (1 << ($class_id - 1))) ? 1 : 0;
+}
+
+sub HasClassName {
+    my $client      = shift;
+    my $class_name  = shift;
+
+    return HasClass(GetClassID())
 }
 
 sub GrantGeneralAA {
