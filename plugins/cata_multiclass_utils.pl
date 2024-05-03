@@ -250,7 +250,7 @@ sub HasClass {
     my $class_id    = shift;
     my $class_bits  = $client->GetClassesBitmask();
 
-    return = ($class_bits & (1 << ($class_id - 1))) ? 1 : 0;
+    return ($class_bits & (1 << ($class_id - 1))) ? 1 : 0;
 }
 
 sub HasClassName {
