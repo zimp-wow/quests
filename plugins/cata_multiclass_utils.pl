@@ -246,8 +246,9 @@ sub IsValidToAddClass {
 }
 
 sub HasClass {
-    my $client   = shift;
-    my $class_id = shift;
+    my $client      = shift;
+    my $class_id    = shift;
+    my $class_bits  = $client->GetClassesBitmask();
 
     return = ($class_bits & (1 << ($class_id - 1))) ? 1 : 0;
 }
