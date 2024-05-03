@@ -115,7 +115,7 @@ sub AwardBonusUnlocks {
         AddWaypoint('lakeofillomen');
         AddWaypoint('dreadlands');
         AddWaypoint('karnor');
-        AddWaypoint('cityofmist');
+        AddWaypoint('citymist');
         AddWaypoint('skyfire');
         AddWaypoint('overthere');
         AddWaypoint('trakanon');
