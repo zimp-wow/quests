@@ -44,7 +44,7 @@ if(plugin::check_handin(\%itemcount, 67411 => 1)) { # Narundel's Decision
 
       elsif ($class eq "Shadowknight"){quest::summonitem(67414);} # Rarundel's Forgotten Memories 
 
-      elsif ($class eq "Monk"){quest::summonitem(67413);} # Rarundel's Mended Memories
+      elsif (plugin::HasClassName($client, "Monk")){quest::summonitem(67413);} # Rarundel's Mended Memories
 
       elsif ($class eq "Beastlord"){quest::summonitem(67414);} #  Rarundel's Forgotten Memories 
 

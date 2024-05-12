@@ -16,7 +16,7 @@ sub EVENT_DEATH_COMPLETE {
   elsif((($class eq "Bard") || ($class eq "Beastlord") || ($class eq "Paladin") || ($class eq "Ranger") || ($class eq "Shadowknight")) && ($qglobals{$instanceid.adhere4} == 2)) {
 	quest::ze(0,"The adherent's debris litters the ground. It has been beaten.");
   }
-  elsif((($class eq "Berserker") || ($class eq "Monk") || ($class eq "Rogue") || ($class eq "Warrior")) && ($qglobals{$instanceid.adhere4} == 3)) {
+  elsif((($class eq "Berserker") || (plugin::HasClassName($client, "Monk")) || ($class eq "Rogue") || ($class eq "Warrior")) && ($qglobals{$instanceid.adhere4} == 3)) {
 	quest::ze(0,"The adherent's debris litters the ground. It has been beaten.");
   }
   elsif((($class eq "Cleric") || ($class eq "Druid") || ($class eq "Shaman")) && ($qglobals{$instanceid.adhere4} == 4)) {

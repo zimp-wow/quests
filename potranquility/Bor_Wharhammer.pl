@@ -201,7 +201,7 @@ sub EVENT_ITEM {
         quest::summonitem(16276);#Druid Emblem
         quest::summonitem(17185);#Druzzil's Mystical Sewing Kit
       }
-      elsif ($class eq "Monk") {
+      elsif (plugin::HasClassName($client, "Monk")) {
         quest::summonitem(16275);#Monk Emblem
         quest::summonitem(17185);#Druzzil's Mystical Sewing Kit
       }

@@ -44,7 +44,7 @@ sub EVENT_ITEM {
 			quest::say("Poor Fraka, he was only a whelp. The betrayers have paid for their crime. While this has avenged the loss of my brother, it still does not take the pain away. Here is your reward for your trouble. Should you find this reward is not fitting, I can replace it with a different one. Now, please leave my sanctum. I need time alone.");
 			if ($class eq "Cleric" || $class eq "Druid" || $class eq "Shaman" || $class eq "Necromancer" || $class eq "Wizard" || $class eq "Magician" || $class eq "Enchanter") { #Caster
 			quest::summonitem(69390); #Earring of Phara Dar
-			} elsif ($class eq "Warrior" || $class eq "Paladin" || $class eq "Ranger" || $class eq "Shadowknight" || $class eq "Monk" || $class eq "Bard" || $class eq "Rogue" || $class eq "Beastlord" || $class eq "Berserker") { #Melee/Hybrid
+			} elsif ($class eq "Warrior" || $class eq "Paladin" || $class eq "Ranger" || $class eq "Shadowknight" || plugin::HasClassName($client, "Monk") || $class eq "Bard" || $class eq "Rogue" || $class eq "Beastlord" || $class eq "Berserker") { #Melee/Hybrid
 				quest::summonitem(69389); #Ring of the Azure Sky
 			}
 			quest::exp(50000);

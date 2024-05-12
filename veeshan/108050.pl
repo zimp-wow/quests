@@ -22,7 +22,7 @@ sub EVENT_ITEM {
 			} elsif ($class eq "Rogue") { quest::summonitem(69381);
 			} elsif ($class eq "Paladin") { quest::summonitem(69381);
 			} elsif ($class eq "Shadowknight") { quest::summonitem(69381);
-			} elsif ($class eq "Monk") { quest::summonitem(69381);
+			} elsif (plugin::HasClassName($client, "Monk")) { quest::summonitem(69381);
 			} elsif ($class eq "Beastlord") { quest::summonitem(69381);
 			} else { quest::summonitem(69382);
 			}

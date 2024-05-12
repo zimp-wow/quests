@@ -121,7 +121,7 @@ sub EVENT_ITEM {
 	if (($class eq "Bard") || ($class eq "Beastlord") || ($class eq "Paladin") || ($class eq "Ranger") ||  ($class eq "Shadowknight")) {
       quest::summonitem(67654); # Item: Green Hued Gemstone
     }
-    elsif (($class eq "Warrior") || ($class eq "Monk") || ($class eq "Berserker")  || ($class eq "Rogue"))  {
+    elsif (($class eq "Warrior") || (plugin::HasClassName($client, "Monk")) || ($class eq "Berserker")  || ($class eq "Rogue"))  {
       quest::summonitem(67653); # Item: Green Hued Gemstone
     }
     elsif (($class eq "Cleric") || ($class eq "Shaman") || ($class eq "Druid")) {
