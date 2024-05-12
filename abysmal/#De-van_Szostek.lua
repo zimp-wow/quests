@@ -69,9 +69,10 @@ function event_say(e)
             e.other:Message(MT.DarkGray, "De`van Szostek says 'You seem quite interested in what I have said here and while I could be wrong, when I look at you I see a glimpse of the same honor-filled spirit I saw in them. I know it may be too much to ask, but we have all been suffering for a long time and... well, if you ever find yourself inside Tacvi, and you come across the remains of an adventurer, bring back what you find. For me, I would like to have the writings of Xenaida, Wijdan, Rytan, Kaikachi, Vahlara, Frizznik, Zajeer, and Valtron. As for the rest of them, I would ask that you return their memories to the six they left here on the boat. While this task is not an easy one, I shall handsomely reward anyone who returns all of these things to the proper people.'")
         end
     elseif (e.message:findi("task is complete")) then
-        if (turnins == 16383) then -- completed!
+        if (turnins == 16383 and not e.other:GetBucket("tome_awarded")) then -- completed!
             e.self:Say("I thank you, " .. e.other:GetName() .. ", and as I promised, here is a reward for your efforts. Guard this with your life, for while it may not seem like much, I believe its potential will increase when we discover more about these beings and the realm they came from.")
             e.other:SummonItem(67606) -- Tome of New Beginnings
+            e.other:SetBucket("tome_awarded", "true");
         else
             e.self:Say("I am sorry. You still have more to collect before I can reward you.")
         end
