@@ -98,20 +98,6 @@ sub HasMeleeClass {
     return 0;
 }
 
-sub HasClass {
-    my $classID = shift;
-    my $client = shift || plugin::val('$client');
-    my $class_bits = $client->GetClassesBitmask();
-
-    # Check if the bit corresponding to the class ID is set in the bitmask
-    # Shift 1 left by (classID - 1) positions to create the bitmask for the specific class
-    if ($class_bits & (1 << ($classID - 1))) {
-        return 1;  # True, class ID is present
-    } else {
-        return 0;  # False, class ID is not present
-    }
-}
-
 sub AddClass {
     my $class_id = shift;
     my $client = shift || plugin::val('$client');

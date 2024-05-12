@@ -15,7 +15,7 @@ sub EVENT_SAY
 		quest::emote("Gram Dunnar stops carving and holds up the object between his short fingers. It is a figurine of a swordsman with many intricate details. 'No one really wants to buy them, these days. If there's no magic in it...' he shrugs. 'Still, something to take up some time.' He rummages through some finished pieces on the floor around him, picks up one, and tosses it to you. 'Here,' he says. 'Maybe it'll bring you some luck.");
 
 		for my $classID (1..16) {        
-			if (plugin::HasClass($classID, $client)) {
+			if (plugin::HasClass($client, $classID)) {
 				my $itemId = 2035000 + $classID;
 				if (!plugin::check_hasitem($client, $itemId)) {
 					$client->SummonFixedItem($itemId);
