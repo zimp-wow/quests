@@ -38,7 +38,7 @@ sub EVENT_ITEM {
     elsif ($class eq "Rogue"){quest::summonitem(59911);} # Chaos Strike
     elsif ($class eq "Paladin"){quest::summonitem(59852);} # Ancient: Force of Chaos
     elsif ($class eq "Shadowknight"){quest::summonitem(59857);} # Ancient: Bite of Chaos
-    elsif ($class eq "Monk"){quest::summonitem(59913);} # Phantom Chaos
+    elsif (plugin::HasClassName($client, "Monk")){quest::summonitem(59913);} # Phantom Chaos
     elsif ($class eq "Beastlord"){quest::summonitem(59847);} # Ancient: Frozen Chaos
     elsif ($class eq "Cleric"){quest::summonitem(59848);} # Ancient: Chaos Censure
     elsif ($class eq "Druid"){quest::summonitem(59849);} # Ancient: Chaos Frost
@@ -59,7 +59,7 @@ sub EVENT_ITEM {
     elsif ($class eq "Rogue"){quest::summonitem(59910);} # Kyv Strike
     elsif ($class eq "Paladin"){quest::summonitem(59831);} # Wave of Trushar
     elsif ($class eq "Shadowknight"){quest::summonitem(59841);} # Black Shroud
-    elsif ($class eq "Monk"){quest::summonitem(59912);} # Phantom Shadow
+    elsif (plugin::HasClassName($client, "Monk")){quest::summonitem(59912);} # Phantom Shadow
     elsif ($class eq "Beastlord"){quest::summonitem(59814);} # Trushar's Mending
     elsif ($class eq "Cleric"){quest::summonitem(59821);} # Holy Elixir
     elsif ($class eq "Druid"){quest::summonitem(59823);} # Sylvan Fire

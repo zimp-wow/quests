@@ -43,7 +43,7 @@ sub EVENT_DEATH_COMPLETE {
     quest::spawn2(294627,0,0,$x,$y,$z,$h); # NPC: a_pile_of_bones
 	quest::ze(0,"The stone worker crumbles to the ground, its energy drained.");
   }
-  elsif(($class eq "Monk") && ($qglobals{$instanceid.asentkill} == 3)) {
+  elsif((plugin::HasClassName($client, "Monk")) && ($qglobals{$instanceid.asentkill} == 3)) {
     quest::spawn2(294627,0,0,$x,$y,$z,$h); # NPC: a_pile_of_bones
 	quest::ze(0,"The stone worker crumbles to the ground, its energy drained.");
   }

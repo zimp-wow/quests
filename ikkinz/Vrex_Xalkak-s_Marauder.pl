@@ -51,7 +51,7 @@ sub EVENT_DEATH_COMPLETE {
 	quest::delglobal($instanceid.marakill);
 	quest::ze(15,"The marauder's remains crash to the ground. It is no more.");
   }
-  elsif((($class eq "Berserker") || ($class eq "Monk") || ($class eq "Rogue") || ($class eq "Warrior")) && ($qglobals{$instanceid.marakill} == 3)) {
+  elsif((($class eq "Berserker") || (plugin::HasClassName($client, "Monk")) || ($class eq "Rogue") || ($class eq "Warrior")) && ($qglobals{$instanceid.marakill} == 3)) {
     quest::spawn2(294595,0,0,480,-592,-50,128); # NPC: #Vrex_Xalkak_Nixki
 	quest::delglobal($instanceid.marakill);
 	quest::ze(15,"The marauder's remains crash to the ground. It is no more.");

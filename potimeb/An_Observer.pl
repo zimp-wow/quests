@@ -17,6 +17,7 @@ sub EVENT_SAY {
 
     if ($text =~ /fabled/i) {
         plugin::set_subflag($client, 'FNagafen', 'Quarm', 1);
+        plugin::set_subflag($client, 'GoD', 'Saryrn');
         quest::say("Indeed. I remember one particularly harrowing battle...");
     }
 }

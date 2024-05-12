@@ -7,7 +7,7 @@ function event_say(e)
 	if(e.message:findi("hail")) then
 		e.self:QuestSay(e.other, "Sorry, I am a bit tired. Been working all night.");
 	end
-	if e.other:HasClass(Class.Paladin) then
+	if e.other:HasClass(Class.PALADIN) then
 		if(e.message:findi("hail")) then
 			e.self:QuestSay(e.other, "Hello, " .. e.other:GetName() .. ", I do believe we've spoken before and I told you I was very [" .. eq.say_link("tired") .. "]. ")
 		elseif(e.message:findi("tired")) then
