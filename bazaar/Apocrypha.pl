@@ -91,8 +91,11 @@ sub EVENT_SAY {
     my $cost = 5;
 
     if ($text=~/hail/i) {
-        if (!($client->IsSeasonal() || plugin::MultiClassingEnabled()))   
-        $response = "Hail, Adventurer. I seek to empower your ilk for my own profit. For a [modest fee], I will enhance the power of your group for a time. In exchange for more [exotic payment], I will enhance the power of all adventurers in the world.";
+        if ($client->IsSeasonal() || plugin::MultiClassingEnabled()) {
+            $response = "Hail, Adventurer. I seek to empower your ilk for my own profit. In exchange for [exotic payment], I will enhance the power of all adventurers in the world.";
+        } else {
+            $response = "Hail, Adventurer. I seek to empower your ilk for my own profit. For a [modest fee], I will enhance the power of your group for a time. In exchange for more [exotic payment], I will enhance the power of all adventurers in the world.";
+        }
     }
 
     elsif ($text=~/modest fee/i) {
