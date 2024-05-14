@@ -44,7 +44,7 @@ sub EVENT_SAY {
       $client->Message(257, " ------- Select a Continent ------- ");   
 
       # Get the list of all continents
-      my @categories = plugin::GetContinents();
+      my @categories = sort plugin::GetContinents();
 
       # Display only those continents which have waypoints
       while (my ($index, $continent) = each @categories) {
@@ -59,7 +59,7 @@ sub EVENT_SAY {
     my $continent_id = $1 || 0;
     my $mode = $2;
     
-    my %waypoints = plugin::GetWaypoints($continent_id, $client);
+    my %waypoints = sort plugin::GetWaypoints($continent_id, $client);
 
     $client->Message(257, " ------- Select a Location ------- ");
 
@@ -74,8 +74,6 @@ sub EVENT_SAY {
     my $wp_id = $1;
     my $mode = $2;
     my %waypoints = plugin::GetWaypoints(-1, $client);
-
-    quest::debug("Searching for $wp_id");
 
     if (exists $waypoints{$wp_id} && $client->TakeMoneyFromPP($cost, 1)) {
       my $destination = $waypoints{$wp_id};
