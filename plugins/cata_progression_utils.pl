@@ -725,7 +725,7 @@ sub ValidProgInstance {
 sub handle_death {
     my ($npc, $x, $y, $z, $entity_list) = @_;
 
-    if (quest::get_rule("Custom:MulticlassingEnabled") eq "true") {
+    if (plugin::MultiClassingEnabled()) {
         my $zoneid          = plugin::val('$zoneid');
         my $instanceid      = plugin::val('$instanceid');
         my $instanceversion = plugin::val('$instanceversion');
@@ -751,7 +751,7 @@ sub handle_killed_merit {
     my $npc   = shift;
     my $client = shift;
 
-    if ($client->IsSeasonal() || quest::get_rule("Custom:MulticlassingEnabled") eq "true") {
+    if ($client->IsSeasonal() || plugin::MultiClassingEnabled()) {
         my $zoneid          = plugin::val('$zoneid');
         my $instanceid      = plugin::val('$instanceid');
         my $instanceversion = plugin::val('$instanceversion');

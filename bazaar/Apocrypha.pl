@@ -39,8 +39,6 @@ sub apply_buffs {
 
     $duration_override *= $duration_scale;
 
-    quest::debug("duration_scale: $duration_scale, $price_scale");
-
     if ($closest_level > 0) {
         if ($client->TakeMoneyFromPP($price_map->{$closest_level} * 1000 * $price_scale, 1)) {
             my $price = $price_map->{$closest_level} * $price_scale;
@@ -92,13 +90,13 @@ sub EVENT_SAY {
     my $buff_id = 0;
     my $cost = 5;
 
-    if ($text=~/hail/i) {   
+    if ($text=~/hail/i) {
+        if (!($client->IsSeasonal() || plugin::MultiClassingEnabled()))   
         $response = "Hail, Adventurer. I seek to empower your ilk for my own profit. For a [modest fee], I will enhance the power of your group for a time. In exchange for more [exotic payment], I will enhance the power of all adventurers in the world.";
     }
 
     elsif ($text=~/modest fee/i) {
         my $level_break = get_level_breakpoint($client->GetLevel());
-        quest::debug("level_break: $level_break");
 
         my $plat_price = $price_map->{get_level_breakpoint($client->GetLevel())};        
        

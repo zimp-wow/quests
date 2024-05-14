@@ -45,7 +45,7 @@ sub EVENT_SAY {
             my $item4_link = quest::varlink($item4);
 
             my $response_string = "In that case, you will need to do is bring me the one each of following: [$item1_link], [$item2_link], [$item3_link], and [$item4_link].";
-            if (quest::get_rule("Custom:MulticlassingEnabled") ne "true") {
+            if (!plugin::MultiClassingEnabled()) {
                 $response_string = $response_string . " Not only will I grant you access to the $stage_desc, but I will give you two tokens so that your companions can present them to me in order to also gain access.";
             }
 
@@ -131,7 +131,7 @@ sub EVENT_ITEM {
 
             plugin::NPCTell("Excellent, you have collected all of the items which I require. Going forward, you will be able to access the $stage_desc.");
             quest::ding();      
-            if (quest::get_rule("Custom:MulticlassingEnabled") ne "true") {
+            if (!plugin::MultiClassingEnabled()) {
                 plugin::NPCTell("Here are two additional tokens for your companions to also gain access to the $stage_desc");
                 quest::summonfixeditem($token_item);
                 quest::summonfixeditem($token_item);  

@@ -13,6 +13,15 @@ sub CommonCharacterUpdate {
     plugin::AwardSeasonalItems($client);
 }
 
+sub MultiClassingEnabled
+{
+    if (quest::get_rule("Custom:MulticlassingEnabled") eq "false") {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
 sub GetClassMap {
     return (
         1 => "Warrior",

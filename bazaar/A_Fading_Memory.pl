@@ -63,7 +63,7 @@ sub RewardItems {
             # Summon the fixed items for the class
             foreach my $item (@{$classRewards{$classBitmask}->{items}}) {
                 # Do not summon the item if it's item ID 199999 and multiclassing is not enabled
-                if (!($item == 199999 && quest::get_rule("Custom:MulticlassingEnabled") eq "false")) {
+                if (!($item == 199999 && plugin:MultiClassingEnabled())) {
                     $client->SummonFixedItem($item);
                 }
             }

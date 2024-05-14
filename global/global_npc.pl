@@ -1,5 +1,5 @@
 sub EVENT_SAY {
-    if (quest::get_rule("Custom:MulticlassingEnabled") ne "false") {
+    if (plugin::MultiClassingEnabled()) {
         my $classes = $client->GetClassesBitmask();
         my $player_class_id = $npc->GetClass() - 19;
         my $class_name = quest::getclassname($player_class_id);
@@ -119,7 +119,7 @@ sub EVENT_TICK {
     CHECK_CHARM_STATUS();
     
     # TODO: Gate this behind your owner actually having an eligible pet bag
-    if (quest::get_rule("Custom:MulticlassingEnabled") ne "false") {  
+    if (plugin::MultiClassingEnabled()) {  
         if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
             UPDATE_PET_BAG($npc);
         }

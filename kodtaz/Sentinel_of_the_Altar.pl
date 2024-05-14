@@ -9,7 +9,7 @@ sub EVENT_ITEM {
 		my $dz_duration = 79200;
 		my $min_players = 1;
 		my $max_players = 54;
-		if (quest::get_rule("Custom:MulticlassingEnabled") ne "false"){
+		if (plugin::MultiClassingEnabled()){
 			$min_players = 1;
 			$max_players = 6;
 		}
