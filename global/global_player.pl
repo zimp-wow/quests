@@ -137,6 +137,31 @@ sub EVENT_SAY {
 		} elsif ($text=~/diag/i) {
             $client->Message(15, "Season: " . plugin::GetSeasonID());
             $client->Message(15, "IsSeasonal? : " . plugin::IsSeasonal($client));
+            $client->Message(15, "IsSeasonal? : " . $client->IsSeasonal());
+
+            my ($sec, $min, $hour, $day, $mon, $year) = localtime();
+            $year += 1900; # Adjust year to get the current year
+            $mon++;
+            plugin::YellowText("Date: $year-$mon-$day");
+        } elsif ($text=~/test1/i) {
+            my $slot = plugin::get_slot_by_item($client, 199990);
+
+            quest::debug("Checking! Found: $slot");
+            if ($slot) {
+                $client->SetCustomItemData($slot, "Customized", "true");
+                $client->SetCustomItemData($slot, "BagSlots", 10);
+                $client->SetCustomItemData($slot, "NoDrop", 0);
+                $client->SetCustomItemData($slot, "Artifact", 1);
+                $client->ReloadDynamicItem($slot);
+            }
+        }  elsif ($text=~/test2/i) {
+            my $slot = plugin::get_slot_by_item($client, 199990);
+
+            if ($slot) {
+                $client->SetCustomItemData($slot, "Customized", "true");
+                $client->SetCustomItemData($slot, "BagSlots", 100);
+                $client->RealoadDynamicItem($slot);
+            }
         }
 	}
 }

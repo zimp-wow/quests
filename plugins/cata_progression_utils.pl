@@ -220,7 +220,8 @@ sub list_stage_prereq {
         
         if ($prereqs && @$prereqs ne 'Disabled') {
             foreach my $objective (@$prereqs) {
-                my $completed = get_subflag($client, $target_stage, $objective) ? "completed" : "not completed";
+                my $completed = get_subflag($client, $target_stage, $objective) ? "Completed" : "Not Completed";
+                $objective =~ s/\b(\w)/\U$1/g;
                 plugin::YellowText("$objective: $completed");
             }
         }
@@ -279,7 +280,7 @@ sub get_subflag {
 
     my %original_flag;
 
-    if (IsSeasonal()) {
+    if ($client->IsSeasonal()) {
         %original_flag = plugin::DeserializeHash($client->GetBucket("progress-flag-$stage"));
     } else {
         %original_flag = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
@@ -312,7 +313,7 @@ sub set_subflag {
     $character_progress{$objective} = $value;
 
     quest::set_data($client->AccountID() . "-progress-flag-$stage", plugin::SerializeHash(%account_progress));
-    $client->SetBucket("progress-flag-$stage", plugin::SerializeHash(%account_progress));
+    $client->SetBucket("progress-flag-$stage", plugin::SerializeHash(%character_progress));
 
     # Check if the objective value has changed
     if ((!exists $account_progress{$objective} || $account_progress{$objective} != $value) ||
@@ -327,6 +328,21 @@ sub set_subflag {
             plugin::BlueText("Your memories gain sudden, sharp focus. You see the path forward.");
             UpdateCharMaxLevel($client);
             UpdateRaceClassLocks($client);
+        }
+    }
+
+    if ($client->IsSeasonal() && is_stage_complete($client, $stage) && !$client->GetBucket("season-$stage-complete")) {
+        plugin::BlueText("WTF?");
+        $client->SetBucket("season-$stage-complete", "true");
+        my $slot = plugin::get_slot_by_item($client, 199990);
+        if ($slot) {
+            $client->SetCustomItemData($slot, "Customized", "true");
+            $client->SetCustomItemData($slot, "NoDrop", 0);
+
+            $client->SetCustomItemData($slot, "BagSlots", ($client->GetCustomItemData($slot, "BagSlots" || 20) + 5));
+            $client->ReloadDynamicItem($slot);
+
+            plugin::YellowText("The Pocket Dimension of your Portable Hole has inflated!");
         }
     }
 
@@ -696,8 +712,28 @@ sub UpdateRaceClassLocks {
     }
 }
 
+sub ValidProgInstance {
+    my ($zoneid, $instanceid, $instanceversion) = @_;
+
+    if ($instanceid || $instanceversion) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 sub handle_death {
     my ($npc, $x, $y, $z, $entity_list) = @_;
+
+    if (quest::get_rule("Custom:MulticlassingEnabled") eq "true") {
+        my $zoneid          = plugin::val('$zoneid');
+        my $instanceid      = plugin::val('$instanceid');
+        my $instanceversion = plugin::val('$instanceversion');
+
+        if (!plugin::ValidProgInstance($zoneid, $instanceid, $instanceversion)) {
+            return;
+        }
+    }
 
     my $npc_name = lc($npc->GetCleanName());
     $npc_name =~ s/^[#\s]+|[#\s]+$//g;
@@ -714,6 +750,16 @@ sub handle_death {
 sub handle_killed_merit {
     my $npc   = shift;
     my $client = shift;
+
+    if ($client->IsSeasonal() || quest::get_rule("Custom:MulticlassingEnabled") eq "true") {
+        my $zoneid          = plugin::val('$zoneid');
+        my $instanceid      = plugin::val('$instanceid');
+        my $instanceversion = plugin::val('$instanceversion');
+
+        if (!plugin::ValidProgInstance($zoneid, $instanceid, $instanceversion)) {
+            return;
+        }
+    }
 
     my $npc_name = lc($npc->GetCleanName());
     $npc_name =~ s/^[#\s]+|[#\s]+$//g;

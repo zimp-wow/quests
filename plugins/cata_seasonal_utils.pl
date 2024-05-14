@@ -48,20 +48,19 @@ sub AwardSeasonalItems
     }
 }
 
-sub UpgradeSeasonalItems {
-
-}
-
 sub RegisterSeasonalLogin {
     my $client = shift;
-    my $login_marker = $client->GetBucket("LoginMarker");
 
     if ($client->IsSeasonal()) {
-        if (!$login_marker) {
-            my $login_count = $client->GetBucket($seasonal_count) || 0;
+        #login tracker        
+        my $last_date = quest::get_data($client->AccountID() . "-season-1-date-flag") || 0;
+        my ($sec, $min, $hour, $day, $mon, $year) = localtime();
+        $year += 1900; # Adjust year to get the current year
+        $mon++;
 
-            $client->SetBucket($seasonal_count, $login_count);
-            $client->SetBucket("LoginMarker", quest::GetTimeSeconds(), 3600 * 16); # Expires in 16 hours.
+        if ($last_date != "$day-$mon-$year") {
+            quest::set_data($client->AccountID() . "-season-1-date-flag", "$day-$mon-$year");
+            quest::set_data($client->AccountID() . "-season-1-participation", (quest::get_data($client->AccountID() . "-season-1-participation") || 0) + 1);
         }
     }
 }

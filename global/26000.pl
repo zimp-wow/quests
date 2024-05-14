@@ -17,7 +17,13 @@ sub EVENT_SAY {
     my $flag_name  = $npc->GetEntityVariable("Flag-Name");
 
     if ($text =~ /hail/i) {
-        
+        if (plugin::IsSeasonal($client) || quest::get_rule("Custom:MulticlassingEnabled") eq "true") {
+            if (!plugin::ValidProgInstance($zoneid, $instanceid, $instanceversion)) {      
+                plugin::YellowText("You may only advance your progression within an instance.");          
+                return;
+            }
+        }
+         
         if ($flag_stage eq 'RoK') {
             plugin::BlueText("Your mind flashes with recollections of savage lands; dense jungles, desolate swamps, and fiery wastes.");
         }
