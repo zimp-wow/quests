@@ -230,7 +230,7 @@ sub EVENT_SAY {
   }
   if (($text=~/final step/i) && defined($qglobals{ikkyraid}) && ($qglobals{ikkyraid} == 3)) { 
     quest::say("Each inferno scepter you make can be used to smelt one block of inanimate ore. Do this three times and you'll get three vials of smelted molten ore. Combine the three vials and the three artifacts in a forge to fuse the three pieces together and hopefully create the Icon of the Altar. When you've finally accomplished all this, show me the icon so I can identify whether this method is one that works or not. Good luck, $name.");
-	quest::setglobal("ikky",13,5,"F");
+	  quest::setglobal("ikky",13,5,"F");
     $client->Message(4, "Finished! - You've been instructed what needs to be done to make the Icon of the Altar!");
   }
 }
@@ -303,12 +303,13 @@ sub EVENT_ITEM {
       quest::emote("scans the icon before returning it to you. 'You've done well. $name. Up until now I hadn't noticed the final glyph that is created when the three pieces are combined. I must inspect this further, but return to me shortly and I should have an answer as to the glyph's meaning.'");
       $client->Message(4, "Finished! - You've constructed your Icon of the Altar!");
       quest::setglobal("ikky",14,5,"F");
-	}
-	quest::summonfixeditem(60173); # Item: Icon of the Altar
+	  }
+	  quest::summonfixeditem(60173); # Item: Icon of the Altar
   }
   if (defined($qglobals{ikky}) && ($qglobals{ikky} < 14)) {
     if (plugin::check_handin(\%itemcount, 60173 => 1)) {
       quest::say("You can't have this? What kind of trickery is this? You haven't completed the [" . quest::saylink("final step") . "] yet have you?.");
+      quest::summonfixeditem(60173); # Item: Icon of the Altar
     }
   }
   if (defined($qglobals{ikky}) && ($qglobals{ikky} >= 10)) {
