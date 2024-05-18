@@ -166,7 +166,7 @@ sub AddDefaultAttunement {
 }
 
 sub GetContinents {
-    return sort @categories;
+    return @categories;
 }
 
 sub CheckSpawnWaypoints {
