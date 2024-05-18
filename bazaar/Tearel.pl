@@ -64,7 +64,7 @@ sub EVENT_SAY {
     $client->Message(257, " ------- Select a Location ------- ");
 
     if (keys %waypoints) {
-      my @keys = sort keys %waypoints
+      my @keys = sort keys %waypoints;
       foreach my $wp_id (@keys) {
         $client->Message(257, "-[ " . quest::saylink("teleport-$wp_id-$2", 1, $waypoints{$wp_id}[0]));
       }
