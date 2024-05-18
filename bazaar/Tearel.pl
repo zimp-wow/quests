@@ -44,7 +44,7 @@ sub EVENT_SAY {
       $client->Message(257, " ------- Select a Continent ------- ");   
 
       # Get the list of all continents
-      my @categories = sort plugin::GetContinents();
+      my @categories = plugin::GetContinents();
 
       # Display only those continents which have waypoints
       while (my ($index, $continent) = each @categories) {
