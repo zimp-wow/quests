@@ -59,7 +59,7 @@ sub EVENT_SAY {
     my $continent_id = $1 || 0;
     my $mode = $2;
     
-    my %waypoints = sort plugin::GetWaypoints($continent_id, $client);
+    my %waypoints = plugin::GetWaypoints($continent_id, $client);
 
     $client->Message(257, " ------- Select a Location ------- ");
 
