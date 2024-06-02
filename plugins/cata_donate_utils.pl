@@ -123,6 +123,7 @@ sub UpdateEoMAward {
     my $client = shift;
     if ($client->GetBucket("EoM-Award")) {
         plugin::AwardEOM($client, $client->GetBucket("EoM-Award"));
+        quest::ding();
         $client->DeleteBucket("EoM-Award");
     }
 }
