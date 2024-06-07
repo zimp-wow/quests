@@ -172,6 +172,23 @@ my %STAGE_PREREQUISITES = (
     # ... and so on for each stage
 );
 
+# Map of titles -> progression target. Progression is the stage which needs to be unlocked to get the title, see above table
+my %PROGRESSION_TITLE_MAP = (
+    'Rok' => ', Hero of Norrath',
+    'SoV' => ', Dragonsbane',
+    'SoL' => ', Frostbane',
+    'PoP' => ', Shadowseeker',
+    'GoD' => ', Timebound',
+);
+
+my %KILLSHOT_TITLES_MAP = (
+    'RoK' => 'the Dragon Slayer',
+    'SoV' => 'the Scale Ripper',
+    'SoL' => 'the Frostriven',
+    'PoP' => 'the Lightbearer',
+    'GoD' => ', Godslayer'
+);
+
 foreach my $key (keys %STAGE_PREREQUISITES) {
     @{$STAGE_PREREQUISITES{$key}} = map { lc } @{$STAGE_PREREQUISITES{$key}};
 }
@@ -318,6 +335,29 @@ sub set_subflag {
     # Check if the objective value has changed
     if ((!exists $account_progress{$objective} || $account_progress{$objective} != $value) ||
         (plugin::IsSeasonal($client) && (!exists $character_progress{$objective} || $character_progress{$objective} != $value))) {
+
+        if ($stage eq 'RoK') {
+            plugin::BlueText("Your mind flashes with recollections of savage lands; dense jungles, desolate swamps, and fiery wastes.");
+        }
+        elsif ($stage eq 'SoV') {
+            plugin::BlueText("You almost feel a chill in your bones as your mind fills with visions of endless ice plains, and fortresses filled with Giants and Dragons alike.");
+        }
+        elsif ($stage eq 'SoL') {
+            plugin::BlueText("Your mind recoils at the eldritch horror; dark shadows whisper to you of rites and mysteries alike.");
+        }
+        elsif ($stage eq 'PoP') {
+            plugin::BlueText("You sense a disturbance in the planes; a power grows near... again.");
+        }
+        elsif ($stage eq 'GoD') {
+            plugin::BlueText("You remember an island lost to the mists, conqurered and shattered, yet its people's will remains unbroken.");
+        }
+        elsif ($stage eq 'OoW') {
+            plugin::BlueText("You recall the Overlord of the invasion, sitting in his throne as he surveys the worlds he regards as prey.");
+        }
+        elsif ($stage eq 'DoN') {
+            plugin::BlueText("You recall the ancient dragons, and grow fearful at the prospect of them stirring once more.");
+        }
+
         # Send messages only if there was a change
         plugin::YellowText("You have gained a progression flag!");
         plugin::BlueText("Your memories become more clear, you see the way forward drawing closer.");
@@ -326,8 +366,14 @@ sub set_subflag {
         if (is_stage_complete($client, $stage)) {       
             plugin::YellowText("You have completed a progression stage!");
             plugin::BlueText("Your memories gain sudden, sharp focus. You see the path forward.");
+
+            if (plugin::IsSeasonal($client)) {
+                quest::set_data($client->AccountID() . "-progression-title-$stage", 1);
+            }
+
             UpdateCharMaxLevel($client);
             UpdateRaceClassLocks($client);
+            UpdateProgressionTitles($client);
         }
     }
 
@@ -421,7 +467,10 @@ sub delete_all_progress {
 sub is_time_locked {
     #TODO - implement logic here to determine if an expansion is currently time-locked
     # Return 1 if locked, 0 if unlocked
-    my ($client, $expansion)
+    my $stage = shift;
+
+    return !(quest::get_data("season-$stage-unlocked"));
+
     return 1;
 }
 
@@ -758,25 +807,7 @@ sub handle_death {
 }
 
 sub handle_killed_merit {
-    my $npc   = shift;
-    my $client = shift;
-
-    if ($client->IsSeasonal() || plugin::MultiClassingEnabled()) {
-        my $zoneid          = plugin::val('$zoneid');
-        my $instanceid      = plugin::val('$instanceid');
-        my $instanceversion = plugin::val('$instanceversion');
-
-        if (!plugin::ValidProgInstance($zoneid, $instanceid, $instanceversion)) {
-            return;
-        }
-    }
-
-    my $npc_name = lc($npc->GetCleanName());
-    $npc_name =~ s/^[#\s]+|[#\s]+$//g;
-
-    if (plugin::subflag_exists($npc_name)) {
-        plugin::set_subflag($client, plugin::get_subflag_stage($npc_name), $npc_name);
-    }
+    # No-Op this. All flagging handled through hail mob (Gross tbh)
 }
 
 sub move_startzone {
@@ -842,4 +873,18 @@ sub move_startzone {
     else {
         quest::movepc(202, -55, 44, -158.81); # Zone: poknowledge
     }  
+}
+
+sub UpdateProgressionTitles {
+    my $client = plugin::val('$client');
+    #quest::set_data($client->AccountID() . "-progression-title-$stage", 1);
+
+    foreach my $stage (@stages) {
+        if (exists $PROGRESSION_TITLE_MAP{$stage}) {
+            my $flag = quest::get_data($client->AccountID() . "-progression-title-$stage") || 0;
+            if ($flag) {
+                quest::checktitle(int title_set)
+            }
+        }
+    }
 }
