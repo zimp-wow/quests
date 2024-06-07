@@ -356,15 +356,18 @@ sub is_stage_complete {
     my ($client, $stage, $inform) = @_;
     $inform //= 0; # Set to 0 if not defined
 
-    #quest::debug("Checking if stage is complete: $stage");
-
     # Return false if the stage is not valid
     unless (exists $VALID_STAGES{$stage}) {
         quest::debug("ERROR: Invalid stage: $stage for " . $client->GetCleanName());
         return 0;
     }
 
-    #quest::debug("Valid Stage: $stage");
+    if (plugin::IsSeasonal($client)) {
+        if (is_time_locked($stage)) {
+            $client->Message(263, "The world is not yet prepared for these memories to be uncovered.");
+            return 0;
+        }
+    }
 
     # Check prerequisites
     foreach my $prerequisite (@{$STAGE_PREREQUISITES{$stage}}) {
@@ -413,6 +416,13 @@ sub delete_all_progress {
 
     # Notify client if necessary
     $client->Message(15, "All your progression flags have been reset.");  # Message 15 is typically a yellow text in EQ
+}
+
+sub is_time_locked {
+    #TODO - implement logic here to determine if an expansion is currently time-locked
+    # Return 1 if locked, 0 if unlocked
+    my ($client, $expansion)
+    return 1;
 }
 
 sub is_eligible_for_race {
