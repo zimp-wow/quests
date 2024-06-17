@@ -18,9 +18,9 @@ sub EVENT_SAY {
   elsif ($text =~ /request/i) {
     my $dz = $client->CreateExpedition($dz_zone, $dz_version, $dz_duration, $expedition_name, $min_players, $max_players);
     if ($dz) {
-      $dz->SetCompass("gukbottom", -216, 1195, -79); # pointing out
-      $dz->SetSafeReturn("gukbottom", -216, 1195, -79, 261); # right outside kedge facing out... gon' drown some boxes'
-      $dz->SetZoneInLocation(-216, 1195, -79, 261); # right inside facing in
+      $dz->SetCompass("gukbottom", -216, 1195, -83); # pointing out
+      $dz->SetSafeReturn("gukbottom", -216, 1195, -83, 258); # right outside kedge facing out... gon' drown some boxes'
+      $dz->SetZoneInLocation(-216, 1195, -83, 258); # right inside facing in
       $dz->AddReplayLockout(79200); # immediately add a 22 hour replay lockout on creation
       quest::say("Tell me when you're [" . quest::saylink("ready") . "] to enter");
     }
