@@ -465,9 +465,12 @@ sub delete_all_progress {
 }
 
 sub is_time_locked {
-    #TODO - implement logic here to determine if an expansion is currently time-locked
     # Return 1 if locked, 0 if unlocked
     my $stage = shift;
+
+    if ($stage == 'RoK') {
+        return 1;
+    }
 
     return !(quest::get_data("season-$stage-unlocked"));
 
