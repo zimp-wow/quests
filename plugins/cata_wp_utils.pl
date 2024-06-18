@@ -54,6 +54,7 @@ my %waypoints = (
     'iceclad'       => ["The Iceclad Ocean (Tower of Frozen Shadow)", 4, 3127, 1300, 111, 500],
     'eastwastes'    => ["Eastern Wastes (Crystal Caverns)", 4, 464, -4037, 144, 178],
     'cobaltscar'    => ["Cobalt Scar", 4, -1633, -1064, 296, 115],
+    'greatdivide'   => ["Great Divide (Velketor's Labyrinth)", 4, 3287, -6646, -35, 251],
     'wakening'      => ["The Wakening Land", 4, 4552, 1455, -60, 130],
     'westwastes'    => ["The Western Wastes (Temple of Veeshan)", 4, 808, 1323, -196, 373],
     'sharvahl'      => ["The City of Shar Vahl", 5, 250, 55, -188, 400],
