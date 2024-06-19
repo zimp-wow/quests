@@ -377,9 +377,8 @@ sub set_subflag {
         }
     }
 
-    if ($client->IsSeasonal() && is_stage_complete($client, $stage) && !$client->GetBucket("season-$stage-complete")) {        
+    if ($client->IsSeasonal() && is_stage_complete_2($client, $stage) && !$client->GetBucket("season-$stage-complete")) {        
         $client->SetBucket("season-$stage-complete", "true");
-        $client->SetBucket("season-bag-upgrade-available", "true");
         plugin::YellowText("Your Portable Hole is eligible to be upgraded. See the Sage of Anachronism in The Bazaar for more information.");
     }
 
@@ -403,6 +402,45 @@ sub is_stage_complete {
         if (is_time_locked($stage)) {            
             return 0;
         }
+    }
+
+    # Check prerequisites
+    foreach my $prerequisite (@{$STAGE_PREREQUISITES{$stage}}) {
+        # Deserialize and then convert keys to lower-case
+        my %raw_objective_progress;
+
+        if (plugin::IsSeasonal($client)) {
+            %raw_objective_progress = plugin::DeserializeHash($client->GetBucket("progress-flag-$stage"));
+        } else {
+            %raw_objective_progress = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
+        }        
+       
+        my %objective_progress = map { lc($_) => $raw_objective_progress{$_} } keys %raw_objective_progress;
+
+        unless ($objective_progress{$prerequisite}) {
+            #quest::debug("Prerequisite not met: $prerequisite");
+            if ($inform) {
+                 $client->Message(263, "You are not yet ready to experience that memory.");
+            }
+            return 0;
+        }
+        #quest::debug("Prerequisite met: $prerequisite");
+    }
+
+    # If all prerequisites are met
+    #quest::debug("All prerequisites for stage $stage have been met");
+    return 1;
+}
+
+# This one ignores time-lock
+sub is_stage_complete_2 {
+    my ($client, $stage, $inform) = @_;
+    $inform //= 0; # Set to 0 if not defined
+
+    # Return false if the stage is not valid
+    unless (exists $VALID_STAGES{$stage}) {
+        quest::debug("ERROR: Invalid stage: $stage for " . $client->GetCleanName());
+        return 0;
     }
 
     # Check prerequisites

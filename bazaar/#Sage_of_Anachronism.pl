@@ -77,33 +77,34 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-    if ($client->GetBucket("season-bag-upgrade-available")) {
+
+    if (plugin::is_stage_complete($client, 'RoK')) {
         if (plugin::check_handin(\%itemcount, 199990 => 1)) {
             $client->SummonFixedItem(199991);
             $client->DeleteBucket("season-bag-upgrade-available");
             plugin::NPCTell("Woosh! It's bigger!");
         }
+    }
 
+    if (plugin::is_stage_complete($client, 'SoV')) {
         if (plugin::check_handin(\%itemcount, 199991 => 1)) {
             $client->SummonFixedItem(199992);
             $client->DeleteBucket("season-bag-upgrade-available");
             plugin::NPCTell("Woosh! It's bigger!");
         }
+    }
 
+    if (plugin::is_stage_complete($client, 'SoL')) {
         if (plugin::check_handin(\%itemcount, 199992 => 1)) {
             $client->SummonFixedItem(199993);
             $client->DeleteBucket("season-bag-upgrade-available");
             plugin::NPCTell("Woosh! It's bigger!");
         }
+    }
 
+    if (plugin::is_stage_complete($client, 'FNagafen')) {
         if (plugin::check_handin(\%itemcount, 199994 => 1)) {
             $client->SummonFixedItem(199995);
-            $client->DeleteBucket("season-bag-upgrade-available");
-            plugin::NPCTell("Woosh! It's bigger!");
-        }
-
-        if (plugin::check_handin(\%itemcount, 199995 => 1)) {
-            $client->SummonFixedItem(199996);
             $client->DeleteBucket("season-bag-upgrade-available");
             plugin::NPCTell("Woosh! It's bigger!");
         }
