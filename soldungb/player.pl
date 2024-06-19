@@ -23,12 +23,12 @@ sub EVENT_ENTERZONE {
 	#$client->Message(7, "Test! 1234 instanceid .. $instanceid");
 	
 	#our instance is the base version of the zone, we don't care.
-	if($instanceid<1){
+	if($instanceid != 1){
 		#$client->Message(7, "Kicking out as instance is less than 1");
 		return;
 	}
 	#our expidition is not version 1 (fabled) so we don't care. 
-	if($expversion<1) {
+	if($expversion != 1) {
 		#$client->Message(7, "Kicking out as exp version is less than 1");
 		return;
 	}

@@ -400,8 +400,7 @@ sub is_stage_complete {
     }
 
     if (plugin::IsSeasonal($client)) {
-        if (is_time_locked($stage)) {
-            $client->Message(263, "The world is not yet prepared for these memories to be uncovered.");
+        if (is_time_locked($stage)) {            
             return 0;
         }
     }
@@ -459,8 +458,8 @@ sub is_time_locked {
     # Return 1 if locked, 0 if unlocked
     my $stage = shift;
 
-    if ($stage == 'RoK') {
-        return 1;
+    if ($stage eq 'RoK') {
+        return 0;
     }
 
     return !(quest::get_data("season-$stage-unlocked"));
@@ -768,7 +767,7 @@ sub UpdateRaceClassLocks {
 sub ValidProgInstance {
     my ($zoneid, $instanceid, $instanceversion) = @_;
 
-    if ($instanceid || $instanceversion) {
+    if ($instanceversion || $instanceid) {
         return 1;
     } else {
         return 0;

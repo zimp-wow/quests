@@ -5,57 +5,35 @@ my $dz_zone         = "soldungb";
 my $dz_version      = 0;
 my $dz_duration     = 79200; # 22 hours
 
-
-my $fabled_expedition_name = "Fabled Nagafen's Lair";
-my $fabled_min_players     = 1;
-my $fabled_max_players     = 18;
-my $fabled_dz_zone         = "soldungb";
-my $fabled_dz_version      = 1;
-my $fabled_dz_duration     = 79200; # 22 hours
-
 sub EVENT_SAY {
-  
+  if (plugin::IsSeasonal($client) || plugin::MultiClassingEnabled()) {
+    $max_players = 6;
+  }
+
   if ($text =~ /hail/i) {
     my $dz = $client->GetExpedition();
     if ($dz && $dz->GetName() eq $expedition_name) {
       quest::say("Tell me when you're [" . quest::saylink("ready") . "] to enter");
     }
-    elsif ($dz && $dz->GetName() eq $fabled_expedition_name ) {
-      quest::say("Tell me when you're [" . quest::saylink("ready to remember") . "], to enter");
-    }
     else {
-      quest::say("Would you like to [" . quest::saylink("request") . "] the expedition?");
-      quest::debug(plugin::is_stage_complete($client, 'FNagafen') ? 1 : 0);
-      if(plugin::is_stage_complete($client, 'FNagafen')) {
-        quest::say("I also see you are prepared for something more. Would you like to [" . quest::saylink("fabled request") . "] the expedition?");
-      }
+      quest::say("Would you like to challenge a pocket dimension of $expedition_name? You can select from [Respawning] or [Non-Respawning] versions.");
     }
   }
-  elsif ($text =~ /fabled request/i && plugin::is_stage_complete($client, 'FNagafen')) {
-    my $dz = $client->CreateExpedition($fabled_dz_zone, $fabled_dz_version, $fabled_dz_duration, $fabled_expedition_name, $fabled_min_players, $fabled_max_players);
-    if ($dz) {
-      $dz->SetCompass("lavastorm", 238.0, 987.0, -24.90); # pointing to guard pineshade
-      $dz->SetSafeReturn("lavastorm",532, 964, 55.75, 484.0); # agent of ret
-      $dz->SetZoneInLocation(-644.10,-1088.42, 26.75, 421.8); # bridge in crushbone
-      $dz->AddReplayLockout(79200); # immediately add a 22 hour replay lockout on creation
-      quest::say("Tell me when you're [" . quest::saylink("ready to remember") . "], to enter");
+  elsif ($text eq 'Respawning' || $text eq 'Non-Respawning') {
+    if ($text eq 'Non-Respawning') {
+      $dz_version = 10;
+      $expedition_name = $expedition_name . " (Static)";
     }
-  }
-  elsif ($text =~ /request/i) {
+    
     my $dz = $client->CreateExpedition($dz_zone, $dz_version, $dz_duration, $expedition_name, $min_players, $max_players);
     if ($dz) {
-      $dz->SetCompass("lavastorm", 238.0, 987.0, -24.90); # pointing to guard pineshade
-      $dz->SetSafeReturn("lavastorm",532, 964, 55.75, 484.0); # agent of ret
-      $dz->SetZoneInLocation(-265, -413, -108.21, 260.8); # bridge in crushbone
-      $dz->AddReplayLockout(79200); # immediately add a 22 hour replay lockout on creation
+      $dz->SetCompass($zonesn, $npc->GetX(), $npc->GetY(), $npc->GetZ());
+      $dz->SetSafeReturn($zonesn, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
+      $dz->AddReplayLockout(79200);
       quest::say("Tell me when you're [" . quest::saylink("ready") . "] to enter");
     }
   }
-  
   elsif ($text =~ /ready/i) {
-    $client->MovePCDynamicZone("soldungb");
-  } 
-  elsif ($text =~ /ready to remember/i) {
-    $client->MovePCDynamicZone("soldungb",1);
-  } 
+    $client->MovePCDynamicZone($dz_zone);
+  }
 }

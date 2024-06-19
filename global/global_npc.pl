@@ -89,12 +89,6 @@ sub EVENT_DEATH_COMPLETE {
         my $corpse = $entity_list->GetCorpseByID($killed_corpse_id);
         
         my %item_drops = (
-            976011 => { #Fading Green Memory 976011
-                'drop_chance' => 0.001, # 1/1000% chance to drop
-                'min_level'   => 1, # Minimum level to drop from
-                'max_level'   => 99, # Maximum level to drop from
-            },
-
             11703 => { #Box of Abu Kar 11703
                 'drop_chance' => 0.0001, # 1/1000% chance to drop
                 'min_level'   => 35, # Minimum level to drop from

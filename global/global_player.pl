@@ -26,7 +26,8 @@ sub EVENT_CONNECT {
         my $name = $client->GetCleanName();
         my $full_class_name = plugin::GetPrettyClassString($client);
 
-        plugin::WorldAnnounce("$name ($full_class_name) has logged in for the first time.");
+        plugin::WorldAnnounce("$name ($full_class_name) has logged in for the first time.");        
+        plugin::AwardSeasonalItems($client);
     }
 
     if (!plugin::is_eligible_for_zone($client, $zonesn)) {
@@ -145,25 +146,6 @@ sub EVENT_SAY {
             $year += 1900; # Adjust year to get the current year
             $mon++;
             plugin::YellowText("Date: $year-$mon-$day");
-        } elsif ($text=~/test1/i) {
-            my $slot = plugin::get_slot_by_item($client, 199990);
-
-            quest::debug("Checking! Found: $slot");
-            if ($slot) {
-                $client->SetCustomItemData($slot, "Customized", "true");
-                $client->SetCustomItemData($slot, "BagSlots", 10);
-                $client->SetCustomItemData($slot, "NoDrop", 0);
-                $client->SetCustomItemData($slot, "Artifact", 1);
-                $client->ReloadDynamicItem($slot);
-            }
-        }  elsif ($text=~/test2/i) {
-            my $slot = plugin::get_slot_by_item($client, 199990);
-
-            if ($slot) {
-                $client->SetCustomItemData($slot, "Customized", "true");
-                $client->SetCustomItemData($slot, "BagSlots", 100);
-                $client->RealoadDynamicItem($slot);
-            }
         }
 	}
 }

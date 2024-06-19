@@ -10,7 +10,6 @@ sub CommonCharacterUpdate {
     plugin::AwardBonusUnlocks($client);
     plugin::UpdateEoMAward($client);
     plugin::RegisterSeasonalLogin($client);
-    plugin::AwardSeasonalItems($client);
 }
 
 sub MultiClassingEnabled

@@ -73,6 +73,9 @@ my %waypoints = (
 );
 
 sub AwardBonusUnlocks {
+    #No-Op
+    return;
+
     my $client = plugin::val('$client');
     my $eligible = quest::get_data($client->AccountID() . "-TL-Account-A") ||
                    quest::get_data($client->AccountID() . "-TL-Account-O") ||
@@ -145,7 +148,7 @@ sub AwardBonusUnlocks {
 
 sub AddDefaultAttunement {
     my $client = shift || plugin::val('$client');
-    if ($client && !($client->IsSeasonal() || $client->IsHardcore())) {
+    if ($client) {
         AddWaypoint('qeynos2');
         AddWaypoint('freportw');
         AddWaypoint('rivervale');
