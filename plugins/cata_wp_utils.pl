@@ -154,7 +154,6 @@ sub AddDefaultAttunement {
         AddWaypoint('rivervale');
         AddWaypoint('erudnext');
         AddWaypoint('halas');
-        AddWaypoint('highkeep');
         AddWaypoint('neriakb');
         AddWaypoint('oggok');
         AddWaypoint('grobb');
