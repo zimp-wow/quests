@@ -379,6 +379,7 @@ sub set_subflag {
 
     if ($client->IsSeasonal() && is_stage_complete($client, $stage) && !$client->GetBucket("season-$stage-complete")) {        
         $client->SetBucket("season-$stage-complete", "true");
+        $client->SetBucket("season-bag-upgrade-available", "true");
         plugin::YellowText("Your Portable Hole is eligible to be upgraded. See the Sage of Anachronism in The Bazaar for more information.");
     }
 

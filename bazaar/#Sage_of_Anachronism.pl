@@ -23,7 +23,11 @@ sub EVENT_SAY {
     }
 
     # Hail Response. Always catch this in say response first.
-    if ($text=~/hail/i) {       
+    if ($text=~/hail/i) {
+        if ($client->GetBucket("season-bag-upgrade-available")) {
+            plugin::NPCTell("I see that you've met such challenges so that I can upgrade your Portable Hole! Hand it to me, and I will return it to you with an inflated Pocket Dimension");
+        }
+
         if ($dz_zone) {
             plugin::NPCTell("You have set upon a path of rememberence. Are you [ready] to proceed?");
         } else {
@@ -38,9 +42,16 @@ sub EVENT_SAY {
         return;
     }
 
-    if ($text=~/Fabled Memories/i && plugin::is_stage_complete($client, 'FNagafen')) {
-        plugin::NPCTell("I can sense that you recall the great battle against [Lord Nagafen]. Would you like to revisit that?");
-        return;
+    if ($text=~/Fabled Memories/i ) {
+        my $count = 0;
+        if (plugin::is_stage_complete($client, 'FNagafen')) {
+            plugin::NPCTell("I can sense that you recall the great battle against [Lord Nagafen]. Would you like to revisit that?");
+            $count++
+        }
+
+        if (!$count) {
+            plugin::NPCTell("You do not seem to have any such memories to relive. Go! Explore! Maybe you'll earn some.");
+        }
     }
 
     if ($text eq 'Lord Nagafen' && plugin::is_stage_complete($client, 'FNagafen')) {
@@ -63,4 +74,40 @@ sub EVENT_SAY {
         }
         return;
     }
+}
+
+sub EVENT_ITEM {
+    if ($client->GetBucket("season-bag-upgrade-available")) {
+        if (plugin::check_handin(\%itemcount, 199990 => 1)) {
+            $client->SummonFixedItem(199991);
+            $client->DeleteBucket("season-bag-upgrade-available");
+            plugin::NPCTell("Woosh! It's bigger!");
+        }
+
+        if (plugin::check_handin(\%itemcount, 199991 => 1)) {
+            $client->SummonFixedItem(199992);
+            $client->DeleteBucket("season-bag-upgrade-available");
+            plugin::NPCTell("Woosh! It's bigger!");
+        }
+
+        if (plugin::check_handin(\%itemcount, 199992 => 1)) {
+            $client->SummonFixedItem(199993);
+            $client->DeleteBucket("season-bag-upgrade-available");
+            plugin::NPCTell("Woosh! It's bigger!");
+        }
+
+        if (plugin::check_handin(\%itemcount, 199994 => 1)) {
+            $client->SummonFixedItem(199995);
+            $client->DeleteBucket("season-bag-upgrade-available");
+            plugin::NPCTell("Woosh! It's bigger!");
+        }
+
+        if (plugin::check_handin(\%itemcount, 199995 => 1)) {
+            $client->SummonFixedItem(199996);
+            $client->DeleteBucket("season-bag-upgrade-available");
+            plugin::NPCTell("Woosh! It's bigger!");
+        }
+    }
+
+    plugin::return_items(\%itemcount);
 }
