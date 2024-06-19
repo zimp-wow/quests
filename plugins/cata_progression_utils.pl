@@ -377,19 +377,9 @@ sub set_subflag {
         }
     }
 
-    if ($client->IsSeasonal() && is_stage_complete($client, $stage) && !$client->GetBucket("season-$stage-complete")) {
-        plugin::BlueText("WTF?");
+    if ($client->IsSeasonal() && is_stage_complete($client, $stage) && !$client->GetBucket("season-$stage-complete")) {        
         $client->SetBucket("season-$stage-complete", "true");
-        my $slot = plugin::get_slot_by_item($client, 199990);
-        if ($slot) {
-            $client->SetCustomItemData($slot, "Customized", "true");
-            $client->SetCustomItemData($slot, "NoDrop", 0);
-
-            $client->SetCustomItemData($slot, "BagSlots", ($client->GetCustomItemData($slot, "BagSlots" || 20) + 5));
-            $client->ReloadDynamicItem($slot);
-
-            plugin::YellowText("The Pocket Dimension of your Portable Hole has inflated!");
-        }
+        plugin::YellowText("Your Portable Hole is eligible to be upgraded. See the Sage of Anachronism in The Bazaar for more information.");
     }
 
     return 1;
