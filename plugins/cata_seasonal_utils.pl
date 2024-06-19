@@ -5,7 +5,7 @@ my $seasonal_rule   = "Custom:EnableSeasonalCharacters";
 my $seasonal_count  = "Season-LoginCount";
 
 my $portable_hole = 199990;
-my $award_aug     = 199995;
+my $award_aug     = 199999;
 
 sub GetSeasonID 
 {
@@ -37,6 +37,11 @@ sub DisableSeasonal {
 sub AwardSeasonalItems 
 {
     my $client = shift;
+
+    # Set basic account reward entitlement
+    if (!quest::get_data($client->AccountID() . "-season-1-entitlement")) {
+        quest::set_data($client->AccountID() . "-season-1-entitlement", "1");
+    }
 
     if (IsSeasonal($client)) {
         if (!plugin::check_hasitem($client, $portable_hole)) {

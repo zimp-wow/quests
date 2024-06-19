@@ -8,5 +8,9 @@ sub EVENT_SCALE_CALC {
 
     my $value = $participation_value / $participation_max;
 
+    if ($value > 1) {
+        $value = 1;
+    }
+
     $questitem->SetScale($value);
 }
