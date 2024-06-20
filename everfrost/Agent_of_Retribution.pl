@@ -21,7 +21,7 @@ sub EVENT_SAY {
   }
   elsif ($text eq 'Respawning' || $text eq 'Non-Respawning') {
     if ($text eq 'Non-Respawning') {
-      $dz_version = 10;
+      $dz_version = 100;
       $expedition_name = $expedition_name . " (Static)";
     }
     

@@ -79,7 +79,7 @@ sub EVENT_SAY {
     if (exists $waypoints{$wp_id} && $client->TakeMoneyFromPP($cost, 1)) {
       my $destination = $waypoints{$wp_id};
 
-      if ($2 eq 'group') {
+      if ($2 eq 'group' && $group_flg) {
         my $raid = $client->GetRaid();
         my $group = $client->GetGroup();
 

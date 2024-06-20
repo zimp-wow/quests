@@ -278,106 +278,162 @@ sub GrantClassAA {
     # Define a hash where each class ID maps to a hash of its AAs and rank counts
     my %class_aa = (
         1 => { # Warrior
-            '6283' => 1, # Infused by Rage
-            '6607' => 1, # Vehement Rage
-            '4739' => 1, # Killing Spree
-            '1597' => 1, # Call of Challenge
+            '3731' => 1, # Infused by Rage
+            '800' => 1, # Vehement Rage
+            '733' => 1, # Killing Spree
+            '254' => 1, # Call of Challenge
         },
         2 => { # Cleric
-            '12652' => 1, # Twincast
-            '507' => 1,   # Divine Arbitration
-            '746' => 1,   # Divine Avatar
+            '1405' => 1, # Twincast
+            '169' => 1,   # Divine Arbitration
+            '254' => 1,   # Divine Avatar
         },
         3 => { # Paladin
-            '188' => 1,  # Divine Stun
-            '6395' => 1, # Blessing of Life
+            '73' => 1,  # Divine Stun
+            '3820' => 1, # Blessing of Life
         },
         4 => { # Ranger
-            '205' => 1,   # Endless Quiver
-            '1196' => 1,  # Bow Mastery
-            '645' => 1,   # Entrap
-            '1345' => 1,  # Auspice of the Hunter
+            '84' => 1,   # Endless Quiver
+            '878' => 1,  # Bow Mastery
+            '219' => 1,   # Entrap
+            '462' => 1,  # Auspice of the Hunter
         },
         5 => { # Shadow Knight
-            '5085' => 1,  # Mortal Coil
-            '13165' => 1, # Explosion of Spite
-            '288' => 1,   # Pet Discipline
+            '697' => 1,  # Mortal Coil
+            '749' => 1, # Explosion of Spite
+            '125' => 1,   # Pet Discipline
         },
         6 => { # Druid
-            '548' => 1,   # Spirit of the Wood
-            '14264' => 1, # Paralytic Spores
-            '767' => 3,   # Critical Affliction (assuming ranks based on script context)
-            '6375' => 1,  # Destructive Cascade
-            '288' => 1,   # Pet Discipline
+            '185' => 1,   # Spirit of the Wood
+            '403' => 1, # Paralytic Spores
+            '259' => 3,   # Critical Affliction (assuming ranks based on script context)
+            '3815' => 1,  # Destructive Cascade
+            '125' => 1,   # Pet Discipline
         },
         7 => { # Monk
-            '611' => 1,  # Technique of Master Wu
-            '1352' => 1, # Crippling Strike
+            '206' => 1,  # Technique of Master Wu
+            '468' => 1, # Crippling Strike
         },
         8 => { # Bard
-            '630' => 1,  # Fading Memories
-            '556' => 5,  # Harmonious Attack (all ranks)
-            '1110' => 1, # Dance of Blades
-            '225' => 1,  # Jam Fest
+            '212' => 1,  # Fading Memories
+            '187' => 5,  # Harmonious Attack (all ranks)
+            '359' => 1, # Dance of Blades
+            '94' => 1,  # Jam Fest
         },
         9 => { # Rogue
-            '287' => 1,  # Chaotic Stab
-            '605' => 1,  # Shroud of Stealth
-            '4739' => 1, # Killing Spree
+            '124' => 1,  # Chaotic Stab
+            '204' => 1,  # Shroud of Stealth
+            '733' => 1, # Killing Spree
         },
         10 => { # Shaman
-            '10957' => 1, # Group Shrink
-            '1327' => 1,  # Ancestral Aid
-            '8227' => 1,  # Summon Companion
-            '288' => 1,   # Pet Discipline
+            '7025' => 1, # Group Shrink
+            '447' => 1,  # Ancestral Aid
+            '1215' => 1,  # Summon Companion
+            '125' => 1,   # Pet Discipline
         },
         11 => { # Necromancer
-            '767' => 1,    # Critical Affliction
-            '6375' => 1,   # Destructive Cascade
-            '734' => 1,    # Pet Affinity
-            '12770' => 1,  # Pestilent Paralysis
-            '8227' => 1,   # Summon Companion
-            '288' => 1,    # Pet Discipline
+            '259' => 1,    # Critical Affliction
+            '3815' => 1,   # Destructive Cascade
+            '250' => 1,    # Pet Affinity
+            '431' => 1,  # Pestilent Paralysis
+            '1215' => 1,   # Summon Companion
+            '125' => 1,    # Pet Discipline
         },
         12 => { # Wizard
-            '155' => 1,  # Improved Familiar
-            '516' => 1,  # Harvest of Druzzil
-            '5295' => 1, # Arcane Overkill
+            '52' => 1,  # Improved Familiar
+            '172' => 1,  # Harvest of Druzzil
+            '776' => 1, # Arcane Overkill
         },
         13 => { # Mage
-            '8201' => 1, # Companion's Fury
-            '734' => 1,  # Pet Affinity
+            '1205' => 1, # Companion's Fury
+            '250' => 1,  # Pet Affinity
             '8342' => 1, # Host in the Shell
-            '8227' => 1, # Summon Companion
-            '288' => 1,  # Pet Discipline
+            '1215' => 1, # Summon Companion
+            '125' => 1,  # Pet Discipline
         },
         14 => { # Enchanter
-            '158' => 1,  # Permanent Illusion
-            '643' => 1,  # Project Illusion
-            '10551' => 1,# Phantasmic Reflex
-            '580' => 3,  # Animation Empathy (all ranks)
-            '734' => 1,  # Pet Affinity
-            '8227' => 1, # Summon Companion
-            '288' => 1,  # Pet Discipline
+            '55' => 1,  # Permanent Illusion
+            '217' => 1,  # Project Illusion
+            '8701' => 1,# Phantasmic Reflex
+            '195' => 3,  # Animation Empathy (all ranks)
+            '250' => 1,  # Pet Affinity
+            '1215' => 1, # Summon Companion
+            '125' => 1,  # Pet Discipline
         },
         15 => { # Beastlord
             '11080' => 1, # Chameleon Strike
-            '6984' => 1,  # Bite of the Asp
-            '734' => 1,   # Pet Affinity
-            '8227' => 1,  # Summon Companion
-            '288' => 1,   # Pet Discipline
+            '986' => 1,  # Bite of the Asp
+            '250' => 1,   # Pet Affinity
+            '1215' => 1,  # Summon Companion
+            '125' => 1,   # Pet Discipline
         },
         16 => { # Berserker
-            '4739' => 1, # Killing Spree
-            '258' => 1,  # Rampage
+            '733' => 1, # Killing Spree
+            '109' => 1,  # Rampage
         }
     );   
 
     foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
-        if ($client->GetAA($aa_id) < $class_aa{$PCClass}{$aa_id}) {
-            $client->IncrementAA($aa_id);
+        $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+    }
+
+    if ($client->GetLevel() >= 51 && plugin::IsSeasonal($client)) {
+        my %class_aa = (
+            1 => {
+                '2011' => 1, #Imperator's Command
+            },
+            2 => {
+                '735' => 1,
+            },
+            3 => {
+                '3500' => 1, # Blessing of Light
+            },
+            4 => {
+              '557' => 1, # Trick Shot  
+            },
+            5  => {
+                '825' => 1, # Vicious Bite of Chaos
+            },
+            6 => {
+                '393' => 1,
+            },
+            7 => {
+                '206' => 2, #Technique of Master Wu
+            },
+            8 => {
+                '1246' => 1,
+            },
+            9 => {
+                '1174' => 1,
+            },
+            10 => {
+                '151' => 1, # Spiritual Blessing
+            },
+            11 => {
+                '710' => 1, # Funeral Pyre
+            },
+            12 => {
+                '1211' => 1,
+            },
+            13 => {
+                '3516' => 1, # Companion of Necessity
+            },
+            14 => {
+                '8700' => 1, # Beam of Slumber
+            },
+            15 => {
+                '1240' => 1, # Frenzied Swipes
+            },
+            16 => {
+                '133' => 1, # Decapitation
+            }
+        );
+        
+        foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
         }
-    }   
+
+    }
 }
 
 sub GrantClassesAA {

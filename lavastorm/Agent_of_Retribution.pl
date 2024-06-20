@@ -21,10 +21,11 @@ sub EVENT_SAY {
   }
   elsif ($text eq 'Respawning' || $text eq 'Non-Respawning') {
     if ($text eq 'Non-Respawning') {
-      $dz_version = 10;
-      $expedition_name = $expedition_name . " (Static)";
-    }
-    
+      $dz_version = 100;
+      if ($expedition_name !~ /\s\(Static\)$/) {
+          $expedition_name .= " (Static)";
+      }
+    }    
     my $dz = $client->CreateExpedition($dz_zone, $dz_version, $dz_duration, $expedition_name, $min_players, $max_players);
     if ($dz) {
       $dz->SetCompass($zonesn, $npc->GetX(), $npc->GetY(), $npc->GetZ());
