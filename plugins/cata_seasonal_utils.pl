@@ -5,7 +5,7 @@ my $seasonal_rule   = "Custom:EnableSeasonalCharacters";
 my $seasonal_count  = "Season-LoginCount";
 
 my $portable_hole = 199990;
-my $award_aug     = 199999;
+my $award_aug     = 200000;
 
 sub GetSeasonID 
 {
