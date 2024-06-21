@@ -16,12 +16,14 @@ sub OfferStandardInstance {
   if ($text =~ /hail/i) {
     my $dz = $client->GetExpedition();
     if ($dz && $dz->GetName() eq $expedition_name) {
-      quest::say("Tell me when you're [" . quest::saylink("ready") . "] to enter");
+      quest::say("When you are [" . quest::saylink("ready", 1) . "], proceed into the portal.");
     }
     else {
-      quest::say("Would you like to challenge a pocket dimension of $expedition_name? You can select from [Respawning] or [Non-Respawning] versions.");
+      quest::say("Hail. I offer you a Trial, a memory. $expedition_name lies before you, do you accept the challenge?");
+      plugin::YellowText("You can select from [". quest::saylink('Respawning', 1). "] or [".quest::saylink('Non-Respawning',1). "] versions.");
     }
   }
+
   elsif ($text eq 'Respawning' || $text eq 'Non-Respawning') {
     if ($text eq 'Non-Respawning') {
       $dz_version = 100;
@@ -33,7 +35,11 @@ sub OfferStandardInstance {
       $dz->SetCompass($zonesn, $npc->GetX(), $npc->GetY(), $npc->GetZ());
       $dz->SetSafeReturn($zonesn, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
       $dz->AddReplayLockout($dz_duration);
-      quest::say("Tell me when you're [" . quest::saylink("ready") . "] to enter");
+      quest::say("Very well. When you are [" . quest::saylink("ready", 1) . "], proceed into the portal, and remember!");
     }
   }
+  
+  elsif ($text =~ /ready/i) {
+    $client->MovePCDynamicZone($dz_zone);
+  }  
 }
