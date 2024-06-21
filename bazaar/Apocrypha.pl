@@ -81,7 +81,9 @@ sub handle_buff_for_level {
     $duration_scale //= 1;  # Set to 1 if not provided
     $price_scale //= 1;     # Set to 1 if not provided
     
-    apply_buffs($client, $closest_level, $duration_override, $duration_scale, $price_scale);
+    if (!plugin::IsSeasonal($client)) {
+        apply_buffs($client, $closest_level, $duration_override, $duration_scale, $price_scale);
+    }
 }
 
 sub EVENT_SAY {
