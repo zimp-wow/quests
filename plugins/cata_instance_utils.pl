@@ -15,11 +15,11 @@ sub OfferStandardInstance {
 
   if ($text =~ /hail/i) {
     my $dz = $client->GetExpedition();
-    if ($dz && ($dz->GetName() eq $expedition_name || $dz->GetName() eq ($expedition_name . " (Static)")) {
+    if ($dz && ($dz->GetName() eq $expedition_name || $dz->GetName() eq ($expedition_name . " (Static)"))) {
       quest::say("When you are [" . quest::saylink("ready", 1) . "], proceed into the portal.");
     }
     else {
-      quest::say("Hail. I offer you a Trial, a memory. $expedition_name lies before you, do you accept the challenge?");
+      quest::say("I offer you a Trial. $expedition_name lies before you, do you accept the challenge?");
       plugin::YellowText("You can select from [". quest::saylink('Respawning', 1). "] or [".quest::saylink('Non-Respawning',1). "] versions.");
     }
   }
