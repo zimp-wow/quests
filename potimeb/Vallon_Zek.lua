@@ -9,6 +9,13 @@ local tether_box = box(229.2,-229.2,246,446.2)
 function event_death_complete(e)
 	eq.signal(223097,223078); -- Add Loot Lockout
 	eq.signal(223097,5); -- send a signal to the zone_status that I died
+
+	local killer = eq.get_entity_list():GetClientByID(e.killer_id)
+
+    if killer then
+        killer:CastToClient():SetBucket('flag-semaphore', '204')
+        killer:Signal(0)
+    end
 end
 
 function event_spawn(e)

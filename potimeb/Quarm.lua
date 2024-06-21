@@ -147,4 +147,16 @@ function event_death_complete(e)
 		eq.world_emote(15,"After a short moment of peace and joy, you are swallowed by the horror of what has happened. You say, out loud for no one to hear, 'What have we done?'");
 		eq.set_global("time_emote","QuarmKilled",7,"F");
 	end
+
+	local killer = eq.get_entity_list():GetClientByID(e.killer_id)
+
+    if killer then
+        killer:CastToClient():SetBucket('flag-semaphore', '204')
+        killer:Signal(0)
+    end
+end
+
+function event_killed_merit(e)
+	e.other:CastToClient():SetBucket('flag-semaphore', '104')
+	e.other:Signal(0)
 end

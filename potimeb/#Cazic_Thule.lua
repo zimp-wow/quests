@@ -6,4 +6,11 @@ function event_death_complete(e)
 	-- send a signal to the zone_status that I died
 	eq.signal(223097,223166); -- Add Lockout
 	eq.signal(223097,6);
+
+	local killer = eq.get_entity_list():GetClientByID(e.killer_id)
+
+    if killer then
+        killer:CastToClient():SetBucket('flag-semaphore', '204')
+        killer:Signal(0)
+    end
 end

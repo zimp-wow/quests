@@ -7,6 +7,13 @@ local event_mobs = {223079,223081,223080,223082};
 function event_death_complete(e)
 	eq.signal(223097,223075); -- Add Loot Lockout
 	eq.signal(223097,5); -- send a signal to the zone_status that I died
+
+	local killer = eq.get_entity_list():GetClientByID(e.killer_id)
+
+    if killer then
+        killer:CastToClient():SetBucket('flag-semaphore', '204')
+        killer:Signal(0)
+    end
 end
 
 function event_spawn(e)
