@@ -5,11 +5,7 @@ sub EVENT_SPAWN {
   $npc->MoveTo($npc->GetX(), $npc->GetY(), $npc->FindGroundZ($npc->GetX(), $npc->GetY()));
 
   $npc->SetRace(quest::ChooseRandom(587, 588, 605));
-  if ($npc->GetRace() == 587 || $npc->GetRace == 588) {
-    $npc->SetGender(quest::ChooseRandom(0, 1));
-  } else {
-    $npc->SetGender(2);
-  }
+  $npc->SetGender(0);
 }
 
 sub EVENT_SAY {
