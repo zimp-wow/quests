@@ -6,3 +6,11 @@ sub EVENT_AGGRO {
   $guards->AddToHateList($client, 1);
 }
  }
+
+sub EVENT_DEATH_COMPLETE {
+    my $killer = $entity_list->GetClientByID($killer_id);   
+
+    if ($killer) {
+        plugin::AddTitleFlag(202);
+    }
+}

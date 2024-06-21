@@ -63,7 +63,7 @@ sub RegisterSeasonalLogin {
         $year += 1900; # Adjust year to get the current year
         $mon++;
 
-        if ($last_date != "$day-$mon-$year") {
+        if ($last_date ne "$day-$mon-$year") {
             quest::set_data($client->AccountID() . "-season-1-date-flag", "$day-$mon-$year");
             quest::set_data($client->AccountID() . "-season-1-participation", (quest::get_data($client->AccountID() . "-season-1-participation") || 0) + 1);
         }

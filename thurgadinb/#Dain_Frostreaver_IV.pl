@@ -89,3 +89,11 @@ sub EVENT_ITEM {
   } 
   plugin::return_items(\%itemcount);
 }
+
+sub EVENT_DEATH_COMPLETE {
+  my $killer = $entity_list->GetClientByID($killer_id);   
+
+  if ($killer) {
+      plugin::AddTitleFlag(201);
+  }
+}

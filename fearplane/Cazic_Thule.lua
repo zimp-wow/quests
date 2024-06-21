@@ -22,6 +22,12 @@ function event_death_complete(e)
 	eq.depop(1120001104);
 	-- eq.spawn2(1120001104,0,0,e.self:GetX(),e.self:GetY(),e.self:GetZ(),e.self:GetHeading());
 	-- spawn fading ally
+
+    local killer = eq.get_entity_list():GetClientByID(e.killer_id)
+    if killer and killer:GetLevel() <= 60 then
+        killer:CastToClient():SetBucket('flag-semaphore', '204')
+        killer:Signal(0)
+    end
 end
 
 function event_trade(e)
@@ -101,3 +107,5 @@ function Set (list)
   for _, l in ipairs(list) do set[l] = true end
   return set
 end
+
+

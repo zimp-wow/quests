@@ -105,3 +105,12 @@ function help_tormax(e)
 		velden:CastToNPC():MoveTo(e.self:GetX(), e.self:GetY(), e.self:GetZ(), 0, false);
 	end
 end
+
+function event_death_complete(e)
+    local killer = eq.get_entity_list():GetClientByID(e.killer_id)
+
+    if killer then
+        killer:CastToClient():SetBucket('flag-semaphore', '201')
+        killer:Signal(0)
+    end
+end

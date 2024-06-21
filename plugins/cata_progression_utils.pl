@@ -172,23 +172,6 @@ my %STAGE_PREREQUISITES = (
     # ... and so on for each stage
 );
 
-# Map of titles -> progression target. Progression is the stage which needs to be unlocked to get the title, see above table
-my %PROGRESSION_TITLE_MAP = (
-    'Rok' => ', Hero of Norrath',
-    'SoV' => ', Dragonsbane',
-    'SoL' => ', Frostbane',
-    'PoP' => ', Shadowseeker',
-    'GoD' => ', Timebound',
-);
-
-my %KILLSHOT_TITLES_MAP = (
-    'RoK' => 'the Dragon Slayer',
-    'SoV' => 'the Scale Ripper',
-    'SoL' => 'the Frostriven',
-    'PoP' => 'the Lightbearer',
-    'GoD' => ', Godslayer'
-);
-
 foreach my $key (keys %STAGE_PREREQUISITES) {
     @{$STAGE_PREREQUISITES{$key}} = map { lc } @{$STAGE_PREREQUISITES{$key}};
 }
@@ -373,11 +356,23 @@ sub set_subflag {
 
             UpdateCharMaxLevel($client);
             UpdateRaceClassLocks($client);
-            UpdateProgressionTitles($client);
         }
     }
 
-    if ($client->IsSeasonal() && is_stage_complete_2($client, $stage) && !$client->GetBucket("season-$stage-complete")) {        
+    if ($client->IsSeasonal() && is_stage_complete_2($client, $stage) && !$client->GetBucket("season-$stage-complete")) {      
+        if ($stage eq 'RoK') {
+            plugin::AddTitleFlag(100); # , Hero of Antonica
+        }
+        elsif ($stage eq 'SoV') {
+            plugin::AddTitleFlag(101); # , Hero of Kunark
+        }
+        elsif ($stage eq 'SoL') {
+            plugin::AddTitleFlag(102); # , Hero of Velious
+        }
+        elsif ($stage eq 'PoP') {
+            plugin::AddTitleFlag(103); # , Hero of Luclin
+        }
+
         $client->SetBucket("season-$stage-complete", "true");
         plugin::YellowText("Your Portable Hole is eligible to be upgraded. See the Sage of Anachronism in The Bazaar for more information.");
     }
@@ -904,18 +899,4 @@ sub move_startzone {
     else {
         quest::movepc(202, -55, 44, -158.81); # Zone: poknowledge
     }  
-}
-
-sub UpdateProgressionTitles {
-    my $client = plugin::val('$client');
-    #quest::set_data($client->AccountID() . "-progression-title-$stage", 1);
-
-    foreach my $stage (@stages) {
-        if (exists $PROGRESSION_TITLE_MAP{$stage}) {
-            my $flag = quest::get_data($client->AccountID() . "-progression-title-$stage") || 0;
-            if ($flag) {
-                quest::checktitle(int title_set)
-            }
-        }
-    }
 }
