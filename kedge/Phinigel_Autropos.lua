@@ -21,3 +21,12 @@ function HelpMe(e)
 		end
 	end
 end
+
+function event_death_complete(e)
+    local killer = eq.get_entity_list():GetClientByID(e.killer_id)
+
+    if killer and killer:GetBucket("SeasonalCharacter") == '1' then
+        killer:CastToClient():SetBucket('flag-semaphore', '206')
+        killer:Signal(0)
+    end
+end

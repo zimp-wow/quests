@@ -27,7 +27,7 @@ sub EVENT_TIMER {
 sub EVENT_DEATH_COMPLETE {
 	my $killer = $entity_list->GetClientByID($killer_id);   
 
-	if ($killer) {
+	if ($killer && plugin::IsSeasonal($killer)) {
 		plugin::AddTitleFlag(203);
 	}
 }

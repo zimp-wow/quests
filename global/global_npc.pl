@@ -161,6 +161,23 @@ sub EVENT_DAMAGE_GIVEN
     }
 }
 
+sub EVENT_KILLED_MERIT {
+    #SLAYERS!
+    if ($killer_id) {
+        my $killer = $entity_list->GetClientByID($killer_id);
+        if (!$killer) {
+            $entity_list->GetMobByID($killer_id);
+            if ($killer && $killer->IsPetOwnerClient()) {
+                $killer = $killer->GetOwner();
+            }
+        }
+
+        if ($killer) {
+            plugin::ProcessSlayerCredit($killer, $npc, $entity_list);
+        }
+    }    
+}
+
 sub UPDATE_PET_BAG {    
     #quest::debug("--Syncronizing Pet Inventory--");
     my $owner = $npc->GetOwner()->CastToClient();

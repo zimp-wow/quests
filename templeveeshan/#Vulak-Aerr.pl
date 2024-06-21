@@ -10,7 +10,7 @@ sub EVENT_AGGRO {
 sub EVENT_DEATH_COMPLETE {
     my $killer = $entity_list->GetClientByID($killer_id);   
 
-    if ($killer) {
-        plugin::AddTitleFlag(202);
+    if ($killer && plugin::IsSeasonal($killer)) {
+        plugin::AddTitleFlag(205);
     }
 }

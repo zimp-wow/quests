@@ -139,8 +139,9 @@ sub EVENT_SAY {
             $client->Message(15, "Season: " . plugin::GetSeasonID());
             $client->Message(15, "IsSeasonal? : " . plugin::IsSeasonal($client));
             $client->Message(15, "IsSeasonal? : " . $client->IsSeasonal());
-
             $client->Message(14, "MC:? " . plugin::MultiClassingEnabled());
+
+            quest::discordsend('admin', "TEST!");
 
             my ($sec, $min, $hour, $day, $mon, $year) = localtime();
             $year += 1900; # Adjust year to get the current year
