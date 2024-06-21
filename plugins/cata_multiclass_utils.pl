@@ -4,7 +4,7 @@ sub CommonCharacterUpdate {
     # Title Semaphore from lua scripts
     my $semaphore_title = $client->GetBucket('flag-semaphore');
     if ($semaphore_title) {
-        AddTitleFlag($semaphore_title, $client);
+        plugin::AddTitleFlag($semaphore_title, $client);
         $client->DeleteBucket('flag-semaphore');
     }
 
