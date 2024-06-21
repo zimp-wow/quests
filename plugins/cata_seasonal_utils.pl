@@ -14,12 +14,7 @@ sub GetSeasonID
 
 sub IsSeasonal {
     my $client = shift;
-    my $season = ($client->GetBucket($seasonal_bucket) || 0);
-    if ($season != 0) {
-        return GetSeasonID() == ($client->GetBucket($seasonal_bucket) || 0);
-    } else {
-        return 0;
-    }
+    return $client->IsSeasonal();
 }
 
 sub EnableSeasonal {
