@@ -20,7 +20,7 @@ function event_death_complete(e)
 
 	-- sanity depop
 	eq.depop(1120001104);
-	eq.spawn2(1120001104,0,0,e.self:GetX(),e.self:GetY(),e.self:GetZ(),e.self:GetHeading());
+	-- eq.spawn2(1120001104,0,0,e.self:GetX(),e.self:GetY(),e.self:GetZ(),e.self:GetHeading());
 	-- spawn fading ally
 end
 
