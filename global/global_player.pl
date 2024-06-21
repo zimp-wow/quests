@@ -126,7 +126,7 @@ sub EVENT_COMBINE_SUCCESS {
 }
 
 sub EVENT_SAY {
-	if ($client->GetGM()) {
+	if (1) {
 		if ($text=~/enable seasonal/i) {
 			plugin::EnableSeasonal($client);
 			$client->Message(15, "Seasonal Enabled");
