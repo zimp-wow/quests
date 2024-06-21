@@ -616,7 +616,21 @@ sub UpdateCharMaxLevel
 {
     my $client = shift;
     my $update = 0;
-    my $CharMaxLevel = $client->GetBucket("CharMaxLevel") || 51;    
+    my $CharMaxLevel = $client->GetBucket("CharMaxLevel") || 51;
+
+    if (plugin::IsSeasonal($client)) {
+        $CharMaxLevel = 51;
+    } else {
+        if (is_stage_complete($client, 'RoK')) {
+            $CharMaxLevel = 60;
+        }
+        if (is_stage_complete($client, 'PoP')) {
+            $CharMaxLevel = 65;
+        } 
+        if (is_stage_complete($client, 'GoD')) {
+            $CharMaxLevel = 70;
+        } 
+    }
 
     if (($client->GetBucket("CharMaxLevel") || 0) != $CharMaxLevel) {
         $client->SetBucket("CharMaxlevel", $CharMaxLevel);        
