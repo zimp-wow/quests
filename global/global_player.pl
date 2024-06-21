@@ -141,7 +141,7 @@ sub EVENT_SAY {
             $client->Message(15, "IsSeasonal? : " . $client->IsSeasonal());
             $client->Message(14, "MC:? " . plugin::MultiClassingEnabled());
 
-            quest::debug("zone: ". plugin::is_eligible_for_zone($client, $zonesn));
+            quest::debug("zone: $zonesn". plugin::is_eligible_for_zone($client, $zonesn));
 
             quest::discordsend('admin', "TEST!");
 
