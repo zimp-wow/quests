@@ -45,7 +45,6 @@ my %atlas = (
     'kael'           => 'SoV',
     'sleeper'        => 'SoV',
     'growthplane'    => 'SoV',
-    'mischiefplane'  => 'SoV',
     'sirens'         => 'SoV',
     'templeveeshan'  => 'SoV',
     'thurgadina'     => 'SoV',
@@ -53,13 +52,14 @@ my %atlas = (
     'frozenshadow'   => 'SoV',
     'wakening'       => 'SoV',
     'westwastes'     => 'SoV',
-    'gunthak'        => 'SoV',
-    'nadox'          => 'SoV',
-    'dulak'          => 'SoV',
-    'hatesfury'      => 'SoV',
-    'torgiran'       => 'SoV',
-    'veksar'         => 'SoV', # Out of Era
-
+    
+    'gunthak'        => 'SoL',
+    'nadox'          => 'SoL',
+    'dulak'          => 'SoL',
+    'hatesfury'      => 'SoL',
+    'torgiran'       => 'SoL',
+    'veksar'         => 'SoL', # Out of Era
+    'mischiefplane'  => 'SoL',
     'acrylia'        => 'SoL',
     'akheva'         => 'SoL',
     'dawnshroud'     => 'SoL',
@@ -82,8 +82,10 @@ my %atlas = (
     'umbral'         => 'SoL',
     'vexthal'        => 'SoL',
     'nexus'          => 'SoL',
+    'jaggedpine'     => 'SoL',
+    'stonebrunt'     => 'SoL',
+    
     'veeshan'        => 'PoP', # Out of Era
-
     'poknowledge'    => 'PoP',
     'potranquility'  => 'PoP',
     'ponightmare'    => 'PoP',
