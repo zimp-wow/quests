@@ -620,6 +620,16 @@ sub UpdateCharMaxLevel
 
     if (plugin::IsSeasonal($client)) {
         $CharMaxLevel = 51;
+
+        if (is_stage_complete($client, 'RoK') && !is_time_locked('RoK')) {
+            $CharMaxLevel = 60;
+        }
+        if (is_stage_complete($client, 'PoP')&& !is_time_locked('PoP')) {
+            $CharMaxLevel = 65;
+        } 
+        if (is_stage_complete($client, 'GoD')&& !is_time_locked('GoD')) {
+            $CharMaxLevel = 70;
+        } 
     } else {
         if (is_stage_complete($client, 'RoK')) {
             $CharMaxLevel = 60;
