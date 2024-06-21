@@ -618,30 +618,6 @@ sub UpdateCharMaxLevel
     my $update = 0;
     my $CharMaxLevel = $client->GetBucket("CharMaxLevel") || 51;    
 
-    if (is_stage_complete($client, 'RoK') && $CharMaxLevel < 60) {
-        $CharMaxLevel = 60;
-    }
-
-    if (is_stage_complete($client, 'PoP') && $CharMaxLevel < 65) {
-        $CharMaxLevel = 65;
-    }
-
-    if (is_stage_complete($client, 'GoD') && $CharMaxLevel < 70) {
-        $CharMaxLevel = 70;
-    }
-
-    if (!is_stage_complete($client, 'RoK')) {
-        $CharMaxLevel = 51;
-    }
-
-    if (!is_stage_complete($client, 'PoP')) {
-        $CharMaxLevel = 60;
-    }
-
-    if (!is_stage_complete($client, 'GoD')) {
-        $CharMaxLevel = 65;
-    }
-
     if (($client->GetBucket("CharMaxLevel") || 0) != $CharMaxLevel) {
         $client->SetBucket("CharMaxlevel", $CharMaxLevel);        
         plugin::YellowText("Your Level Cap has been set to $CharMaxLevel.");
