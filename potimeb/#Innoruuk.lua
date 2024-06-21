@@ -52,7 +52,7 @@ function event_death_complete(e)
 
 	local killer = eq.get_entity_list():GetClientByID(e.killer_id)
 
-    if killer then
+    if killer and killer:GetBucket("SeasonalCharacter") == '1' then
         killer:CastToClient():SetBucket('flag-semaphore', '204')
         killer:Signal(0)
     end

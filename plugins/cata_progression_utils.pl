@@ -492,8 +492,26 @@ sub is_time_locked {
     my $stage = shift;
 
     if ($stage eq 'RoK') {
-        return 0;
+        return 1;
     }
+
+    if ($stage eq 'SoV') {
+        return 1;
+    }
+
+    if ($stage eq 'SoL') {
+        return 1;
+    }
+
+    if ($stage eq 'PoP') {
+        return 1;
+    }
+
+    if ($stage eq 'GoD') {
+        return 1;
+    }
+
+    # .. etc
 
     return !(quest::get_data("season-$stage-unlocked"));
 
