@@ -26,6 +26,7 @@ sub check_handin {
     # Iterate over the hashref and replace each key with its get_base_id(key) version
     foreach my $item (keys %$hashref) {
         my $base_id = get_base_id($item);
+		quest::debug("base_id is: " . $base_id);
         if ($base_id && $base_id ne $item) {
             $hashref->{$base_id} += $hashref->{$item} if exists $hashref->{$base_id};
             $hashref->{$base_id} = $hashref->{$item} unless exists $hashref->{$base_id};
