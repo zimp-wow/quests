@@ -126,6 +126,7 @@ sub EVENT_COMBAT {
 
 sub EVENT_AGGRO {
     CHECK_CHARM_STATUS();
+    plugin::FadeWorldWideBuffs($npc);
 }
 
 sub EVENT_SPELL_FADE {

@@ -27,6 +27,16 @@ sub DoCheckWorldWideBuffs {
     }
 }
 
+sub FadeWorldWideBuffs {
+    my $npc = shift;
+
+    if (!($npc->IsPet() && $npc->IsPetOwnerClient())) {
+        for my $spell_id (43002..43008, 17779) {
+            $npc->BuffFadeBySpellID($spell_id);
+        }
+    }
+}
+
 # Spend EOM. Returns true on success, false on failure
 # usage: plugin::SpendEOM($client, $amount)
 sub SpendEOM {
