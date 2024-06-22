@@ -73,8 +73,7 @@ sub EVENT_ITEM {
 				$client->SummonFixedItem(2054884);
 				delete $itemcount{$item_id};
 				quest::emote("The memory of a guktan conjures a ghostly mask.");	
-			}
-		}
+			}		
 		} else {
 			quest::emote("The memory of a guktan stares into the distance, ignoring your presence.");			
 		}
