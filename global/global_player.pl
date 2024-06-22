@@ -1,10 +1,7 @@
 
 sub EVENT_SIGNAL {
-    if ($signal == 666) {
-        plugin::UpdateEoMAward($client);
-    } else {
-        plugin::CommonCharacterUpdate($client);
-    }	
+    plugin::CommonCharacterUpdate($client);
+    plugin::UpdateEoMAward($client);
 }
 
 sub EVENT_ENTERZONE { 
@@ -126,7 +123,7 @@ sub EVENT_COMBINE_SUCCESS {
 }
 
 sub EVENT_SAY {
-	if (1) {
+	if ($client->GetGM()) {
 		if ($text=~/enable seasonal/i) {
 			plugin::EnableSeasonal($client);
 			$client->Message(15, "Seasonal Enabled");
