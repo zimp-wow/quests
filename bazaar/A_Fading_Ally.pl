@@ -67,12 +67,14 @@ sub EVENT_ITEM {
 				$unlock_progress += $itemcount{$item_id};
 				$count += $itemcount{$item_id};
 				delete $itemcount{$item_id};
+			
+			} elsif (!$client->GetBucket("guktan-mask-obtained")) {
+				$client->SetBucket("guktan-mask-obtained", 1);
+				$client->SummonFixedItem(2054884);
+				delete $itemcount{$item_id};
+				quest::emote("The memory of a guktan conjures a ghostly mask.");	
 			}
-		} elsif (!$client->GetBucket("guktan-mask-obtained")) {
-			$client->SetBucket("guktan-mask-obtained", 1);
-			$client->SummonFixedItem(2054884);
-			delete $itemcount{$item_id};
-			quest::emote("The memory of a guktan conjures a ghostly mask.");	
+		}
 		} else {
 			quest::emote("The memory of a guktan stares into the distance, ignoring your presence.");			
 		}
