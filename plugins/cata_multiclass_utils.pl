@@ -335,7 +335,7 @@ sub GrantClassAA {
             '733' => 1, # Killing Spree
         },
         10 => { # Shaman
-            '7025' => 1, # Group Shrink
+            '9503' => 1, # Group Shrink
             '447' => 1,  # Ancestral Aid
             '1215' => 1,  # Summon Companion
             '125' => 1,   # Pet Discipline
