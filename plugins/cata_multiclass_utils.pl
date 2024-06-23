@@ -397,15 +397,7 @@ sub GrantClassAA {
     if ($client->GetLevel() >= 40) {
         my %class_aa = (
             4 => { # Ranger
-                '82' => 1 # Archery Master 1
-            }
-        );
-    }
-
-    if ($client->GetLevel() >= 51) {
-        my %class_aa = (
-            4 => { # Ranger
-                '82' => 1 # Archery Master 1
+                '82' => 2 # Archery Master 1
             }
         );
     }
