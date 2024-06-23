@@ -5,10 +5,13 @@ my $eom_award_log = "total-eom-award";
 
 sub CheckWorldWideBuffs {
     my $client = plugin::val('$client');
-    DoCheckWorldWideBuffs($client);
 
-    if ($client->GetPet()) {
-        DoCheckWorldWideBuffs($client->GetPet());
+    if ($client) {
+        DoCheckWorldWideBuffs($client);
+
+        if ($client->GetPet()) {
+            DoCheckWorldWideBuffs($client->GetPet());
+        }
     }
 }
 

@@ -1,24 +1,26 @@
 sub CommonCharacterUpdate {    
     my $client = shift || plugin::val('$client');
 
-    # Title Semaphore from lua scripts
-    my $semaphore_title = $client->GetBucket('flag-semaphore');
-    if ($semaphore_title) {
-        plugin::AddTitleFlag($semaphore_title, $client);
-        $client->DeleteBucket('flag-semaphore');
+    if ($client && $client->IsClient()) {
+        # Title Semaphore from lua scripts
+        my $semaphore_title = $client->GetBucket('flag-semaphore');
+        if ($semaphore_title) {
+            plugin::AddTitleFlag($semaphore_title, $client);
+            $client->DeleteBucket('flag-semaphore');
+        }
+
+        GrantClassesAA($client);
+        GrantGeneralAA($client); # Grant the general here too
+
+        plugin::CheckWorldWideBuffs($client);
+        plugin::UpdateCharMaxLevel($client);
+        #plugin::ConvertFlags($client);
+        plugin::AddDefaultAttunement($client);
+        #plugin::AwardBonusUnlocks($client);
+        plugin::UpdateEoMAward($client);
+        plugin::RegisterSeasonalLogin($client);
+        plugin::EnableTitles($client);
     }
-
-    GrantClassesAA($client);
-    GrantGeneralAA($client); # Grant the general here too
-
-    plugin::CheckWorldWideBuffs($client);
-    plugin::UpdateCharMaxLevel($client);
-	#plugin::ConvertFlags($client);
-    plugin::AddDefaultAttunement($client);
-    #plugin::AwardBonusUnlocks($client);
-    plugin::UpdateEoMAward($client);
-    plugin::RegisterSeasonalLogin($client);
-    plugin::EnableTitles($client);
 }
 
 sub MultiClassingEnabled
