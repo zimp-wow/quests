@@ -1,7 +1,19 @@
 
 sub EVENT_SIGNAL {
-    plugin::CommonCharacterUpdate($client);
     plugin::UpdateEoMAward($client);
+
+    if ($signal == 100) {
+        plugin::CheckWorldWideBuffs($client);
+    } else {
+        # Title Semaphore from lua scripts
+        my $semaphore_title = $client->GetBucket('flag-semaphore');
+        if ($semaphore_title) {
+            plugin::AddTitleFlag($semaphore_title, $client);
+            $client->DeleteBucket('flag-semaphore');
+        }
+
+        plugin::EnableTitles($client);
+    }
 }
 
 sub EVENT_ENTERZONE { 
