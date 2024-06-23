@@ -386,6 +386,30 @@ sub GrantClassAA {
         $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
     }
 
+    if ($client->GetLevel() >= 20) {
+        my %class_aa = (
+            4 => { # Ranger
+                '82' => 1 # Archery Master 1
+            }
+        );
+    }
+
+    if ($client->GetLevel() >= 40) {
+        my %class_aa = (
+            4 => { # Ranger
+                '82' => 1 # Archery Master 1
+            }
+        );
+    }
+
+    if ($client->GetLevel() >= 51) {
+        my %class_aa = (
+            4 => { # Ranger
+                '82' => 1 # Archery Master 1
+            }
+        );
+    }
+
     if ($client->GetLevel() >= 51 && plugin::IsSeasonal($client)) {
         my %class_aa = (
             1 => {
