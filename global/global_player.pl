@@ -33,10 +33,6 @@ sub EVENT_CONNECT {
 	}
 }
 
-sub EVENT_DISCONNECT {
-	plugin::CommonCharacterUpdate($client);
-}
-
 sub EVENT_LEVEL_UP {
     plugin::CommonCharacterUpdate($client);
 
@@ -57,9 +53,7 @@ sub EVENT_CLICKDOOR {
     }
 }
 
-sub EVENT_ZONE {
-	plugin::CommonCharacterUpdate($client);    
-
+sub EVENT_ZONE { 
     # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
 }
 
