@@ -14,7 +14,7 @@ sub CheckWorldWideBuffs {
 
 sub DoCheckWorldWideBuffs {
     my $target = shift;
-    if($target && $target->IsClient() || ($target->IsPet() && $target->HasOwner() && $target->GetOwner()->IsClient())) {
+    if($target && ($target->IsClient() || ($target->IsPet() && $target->HasOwner() && $target->GetOwner()->IsClient()))) {
         for my $spell_id (43002..43008, 17779) {
             my $data = quest::get_data("eom_$spell_id");
 
