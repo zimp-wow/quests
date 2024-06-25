@@ -1,6 +1,8 @@
 
 sub EVENT_SIGNAL {
-    plugin::UpdateEoMAward($client);
+    if ($signal = 666) {
+        plugin::UpdateEoMAward($client);
+    }
 
     if ($signal == 100) {
         plugin::CheckWorldWideBuffs($client);
