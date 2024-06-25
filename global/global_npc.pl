@@ -124,11 +124,13 @@ sub EVENT_TICK {
 
 sub EVENT_COMBAT {
     CHECK_CHARM_STATUS();
+    plugin::DoCheckWorldWideBuffs($npc); 
 }
 
 sub EVENT_AGGRO {
     CHECK_CHARM_STATUS();
     plugin::FadeWorldWideBuffs($npc);
+    plugin::DoCheckWorldWideBuffs($npc); 
 }
 
 sub EVENT_SPELL_FADE {
@@ -139,11 +141,10 @@ sub EVENT_SPAWN {
     if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
         UPDATE_PET_BAG($npc);
         CHECK_CHARM_STATUS();
-        quest::debug("I'm a pet");                       
+        plugin::DoCheckWorldWideBuffs($npc);                    
     }
 
-    plugin::CheckSpawnWaypoints();
-    plugin::DoCheckWorldWideBuffs($npc);
+    plugin::CheckSpawnWaypoints();    
 }
 
 sub EVENT_DAMAGE_GIVEN 
