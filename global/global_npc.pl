@@ -118,9 +118,7 @@ sub EVENT_TICK {
     if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
         if (plugin::MultiClassingEnabled()) {  
             UPDATE_PET_BAG($npc);
-        }
-        
-        plugin::DoCheckWorldWideBuffs($npc);
+        } 
     }
 }
 
@@ -140,7 +138,8 @@ sub EVENT_SPELL_FADE {
 sub EVENT_SPAWN {
     if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
         UPDATE_PET_BAG($npc);
-        CHECK_CHARM_STATUS();               
+        CHECK_CHARM_STATUS();
+        plugin::DoCheckWorldWideBuffs($npc);               
     }
 
     plugin::CheckSpawnWaypoints();
