@@ -138,11 +138,11 @@ sub EVENT_SPELL_FADE {
 sub EVENT_SPAWN {
     if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
         UPDATE_PET_BAG($npc);
-        CHECK_CHARM_STATUS();
-        plugin::DoCheckWorldWideBuffs($npc);               
+        CHECK_CHARM_STATUS();                       
     }
 
     plugin::CheckSpawnWaypoints();
+    plugin::DoCheckWorldWideBuffs($npc);
 }
 
 sub EVENT_DAMAGE_GIVEN 
