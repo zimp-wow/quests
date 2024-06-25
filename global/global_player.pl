@@ -51,11 +51,13 @@ sub EVENT_LEVEL_UP {
     plugin::CommonCharacterUpdate($client);
 
     my $new_level = $client->GetLevel();
-    if (($new_level % 10 == 0) || $new_level == 5) {
+    if (($new_level % 10 == 0) || $new_level == 5 || $new_level == $client->GetBucket("CharMaxLevel")) {
         my $name = $client->GetCleanName();
         my $full_class_name = plugin::GetPrettyClassString($client);
 
-        plugin::WorldAnnounce("$name ($full_class_name) has reached Level $new_level.");
+        my $capped = $new_level == $client->GetBucket("CharMaxLevel") ? " (MAX LEVEL)" : "";
+
+        plugin::WorldAnnounce("$name ($full_class_name) has reached Level $new_level$capped!");
     }
 }
 
