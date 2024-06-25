@@ -115,7 +115,7 @@ sub EVENT_SAY {
     elsif ($text=~/exotic payment/i) {
         $response = "In exchange for five [Echo of Memory], I can enchant the entire world! Each should co-exist with over versions of this type of effect, and will last four hours. If the world is already enchanted in this way, purchasing additional enhancement will extend the duration of the current enchantment. Would you like to enhance the [Experience Gain], [Hit Points and Armor Class], [Combat Statistics], [Movement Speed], [Mana Regeneration], [Attack Speed], or [Health Regeneration]? Alternatively, for twenty-five Echoes, I can cast [all of these enchantments]!";
 
-        $response = $response . " For merely twenty-five Echoes, I can [influence the tides of fate] in order to increase the rate that adventurers find rare items in the world!"
+        $response = $response . " For merely ten Echoes, I can [influence the tides of fate] in order to increase the rate that adventurers find rare items in the world!"
     }
 
     elsif ($text=~/experience gain/i) {        
@@ -156,7 +156,7 @@ sub EVENT_SAY {
     elsif ($text=~/influence the tides of fate/i) {
         #Echo of Luck
         $buff_id = 17779;
-        $cost = 25;
+        $cost = 10;
     }
 
     elsif ($text=~/buffs/i) {        
