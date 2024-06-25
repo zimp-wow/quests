@@ -113,10 +113,14 @@ sub EVENT_TICK {
     CHECK_CHARM_STATUS();
     
     # TODO: Gate this behind your owner actually having an eligible pet bag
-    if (plugin::MultiClassingEnabled()) {  
-        if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
+
+
+    if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
+        if (plugin::MultiClassingEnabled()) {  
             UPDATE_PET_BAG($npc);
         }
+        
+        plugin::DoCheckWorldWideBuffs($npc);
     }
 }
 
