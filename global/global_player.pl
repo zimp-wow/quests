@@ -73,6 +73,36 @@ sub EVENT_ZONE {
     # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
 }
 
+sub EVENT_WARP {
+    my $name = $client->GetCleanName();
+    my $current_x = $client->GetX();
+    my $current_y = $client->GetY();
+    my $current_z = $client->GetZ();
+
+    quest::debug("from_x " . $from_x);
+    quest::debug("from_y " . $from_y);
+    quest::debug("from_z " . $from_z);
+    quest::debug("current_x " . $current_x);
+    quest::debug("current_y " . $current_y);
+    quest::debug("current_z " . $current_z);    
+
+    my $distance = sqrt(($current_x - $from_x) ** 2 + ($current_y - $from_y) ** 2 + ($current_z - $from_z) ** 2);
+
+    my $flag1 = "";
+    my $flag2 = "";
+
+    if ($distance > 100) {
+        my $flag1 = "(Warp distance greater than 100 units: $distance)";
+    }
+
+    if (($current_x % 2 == 0) && ($current_y % 2 == 0) && ($current_z % 2 == 0)) {
+        quest::debug("Target coordinates are all even numbers: ($current_x, $current_y, $current_z)");
+    }
+
+    quest::discordsend("admin", "Warp Detected. Character: $name Zone: $zonesn From: $from_x, $from_y, $from_z To: $current_x, $current_y, $current_z $flag1 $flag2");
+}
+
+
 sub EVENT_DISCOVER_ITEM {
     my $name = $client->GetCleanName();
     
