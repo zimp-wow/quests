@@ -20,7 +20,7 @@ sub EVENT_SAY {
 	}
 	if(($text=~/gather materials/i) && (plugin::HasClassName($client, "Ranger"))) {
 		quest::debug($faction);
-		if($faction < 4) { #Needs better than indifferent
+		if($faction <= 4) { #Needs better than indifferent
 			quest::say("Take this pack. Go to Kaladim, find Trantor Everhot and ask for dwarven wire. Then go to Freeport to meet Jyle Windshot. Search the inns for him and ask him for treant wood. Then, collect some spiderling silk from spiderlings and finally, in Steamfont, we have the permission of the gnomes to use any micro servos we find while destroying rogue spiders. Combine them all and return the pack to me.");
 			quest::summonitem(17951); #Material Pack
 		}
