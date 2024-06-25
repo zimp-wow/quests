@@ -138,7 +138,8 @@ sub EVENT_SPELL_FADE {
 sub EVENT_SPAWN {
     if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
         UPDATE_PET_BAG($npc);
-        CHECK_CHARM_STATUS();                       
+        CHECK_CHARM_STATUS();
+        quest::debug("I'm a pet");                       
     }
 
     plugin::CheckSpawnWaypoints();
