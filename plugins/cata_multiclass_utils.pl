@@ -450,6 +450,7 @@ sub GrantClassAA {
             },
             15 => {
                 '1240' => 1, # Frenzied Swipes
+                '247'  => 1, # Feral Swipe
             },
             16 => {
                 '133' => 1, # Decapitation
