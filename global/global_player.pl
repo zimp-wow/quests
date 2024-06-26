@@ -1,4 +1,3 @@
-
 sub EVENT_SIGNAL {
     if ($signal = 666) {
         plugin::UpdateEoMAward($client);
@@ -45,6 +44,10 @@ sub EVENT_CONNECT {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
 		$client->MovePC(151, 185, -835, 4, 390); # Bazaar Safe Location.
 	}
+
+    if (plugin::GetSoulmark($client)) {
+        plugin::DisplayWarning($client);
+    }
 }
 
 sub EVENT_LEVEL_UP {
@@ -71,6 +74,7 @@ sub EVENT_CLICKDOOR {
 
 sub EVENT_ZONE { 
     # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
+    plugin::CommonCharacterUpdate($client);
 }
 
 sub EVENT_WARP {
@@ -79,11 +83,51 @@ sub EVENT_WARP {
     my $current_y = $client->GetY();
     my $current_z = $client->GetZ();
     my $distance = sqrt(($current_x - $from_x) ** 2 + ($current_y - $from_y) ** 2 + ($current_z - $from_z) ** 2);
+    my $account_key = $client->AccountID() . "-WarpCount";
+    my $soulmark = quest::get_data($client->AccountID() . "-CheaterFlag");
 
-    if ($distance > 100) {
-        quest::discordsend("admin", "Large Warp Detected. Character: $name Zone: $zonesn From: $from_x, $from_y, $from_z To: $current_x, $current_y, $current_z");
+    my @warp_events = plugin::DeserializeList(quest::get_data($account_key));
+
+    # Enqueue the current warp event with timestamp
+    push @warp_events, time();
+
+    # Clean up array elements older than 30 days
+    my $thirty_days_in_seconds = 30 * 24 * 60 * 60;
+    @warp_events = grep { time() - $_ <= $thirty_days_in_seconds } @warp_events;
+
+    # Count recent warp events
+    my $recent_warp_count = scalar(@warp_events);
+
+    my $enforcement = 0;
+
+    quest::set_data($account_key, plugin::SerializeList(@warp_events));
+
+    if ($distance > 100 || $soulmark) {
+        my $admin_message = "Large Warp Detected. Character: $name Zone: $zonesn From: $from_x, $from_y, $from_z To: $current_x, $current_y, $current_z Distance: $distance";
+
+        if ($soulmark) {
+            $admin_message .= "\nAccount has Soulmark. Reason: $soulmark";            
+        }
+
+        if ($recent_warp_count) {
+            $admin_message .= "\nPrevious 30-day Warp Count: $recent_warp_count";
+        }
+
+        if ($soulmark && $recent_warp_count > 10) {
+            $admin_message .= "\nHigh 30-day Warp Count. Enforcement Engaged.";
+            $enforcement = 1;
+        }
+
+        # Send the admin message
+        quest::discordsend("admin", $admin_message);
+        quest::debug($admin_message);
+
+        if ($enforcement) {
+            $client->WorldKick();
+        }
     }
 }
+
 
 
 sub EVENT_DISCOVER_ITEM {
