@@ -6,7 +6,8 @@ sub OfferStandardInstance {
   my $text            = plugin::val('$text');
   my $zonesn          = plugin::val('$zonesn');
   my $dz_version      = 0;
-  my $dz_duration     = 79200; # 22 hours
+  my $dz_duration     = 64800; # 18 hours
+  my $dz_lifetime     = 604800;
   my ($expedition_name, $min_players, $max_players, $dz_zone) = @_;
 
   if (plugin::IsSeasonal($client) || plugin::MultiClassingEnabled()) {
@@ -30,7 +31,7 @@ sub OfferStandardInstance {
       $expedition_name = $expedition_name . " (Static)";
     }
     
-    my $dz = $client->CreateExpedition($dz_zone, $dz_version, $dz_duration, $expedition_name, $min_players, $max_players);
+    my $dz = $client->CreateExpedition($dz_zone, $dz_version, $dz_lifetime, $expedition_name, $min_players, $max_players);
     if ($dz) {
       $dz->SetCompass($zonesn, $npc->GetX(), $npc->GetY(), $npc->GetZ());
       $dz->SetSafeReturn($zonesn, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
