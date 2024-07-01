@@ -129,6 +129,7 @@ my %atlas = (
     'uqua'           => 'GoD',
     'vxed'           => 'GoD',
     'yxtta'          => 'GoD',
+    'nedaria'        => 'GoD',
 
     'anguish'        => 'OoW',
     'harbingers'     => 'OoW',
