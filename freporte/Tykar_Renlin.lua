@@ -40,5 +40,5 @@ function event_trade(e)
 		e.other:QuestReward(e.self,{itemid = 12196, exp = 10}); -- Item: Bunker Cell #1 (Zimel's Blanket)
 		total_champagne = 0;
 	end
-	item_lib.return_items(e.other, e.trade)
+	item_lib.return_items(e.self, e.other, e.trade);
 end
