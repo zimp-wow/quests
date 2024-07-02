@@ -14,16 +14,16 @@ function event_trade(e)
 	local champagne = 0;
 	local item_lib = require("items");
 
-	if item_lib.check_turn_in(e.self, e.trade, {item1 = 13829,item2 = 13829,item3 = 13829,item4 = 13829}) then
+	if item_lib.check_turn_in(e.trade, {item1 = 13829,item2 = 13829,item3 = 13829,item4 = 13829}) then
 		total_champagne = total_champagne + 4;
 		champagne = 4;
-	elseif item_lib.check_turn_in(e.self, e.trade, {item1 = 13829,item2 = 13829,item3 = 13829}) then
+	elseif item_lib.check_turn_in(e.trade, {item1 = 13829,item2 = 13829,item3 = 13829}) then
 		total_champagne = total_champagne + 3;
 		champagne = 3;
-	elseif item_lib.check_turn_in(e.self, e.trade, {item1 = 13829,item2 = 13829}) then
+	elseif item_lib.check_turn_in(e.trade, {item1 = 13829,item2 = 13829}) then
 		total_champagne = total_champagne + 2;
 		champagne = 2;
-	elseif item_lib.check_turn_in(e.self, e.trade, {item1 = 13829}) then
+	elseif item_lib.check_turn_in(e.trade, {item1 = 13829}) then
 		total_champagne = total_champagne + 1;
 		champagne = 1;
 	end
@@ -40,5 +40,5 @@ function event_trade(e)
 		e.other:QuestReward(e.self,{itemid = 12196, exp = 10}); -- Item: Bunker Cell #1 (Zimel's Blanket)
 		total_champagne = 0;
 	end
-	item_lib.return_items(e.self, e.other, e.trade)
+	item_lib.return_items(e.other, e.trade)
 end
