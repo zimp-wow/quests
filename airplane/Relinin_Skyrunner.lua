@@ -21,7 +21,7 @@ end
 function event_trade(e)
 	local item_lib = require("items");
 	if(item_lib.check_turn_in(e.trade, {item1 = 20934, item2 = 20850, item3 = 20849})) then 	--ranger test of body using auburn tessera, griffon talon, ysgaril root
-		e.other:SummonItem(2715); 	--griffon talon
+		e.other:SummonItem(14567); 	--griffon talon necklace
 		e.other:AddEXP(100000);
 		e.self:Say("Good work, ranger.");
 		eq.depop();
