@@ -52,6 +52,7 @@ my %waypoints = (
     'trakanon'      => ["Trakanon's Teeth", 3, -4720, -1620, -473, 320],
     'cabeast'       => ["Eastern Cabilis", 3, -136, 969, 4.68, 271],
     'chardok'       => ["Chardok", 3, -3876, 7407, -233, 303],
+    'timorous'      => ["Timorous Deep", 3, 2557, -6797, 4, 293],
     'iceclad'       => ["The Iceclad Ocean (Tower of Frozen Shadow)", 4, 3127, 1300, 111, 500],
     'eastwastes'    => ["Eastern Wastes (Crystal Caverns)", 4, 464, -4037, 144, 178],
     'cobaltscar'    => ["Cobalt Scar", 4, -1633, -1064, 296, 115],
