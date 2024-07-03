@@ -70,7 +70,7 @@ function event_trade(e)
 			e.other:Faction(261,50,0); --Green Blood Knights
 			e.other:Faction(232,50,0); --Craknek Warriors
 			e.other:Faction(337,50,0); --Oggok Guards
-			e.other:SummonItem(6359); -- Stein of Moggok
+			e.other:SummonItem(13380); -- Stein of Moggok
 		else
 			e.self:Say("Find ways to help all in Oggok. Then we will trade.");
 			e.other:SummonItem(13379);	-- Compendium returned. Not enough faction @ indifferent
