@@ -29,6 +29,7 @@ end
 
 function event_timer(e)
 	if(e.timer == "87") then
+		eq.depop_all(71075); -- Sanity depop in case one is already up
 		eq.spawn2(71075,0,0,-996.3,910.5,192.3,36); -- NPC: Keeper_of_Souls
 		eq.stop_timer("87");
 	end
