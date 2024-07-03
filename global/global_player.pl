@@ -1,5 +1,5 @@
 sub EVENT_SIGNAL {
-    if ($signal = 666) {
+    if ($signal == 666) {
         plugin::UpdateEoMAward($client);
     }
 

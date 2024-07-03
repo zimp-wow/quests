@@ -3,9 +3,6 @@ sub EVENT_SPAWN {
   quest::emote("rises from the corpse and stares around, as if waiting...");
 
   $npc->MoveTo($npc->GetX(), $npc->GetY(), $npc->FindGroundZ($npc->GetX(), $npc->GetY()));
-
-  $npc->SetRace(quest::ChooseRandom(587, 588, 605));
-  $npc->SetGender(0);
 }
 
 sub EVENT_SAY {
