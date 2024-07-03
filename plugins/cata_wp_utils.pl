@@ -32,6 +32,7 @@ my %waypoints = (
     'cazicthule'    => ["Accursed Temple of Cazic-Thule", 0, -466, 255, 20, 400],    
     'oggok'         => ["Oggok", 0, 513, 465, 3.75, 205],
     'grobb'         => ["Grobb", 0, -200, 223, 3.75, 414],
+    'everfrost'     => ["Everfrost", 0, -6972, 2133, -58, 163],    
     'gfaydark'      => ["Greater Faydark (Druid Ring)", 1, -385, 458, 0, 0],
     'akanon'        => ["Ak'anon", 1, -761, 1279, -24.25, 182.25],
     'mistmoore'     => ["Castle of Mistmoore", 1, 122, -294, -179, 135],
