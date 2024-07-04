@@ -123,18 +123,12 @@ sub EVENT_TICK {
 }
 
 sub EVENT_COMBAT {
-    CHECK_CHARM_STATUS();
-    plugin::DoCheckWorldWideBuffs($npc); 
+    CHECK_CHARM_STATUS(); 
 }
 
 sub EVENT_AGGRO {
     CHECK_CHARM_STATUS();
     plugin::FadeWorldWideBuffs($npc);
-    plugin::DoCheckWorldWideBuffs($npc); 
-}
-
-sub EVENT_SPELL_FADE {
-    CHECK_CHARM_STATUS();
 }
 
 sub EVENT_SPAWN {
@@ -366,6 +360,10 @@ sub GET_BAG_CONTENTS {
 
 sub CHECK_CHARM_STATUS
 {   
+    if ($npc->Charmed() && $npc->GetOwner()->IsClient()) {
+        plugin::DoCheckWorldWideBuffs($npc);
+    }
+
     if ($npc->Charmed() && !plugin::REV($npc, "is_charmed")) {     
         my @lootlist = $npc->GetLootList();
         my @inventory;
@@ -385,6 +383,7 @@ sub CHECK_CHARM_STATUS
 
         while (@lootlist) { # While lootlist has elements
             foreach my $item_id (@lootlist) {
+                quest::debug("Removing: $item_id");
                 $npc->RemoveItem($item_id);
             }
             @lootlist = $npc->GetLootList(); # Update the lootlist after removing items
@@ -392,7 +391,7 @@ sub CHECK_CHARM_STATUS
 
         foreach my $item (@inventory) {
             my ($item_id, $quantity) = split(":", $item);
-            #quest::debug("Adding: $item_id x $quantity");
+            quest::debug("Adding: $item_id x $quantity");
             $npc->AddItem($item_id, $quantity);
         }
 
