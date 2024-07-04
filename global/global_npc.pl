@@ -360,13 +360,13 @@ sub GET_BAG_CONTENTS {
 
 sub CHECK_CHARM_STATUS
 {   
-    if ($npc->Charmed() && $npc->GetOwner()->IsClient()) {
-        plugin::DoCheckWorldWideBuffs($npc);
-    }
-
     if ($npc->Charmed() && !plugin::REV($npc, "is_charmed")) {     
         my @lootlist = $npc->GetLootList();
         my @inventory;
+
+        if ($npc->Charmed() && $npc->GetOwner()->IsClient()) {
+            plugin::DoCheckWorldWideBuffs($npc);
+        }
         
         foreach my $item_id (@lootlist) {
             my $quantity = $npc->CountItem($item_id);
