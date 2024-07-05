@@ -119,12 +119,14 @@ sub EVENT_TICK {
 
 sub EVENT_CAST_ON {
     if (quest::IsCharmSpell($spell_id)) {
-        $npc->SetTimer("charm_check", 1);
+        quest::debug("Setting charm_check timer");
+        $npc->SetTimer("charm_check", 1);        
     }
 }
 
-sub EVENT_TIMER {
+sub EVENT_TIMER {    
     if ($timer eq "charm_check") {
+        quest::debug("Entering charm_check timer");
         $npc->StopTimer("charm_check");
         CHECK_CHARM_STATUS(); 
     }
