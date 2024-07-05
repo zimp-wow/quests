@@ -120,7 +120,7 @@ sub EVENT_TICK {
 sub EVENT_CAST_ON {
     if (quest::IsCharmSpell($spell_id)) {
         quest::debug("Setting charm_check timer");
-        $npc->SetTimer("charm_check", 3);        
+        $npc->SetTimer("charm_check", 3); 
     }
 }
 
@@ -128,7 +128,7 @@ sub EVENT_TIMER {
     if ($timer eq "charm_check") {
         quest::debug("Entering charm_check timer");
         $npc->StopTimer("charm_check");
-        CHECK_CHARM_STATUS(); 
+        CHECK_CHARM_STATUS($npc); 
     }
 }
 
@@ -364,6 +364,7 @@ sub GET_BAG_CONTENTS {
 
 sub CHECK_CHARM_STATUS
 {
+    $npc = shift;
     if (plugin::REV($npc, "is_charmed")) {
         quest::debug("check1");
         if ($npc->Charmed() && $npc->GetOwner()->IsClient()) {
