@@ -126,9 +126,18 @@ sub EVENT_CAST_ON {
 
 sub EVENT_TIMER {    
     if ($timer eq "charm_check") {
-        quest::debug("Entering charm_check timer");
+        quest::debug("Entering charm_check timer");        
+        
+        if (plugin::REV($npc, "is_charmed")) {
+            quest::debug("Check 1");
+            if ($npc->Charmed() && $npc->GetOwner()->IsClient()) {
+                quest::debug("Check 2");
+                plugin::DoCheckWorldWideBuffs($npc);
+                quest::debug("Check 3");
+            }
+        }
+
         $npc->StopTimer("charm_check");
-        CHECK_CHARM_STATUS($npc); 
     }
 }
 
@@ -360,15 +369,4 @@ sub GET_BAG_CONTENTS {
     }
 
     return %new_bag_inventory;
-}
-
-sub CHECK_CHARM_STATUS
-{
-    $npc = shift;
-    if (plugin::REV($npc, "is_charmed")) {
-        quest::debug("check1");
-        if ($npc->Charmed() && $npc->GetOwner()->IsClient()) {
-            plugin::DoCheckWorldWideBuffs($npc);
-        }
-    }
 }
