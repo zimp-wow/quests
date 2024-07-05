@@ -60,13 +60,8 @@ sub DoCheckWorldWideBuffs {
             }
         }
 
-        if ($hp_ratio) {
-            $target->SetHP($target->GetMaxHP() * ($hp_ratio / 100));
-        }
-
-        if ($mana_ratio) {
-            $target->SetHP($target->GetMaxMana() * ($mana_ratio / 100));
-        }
+        $target->SetHP($target->GetMaxHP() * ($hp_ratio / 100));
+        $target->SetMana($target->GetMaxMana() * ($mana_ratio / 100));
     }
 }
 
