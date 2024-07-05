@@ -29,9 +29,9 @@ function Control_Timer(e)
     end
 end
 
---function Real_Death(e)
-    --eq.depop_with_timer(186201);
---end
+function Real_Death(e)
+    eq.depop_with_timer(186201);
+end
     
 function Real_Combat(e)
 	if (e.joined == true) then
