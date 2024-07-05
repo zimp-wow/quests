@@ -1,36 +1,35 @@
 sub EVENT_SAY {
-    if (plugin::MultiClassingEnabled()) {
+    if (plugin::MultiClassingEnabled() && $npc->GetClass() >= 20 && $npc->GetClass() <= 35) {
         my $classes = $client->GetClassesBitmask();
         my $player_class_id = $npc->GetClass() - 19;
         my $class_name = quest::getclassname($player_class_id);
-        if ($npc->GetClass() >= 20 && $npc->GetClass() <= 35) {
-            if ($text=~/hail/i) {
-                my $select_string = quest::saylink("class_select", 1, "become a $class_name");
-                my %class_greetings = (
-                    1 => "Ah, a courageous soul approaches. Are you here to embrace the discipline and strength required to [$select_string]?",
-                    2 => "Blessings upon you, child. The light guides you to me; is it your wish to [$select_string] and serve the divine?",
-                    3 => "Honor and valor shine from your eyes. Are you destined to [$select_string], a righteous defender of the light?",
-                    4 => "The winds whisper of a new guardian. Is your heart called to the wilds, to [$select_string], protector of nature?",
-                    5 => "A shadow looms near. Is it your fate to command the darkness and [$select_string]?",
-                    6 => "The essence of nature surrounds you. Are you ready to [$select_string], guardian of the balance?",
-                    7 => "Discipline and inner strength are your allies. Do you seek the path to [$select_string], master of martial arts?",
-                    8 => "A melody accompanies your steps. Do you feel the rhythm calling you to [$select_string], the voice of inspiration?",
-                    9 => "Cunning and silence are your markers. Are you prepared to [$select_string], master of stealth and treachery?",
-                    10 => "The spirits whisper of a new journey. Is it time for you to [$select_string], a conduit of the spirit world?",
-                    11 => "A chill of the grave precedes you. Will you embrace the dark arts and [$select_string]?",
-                    12 => "Arcane energies pulse around you. Is your destiny to [$select_string], master of the elements?",
-                    13 => "Creation's essence swirls around you. Are you called to [$select_string], summoner of the arcane?",
-                    14 => "Your presence bends reality. Are you ready to [$select_string], weaver of illusions and mind control?",
-                    15 => "The call of the wild strengthens. Will you heed the call and [$select_string], melding the power of beasts and combat?",
-                    16 => "Rage burns within your spirit. Do you wish to unleash this power and [$select_string], a warrior of frenzy?"
-                );
-                
-                my $greeting = $class_greetings{$player_class_id} // "Greetings, traveler. Are you seeking guidance or knowledge?";
-                if (!($classes & plugin::GetClassBitmask($player_class_id)) && plugin::GetClassesCount($client) < 3) {
-                    plugin::NPCTell($greeting);
-                }
+
+        if ($text=~/hail/i) {
+            my $select_string = quest::saylink("class_select", 1, "become a $class_name");
+            my %class_greetings = (
+                1 => "Ah, a courageous soul approaches. Are you here to embrace the discipline and strength required to [$select_string]?",
+                2 => "Blessings upon you, child. The light guides you to me; is it your wish to [$select_string] and serve the divine?",
+                3 => "Honor and valor shine from your eyes. Are you destined to [$select_string], a righteous defender of the light?",
+                4 => "The winds whisper of a new guardian. Is your heart called to the wilds, to [$select_string], protector of nature?",
+                5 => "A shadow looms near. Is it your fate to command the darkness and [$select_string]?",
+                6 => "The essence of nature surrounds you. Are you ready to [$select_string], guardian of the balance?",
+                7 => "Discipline and inner strength are your allies. Do you seek the path to [$select_string], master of martial arts?",
+                8 => "A melody accompanies your steps. Do you feel the rhythm calling you to [$select_string], the voice of inspiration?",
+                9 => "Cunning and silence are your markers. Are you prepared to [$select_string], master of stealth and treachery?",
+                10 => "The spirits whisper of a new journey. Is it time for you to [$select_string], a conduit of the spirit world?",
+                11 => "A chill of the grave precedes you. Will you embrace the dark arts and [$select_string]?",
+                12 => "Arcane energies pulse around you. Is your destiny to [$select_string], master of the elements?",
+                13 => "Creation's essence swirls around you. Are you called to [$select_string], summoner of the arcane?",
+                14 => "Your presence bends reality. Are you ready to [$select_string], weaver of illusions and mind control?",
+                15 => "The call of the wild strengthens. Will you heed the call and [$select_string], melding the power of beasts and combat?",
+                16 => "Rage burns within your spirit. Do you wish to unleash this power and [$select_string], a warrior of frenzy?"
+            );
+            
+            my $greeting = $class_greetings{$player_class_id} // "Greetings, traveler. Are you seeking guidance or knowledge?";
+            if (!($classes & plugin::GetClassBitmask($player_class_id)) && plugin::GetClassesCount($client) < 3) {
+                plugin::NPCTell($greeting);
             }
-        }
+        }        
 
         if ($text eq "class_select") {
             my $class_name = quest::getclassname($npc->GetClass() - 19);
@@ -109,12 +108,8 @@ sub EVENT_DEATH_COMPLETE {
     }
 }
 
-sub EVENT_TICK {    
-    CHECK_CHARM_STATUS();
-    
+sub EVENT_TICK {        
     # TODO: Gate this behind your owner actually having an eligible pet bag
-
-
     if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
         if (plugin::MultiClassingEnabled()) {  
             UPDATE_PET_BAG($npc);
@@ -122,19 +117,26 @@ sub EVENT_TICK {
     }
 }
 
-sub EVENT_COMBAT {
-    CHECK_CHARM_STATUS(); 
+sub EVENT_CAST_ON {
+    if (quest::IsCharmSpell($spell_id)) {
+        $npc->SetTimer("charm_check", 1);
+    }
+}
+
+sub EVENT_TIMER {
+    if ($timer eq "charm_check") {
+        $npc->StopTimer("charm_check");
+        CHECK_CHARM_STATUS(); 
+    }
 }
 
 sub EVENT_AGGRO {
-    CHECK_CHARM_STATUS();
     plugin::FadeWorldWideBuffs($npc);
 }
 
 sub EVENT_SPAWN {
     if ($npc->IsPet() && $npc->GetOwner()->IsClient()) { 
         UPDATE_PET_BAG($npc);
-        CHECK_CHARM_STATUS();
         plugin::DoCheckWorldWideBuffs($npc);                    
     }
 
@@ -359,42 +361,11 @@ sub GET_BAG_CONTENTS {
 }
 
 sub CHECK_CHARM_STATUS
-{   
-    if ($npc->Charmed() && !plugin::REV($npc, "is_charmed")) {     
-        my @lootlist = $npc->GetLootList();
-        my @inventory;
-
+{
+    if (plugin::REV($npc, "is_charmed")) {
+        quest::debug("check1");
         if ($npc->Charmed() && $npc->GetOwner()->IsClient()) {
             plugin::DoCheckWorldWideBuffs($npc);
         }
-        
-        foreach my $item_id (@lootlist) {
-            my $quantity = $npc->CountItem($item_id);
-            push @inventory, "$item_id:$quantity";
-        }
-
-        my $data = @inventory ? join(",", @inventory) : "EMPTY";
-        plugin::SEV($npc, "is_charmed", $data);
-
-    } elsif (!$npc->Charmed() && plugin::REV($npc, "is_charmed")) {        
-        my $data = plugin::REV($npc, "is_charmed");
-        my @inventory = split(",", $data);
-        my @lootlist = $npc->GetLootList();
-
-        while (@lootlist) { # While lootlist has elements
-            foreach my $item_id (@lootlist) {
-                quest::debug("Removing: $item_id");
-                $npc->RemoveItem($item_id);
-            }
-            @lootlist = $npc->GetLootList(); # Update the lootlist after removing items
-        }
-
-        foreach my $item (@inventory) {
-            my ($item_id, $quantity) = split(":", $item);
-            quest::debug("Adding: $item_id x $quantity");
-            $npc->AddItem($item_id, $quantity);
-        }
-
-        plugin::SEV($npc, "is_charmed", "");
-    }    
+    }
 }

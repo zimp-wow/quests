@@ -31,7 +31,7 @@ sub DoCheckWorldWideBuffs {
 
                     if ($data) {
                         if (abs($tics_remaining - $expected_tics) > 10) {
-                            $target->SetSpellDuration($spell_id, $expected_tics);
+                            $target->ApplyBuffSpell($spell_id, $expected_tics);
                             quest::debug("Applied spell buff: ID $spell_id, Expected Tics: $expected_tics, Current Tics: $tics_remaining");
                         } else {
                             quest::debug("Skipped spell buff: ID $spell_id, Current Tics: $tics_remaining is within acceptable range");
