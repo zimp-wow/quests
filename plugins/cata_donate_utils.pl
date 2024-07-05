@@ -18,6 +18,9 @@ sub CheckWorldWideBuffs {
 sub DoCheckWorldWideBuffs {
     my $target = shift;
     if ($target && ($target->IsClient() || ($target->IsPet() && $target->HasOwner() && $target->GetOwner()->IsClient()))) {
+        my $hp_ratio   = $target->GetHPRatio();
+        my $mana_ratio = $target->GetManaRatio();
+
         my %buffs_to_check = map { $_ => 1 } (43002..43008, 17779);
 
         for my $buff ($target->GetBuffs()) {
@@ -55,6 +58,14 @@ sub DoCheckWorldWideBuffs {
                 $target->ApplySpellBuff($spell_id, $tics_remaining);
                 quest::debug("Applied spell buff: ID $spell_id, Tics: $tics_remaining");
             }
+        }
+
+        if ($hp_ratio) {
+            $target->SetHP($target->GetMaxHP() * ($hp_ratio / 100));
+        }
+
+        if ($mana_ratio) {
+            $target->SetHP($target->GetMaxMana() * ($mana_ratio / 100));
         }
     }
 }
