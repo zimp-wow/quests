@@ -128,7 +128,7 @@ sub EVENT_TIMER {
     if ($timer eq "charm_check") {
         quest::debug("Entering charm_check timer");        
         
-        if ($npc->EntityVariableExists("is_charmed")) {
+        if ($npc->IsCharmed() && $npc->GetOwner() && $npc->GetOwner()->IsClient()) {
             quest::debug("Check 1");
             if ($npc->Charmed() && $npc->GetOwner()->IsClient()) {
                 quest::debug("Check 2");
