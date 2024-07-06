@@ -117,26 +117,6 @@ sub EVENT_TICK {
     }
 }
 
-sub EVENT_CAST_ON {
-    if (quest::IsCharmSpell($spell_id)) {
-        quest::debug("Setting charm_check timer");
-        $npc->SetTimer("charm_check", 12); 
-    }
-}
-
-sub EVENT_TIMER {    
-    if ($npc && $timer eq "charm_check") {
-        quest::debug("Entering charm_check timer");        
-        
-        if ($npc->IsCharmed() && $npc->GetOwner() && $npc->GetOwner()->IsClient()) {
-            quest::debug("Check 1");
-            plugin::DoCheckWorldWideBuffs($npc);
-            quest::debug("Check 3");
-        }
-        $npc->StopTimer("charm_check");
-    }
-}
-
 sub EVENT_AGGRO {
     plugin::FadeWorldWideBuffs($npc);
 }
