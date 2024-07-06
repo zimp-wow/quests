@@ -18,7 +18,7 @@ end
 function event_trade(e)
 	local item_lib = require("items");
 	if(item_lib.check_turn_in(e.trade, {item1 = 20934, item2 = 20834, item3 = 20835})) then						--shaman test of might using auburn tessera, drake fang, leather cord
-		e.other:SummonItem(14566); --drake fang amulet
+		e.other:SummonItem(27726); --drake fang amulet
 		e.other:AddEXP(100000);
 		e.self:Say("Excellent! Take this as your reward.");
 		eq.depop();

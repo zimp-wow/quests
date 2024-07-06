@@ -18,7 +18,7 @@ end
 function event_trade(e)
 	local item_lib = require("items");
 	if(item_lib.check_turn_in(e.trade, {item1 = 20963, item2 = 20994, item3 = 20995, item4 = 20996})) then  	--rogue test of deception using honeyed nectar, bixie stinger, lightning rod, bloodsky sapphire
-		e.other:SummonItem(11677); 	--ebonsting
+		e.other:SummonItem(27704); 	--ebonsting
 		e.other:AddEXP(100000);
 		e.self:Say("Very good. Here's your reward.");
 		eq.depop();
@@ -28,7 +28,7 @@ function event_trade(e)
 		e.self:Say("Very good. Here's your reward.");
 		eq.depop();
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 20935, item2 = 20987, item3 = 20986})) then 	--rogue test of cunning using bronze disc, jester's mask, red face paint
-		e.other:SummonItem(2702); 	--transparent mask
+		e.other:SummonItem(27702); 	--transparent mask
 		e.other:AddEXP(100000);
 		e.self:Say("Very good. Here's your reward.");
 		eq.depop();

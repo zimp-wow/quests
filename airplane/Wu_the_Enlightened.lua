@@ -23,7 +23,7 @@ function event_trade(e)
 		e.self:Say("You have moved closer to enlightenment.");
 		eq.depop();
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 20803, item2 = 20801, item3 = 20802, item4 = 20960})) then 	--monk test of fists using brass knuckles, ethereal amethyst, nebulous sapphire, white spiroc feather
-		e.other:SummonItem(11690); 	--wu's tranquil fist
+		e.other:SummonItem(27715); 	--wu's tranquil fist
 		e.other:AddEXP(100000);
 		e.self:Say("You have moved closer to enlightenment.");
 		eq.depop();

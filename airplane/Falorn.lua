@@ -27,7 +27,7 @@ function event_trade(e)
 		e.self:Say("You have proven yourself worthy.");
 		eq.depop();
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 20942, item2 = 20974, item3 = 20975})) then		--warrior test of force using pearlescent globe, silver mesh, spiroc air totem
-		e.other:SummonItem(4321); 	--aerated pauldrons
+		e.other:SummonItem(27701); 	--aerated pauldrons
 		e.other:AddEXP(100000);
 		e.self:Say("You have proven yourself worthy.");
 		eq.depop();

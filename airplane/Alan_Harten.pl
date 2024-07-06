@@ -45,7 +45,7 @@ sub EVENT_ITEM {
 	elsif (plugin::takeItems(20808 => 1, 20939 => 1, 20809 => 1)) { 		#:: Cleric Test of Skill
 		quest::say("Wonderful! Take this as your reward!");
 		#:: Give a 9201 - Darkwood Aegis
-		quest::summonitem(19201);
+		quest::summonitem(27716);
 		#:: Ding!
 		quest::ding();
 		#:: Grant a huge amount of experience
@@ -57,7 +57,7 @@ sub EVENT_ITEM {
 	elsif (plugin::takeItems(20946 => 1, 20810 => 1, 20811 => 1)) {			#:: Cleric Test of Protection
 		quest::say("Wonderful! Take this as your reward!");
 		#:: Give a 4323 - Glowing Pauldrons
-		quest::summonitem(14323);
+		quest::summonitem(27717);
 		#:: Ding!
 		quest::ding();
 		#:: Grant a huge amount of experience

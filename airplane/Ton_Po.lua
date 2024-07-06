@@ -18,7 +18,7 @@ end
 function event_trade(e)
 	local item_lib = require("items");
 	if(item_lib.check_turn_in(e.trade, {item1 = 20793, item2 = 20794, item3 = 20932})) then 	--monk test of strength using finely woven gold mesh, silken strands, verdant tessera
-		e.other:SummonItem(1282); --mystical back straps
+		e.other:SummonItem(27714); --mystical back straps
 		e.other:AddEXP(100000);
 		e.self:Say("You have done well, " .. e.other:GetName() .. ".");
 		eq.depop();

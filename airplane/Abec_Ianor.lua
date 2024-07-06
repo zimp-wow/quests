@@ -23,7 +23,7 @@ function event_trade(e)
 		e.self:Say("Excellent! Take this.");
 		eq.depop();
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 20958, item2 = 20749, item3 = 20750})) then					--wizard test of visualization using white-tipped spiroc feather, pulsating sapphire, amethyst amulet
-		e.other:SummonItem(14556); --amulet of planar transference
+		e.other:SummonItem(27710); --amulet of planar transference
 		e.other:AddEXP(100000);
 		e.self:Say("Excellent! Take this.");
 		eq.depop();
