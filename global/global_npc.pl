@@ -125,7 +125,7 @@ sub EVENT_CAST_ON {
 }
 
 sub EVENT_TIMER {    
-    if ($timer eq "charm_check") {
+    if ($npc && $timer eq "charm_check") {
         quest::debug("Entering charm_check timer");        
         
         if ($npc->IsCharmed() && $npc->GetOwner() && $npc->GetOwner()->IsClient()) {
@@ -133,7 +133,6 @@ sub EVENT_TIMER {
             plugin::DoCheckWorldWideBuffs($npc);
             quest::debug("Check 3");
         }
-
         $npc->StopTimer("charm_check");
     }
 }
