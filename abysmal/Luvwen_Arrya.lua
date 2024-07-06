@@ -1,7 +1,7 @@
 -- Bard Abysmal Sea armor
 
 function event_say(e)
-	if e.other:GetClass() == Class.BARD then
+	if e.other:HasClass(Class.BARD) then
 		if e.message:findi("hail") then
 			e.self:Say("Hail, adventurer. Welcome aboard! Should you be a bard like myself, I am sure you have collected quite a few stories thus far in your travels. Would you be a [bard]?");
 		elseif e.message:findi("bard") then
@@ -28,7 +28,7 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if e.other:GetClass() == Class.BARD then -- Bard
+	if e.other:HasClass(Class.BARD) then -- Bard
 		if item_lib.check_turn_in(e.trade, {item1 = 68222}) then -- Muramite Bracer Armor
 			e.other:QuestReward(e.self,0,0,0,0,54163,0); -- Reworked Muramite Bracer
 		elseif item_lib.check_turn_in(e.trade, {item1 = 68220}) then -- Muramite Helm Armor

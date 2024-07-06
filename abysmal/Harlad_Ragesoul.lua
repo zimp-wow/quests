@@ -1,7 +1,7 @@
 -- Berserker Abysmal Sea armor
 
 function event_say(e)
-	if e.other:GetClass() == Class.BERSERKER then
+	if e.other:HasClass(Class.BERSERKER) then
 		if e.message:findi("hail") then
 			e.self:Say("Hail ".. e.other:GetRaceName() ..", I am seeking a [berserker]. One of those few brave souls that show no fear regardless of the enemy. Is such bravery within you?");
 		elseif e.message:findi("berserker") then
@@ -28,7 +28,7 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if e.other:GetClass() == Class.BERSERKER then -- Berserker
+	if e.other:HasClass(Class.BERSERKER) then -- Berserker
 		if item_lib.check_turn_in(e.trade, {item1 = 68222}) then -- Muramite Bracer Armor
 			e.other:QuestReward(e.self,0,0,0,0,54128,0); -- Reworked Muramite Bracer
 		elseif item_lib.check_turn_in(e.trade, {item1 = 68220}) then -- Muramite Helm Armor

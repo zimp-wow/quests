@@ -1,7 +1,7 @@
 -- Shaman Abysmal Sea armor
 
 function event_say(e)
-	if e.other:GetClass() == Class.SHAMAN then
+	if e.other:HasClass(Class.SHAMAN) then
 		if e.message:findi("hail") then
 			e.self:Say("I seek those who study the spirit world and potions and tribal magic. I seek a shaman. Are you a [shaman]?");
 		elseif e.message:findi("shaman") then
@@ -28,7 +28,7 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if e.other:GetClass() == Class.SHAMAN then -- Shaman
+	if e.other:HasClass(Class.SHAMAN) then -- Shaman
 		if item_lib.check_turn_in(e.trade, {item1 = 68222}) then -- Muramite Bracer Armor
 			e.other:QuestReward(e.self,0,0,0,0,54142,0); -- Reworked Muramite Bracer
 		elseif item_lib.check_turn_in(e.trade, {item1 = 68220}) then -- Muramite Helm Armor

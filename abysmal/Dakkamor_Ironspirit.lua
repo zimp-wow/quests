@@ -1,7 +1,7 @@
 -- Cleric Abysmal Sea armor
 
 function event_say(e)
-	if e.other:GetClass() == Class.CLERIC then -- Cleric
+	if e.other:HasClass(Class.CLERIC) then -- Cleric
 		if e.message:findi("hail") then
 			e.self:Say("Hail there! Welcome aboard! There is never enough time to care for all the ill in such a place. You wouldn't happen to be a [cleric] as well would you?");
 		elseif e.message:findi("cleric") then
@@ -28,7 +28,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if e.other:GetClass() == Class.CLERIC then -- Cleric
+    if e.other:HasClass(Class.CLERIC) then -- Cleric
         if item_lib.check_turn_in(e.trade, {item1 = 68222}) then -- Muramite Bracer Armor
             e.other:QuestReward(e.self,0,0,0,0,54114,0); -- Reworked Muramite Bracer
         elseif item_lib.check_turn_in(e.trade, {item1 = 68220}) then -- Muramite Helm Armor

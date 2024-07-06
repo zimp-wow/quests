@@ -47,7 +47,7 @@ function event_say(e)
 
   -- Smith Rondo skip flag was not tested on live, will just bypass sewers progression dialogue here
   if e.message:findi("hail") then
-    if e.other:GetClass() == Class.PALADIN and e.other:HasItem(69933) then -- Item: Seal of Enic
+    if e.other:HasClass(Class.PALADIN) and e.other:HasItem(69933) then -- Item: Seal of Enic
       e.other:Message(MT.NPCQuestSay, string.format("I heard you released Reiya from his tourture, %s. I have seen muramites gathering in Vxed and I fear this may have to do with Reiya and the creatures responsible. Go there now and investigate, Noble Knight.", e.other:GetCleanName()))
       create_expedition(e.other, paladin_epic)
     elseif sewers_flag == 4 and not has_tipt_access then -- sewers progression dialogue

@@ -1,7 +1,7 @@
 -- Druid Abysmal Sea armor
 
 function event_say(e)
-	if e.other:GetClass() == Class.DRUID then -- Druid
+	if e.other:HasClass(Class.DRUID) then -- Druid
 		if e.message:findi("hail") then
 			e.self:Say("Greetings ".. e.other:GetName() .. ", I am looking for those protectors of the woodland, the most noble of all classes, the [druid]. You wouldn't happen to be one would you?");
 		elseif e.message:findi("druid") then
@@ -28,7 +28,7 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if e.other:GetClass() == Class.DRUID then -- Druid
+	if e.other:HasClass(Class.DRUID) then -- Druid
 		if item_lib.check_turn_in(e.trade, {item1 = 68222}) then -- Muramite Bracer Armor
 			e.other:QuestReward(e.self,0,0,0,0,54121,0); -- Reworked Muramite Bracer
 		elseif item_lib.check_turn_in(e.trade, {item1 = 68220}) then -- Muramite Helm Armor

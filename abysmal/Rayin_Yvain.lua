@@ -1,7 +1,7 @@
 -- Shadowknight Abysmal Sea armor
 
 function event_say(e)
-	if e.other:GetClass() == Class.SHADOWKNIGHT then
+	if e.other:HasClass(Class.SHADOWKNIGHT) then
 		if e.message:findi("hail") then
 			e.self:Say("I need a dark knight, one who walks in the land of the shadow. Would you be thus, a [shadowknight]?");
 		elseif e.message:findi("shadowknight") then
@@ -28,7 +28,7 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if e.other:GetClass() == Class.SHADOWKNIGHT then
+	if e.other:HasClass(Class.SHADOWKNIGHT) then
 		if item_lib.check_turn_in(e.trade, {item1 = 68222}) then -- Muramite Bracer Armor
 			e.other:QuestReward(e.self,0,0,0,0,54198,0); -- Reworked Muramite Bracer
 		elseif item_lib.check_turn_in(e.trade, {item1 = 68220}) then -- Muramite Helm Armor
