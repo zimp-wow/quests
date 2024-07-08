@@ -59,7 +59,6 @@ my %atlas = (
     'dulak'          => 'SoL',
     'hatesfury'      => 'SoL',
     'torgiran'       => 'SoL',
-    'veksar'         => 'SoL', # Out of Era
     'mischiefplane'  => 'SoL',
     'acrylia'        => 'SoL',
     'akheva'         => 'SoL',
@@ -86,6 +85,9 @@ my %atlas = (
     'jaggedpine'     => 'SoL',
     'stonebrunt'     => 'SoL',
     
+    'veksar'         => 'PoP', # Out of Era
+    'chardokb'       => 'PoP', # Out of Era
+    'soldungc'       => 'PoP', # Out of Era
     'veeshan'        => 'PoP', # Out of Era
     'poknowledge'    => 'PoP',
     'potranquility'  => 'PoP',
