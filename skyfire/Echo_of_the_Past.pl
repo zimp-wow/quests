@@ -1,7 +1,7 @@
-my $expedition_name = "Skyfire Mountains";
+my $expedition_name = "Skyshrine Mountains";
 my $min_players     = 1;
 my $max_players     = 72;
-my $dz_zone         = "veeshan";
+my $dz_zone         = "skyshrine";
 
 sub EVENT_SAY {
   plugin::OfferStandardInstance($expedition_name, $min_players, $max_players, $dz_zone);
