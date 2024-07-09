@@ -78,6 +78,7 @@ my %waypoints = (
     'qvic'          => ["Qvic, Prayer Grounds of Calling", 7, -1018, -1403, -490, 3],
     'txevu'         => ["Txevu, Lair of the Elite", 7, -316, -20, -420, 430],
     'timorous'      => ["The Firepot Room (Secret)", 3, 4366.5, -12256.8, -278, 256],
+    
 );
 
 sub AwardBonusUnlocks {
