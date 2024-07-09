@@ -36,6 +36,9 @@ my %atlas = (
     'droga'          => 'RoK',
     'sebilis'        => 'RoK',
     'skyfire'        => 'RoK',
+    'veksar'         => 'RoK', # Out of Era
+    'chardokb'       => 'RoK', # Out of Era
+    'veeshan'        => 'RoK', # Out of Era
 
     'cobaltscar'     => 'SoV',
     'crystal'        => 'SoV',
@@ -85,10 +88,7 @@ my %atlas = (
     'jaggedpine'     => 'SoL',
     'stonebrunt'     => 'SoL',
     
-    'veksar'         => 'PoP', # Out of Era
-    'chardokb'       => 'PoP', # Out of Era
     'soldungc'       => 'PoP', # Out of Era
-    'veeshan'        => 'PoP', # Out of Era
     'poknowledge'    => 'PoP',
     'potranquility'  => 'PoP',
     'ponightmare'    => 'PoP',
