@@ -22,7 +22,7 @@ sub EVENT_SAY {
     elsif ($text=~/unhappy with your form/i) {
         quest::say("Just so. If you can properly anchor your memories - perhaps with ". plugin::num2en($race_change_cost) ." [". plugin::EOMLink() ."], I can adjust your form.
                     Be warned, this process is quite traumatic, and you will immediately black out.");
-        if (plugin::GetEOM($client) > $race_change_cost) {
+        if (plugin::GetEOM($client) => $race_change_cost) {
             $client->Message(15, "WARNING: You will disconnect immediately upon selecting a new race.");
             $client->Message(15, "WARNING: You may select illegal races for your class. No support will be provided for any problems caused as a result.");
             $client->Message(257, " ------- Select a Race ------- ");
