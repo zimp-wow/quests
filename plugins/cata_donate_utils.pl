@@ -21,42 +21,18 @@ sub DoCheckWorldWideBuffs {
         my $hp_ratio   = $target->GetHPRatio();
         my $mana_ratio = $target->GetManaRatio();
 
-        my %buffs_to_check = map { $_ => 1 } (43002..43008, 17779);
+        my @buffs_to_check = (43002..43008, 17779);
 
-        for my $buff ($target->GetBuffs()) {
-            if ($buff->GetSpellID() < 65535) { # filter out empty buff slots
-                my $spell_id = $buff->GetSpellID();
-                my $tics_remaining = $buff->GetTicsRemaining();
-
-                if (exists $buffs_to_check{$spell_id}) {
-                    my $data = quest::get_data("eom_$spell_id");
-                    my $expected_tics = int(quest::get_data_remaining("eom_$spell_id") / 6);
-
-                    if ($data) {
-                        if (abs($tics_remaining - $expected_tics) > 10) {
-                            $target->SetBuffDuration($spell_id, $expected_tics);
-                            quest::debug("Applied spell buff: ID $spell_id, Expected Tics: $expected_tics, Current Tics: $tics_remaining");
-                        } else {
-                            quest::debug("Skipped spell buff: ID $spell_id, Current Tics: $tics_remaining is within acceptable range");
-                        }
-                    } else {
-                        $target->BuffFadeBySpellID($spell_id);
-                        quest::debug("Faded spell buff: ID $spell_id, No data found");
-                    }
-
-                    delete $buffs_to_check{$spell_id};
-                }
-            }
-        }
-
-        # Apply buffs that are not currently present on the target
-        for my $spell_id (keys %buffs_to_check) {
+        for my $spell_id (@buffs_to_check) {
             my $data = quest::get_data("eom_$spell_id");
             my $tics_remaining = int(quest::get_data_remaining("eom_$spell_id") / 6);
 
             if ($data) {
                 $target->ApplySpellBuff($spell_id, $tics_remaining);
                 quest::debug("Applied spell buff: ID $spell_id, Tics: $tics_remaining");
+            } else {
+                $target->BuffFadeBySpellID($spell_id);
+                quest::debug("Faded spell buff: ID $spell_id, No data found");
             }
         }
 
@@ -64,7 +40,6 @@ sub DoCheckWorldWideBuffs {
         $target->SetMana($target->GetMaxMana() * ($mana_ratio / 100));
     }
 }
-
 
 sub FadeWorldWideBuffs {
     my $npc = shift;
