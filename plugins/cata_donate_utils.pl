@@ -34,7 +34,7 @@ sub DoCheckWorldWideBuffs {
 
                     if ($data) {
                         if (abs($tics_remaining - $expected_tics) > 10) {
-                            $target->ApplySpellBuff($spell_id, $expected_tics);
+                            $target->SetBuffDuration($spell_id, $expected_tics);
                             quest::debug("Applied spell buff: ID $spell_id, Expected Tics: $expected_tics, Current Tics: $tics_remaining");
                         } else {
                             quest::debug("Skipped spell buff: ID $spell_id, Current Tics: $tics_remaining is within acceptable range");
@@ -52,7 +52,7 @@ sub DoCheckWorldWideBuffs {
         # Apply buffs that are not currently present on the target
         for my $spell_id (keys %buffs_to_check) {
             my $data = quest::get_data("eom_$spell_id");
-            my $tics_remaining = quest::get_data_remaining("eom_$spell_id") / 6;
+            my $tics_remaining = int(quest::get_data_remaining("eom_$spell_id") / 6);
 
             if ($data) {
                 $target->ApplySpellBuff($spell_id, $tics_remaining);
@@ -161,7 +161,7 @@ sub ApplyWorldWideBuff {
             plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to enhance your $buff_type. This buff will endure for 4 Hours.");
         }
         
-        if (!$skip_payment) { quest::worldwidesignalclient($buff_id); }
+        if (!$skip_payment) { quest::worldwidesignalclient(100); }
         return 1;
     } else {
         return 0;

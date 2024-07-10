@@ -1,4 +1,5 @@
 sub EVENT_SIGNAL {
+    quest::debug("$signal");
     if ($signal == 666) {
         plugin::UpdateEoMAward($client);
     }
@@ -191,6 +192,22 @@ sub EVENT_COMBINE_SUCCESS {
 
 sub EVENT_SAY {
 	if ($client->GetGM()) {
+        if ($text=~/debug upgrade bag/i) {
+            my %item = (
+                "item_id"             => 199996,
+                "charges"            => 0,
+                "augment_one"         => 0,
+                "augment_two"         => 0,
+                "augment_three"     => 0,
+                "augment_four"         => 0,
+                "augment_five"         => 0,
+                "augment_six"       => 0,
+                "attuned"             => 1,
+                "slot_id"             => 32
+            );
+
+            $client->AddItem(\%item);
+        }
 		if ($text=~/enable seasonal/i) {
 			plugin::EnableSeasonal($client);
 			$client->Message(15, "Seasonal Enabled");
