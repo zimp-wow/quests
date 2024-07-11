@@ -324,6 +324,7 @@ sub GrantClassAA {
         7 => { # Monk
             '206' => 1,  # Technique of Master Wu
             '468' => 1, # Crippling Strike
+            '733' => 1, # Killing Spree
         },
         8 => { # Bard
             '212' => 1,  # Fading Memories
@@ -334,7 +335,8 @@ sub GrantClassAA {
         9 => { # Rogue
             '124' => 1,  # Chaotic Stab
             '204' => 1,  # Shroud of Stealth
-            '733' => 1, # Killing Spree
+            '733' => 1,  # Killing Spree
+            '790' => 1,  # Seized Opportunity
         },
         10 => { # Shaman
             '9503' => 1, # Group Shrink
