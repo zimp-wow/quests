@@ -400,6 +400,7 @@ sub is_stage_complete {
     }
 
     if (plugin::IsSeasonal($client)) {
+        quest::debug("is_stage_complete going down seasonal bramch");
         if (is_time_locked($stage)) {            
             return 0;
         }
@@ -419,17 +420,17 @@ sub is_stage_complete {
         my %objective_progress = map { lc($_) => $raw_objective_progress{$_} } keys %raw_objective_progress;
 
         unless ($objective_progress{$prerequisite}) {
-            #quest::debug("Prerequisite not met: $prerequisite");
+            quest::debug("Prerequisite not met: $prerequisite");
             if ($inform) {
                  $client->Message(263, "You are not yet ready to experience that memory.");
             }
             return 0;
         }
-        #quest::debug("Prerequisite met: $prerequisite");
+        quest::debug("Prerequisite met: $prerequisite");
     }
 
     # If all prerequisites are met
-    #quest::debug("All prerequisites for stage $stage have been met");
+    quest::debug("All prerequisites for stage $stage have been met");
     return 1;
 }
 

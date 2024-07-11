@@ -24,14 +24,13 @@ sub EVENT_SAY {
 
     # Hail Response. Always catch this in say response first.
     if ($text=~/hail/i) {
-        if ($client->GetBucket("season-bag-upgrade-available")) {
-            plugin::NPCTell("I see that you've met such challenges so that I can upgrade your Portable Hole! Hand it to me, and I will return it to you with an inflated Pocket Dimension");
-        }
-
         if ($dz_zone) {
             plugin::NPCTell("You have set upon a path of rememberence. Are you [ready] to proceed?");
         } else {
-            plugin::NPCTell("Hail, Adventurer. I am here in order to grant you access certain [Fabled Memories], through which you can experience past events in a new light.");      
+            plugin::NPCTell("Hail, Adventurer. I am here in order to grant you access certain [Fabled Memories], through which you can experience past events in a new light.");
+            if (quest::get_data($client->AccountID() . "-season-1-participation") && !plugin::check_hasitem($client, 200000)) {
+                plugin::NPCTell("It also appears as if you have lost your [".quest::saylink("First Orb of Retribution", 1)."]. Would you like me to replace it?");
+            }    
         }        
         # Never continue after handling a basic hail.
         return;
@@ -40,6 +39,11 @@ sub EVENT_SAY {
     if ($text eq 'ready' && $dz_zone && plugin::is_stage_complete($client, $flag_required)) {        
         $client->MovePCDynamicZone($dz_zone);
         return;
+    }
+
+    if ($text=~/First Orb of Retribution/i && quest::get_data($client->AccountID() . "-season-1-participation") && !plugin::check_hasitem($client, 200000)) {
+        plugin::NPCTell("But of course. Here, try to be more careful with this one.");
+        $client->SummonFixedItem(200000);
     }
 
     if ($text=~/Fabled Memories/i ) {
@@ -77,36 +81,38 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-
-    if (plugin::is_stage_complete($client, 'RoK')) {
+    if (plugin::is_stage_complete_2($client, 'RoK')) {
         if (plugin::check_handin(\%itemcount, 199990 => 1)) {
             $client->SummonFixedItem(199991);
-            $client->DeleteBucket("season-bag-upgrade-available");
-            plugin::NPCTell("Woosh! It's bigger!");
+            plugin::NPCTell("I have expanded your hole! (That's what she said).");
         }
     }
 
-    if (plugin::is_stage_complete($client, 'SoV')) {
+    if (plugin::is_stage_complete_2($client, 'SoV')) {
         if (plugin::check_handin(\%itemcount, 199991 => 1)) {
             $client->SummonFixedItem(199992);
-            $client->DeleteBucket("season-bag-upgrade-available");
-            plugin::NPCTell("Woosh! It's bigger!");
+            plugin::NPCTell("I have expanded your hole! (That's what she said).");
         }
     }
 
-    if (plugin::is_stage_complete($client, 'SoL')) {
+    if (plugin::is_stage_complete_2($client, 'SoL')) {
         if (plugin::check_handin(\%itemcount, 199992 => 1)) {
             $client->SummonFixedItem(199993);
-            $client->DeleteBucket("season-bag-upgrade-available");
-            plugin::NPCTell("Woosh! It's bigger!");
+            plugin::NPCTell("I have expanded your hole! (That's what she said).");
         }
     }
 
-    if (plugin::is_stage_complete($client, 'FNagafen')) {
+    if (plugin::is_stage_complete_2($client, 'PoP')) {
         if (plugin::check_handin(\%itemcount, 199994 => 1)) {
             $client->SummonFixedItem(199995);
-            $client->DeleteBucket("season-bag-upgrade-available");
-            plugin::NPCTell("Woosh! It's bigger!");
+            plugin::NPCTell("I have expanded your hole! (That's what she said).");
+        }
+    }
+
+    if (plugin::is_stage_complete_2($client, 'FNagafen')) {
+        if (plugin::check_handin(\%itemcount, 199995 => 1)) {
+            $client->SummonFixedItem(199996);
+            plugin::NPCTell("I have expanded your hole! (That's what she said).");
         }
     }
 
