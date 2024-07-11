@@ -28,18 +28,24 @@ sub EVENT_CLICKDOOR {
     $client->Message(4,"The globe does not seem to do anything");
   }
   if($doorid == 135) {
-    if (!plugin::is_eligible_for_zone($client, 'veeshan', 1)) {		
-		  return 1;
+    # Let otherwise completed SoV flags allow entry instead of key
+    if (plugin::is_stage_complete_2($client, 'SoV')) {
+      quest::debug("Allowing access through SoV flag");      
+      quest::movepc(108,1682,41,25.9); # Zone: veeshan
     } else {
-        if(plugin::check_hasitem($client, 20884) && !$client->KeyRingCheck(20884)) {
-            $client->KeyRingAdd(20884);
-        }
-        if($client->KeyRingCheck(20884) || ($status > 99)) {
-            quest::movepc(108,1682,41,25.9); # Zone: veeshan
-        }
-        else {
-            $client->Message(13, "You lack the will to use this object!");
-        }
+      if (!plugin::is_eligible_for_zone($client, 'veeshan', 1)) {		
+        return 1;
+      } else {
+          if(plugin::check_hasitem($client, 20884) && !$client->KeyRingCheck(20884)) {
+              $client->KeyRingAdd(20884);
+          }
+          if($client->KeyRingCheck(20884) || ($status > 99)) {
+              quest::movepc(108,1682,41,25.9); # Zone: veeshan
+          }
+          else {
+              $client->Message(13, "You lack the will to use this object!");
+          }
+      }
     }
   }
 }

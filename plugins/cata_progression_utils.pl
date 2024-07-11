@@ -360,6 +360,14 @@ sub set_subflag {
                 quest::set_data($client->AccountID() . "-progression-title-$stage", 1);
             }
 
+            if ($stage eq 'SoV') {
+                $client->KeyRingAdd(20884);
+            }
+
+            if ($stage eq 'PoP') {     
+                $client->KeyRingAdd(22198);
+            }
+
             UpdateCharMaxLevel($client);
             UpdateRaceClassLocks($client);
         }
@@ -371,12 +379,14 @@ sub set_subflag {
         }
         elsif ($stage eq 'SoV') {
             plugin::AddTitleFlag(101); # , Hero of Kunark
+            $client->KeyRingAdd(20884);
         }
         elsif ($stage eq 'SoL') {
             plugin::AddTitleFlag(102); # , Hero of Velious
         }
         elsif ($stage eq 'PoP') {
-            plugin::AddTitleFlag(103); # , Hero of Luclin
+            plugin::AddTitleFlag(103); # , Hero of Luclin            
+            $client->KeyRingAdd(22198);
         }
 
         $client->SetBucket("season-$stage-complete", "true");
