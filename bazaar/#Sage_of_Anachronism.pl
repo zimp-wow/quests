@@ -28,7 +28,7 @@ sub EVENT_SAY {
             plugin::NPCTell("You have set upon a path of rememberence. Are you [ready] to proceed?");
         } else {
             plugin::NPCTell("Hail, Adventurer. I am here in order to grant you access certain [Fabled Memories], through which you can experience past events in a new light.");
-            if (quest::get_data($client->AccountID() . "-season-1-participation") && !plugin::check_hasitem($client, 200000)) {
+            if (quest::get_data($client->AccountID() . "-season-1-participation") && !plugin::check_hasitem($client, 200000) && $client->IsSeasonal()) {
                 plugin::NPCTell("It also appears as if you have lost your [".quest::saylink("First Orb of Retribution", 1)."]. Would you like me to replace it?");
             }    
         }        
@@ -81,35 +81,35 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-    if (plugin::is_stage_complete_2($client, 'RoK')) {
+    if (plugin::is_stage_complete_2($client, 'RoK') && $client->IsSeasonal()) {
         if (plugin::check_handin(\%itemcount, 199990 => 1)) {
             $client->SummonFixedItem(199991);
             plugin::NPCTell("I have expanded your hole! (That's what she said).");
         }
     }
 
-    if (plugin::is_stage_complete_2($client, 'SoV')) {
+    if (plugin::is_stage_complete_2($client, 'SoV') && $client->IsSeasonal()) {
         if (plugin::check_handin(\%itemcount, 199991 => 1)) {
             $client->SummonFixedItem(199992);
             plugin::NPCTell("I have expanded your hole! (That's what she said).");
         }
     }
 
-    if (plugin::is_stage_complete_2($client, 'SoL')) {
+    if (plugin::is_stage_complete_2($client, 'SoL') && $client->IsSeasonal()) {
         if (plugin::check_handin(\%itemcount, 199992 => 1)) {
             $client->SummonFixedItem(199993);
             plugin::NPCTell("I have expanded your hole! (That's what she said).");
         }
     }
 
-    if (plugin::is_stage_complete_2($client, 'PoP')) {
+    if (plugin::is_stage_complete_2($client, 'PoP') && $client->IsSeasonal()) {
         if (plugin::check_handin(\%itemcount, 199994 => 1)) {
             $client->SummonFixedItem(199995);
             plugin::NPCTell("I have expanded your hole! (That's what she said).");
         }
     }
 
-    if (plugin::is_stage_complete_2($client, 'FNagafen')) {
+    if (plugin::is_stage_complete_2($client, 'FNagafen') && $client->IsSeasonal()) {
         if (plugin::check_handin(\%itemcount, 199995 => 1)) {
             $client->SummonFixedItem(199996);
             plugin::NPCTell("I have expanded your hole! (That's what she said).");
