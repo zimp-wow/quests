@@ -1,7 +1,7 @@
 -- Beastlord Abysmal Sea armor
 
 function event_say(e)
-	if e.other:HasClass(Class.BESATLORD) then
+	if e.other:HasClass(Class.BEASTLORD) then
 		if e.message:findi("hail") then
 			e.self:Say("Greetings ".. e.other:GetName() .. ", I am looking for those who are one with the beast. Are you a [beastlord]?");
 		elseif e.message:findi("beastlord") then
@@ -28,7 +28,7 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if e.other:HasClass(Class.BESATLORD) then -- Beastlord
+	if e.other:HasClass(Class.BEASTLORD) then -- Beastlord
 		if item_lib.check_turn_in(e.trade, {item1 = 68222}) then -- Muramite Bracer Armor
 			e.other:QuestReward(e.self,0,0,0,0,54149,0); -- Reworked Muramite Bracer
 		elseif item_lib.check_turn_in(e.trade, {item1 = 68220}) then -- Muramite Helm Armor
