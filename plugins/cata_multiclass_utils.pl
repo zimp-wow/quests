@@ -271,15 +271,15 @@ sub HasClassName {
 sub GrantGeneralAA {
     my $client = shift || plugin::val('$client');
 
-
-    #TODO - switch this to work like the other one and use base ability IDs
+    # Hash of general AA abilities with their IDs and levels
     my %general_aa = (
         '331' => 1,  # Bazaar Gate
-        '938' => 8, # Eyes Wide Open
-        '334' => 5,  # Mystical Attuning 
+        '938' => 8,  # Eyes Wide Open
+        '334' => 5,  # Mystical Attuning
     );
-    
-     foreach my $general_aa (keys %{$general_aa{$PCClass}}) {
+
+    # Loop through each AA ID in the hash and grant the ability
+    foreach my $aa_id (keys %general_aa) {
         $client->GrantAlternateAdvancementAbility($aa_id, $general_aa{$aa_id}, 1);
     }
 }
