@@ -469,13 +469,13 @@ sub is_stage_complete_2 {
         my %objective_progress = map { lc($_) => $raw_objective_progress{$_} } keys %raw_objective_progress;
 
         unless ($objective_progress{$prerequisite}) {
-            #quest::debug("Prerequisite not met: $prerequisite");
+            quest::debug("Prerequisite not met: $prerequisite");
             if ($inform) {
                  $client->Message(263, "You are not yet ready to experience that memory.");
             }
             return 0;
         }
-        #quest::debug("Prerequisite met: $prerequisite");
+        quest::debug("Prerequisite met: $prerequisite");
     }
 
     # If all prerequisites are met
