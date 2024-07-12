@@ -12,10 +12,6 @@ my @target_list = ('Lord Nagafen',
                    'Lady Vox');
 
 sub EVENT_SAY {
-    if ($client->GetGM() && $text=~/delete my flags/i) {
-        plugin::delete_all_progress($client);
-    }
-    
     if ($text=~/hail/i) {
         if (plugin::is_stage_complete($client, $stage_key)) {
             plugin::YellowText("You have access to the $stage_desc.");

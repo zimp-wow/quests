@@ -14,15 +14,15 @@ my @target_list = ('Trakanon',
                    'Severilous');
 
 sub EVENT_SAY {
-    if ($client->GetGM() && $text=~/delete my flags/i) {
-        plugin::delete_all_progress($client);
-    }
-    
-    if ($text=~/hail/i){
+    if ($text=~/hail/i) {
         if (plugin::is_stage_complete($client, $stage_key)) {
             plugin::YellowText("You have access to the $stage_desc.");
         } else {
-            plugin::NPCTell("To gain access to the $stage_desc, two paths lie before you; [hero] and [explorer].");
+            if (plugin::is_stage_complete_2($client, $stage_key)) {
+                plugin::YellowText("You will have access to the $stage_desc when the time-lock is expired.");
+            } else {
+                plugin::NPCTell("To gain access to the $stage_desc, two paths lie before you; [hero] and [explorer].");
+            }
         }
     }
     elsif (!plugin::is_stage_complete($client, $stage_key)) {
