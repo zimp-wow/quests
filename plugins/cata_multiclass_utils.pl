@@ -286,6 +286,14 @@ sub GrantGeneralAA {
     } 
 }
 
+# TODO - These AAs have a cost in the DB due to being shared;
+# Twincast 
+# Entrap 
+# Paralytic Spores 
+# Critical Affliction 
+# Destructive Cascade 
+
+
 sub GrantClassAA {
     my ($client, $PCClass) = @_;
 
@@ -305,6 +313,7 @@ sub GrantClassAA {
         3 => { # Paladin
             '73' => 1,  # Divine Stun
             '3820' => 1, # Blessing of Life
+            '6001' => 1, # Lay on Hands
         },
         4 => { # Ranger
             '84' => 1,   # Endless Quiver
@@ -316,13 +325,17 @@ sub GrantClassAA {
             '697' => 1,  # Mortal Coil
             '749' => 1, # Explosion of Spite
             '125' => 1,   # Pet Discipline
+            '1215' => 1,  # Summon Companion
+            '250' => 1,    # Pet Affinity
         },
         6 => { # Druid
             '185' => 1,   # Spirit of the Wood
             '403' => 1, # Paralytic Spores
-            '259' => 3,   # Critical Affliction (assuming ranks based on script context)
+            '259' => 1   # Critical Affliction
             '3815' => 1,  # Destructive Cascade
             '125' => 1,   # Pet Discipline
+            '1215' => 1,  # Summon Companion
+            '250' => 1,    # Pet Affinity
         },
         7 => { # Monk
             '206' => 1,  # Technique of Master Wu
@@ -334,6 +347,7 @@ sub GrantClassAA {
             '187' => 5,  # Harmonious Attack (all ranks)
             '359' => 1, # Dance of Blades
             '94' => 1,  # Jam Fest
+            '250' => 1,    # Pet Affinity
         },
         9 => { # Rogue
             '124' => 1,  # Chaotic Stab
@@ -346,6 +360,7 @@ sub GrantClassAA {
             '447' => 1,  # Ancestral Aid
             '1215' => 1,  # Summon Companion
             '125' => 1,   # Pet Discipline
+            '250' => 1,    # Pet Affinity
         },
         11 => { # Necromancer
             '259' => 1,    # Critical Affliction
@@ -361,7 +376,7 @@ sub GrantClassAA {
             '776' => 1, # Arcane Overkill
         },
         13 => { # Mage
-            '1205' => 1, # Companion's Fury
+            '266' => 1, # Elemental Fury
             '250' => 1,  # Pet Affinity
             '8342' => 1, # Host in the Shell
             '1215' => 1, # Summon Companion
@@ -382,6 +397,7 @@ sub GrantClassAA {
             '250' => 1,   # Pet Affinity
             '1215' => 1,  # Summon Companion
             '125' => 1,   # Pet Discipline
+            '9503' => 1, # Group Shrink
         },
         16 => { # Berserker
             '733' => 1, # Killing Spree
@@ -395,19 +411,43 @@ sub GrantClassAA {
         $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
     }
 
+    if ($client->GetLevel() >= 5) {
+        my %class_aa = (
+            3 => { # Paladin
+            '6001' => 2, # Lay on Hands
+            },
+        );
+    }
+
+    if ($client->GetLevel() >= 10) {
+        my %class_aa = (
+            3 => { # Paladin
+            '6001' => 2, # Lay on Hands
+            },
+        );
+    }
+
+    if ($client->GetLevel() >= 15) {
+        my %class_aa = (
+            3 => { # Paladin
+            '6001' => 2, # Lay on Hands
+            },
+        );
+    }
+
     if ($client->GetLevel() >= 20) {
         my %class_aa = (
             4 => { # Ranger
                 '82' => 1 # Archery Master 1
-            }
+            },
         );
     }
 
     if ($client->GetLevel() >= 40) {
         my %class_aa = (
             4 => { # Ranger
-                '82' => 2 # Archery Master 1
-            }
+                '82' => 2 # Archery Master 2
+            },
         );
     }
 
