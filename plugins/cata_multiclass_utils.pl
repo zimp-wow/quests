@@ -327,6 +327,7 @@ sub GrantClassAA {
             '125' => 1,   # Pet Discipline
             '1215' => 1,  # Summon Companion
             '250' => 1,    # Pet Affinity
+            '6000' => 1, # Harm Touch
         },
         6 => { # Druid
             '185' => 1,   # Spirit of the Wood
@@ -415,6 +416,9 @@ sub GrantClassAA {
         my %class_aa = (
             3 => { # Paladin
                 '6001' => 2, # Lay on Hands
+            },
+            5 => { # Shadow Knight
+                '6000' => 2, # Harm Touch
             }
         );
 
@@ -427,6 +431,9 @@ sub GrantClassAA {
         my %class_aa = (
             3 => { # Paladin
                 '6001' => 3, # Lay on Hands
+            },
+            5 => { # Shadow Knight
+                '6000' => 3, # Harm Touch
             }
         );
 
@@ -439,6 +446,9 @@ sub GrantClassAA {
         my %class_aa = (
             3 => { # Paladin
                 '6001' => 4, # Lay on Hands
+            },
+            5 => { # Shadow Knight
+                '6000' => 4, # Harm Touch
             }
         );        
         
@@ -454,6 +464,9 @@ sub GrantClassAA {
             },
             4 => { # Ranger
                 '82' => 1 # Archery Master 1
+            },
+            5 => { # Shadow Knight
+                '6000' => 5, # Harm Touch
             }
         );
 
@@ -466,6 +479,9 @@ sub GrantClassAA {
         my %class_aa = (
             3 => { # Paladin
                 '6001' => 6, # Lay on Hands
+            },
+            5 => { # Shadow Knight
+                '6000' => 6, # Harm Touch
             }
         );
 
@@ -478,6 +494,9 @@ sub GrantClassAA {
         my %class_aa = (
             3 => { # Paladin
                 '6001' => 7, # Lay on Hands
+            },
+            5 => { # Shadow Knight
+                '6000' => 7, # Harm Touch
             }
         );
 
@@ -490,6 +509,9 @@ sub GrantClassAA {
         my %class_aa = (
             3 => { # Paladin
                 '6001' => 8, # Lay on Hands
+            },
+            5 => { # Shadow Knight
+                '6000' => 8, # Harm Touch
             }
         );
 
@@ -505,6 +527,9 @@ sub GrantClassAA {
             },
             4 => { # Ranger
                 '82' => 2 # Archery Master 2
+            },
+            5 => { # Shadow Knight
+                '6000' => 9, # Harm Touch
             }
         );        
         
@@ -517,6 +542,9 @@ sub GrantClassAA {
         my %class_aa = (
             3 => { # Paladin
                 '6001' => 10, # Lay on Hands
+            },
+            5 => { # Shadow Knight
+                '6000' => 10, # Harm Touch
             }
         );
 
@@ -529,6 +557,9 @@ sub GrantClassAA {
         my %class_aa = (
             3 => { # Paladin
                 '6001' => 11, # Lay on Hands
+            },
+            5 => { # Shadow Knight
+                '6000' => 11, # Harm Touch
             }
         );
 
