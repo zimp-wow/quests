@@ -415,7 +415,7 @@ sub GrantClassAA {
         my %class_aa = (
             3 => { # Paladin
             '6001' => 2, # Lay on Hands
-            },
+            }
         );
     }
 
@@ -423,7 +423,7 @@ sub GrantClassAA {
         my %class_aa = (
             3 => { # Paladin
             '6001' => 2, # Lay on Hands
-            },
+            }
         );
     }
 
@@ -431,7 +431,7 @@ sub GrantClassAA {
         my %class_aa = (
             3 => { # Paladin
             '6001' => 2, # Lay on Hands
-            },
+            }
         );
     }
 
@@ -439,7 +439,7 @@ sub GrantClassAA {
         my %class_aa = (
             4 => { # Ranger
                 '82' => 1 # Archery Master 1
-            },
+            }
         );
     }
 
@@ -447,7 +447,7 @@ sub GrantClassAA {
         my %class_aa = (
             4 => { # Ranger
                 '82' => 2 # Archery Master 2
-            },
+            }
         );
     }
 
