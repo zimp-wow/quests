@@ -20,7 +20,11 @@ sub EVENT_SAY {
         if (plugin::is_stage_complete($client, $stage_key)) {
             plugin::YellowText("You have access to the $stage_desc.");
         } else {
-            plugin::NPCTell("To gain access to the $stage_desc, two paths lie before you; [hero] and [explorer].");
+            if (plugin::is_stage_complete2($client, $stage_key)) {
+                plugin::YellowText("You will have access to the $stage_desc when the time-lock is expired.");
+            } else {
+                plugin::NPCTell("To gain access to the $stage_desc, two paths lie before you; [hero] and [explorer].");
+            }
         }
     }
     elsif (!plugin::is_stage_complete($client, $stage_key)) {
