@@ -426,17 +426,20 @@ sub is_stage_complete {
         } else {
             %raw_objective_progress = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
         }        
-       
+
         my %objective_progress = map { lc($_) => $raw_objective_progress{$_} } keys %raw_objective_progress;
 
-        unless ($objective_progress{$prerequisite}) {
-            quest::debug("Prerequisite not met: $prerequisite");
+        # Convert prerequisite to lowercase
+        my $lc_prerequisite = lc($prerequisite);
+
+        unless ($objective_progress{$lc_prerequisite}) {
+            quest::debug("Prerequisite not met: $lc_prerequisite");
             if ($inform) {
-                 $client->Message(263, "You are not yet ready to experience that memory.");
+                $client->Message(263, "You are not yet ready to experience that memory.");
             }
             return 0;
         }
-        quest::debug("Prerequisite met: $prerequisite");
+        quest::debug("Prerequisite met: $lc_prerequisite");
     }
 
     # If all prerequisites are met
@@ -465,17 +468,20 @@ sub is_stage_complete_2 {
         } else {
             %raw_objective_progress = plugin::DeserializeHash(quest::get_data($client->AccountID() . "-progress-flag-$stage"));
         }        
-       
+
         my %objective_progress = map { lc($_) => $raw_objective_progress{$_} } keys %raw_objective_progress;
 
-        unless ($objective_progress{$prerequisite}) {
-            quest::debug("Prerequisite not met: $prerequisite");
+        # Convert prerequisite to lowercase
+        my $lc_prerequisite = lc($prerequisite);
+
+        unless ($objective_progress{$lc_prerequisite}) {
+            quest::debug("Prerequisite not met: $lc_prerequisite");
             if ($inform) {
-                 $client->Message(263, "You are not yet ready to experience that memory.");
+                $client->Message(263, "You are not yet ready to experience that memory.");
             }
             return 0;
         }
-        quest::debug("Prerequisite met: $prerequisite");
+        quest::debug("Prerequisite met: $lc_prerequisite");
     }
 
     # If all prerequisites are met
