@@ -274,14 +274,14 @@ sub GrantGeneralAA {
 
     #TODO - switch this to work like the other one and use base ability IDs
     my %general_aa = (
-        1000 => 1,  # Bazaar Gate
-        12636 => 8, # Eyes Wide Open
-        1021 => 5,  # Mystical Attuning 
+        '331' => 1,  # Bazaar Gate
+        '938' => 8, # Eyes Wide Open
+        '334' => 5,  # Mystical Attuning 
     );
     
     foreach my $aa_id (keys %general_aa) {        
         while ($client->GetAA($aa_id) < $general_aa{$aa_id}) {
-            $client->IncrementAA($aa_id);
+            $client->GrantAlternateAdvancementAbility($aa_id, $general_aa{$aa_id}, 1);
         }
     } 
 }
@@ -292,7 +292,7 @@ sub GrantGeneralAA {
 # Paralytic Spores 
 # Critical Affliction 
 # Destructive Cascade 
-
+# Focus of Arcanum (8221)
 
 sub GrantClassAA {
     my ($client, $PCClass) = @_;
@@ -408,7 +408,6 @@ sub GrantClassAA {
     );   
 
     foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
-        quest::debug("Granding $aa_id");
         $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
     }
 
@@ -568,34 +567,34 @@ sub GrantClassAA {
         }    
     }
 
-    if ($client->GetLevel() >= 51 && plugin::IsSeasonal($client)) {
+    if ($client->GetLevel() >= 51) {
         my %class_aa = (
             1 => {
-                '2011' => 1, #Imperator's Command
+                '2011' => 1, # Imperator's Command
             },
             2 => {
-                '735' => 1,
+                '735' => 1, # Battle Frenzy
             },
             3 => {
                 '3500' => 1, # Blessing of Light
             },
             4 => {
-              '557' => 1, # Trick Shot  
+                '557' => 1, # Trick Shot  
             },
             5  => {
                 '825' => 1, # Vicious Bite of Chaos
             },
             6 => {
-                '393' => 1,
+                '393' => 1, # Nature's Blessing
             },
             7 => {
-                '206' => 2, #Technique of Master Wu
+                '206' => 2, # Technique of Master Wu
             },
             8 => {
-                '1246' => 1,
+                '1246' => 1, # Troubador's Weapon Mastery
             },
             9 => {
-                '1174' => 1,
+                '1174' => 1, # Mrylokar's Rigor
             },
             10 => {
                 '151' => 1, # Spiritual Blessing
@@ -604,7 +603,7 @@ sub GrantClassAA {
                 '710' => 1, # Funeral Pyre
             },
             12 => {
-                '1211' => 1,
+                '1211' => 1, # Focus of Arcanum
             },
             13 => {
                 '16001' => 1, # Dimensional Armory
@@ -622,7 +621,6 @@ sub GrantClassAA {
         );
         
         foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
-            quest::debug("Granding $aa_id");
             $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id});
         }
 
