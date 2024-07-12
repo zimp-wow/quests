@@ -426,7 +426,7 @@ sub GrantClassAA {
     if ($client->GetLevel() >= 10) {
         my %class_aa = (
             3 => { # Paladin
-                '6001' => 2, # Lay on Hands
+                '6001' => 3, # Lay on Hands
             }
         );
 
@@ -438,7 +438,7 @@ sub GrantClassAA {
     if ($client->GetLevel() >= 15) {
         my %class_aa = (
             3 => { # Paladin
-                '6001' => 2, # Lay on Hands
+                '6001' => 4, # Lay on Hands
             }
         );        
         
@@ -449,6 +449,9 @@ sub GrantClassAA {
 
     if ($client->GetLevel() >= 20) {
         my %class_aa = (
+            3 => { # Paladin
+                '6001' => 5, # Lay on Hands
+            },
             4 => { # Ranger
                 '82' => 1 # Archery Master 1
             }
@@ -459,8 +462,47 @@ sub GrantClassAA {
         }    
     }
 
+    if ($client->GetLevel() >= 25) {
+        my %class_aa = (
+            3 => { # Paladin
+                '6001' => 6, # Lay on Hands
+            }
+        );
+
+        foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+        }    
+    }
+
+    if ($client->GetLevel() >= 30) {
+        my %class_aa = (
+            3 => { # Paladin
+                '6001' => 7, # Lay on Hands
+            }
+        );
+
+        foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+        }    
+    }
+
+    if ($client->GetLevel() >= 35) {
+        my %class_aa = (
+            3 => { # Paladin
+                '6001' => 8, # Lay on Hands
+            }
+        );
+
+        foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+        }    
+    }
+
     if ($client->GetLevel() >= 40) {
         my %class_aa = (
+            3 => { # Paladin
+                '6001' => 9, # Lay on Hands
+            },
             4 => { # Ranger
                 '82' => 2 # Archery Master 2
             }
@@ -469,6 +511,30 @@ sub GrantClassAA {
         foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
             $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
         }
+    }
+
+    if ($client->GetLevel() >= 45) {
+        my %class_aa = (
+            3 => { # Paladin
+                '6001' => 10, # Lay on Hands
+            }
+        );
+
+        foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+        }    
+    }
+
+    if ($client->GetLevel() >= 50) {
+        my %class_aa = (
+            3 => { # Paladin
+                '6001' => 11, # Lay on Hands
+            }
+        );
+
+        foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+        }    
     }
 
     if ($client->GetLevel() >= 51 && plugin::IsSeasonal($client)) {
