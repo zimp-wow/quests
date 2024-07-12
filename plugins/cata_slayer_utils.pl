@@ -134,13 +134,6 @@ sub ProcessSlayerCredit {
         my $data = $creature_data{$creature_type};
         my $kill_count_key = $client->AccountID() . '-' . $creature_type . '-kill-count';
 
-        # New work
-        my $new_kill_count_key = $client->AccountID() . '-' . $npc->GetRace() . '-kill-count';
-        my $new_creature_count = (quest::get_data($new_kill_count_key) || 0) + 1; 
-        quest::set_data($new_kill_count_key, $new_creature_count);
-
-        quest::debug($new_kill_count_key . ", " . $new_creature_count);
-
         if (grep { $_ == $npc->GetRace() } @{$data->{race_ids}}) {
             my $creature_count = quest::get_data($kill_count_key) || 0;
             $creature_count++;
@@ -155,4 +148,11 @@ sub ProcessSlayerCredit {
             last;
         }
     }
+
+    # New work
+    my $new_kill_count_key = $client->AccountID() . '-' . $npc->GetRace() . '-kill-count';
+    my $new_creature_count = (quest::get_data($new_kill_count_key) || 0) + 1; 
+    quest::set_data($new_kill_count_key, $new_creature_count);
+
+    quest::debug($new_kill_count_key . ", " . $new_creature_count);
 }
