@@ -81,9 +81,10 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
+    $client->ReloadDataBuckets();
     quest::debug("DIAG: " . plugin::is_stage_complete_2($client, 'RoK'));
 
-    $client->ReloadDataBuckets();
+    
 
     if (plugin::is_stage_complete_2($client, 'RoK') && $client->IsSeasonal()) {
         if (plugin::check_handin(\%itemcount, 199990 => 1)) {
