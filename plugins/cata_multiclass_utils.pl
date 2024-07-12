@@ -391,6 +391,7 @@ sub GrantClassAA {
     );   
 
     foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+        quest::debug("Granding $aa_id");
         $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
     }
 
@@ -449,7 +450,7 @@ sub GrantClassAA {
                 '1211' => 1,
             },
             13 => {
-                '3516' => 1, # Companion of Necessity
+                '16001' => 1, # Dimensional Armory
             },
             14 => {
                 '8700' => 1, # Beam of Slumber
@@ -464,6 +465,7 @@ sub GrantClassAA {
         );
         
         foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            quest::debug("Granding $aa_id");
             $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id});
         }
 
