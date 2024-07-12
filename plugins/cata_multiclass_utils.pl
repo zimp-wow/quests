@@ -2,6 +2,7 @@ sub CommonCharacterUpdate {
     my $client = shift || plugin::val('$client');
 
     if ($client && $client->IsClient()) {
+        $client->ReloadDataBuckets();
         # Title Semaphore from lua scripts
         my $semaphore_title = $client->GetBucket('flag-semaphore');
         if ($semaphore_title) {
