@@ -279,11 +279,9 @@ sub GrantGeneralAA {
         '334' => 5,  # Mystical Attuning 
     );
     
-    foreach my $aa_id (keys %general_aa) {        
-        while ($client->GetAA($aa_id) < $general_aa{$aa_id}) {
-            $client->GrantAlternateAdvancementAbility($aa_id, $general_aa{$aa_id}, 1);
-        }
-    } 
+     foreach my $general_aa (keys %{$general_aa{$PCClass}}) {
+        $client->GrantAlternateAdvancementAbility($aa_id, $general_aa{$aa_id}, 1);
+    }
 }
 
 # TODO - These AAs have a cost in the DB due to being shared;
