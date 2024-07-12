@@ -1,5 +1,4 @@
 sub EVENT_SIGNAL {
-    quest::debug("$signal");
     if ($signal == 666) {
         plugin::UpdateEoMAward($client);
     }

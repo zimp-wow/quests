@@ -270,6 +270,8 @@ sub HasClassName {
 sub GrantGeneralAA {
     my $client = shift || plugin::val('$client');
 
+
+    #TODO - switch this to work like the other one and use base ability IDs
     my %general_aa = (
         1000 => 1,  # Bazaar Gate
         12636 => 8, # Eyes Wide Open
@@ -292,7 +294,7 @@ sub GrantClassAA {
             '3731' => 1, # Infused by Rage
             '800' => 1, # Vehement Rage
             '733' => 1, # Killing Spree
-            '254' => 1, # Call of Challenge
+            '552' => 1, # Call of Challenge
         },
         2 => { # Cleric
             '1405' => 1, # Twincast
@@ -383,6 +385,7 @@ sub GrantClassAA {
         16 => { # Berserker
             '733' => 1, # Killing Spree
             '109' => 1,  # Rampage
+            '800' => 1, # Vehement Rage
         }
     );   
 
@@ -460,7 +463,7 @@ sub GrantClassAA {
         );
         
         foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
-            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id});
         }
 
     }
