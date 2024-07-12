@@ -410,7 +410,7 @@ sub is_stage_complete {
     }
 
     if (plugin::IsSeasonal($client)) {
-        quest::debug("is_stage_complete going down seasonal bramch");
+        #quest::debug("is_stage_complete going down seasonal bramch");
         if (is_time_locked($stage)) {            
             return 0;
         }

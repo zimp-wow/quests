@@ -29,10 +29,10 @@ sub DoCheckWorldWideBuffs {
 
             if ($data) {
                 $target->ApplySpellBuff($spell_id, $tics_remaining);
-                quest::debug("Applied spell buff: ID $spell_id, Tics: $tics_remaining");
+                #quest::debug("Applied spell buff: ID $spell_id, Tics: $tics_remaining");
             } else {
                 $target->BuffFadeBySpellID($spell_id);
-                quest::debug("Faded spell buff: ID $spell_id, No data found");
+                #quest::debug("Faded spell buff: ID $spell_id, No data found");
             }
         }
 
