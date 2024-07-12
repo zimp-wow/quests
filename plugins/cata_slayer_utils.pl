@@ -6,8 +6,6 @@ sub ProcessSlayerCredit {
     my $new_creature_count = (quest::get_data($new_kill_count_key) || 0) + 1; 
     quest::set_data($new_kill_count_key, $new_creature_count);
 
-    quest::debug($new_kill_count_key . ", " . $new_creature_count);
-
     my %creature_data = (
         'goblin' => {
             race_ids  => [40, 137, 277, 369, 433],
