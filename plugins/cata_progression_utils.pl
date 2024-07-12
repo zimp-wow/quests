@@ -515,7 +515,7 @@ sub is_time_locked {
     my $stage = shift;
 
     if ($stage eq 'RoK') {
-        return 1;
+        return 0;
     }
 
     if ($stage eq 'SoV') {
