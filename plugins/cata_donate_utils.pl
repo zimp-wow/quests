@@ -136,7 +136,6 @@ sub ApplyWorldWideBuff {
             plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to enhance your $buff_type. This buff will endure for 4 Hours.");
         }
         
-        if (!$skip_payment) { quest::worldwidesignalclient(100); }
         return 1;
     } else {
         return 0;

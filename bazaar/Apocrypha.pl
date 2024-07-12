@@ -146,8 +146,6 @@ sub EVENT_SAY {
             for my $value (43002 .. 43008) {
                 plugin::ApplyWorldWideBuff($value, 0);                
             }
-
-            quest::worldwidesignalclient(100);
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }

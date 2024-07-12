@@ -56,6 +56,7 @@ sub handle_buff_for_level {
 sub EVENT_SAY {
     my $response = "";
     my $clientName = $client->GetCleanName();
+    my $ww_buff = 0;
 
     if ($text=~/hail/i) {   
         $response = "Hail, Adventurer. I seek to empower your ilk for my own profit. For a [modest fee], I will enhance the power of your group for a time. In exchange for more [exotic payment], I will enhance the power of all adventurers in the world.";
@@ -81,6 +82,7 @@ sub EVENT_SAY {
         my $buff_id = 43003;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
+            $ww_buff = 1;
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
@@ -89,6 +91,7 @@ sub EVENT_SAY {
         my $buff_id = 43004;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
+            $ww_buff = 1;
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
@@ -97,6 +100,7 @@ sub EVENT_SAY {
         my $buff_id = 43005;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
+            $ww_buff = 1;
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
@@ -105,6 +109,7 @@ sub EVENT_SAY {
         my $buff_id = 43006;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
+            $ww_buff = 1;
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
@@ -113,6 +118,7 @@ sub EVENT_SAY {
         my $buff_id = 43007;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
+            $ww_buff = 1;
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
@@ -121,6 +127,7 @@ sub EVENT_SAY {
         my $buff_id = 43008;
         if (ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
+            $ww_buff = 1;
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
@@ -133,6 +140,7 @@ sub EVENT_SAY {
             for my $value (43002 .. 43008) {
                 ApplyWorldWideBuff($value, 1);                
             }
+            $ww_buff = 1;
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
@@ -145,6 +153,10 @@ sub EVENT_SAY {
     if ($response) {
         plugin::Whisper($response);
     }
+
+    if ($ww_buff) {
+        quest::worldwidesignalclient(100);
+    }
 }
 
 sub ApplyGroupBuff {
@@ -156,42 +168,6 @@ sub ApplyGroupBuff {
     } else {
         return 0;
     }    
-}
-
-
-sub ApplyWorldWideBuff {
-    my $buff_id = shift;
-    my $skip_payment = shift;
-    my $eom_avail = $client->GetAlternateCurrencyValue(6);
-
-    if ($eom_avail < 5 && !$skip_payment) {
-        return 0;
-    } else {
-        if (!$skip_payment) { $client->SetAlternateCurrencyValue(6, $eom_avail - 5); }
-
-        my %buff_types = (
-            43002 => "Experience Gain",
-            43003 => "Hit Points and Armor Class",
-            43004 => "Basic Statistics",
-            43005 => "Movement Speed",
-            43006 => "Mana Regeneration",
-            43007 => "Attack Speed",
-            43008 => "Health Regeneration",
-        );
-        my $buff_type = $buff_types{$buff_id} // "Unknown Buff";  # Fallback for unknown buff IDs
-
-        if (quest::get_data("eom_$buff_id")) {            
-            quest::set_data("eom_$buff_id", 1, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));
-            my ($hours, $minutes, $seconds) = convert_seconds(quest::get_data_remaining("eom_$buff_id"));
-            quest::worldwidemessage(15, $client->GetCleanName() . " has used their Echo of Memory to extend your enhanced $buff_type. This buff will endure for $hours Hours and $minutes Minutes.");
-        } else {
-            quest::set_data("eom_$buff_id", 1, H4);
-            quest::worldwidemessage(15, $client->GetCleanName() . " has used their Echo of Memory to enhance your $buff_type. This buff will endure for 4 Hours.");
-        }
-        
-        quest::worldwidesignalclient($buff_id);
-        return 1;
-    }
 }
 
 sub convert_seconds {
