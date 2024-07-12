@@ -149,6 +149,7 @@ sub EVENT_SAY {
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
+        quest::worldwidesignalclient(100);
     }
 
     elsif ($text=~/influence the tides of fate/i) {
@@ -170,7 +171,8 @@ sub EVENT_SAY {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
-        }       
+        }
+        quest::worldwidesignalclient(100);
     }  
 
     if ($response) {
