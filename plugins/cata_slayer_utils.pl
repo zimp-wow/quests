@@ -1,11 +1,6 @@
 sub ProcessSlayerCredit {
     my ($client, $npc, $entity_list) = @_;
 
-    # New work
-    my $new_kill_count_key = $client->AccountID() . '-' . $npc->GetRace() . '-kill-count';
-    my $new_creature_count = (quest::get_data($new_kill_count_key) || 0) + 1; 
-    quest::set_data($new_kill_count_key, $new_creature_count);
-
     my %creature_data = (
         'goblin' => {
             race_ids  => [40, 137, 277, 369, 433],
@@ -15,7 +10,7 @@ sub ProcessSlayerCredit {
             race_ids  => [75, 209, 210, 211, 212, 475, 476, 477, 478],
             title_flags => [506, 507, 508, 509, 510],
         },
-            'humans' => {
+        'humans' => {
             race_ids    => [1, 55, 341, 566, 44, 71],
             title_flags => [511, 512, 513, 514, 515],
         },
@@ -135,21 +130,29 @@ sub ProcessSlayerCredit {
 
     my @tier_counts = (500, 5000, 10000, 50000, 1000000);
 
+    # Record the new race_id kills
+    my $new_kill_count_key = $client->AccountID() . '-' . $npc->GetRace() . '-kill-count';
+    my $new_creature_count = (quest::get_data($new_kill_count_key) || 0) + 1;
+    quest::set_data($new_kill_count_key, $new_creature_count);
+
+    # Aggregate the counts based on defined categories
     foreach my $creature_type (keys %creature_data) {
         my $data = $creature_data{$creature_type};
-        my $kill_count_key = $client->AccountID() . '-' . $creature_type . '-kill-count';
+        my $old_kill_count_key = $client->AccountID() . '-' . $creature_type . '-kill-count';
+
+        # Retrieve the old count data
+        my $old_creature_count = quest::get_data($old_kill_count_key) || 0;
 
         if (grep { $_ == $npc->GetRace() } @{$data->{race_ids}}) {
-            my $creature_count = quest::get_data($kill_count_key) || 0;
-            $creature_count++;
+            # Calculate the total count including new data
+            my $total_creature_count = $old_creature_count + $new_creature_count;
 
             for (my $i = 0; $i < @tier_counts; $i++) {
-                if ($creature_count >= $tier_counts[$i]) {
+                if ($total_creature_count >= $tier_counts[$i]) {
                     plugin::AddTitleFlag($data->{title_flags}[$i]);
                 }
             }
 
-            quest::set_data($kill_count_key, $creature_count);            
             last;
         }
     }
