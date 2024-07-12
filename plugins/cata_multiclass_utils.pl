@@ -331,7 +331,7 @@ sub GrantClassAA {
         6 => { # Druid
             '185' => 1,   # Spirit of the Wood
             '403' => 1, # Paralytic Spores
-            '259' => 1   # Critical Affliction
+            '259' => 1,   # Critical Affliction
             '3815' => 1,  # Destructive Cascade
             '125' => 1,   # Pet Discipline
             '1215' => 1,  # Summon Companion
@@ -414,25 +414,37 @@ sub GrantClassAA {
     if ($client->GetLevel() >= 5) {
         my %class_aa = (
             3 => { # Paladin
-            '6001' => 2, # Lay on Hands
+                '6001' => 2, # Lay on Hands
             }
         );
+
+        foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+        }
     }
 
     if ($client->GetLevel() >= 10) {
         my %class_aa = (
             3 => { # Paladin
-            '6001' => 2, # Lay on Hands
+                '6001' => 2, # Lay on Hands
             }
         );
+
+        foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+        }
     }
 
     if ($client->GetLevel() >= 15) {
         my %class_aa = (
             3 => { # Paladin
-            '6001' => 2, # Lay on Hands
+                '6001' => 2, # Lay on Hands
             }
-        );
+        );        
+        
+        foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+        }
     }
 
     if ($client->GetLevel() >= 20) {
@@ -441,6 +453,10 @@ sub GrantClassAA {
                 '82' => 1 # Archery Master 1
             }
         );
+
+        foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+        }    
     }
 
     if ($client->GetLevel() >= 40) {
@@ -448,7 +464,11 @@ sub GrantClassAA {
             4 => { # Ranger
                 '82' => 2 # Archery Master 2
             }
-        );
+        );        
+        
+        foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
+        }
     }
 
     if ($client->GetLevel() >= 51 && plugin::IsSeasonal($client)) {
