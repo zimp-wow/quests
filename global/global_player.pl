@@ -1,4 +1,5 @@
 sub EVENT_SIGNAL {
+    $client->ReloadDataBuckets();
     if ($signal == 666) {
         plugin::UpdateEoMAward($client);
     }
@@ -17,7 +18,8 @@ sub EVENT_SIGNAL {
     }
 }
 
-sub EVENT_ENTERZONE { 
+sub EVENT_ENTERZONE {
+    $client->ReloadDataBuckets();
 	plugin::CommonCharacterUpdate($client);    
 	if (!plugin::is_eligible_for_zone($client, $zonesn)) {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
@@ -52,7 +54,6 @@ sub EVENT_CONNECT {
 
 sub EVENT_LEVEL_UP {
     plugin::CommonCharacterUpdate($client);
-
     my $new_level = $client->GetLevel();
     if (($new_level % 10 == 0) || $new_level == 5 || $new_level == $client->GetBucket("CharMaxLevel")) {
         my $name = $client->GetCleanName();
@@ -72,7 +73,8 @@ sub EVENT_CLICKDOOR {
     }
 }
 
-sub EVENT_ZONE { 
+sub EVENT_ZONE {
+    $client->ReloadDataBuckets(); 
     # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
     plugin::CommonCharacterUpdate($client);
 }
