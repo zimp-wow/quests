@@ -1,10 +1,7 @@
 sub EVENT_SIGNAL {
-    $client->ReloadDataBuckets();
     if ($signal == 666) {
         plugin::UpdateEoMAward($client);
-    }
-
-    if ($signal == 100) {
+    } elsif ($signal == 100) {
         plugin::CheckWorldWideBuffs($client);
     } else {
         # Title Semaphore from lua scripts
