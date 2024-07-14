@@ -20,6 +20,7 @@ my @target_list = ('Lord Yelinak',
 
 sub EVENT_SAY {
     if ($text=~/hail/i) {
+        plugin::ConvertFlags($client);
         if (plugin::is_stage_complete($client, $stage_key)) {
             plugin::YellowText("You have access to the $stage_desc.");
         } else {
