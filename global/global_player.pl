@@ -231,3 +231,30 @@ sub EVENT_SAY {
         }
 	}
 }
+
+sub EVENT_ITEM_CLICK_CAST_CLIENT {
+    swap_vib_gaunt_and_hammer($client, $item_id);
+}
+
+sub swap_vib_gaunt_and_hammer {
+    my ($client, $item_id) = @_;    
+    my $src_item = 0;
+    my $dst_item = 0;
+    
+    if ($item_id % 1000000 == 11668 || $item_id % 1000000 == 11669) {
+        $src_item = $item_id;
+
+        my $rank = int($item_id / 1000000);
+        if ($item_id % 1000000 == 11668) {
+            $dst_item = 11669 + ($rank * 1000000);
+        }
+
+        if ($item_id % 1000000 == 11669) {
+            $dst_item = 11668 + ($rank * 1000000);
+        }
+    }
+
+    if ($src_item && $dst_item) {
+        $client->SummonFixedItem($dst_item);
+    }
+}
