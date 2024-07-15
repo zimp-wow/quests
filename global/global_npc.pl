@@ -114,10 +114,6 @@ sub EVENT_AGGRO {
 
 sub EVENT_SPAWN {
     plugin::CheckSpawnWaypoints();
-
-    if ($npc->IsPet() && $npc->IsPetOwnerClient() && $npc->GetRace() == 273) {
-        quest::debug($npc->GetBaseSize());
-    }    
 }
 
 sub EVENT_DAMAGE_GIVEN 
