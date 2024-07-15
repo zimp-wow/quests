@@ -113,7 +113,11 @@ sub EVENT_AGGRO {
 }
 
 sub EVENT_SPAWN {
-    plugin::CheckSpawnWaypoints();    
+    plugin::CheckSpawnWaypoints();
+
+    if ($npc->IsPet() && $npc->IsPetOwnerClient() && $npc->GetRace() == 273) {
+        $npc->ChangeSize(2, 1);
+    }    
 }
 
 sub EVENT_DAMAGE_GIVEN 
