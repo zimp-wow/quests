@@ -116,7 +116,7 @@ sub EVENT_SPAWN {
     plugin::CheckSpawnWaypoints();
 
     if ($npc->IsPet() && $npc->IsPetOwnerClient() && $npc->GetRace() == 273) {
-        quest::debug($npc->GetBaseSize();)
+        quest::debug($npc->GetBaseSize());
     }    
 }
 
