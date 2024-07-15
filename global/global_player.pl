@@ -232,6 +232,17 @@ sub EVENT_SAY {
 	}
 }
 
+sub EVENT_CAST {
+    quest::debug("spell_id " . $spell_id);
+    quest::debug("caster_id " . $caster_id);
+    quest::debug("caster_level " . $caster_level);
+    quest::debug("target_id " . $target_id);
+    quest::debug("target " . $target);
+    quest::debug("spell " . $spell);
+
+    quest::debug($client->GetPetID());
+}
+
 sub EVENT_ITEM_CLICK_CAST_CLIENT {
     swap_vib_gaunt_and_hammer($client, $item_id);
 }

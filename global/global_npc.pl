@@ -114,6 +114,61 @@ sub EVENT_AGGRO {
 
 sub EVENT_SPAWN {
     plugin::CheckSpawnWaypoints();
+
+    # Resize Pets
+    if ($npc->IsPet() && $npc->GetOwner() && $npc->GetOwner()->IsClient()) {
+        my $size = 4;
+        if (0) {}
+        # Beastlord pets
+        elsif ($npc->GetRace() == 439 && $npc->GetOwner()->GetRace() == 1) {
+            $size = 8;
+        }   
+        elsif ($npc->GetRace() == 42 && $npc->GetOwner()->GetRace() == 2) {
+            $size = 4;
+        }
+        elsif ($npc->GetRace() == 455 && $npc->GetOwner()->GetRace() == 3) {
+            $size = 5;
+        }
+        elsif ($npc->GetRace() == 432 && $npc->GetOwner()->GetRace() == 4) {
+            $size = 9;
+        }
+        elsif ($npc->GetRace() == 432 && $npc->GetOwner()->GetRace() == 5) {
+            $size = 6;
+        }
+        elsif ($npc->GetRace() == 432 && $npc->GetOwner()->GetRace() == 6) {
+            $size = 6;
+        }
+        elsif ($npc->GetRace() == 432 && $npc->GetOwner()->GetRace() == 7) {
+            $size = 6;
+        }
+        elsif ($npc->GetRace() == 369 && $npc->GetOwner()->GetRace() == 8) {
+            $size = 3;
+        }
+        elsif ($npc->GetRace() == 91 && $npc->GetOwner()->GetRace() == 9) {
+            $size = 12;
+        }
+        elsif ($npc->GetRace() == 305 && $npc->GetOwner()->GetRace() == 10) {
+            $size = 4;
+        }
+        elsif ($npc->GetRace() == 468 && $npc->GetOwner()->GetRace() == 11) {
+            $size = 5;
+        }
+        elsif ($npc->GetRace() == 273 && $npc->GetOwner()->GetRace() == 12) {
+            $size = 3;
+        }
+        elsif ($npc->GetRace() == 42 && $npc->GetOwner()->GetRace() == 128) {
+            $size = 3;
+        }
+        elsif ($npc->GetRace() == 439 && $npc->GetOwner()->GetRace() == 130) {
+            $size = 8;
+        }
+        elsif ($npc->GetRace() == 273 && $npc->GetOwner()->GetRace() == 330) {
+            $npc->ChangeSize(3);
+        }
+
+        $size *= 1 + ($npc->GetLevel() * 0.01);
+        $npc->ChangeSize($size);
+    }
 }
 
 sub EVENT_DAMAGE_GIVEN 
