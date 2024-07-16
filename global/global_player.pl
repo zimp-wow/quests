@@ -188,50 +188,6 @@ sub EVENT_COMBINE_SUCCESS {
     }
 }
 
-sub EVENT_SAY {
-	if ($client->GetGM()) {
-        if ($text=~/debug upgrade bag/i) {
-            my %item = (
-                "item_id"             => 199996,
-                "charges"            => 0,
-                "augment_one"         => 0,
-                "augment_two"         => 0,
-                "augment_three"     => 0,
-                "augment_four"         => 0,
-                "augment_five"         => 0,
-                "augment_six"       => 0,
-                "attuned"             => 1,
-                "slot_id"             => 32
-            );
-
-            $client->AddItem(\%item);
-        }
-		if ($text=~/enable seasonal/i) {
-			plugin::EnableSeasonal($client);
-			$client->Message(15, "Seasonal Enabled");
-            $client->Message(15, "IsSeasonal() == " . plugin::IsSeasonal($client));
-		} elsif ($text=~/disable seasonal/i) {
-			plugin::DisableSeasonal($client);
-			$client->Message(15, "Seasonal Disabled");
-            $client->Message(15, "IsSeasonal() == " . plugin::IsSeasonal($client));
-		} elsif ($text=~/diag/i) {
-            $client->Message(15, "Season: " . plugin::GetSeasonID());
-            $client->Message(15, "IsSeasonal? : " . plugin::IsSeasonal($client));
-            $client->Message(15, "IsSeasonal? : " . $client->IsSeasonal());
-            $client->Message(14, "MC:? " . plugin::MultiClassingEnabled());
-
-            quest::debug("zone: $zonesn". plugin::is_eligible_for_zone($client, $zonesn));
-
-            quest::discordsend('admin', "TEST!");
-
-            my ($sec, $min, $hour, $day, $mon, $year) = localtime();
-            $year += 1900; # Adjust year to get the current year
-            $mon++;
-            plugin::YellowText("Date: $year-$mon-$day");
-        }
-	}
-}
-
 sub EVENT_ITEM_CLICK_CAST_CLIENT {
     swap_vib_gaunt_and_hammer($client, $item_id);
 }
@@ -256,5 +212,19 @@ sub swap_vib_gaunt_and_hammer {
 
     if ($src_item && $dst_item) {
         $client->SummonFixedItem($dst_item);
+    }
+}
+
+sub EVENT_CAST_ON {
+    # Check for mutually-exclusive elemental form spells.
+    my @spell_ids = (
+        2789, 2790, 2791, 2792, 2793, 2794, 2795, 2796, 2797, 2798, 2799, 2800,
+        38329, 38330, 38331, 38333, 38334, 38335, 38336, 38337, 38338, 38340, 38341, 38342
+    );
+    if (grep { $_ == $spell_id } @spell_ids) {
+        foreach my $id (@spell_ids) {
+            next if $id == $spell_id; # Skip the matched spell_id
+            $client->BuffFadeBySpellID($id);
+        }
     }
 }
