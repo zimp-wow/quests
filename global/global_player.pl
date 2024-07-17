@@ -15,6 +15,13 @@ sub EVENT_SIGNAL {
     }
 }
 
+sub EVENT_TIMER {
+    quest::debug("timer " . $timer);
+    if ($timer eq 'ccu' && $client) {
+        plugin::ActCCU($client);
+    }
+}
+
 sub EVENT_ENTERZONE {
     $client->ReloadDataBuckets();
 	plugin::CommonCharacterUpdate($client);    
