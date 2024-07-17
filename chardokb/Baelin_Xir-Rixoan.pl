@@ -29,9 +29,7 @@ sub EVENT_SAY
 	}
 	
 	if ($text=~/problem/i) {
-		if(defined $qglobals{HelpBaelin} && $qglobals{HelpBaelin} == 1){
 			quest::say("There are some gems missing from these pieces, they were magically infused into the oak and I do not know how they disappeared but I cannot conduct my magics with my staff being incomplete. If you [wish to help] me further then I will need you to obtain them.");
-		}
 	}
 	
 	if ($text=~/wish to help/i) {
@@ -47,6 +45,7 @@ sub EVENT_ITEM
 	if(plugin::check_handin(\%itemcount, 61172 => 1, 61173 => 1, 61174 => 1, 61175 => 1)) {#Staff of Suffering 1-4
 		quest::say("These are indeed the pieces that I seek. It is amazing that you were able to obtain these staff pieces and I am very grateful. Unfortunately there is a [problem].");
 		quest::setglobal("HelpBaelin",1,0,"F");
+		quest::summonitem(61197);
 
 	}
 	
