@@ -4,8 +4,11 @@ my $eom_log = "total-eom-spend";
 my $eom_award_log = "total-eom-award";
 
 sub CheckWorldWideBuffs {
-    my $client = plugin::val('$client');    
-    if ($client) {        
+    my $client = plugin::val('$client');
+
+    if (1) { return; }
+
+    if ($client) {
         DoCheckWorldWideBuffs($client);
 
         if ($client->GetPet()) {
@@ -15,6 +18,7 @@ sub CheckWorldWideBuffs {
 }
 
 sub DoCheckWorldWideBuffs {
+    if (1) {return;}
     my $target = shift;
     if ($target && ($target->IsClient() || ($target->IsPet() && $target->HasOwner() && $target->GetOwner()->IsClient()))) {
         my $hp_ratio   = $target->GetHPRatio();
