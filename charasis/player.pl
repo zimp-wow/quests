@@ -1,4 +1,4 @@
-sub EVENT_CLICKDOOR {
+sub EVENT_CLICKDOOR {  
   if($doorid == 8){
     if($client->KeyRingCheck(17274)){
       OPEN_DOORS(8,0);
@@ -34,6 +34,18 @@ sub EVENT_CLICKDOOR {
       OPEN_DOORS(46,0);
     } elsif(plugin::check_hasitem($client, 17274)) {
       OPEN_DOORS(46,1);
+    }
+  } elsif($doorid == 32){
+    if($client->KeyRingCheck(17274)){
+      OPEN_DOORS(32,0);
+    } elsif(plugin::check_hasitem($client, 17274)) {
+      OPEN_DOORS(32,1);
+    }
+  } elsif($doorid == 29){
+    if($client->KeyRingCheck(17274)){
+      OPEN_DOORS(29,0);
+    } elsif(plugin::check_hasitem($client, 17274)) {
+      OPEN_DOORS(29,1);
     }
   }
 }
