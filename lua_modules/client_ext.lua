@@ -152,7 +152,7 @@ function Client:HasItem(itemid, trade)
 						return true;
 					end
 				end
-				if(trade_copy[key]:GetID() == itemid) then
+				if(trade_copy[key]:GetID() % 1000000 == itemid % 1000000) then
 					return true;
 				end
 			end
@@ -168,7 +168,7 @@ function Client:HasItem(itemid, trade)
 				return true;
 			end
 		end
-		if(thisitem == itemid) then
+		if(thisitem % 1000000 == itemid % 1000000) then
 			return true;
 		end
 	end
@@ -182,7 +182,7 @@ function Client:HasItem(itemid, trade)
 				return true;
 			end
 		end
-		if(thisitem == itemid) then
+		if(thisitem % 1000000 == itemid % 1000000) then
 			return true;
 		end
 	end
@@ -196,7 +196,7 @@ function Client:HasItem(itemid, trade)
 				return true;
 			end
 		end
-		if(thisitem == itemid) then
+		if(thisitem % 1000000 == itemid % 1000000) then
 			return true;
 		end
 	end
@@ -210,7 +210,7 @@ function Client:HasItem(itemid, trade)
 				return true;
 			end
 		end
-		if(thisitem == itemid) then
+		if(thisitem % 1000000 == itemid % 1000000) then
 			return true;
 		end
 	end
@@ -224,7 +224,7 @@ function Client:HasItem(itemid, trade)
 				return true;
 			end
 		end
-		if(thisitem == itemid) then
+		if(thisitem % 1000000 == itemid % 1000000) then
 			return true;
 		end
 	end
@@ -238,7 +238,7 @@ function Client:HasItem(itemid, trade)
 				return true;
 			end
 		end
-		if(thisitem == itemid) then
+		if(thisitem % 1000000 == itemid % 1000000) then
 			return true;
 		end
 	end
