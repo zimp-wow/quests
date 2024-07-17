@@ -1,7 +1,5 @@
 sub CommonCharacterUpdate {    
     my $client = shift || plugin::val('$client');
-    if ($client->CharacterID() != 16216) {
-
     if ($client && $client->IsClient()) {
         # Title Semaphore from lua scripts
         my $semaphore_title = $client->GetBucket('flag-semaphore');
@@ -19,9 +17,7 @@ sub CommonCharacterUpdate {
         plugin::UpdateEoMAward($client);
         plugin::RegisterSeasonalLogin($client);
         plugin::EnableTitles($client);
-    }
-
-    }
+    }    
 }
 
 sub MultiClassingEnabled
