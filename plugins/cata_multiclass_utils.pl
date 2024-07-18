@@ -135,12 +135,6 @@ sub AddClass {
             my $class_bits          = $client->GetClassesBitmask();
             quest::set_data("class-$class_bits", $class_bits);
             plugin::WorldAnnounce("$name has become the FIRST $full_class_name.");            
-        }       
-
-        if ($class_id == 8) {
-            quest::permaclass(8);
-        } elsif (plugin::IsMeleeClass($class_id) && !plugin::IsMeleeClass($client->GetClass())) {
-            quest::permaclass($class_id);
         }
     }    
 }
