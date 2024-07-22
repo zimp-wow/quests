@@ -13,12 +13,9 @@ sub EVENT_POPUPRESPONSE {
     my %portal_destinations = %{ plugin::get_portal_destinations() };
     
     foreach my $info (values %portal_destinations) {
-        my ($destination_name, $portalid, $zone_id, $x, $y, $z, $heading) = @$info;
-        quest::debug("popupid? $popupid");
-        quest::debug("popup_id? $portalid");
+        my ($destination_name, $portalid, $zone_id, $x, $y, $z, $heading) = @$info;        
         if ($popupid == $portalid) {
-            quest::debug("inside popupid? $popuid");
-            quest::debug("inside popup_id? $portalid");
+            $heading ||= quest::GetZoneSafeHeading($zone_id);
             quest::movepc($zone_id, $x, $y, $z, $heading);
             return;
         }
