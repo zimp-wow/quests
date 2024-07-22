@@ -73,11 +73,6 @@ sub GetClassID {
     return $class_map{$class_name};
 }
 
-# Example usage:
-my $class_id = GetClassID("Wizard");
-print "Wizard's ID is $class_id\n"; # Output: Wizard's ID is 12
-
-
 sub GetClassBitmask {
     my ($class_id) = @_;
     if ($class_id < 1 || $class_id > 16) {
