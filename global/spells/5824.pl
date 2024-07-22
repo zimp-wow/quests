@@ -2,10 +2,10 @@
 sub EVENT_SPELL_EFFECT_CLIENT {
     my $client = plugin::val('$client');
 
-    quest::debug("Cast Bazaar Portal");
+    #quest::debug("Cast Bazaar Portal");
 
     if ($zoneid != 151) {
-        quest::debug("Not in Bazaar");
+        #quest::debug("Not in Bazaar");
         $client->SetBucket("Return-X", $client->GetX());
         $client->SetBucket("Return-Y", $client->GetY());
         $client->SetBucket("Return-Z", $client->GetZ());
@@ -15,7 +15,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
 
         $client->MovePCInstance(151, 0, 185, -834, 4, -125);
     } else {
-        quest::debug("We are in Bazaar");
+        #quest::debug("We are in Bazaar");
         my $ReturnX = $client->GetBucket("Return-X");
         my $ReturnY = $client->GetBucket("Return-Y");
         my $ReturnZ = $client->GetBucket("Return-Z");
@@ -28,7 +28,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
             defined($ReturnZ) && $ReturnZ ne '' && 
             defined($ReturnH) && $ReturnH ne '' && 
             defined($ReturnZone) && $ReturnZone ne '') {
-            quest::debug("Found a return location");
+            #quest::debug("Found a return location");
 
             $client->DeleteBucket("Return-X");
             $client->DeleteBucket("Return-Y");
@@ -37,7 +37,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
             $client->DeleteBucket("Return-Zone");
             $client->DeleteBucket("Return-Instance");            
         } else {            
-            quest::debug("Returning to default location");
+            #quest::debug("Returning to default location");
 
             $ReturnX = $client->GetBindX();
             $ReturnY = $client->GetBindY();
