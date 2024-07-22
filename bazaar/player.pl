@@ -14,7 +14,7 @@ sub EVENT_POPUPRESPONSE {
     
     foreach my $info (values %portal_destinations) {
         my ($destination_name, $portalid, $zone_id, $x, $y, $z, $heading) = @$info;
-        quest::debug("popupid? $popuid");
+        quest::debug("popupid? $popupid");
         quest::debug("popup_id? $portalid");
         if ($popupid == $portalid) {
             quest::debug("inside popupid? $popuid");
@@ -23,4 +23,8 @@ sub EVENT_POPUPRESPONSE {
             return;
         }
     }
+}
+
+sub EVENT_POPUPRESPONSE {
+    quest::debug("popupid " . $popupid);
 }
