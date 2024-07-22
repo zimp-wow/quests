@@ -24,7 +24,3 @@ sub EVENT_POPUPRESPONSE {
         }
     }
 }
-
-sub EVENT_POPUPRESPONSE {
-    quest::debug("popupid " . $popupid);
-}
