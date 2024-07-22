@@ -4,7 +4,7 @@ sub EVENT_CLICKDOOR {
     if ($doorid == 146) {
         if ($destination && exists $portal_destinations{$destination}) {
             my ($destination_name, $portalid) = @{ $portal_destinations{$destination} };
-            quest::popup('Teleport', "Teleport to $destination_name?", $popup_id, 1, 0);
+            quest::popup('Teleport', "Teleport to $destination_name?", $portalid, 1, 0);
         }
     }
 }
