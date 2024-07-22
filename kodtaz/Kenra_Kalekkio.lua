@@ -3,6 +3,12 @@
 -- items: 60154
 local expedition_name = "Ikkinz, Chambers of the Tri-Fates"
 local dz_version = 2
+local min_players = 1
+local max_players = 54
+if (eq.get_rule("Custom:MulticlassingEnabled") == "true" ) then
+    min_players = 1
+    max_players = 6
+end
 
 local expedition_info = {
   expedition = { name=expedition_name, min_players=1, max_players=6 },
