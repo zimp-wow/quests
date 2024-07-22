@@ -228,12 +228,3 @@ sub EVENT_CAST_ON {
         }
     }
 }
-
-sub EVENT_SAY {
-    if ($text=~/debug/i) {
-        quest::debug("HasClass('Berserker')? " . $client->HasClass("Berserker"));
-        quest::debug("HasClassID(16)? " . $client->HasClassID(16));
-        quest::debug("HasClass('Beastlord')? " . $client->HasClass("Beastlord"));
-        quest::debug("HasClassID(15)? " . $client->HasClassID(15));
-    }
-}
