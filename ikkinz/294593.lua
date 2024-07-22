@@ -30,7 +30,7 @@ end
 
 function event_death_complete(e)
 	local qglobals = eq.get_qglobals(e.self);
-	if (qglobals[instance_id .. "vrexkill1"] == tostring(e.other:GetClass())) then
+	if (e.other:HasClass(tonumber(qglobals[instance_id .. "vrexkill1"]))) then
 		eq.zone_emote(MT.Yellow,"The sentinel's rubble drops to the ground. It has been defeated.");
 		eq.signal(294597,1,0); -- NPC: #Trigger_Ikkinz_3
 	else

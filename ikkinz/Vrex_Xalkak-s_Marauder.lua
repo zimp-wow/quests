@@ -90,19 +90,19 @@ function event_death_complete(e)
 		eq.signal(294595,2);
 		eq.delete_data(data_bucket);
 		eq.zone_emote(MT.Yellow,"The marauder's remains crash to the ground. It is no more.");
-	elseif class_arch_required == 2 and (class == Class.BARD or class == Class.BEASTLORD or class == Class.PALADIN or class == Class.RANGER or class == Class.SHADOWKNIGHT) then
+	elseif class_arch_required == 2 and (e.other:HasClass(Class.BARD) or e.other:HasClass(Class.BEASTLORD) or e.other:HasClass(Class.PALADIN) or e.other:HasClass(Class.RANGER) or e.other:HasClass(Class.SHADOWKNIGHT)) then
 		eq.signal(294595,2);
 		eq.delete_data(data_bucket);
 		eq.zone_emote(MT.Yellow,"The marauder's remains crash to the ground. It is no more.");
-	elseif class_arch_required == 3 and (class == Class.BERSERKER or class == Class.MONK or class == Class.ROGUE or class == Class.WARRIOR) then
+	elseif class_arch_required == 3 and (class == e.other:HasClass(Class.BERSERKER) or class == e.other:HasClass(Class.MONK) or e.other:HasClass(Class.ROGUE) or e.other:HasClass(Class.WARRIOR)) then
 		eq.signal(294595,2);
 		eq.delete_data(data_bucket);
 		eq.zone_emote(MT.Yellow,"The marauder's remains crash to the ground. It is no more.");
-	elseif class_arch_required == 4 and (class == Class.CLERIC or class == Class.DRUID or class == Class.SHAMAN) then
+	elseif class_arch_required == 4 and (e.other:HasClass(Class.CLERIC) or e.other:HasClass(Class.DRUID) or e.other:HasClass(Class.SHAMAN)) then
 		eq.signal(294595,2);
 		eq.delete_data(data_bucket);
 		eq.zone_emote(MT.Yellow,"The marauder's remains crash to the ground. It is no more.");
-	elseif class_arch_required == 1 and (class == Class.ENCHANTER or class == Class.MAGICIAN or class == Class.NECROMANCER or class == Class.WIZARD) then
+	elseif class_arch_required == 1 and (e.other:HasClass(Class.ENCHANTER) or e.other:HasClass(Class.MAGICIAN) or e.other:HasClass(Class.NECROMANCER) or e.other:HasClass(Class.WIZARD)) then
 		eq.signal(294595,2);
 		eq.delete_data(data_bucket);
 		eq.zone_emote(MT.Yellow,"The marauder's remains crash to the ground. It is no more.");
