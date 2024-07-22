@@ -14,6 +14,8 @@ sub EVENT_POPUPRESPONSE {
     
     foreach my $info (values %portal_destinations) {
         my ($destination_name, $popup_id, $zone_id, $x, $y, $z, $heading) = @$info;
+        quest::debug("popupid? $popuid");
+        quest::debug("popup_id? $popup_id");
         if ($popupid == $popup_id) {
             quest::movepc($zone_id, $x, $y, $z, $heading);
             return;
