@@ -4,7 +4,7 @@ sub EVENT_SPAWN {
 
 sub EVENT_TIMER{
   if ($timer eq "follow"){
-    my $OpponentID = 415049;
+    my $OpponentID = 33066;
     my $getmobbynpctype = $entity_list->GetMobByNpcTypeID($OpponentID);
     if ($getmobbynpctype) {
         my $follow_target = $getmobbynpctype->GetID();
