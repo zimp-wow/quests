@@ -16,5 +16,5 @@ sub EVENT_TIMER{
 
 sub EVENT_SIGNAL{
 	quest::emote("clicks at Blixkin happily.");
-	quest::signal(415049);
+	quest::signal(33066);
 }
