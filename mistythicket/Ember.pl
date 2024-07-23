@@ -6,9 +6,11 @@ sub EVENT_TIMER{
   if ($timer eq "follow"){
     my $OpponentID = 415049;
     my $getmobbynpctype = $entity_list->GetMobByNpcTypeID($OpponentID);
-    my $follow_target = $getmobbynpctype->GetID();
-    quest::follow($follow_target,10);
-    quest::stoptimer("follow");
+    if ($getmobbynpctype) {
+        my $follow_target = $getmobbynpctype->GetID();
+        quest::follow($follow_target,10);
+        quest::stoptimer("follow");
+    }
   }
 }
 
