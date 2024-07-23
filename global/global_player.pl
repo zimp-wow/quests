@@ -25,6 +25,7 @@ sub EVENT_ENTERZONE {
 }
 
 sub EVENT_CONNECT {
+    $client->ReloadDataBuckets();
     plugin::CommonCharacterUpdate($client);  
     if (!$client->GetBucket("First-Login")) {
         $client->SetBucket("First-Login", 1);
