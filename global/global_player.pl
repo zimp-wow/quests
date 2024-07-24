@@ -1,5 +1,6 @@
 sub EVENT_SIGNAL {
     if ($signal == 666) {
+        quest::debug("Got EoM Signal");
         plugin::UpdateEoMAward($client);
     } elsif ($signal == 100) {
         plugin::CheckWorldWideBuffs($client);
@@ -25,7 +26,7 @@ sub EVENT_ENTERZONE {
 }
 
 sub EVENT_CONNECT {
-    $client->ReloadDataBuckets();
+    $client->ReloadDataBuckets();    
     plugin::CommonCharacterUpdate($client);  
     if (!$client->GetBucket("First-Login")) {
         $client->SetBucket("First-Login", 1);

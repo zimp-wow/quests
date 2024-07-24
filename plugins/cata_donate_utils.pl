@@ -83,6 +83,16 @@ sub AwardEOM {
     }
 }
 
+sub AwardEOMAuto {
+    my ($client, $amount) = @_;
+    $client->AddAlternateCurrencyValue($eom_id, $amount);
+    $client->Message(15, "You have gained $amount [".quest::varlink($eom_item_id)."].");
+    quest::discordsend("admin", $client->GetCleanName() . " collected $amount EoM (From Web Donation).");
+    if (!$client->GetGM()) {
+        quest::set_data($eom_award_log, (quest::get_data($eom_award_log) || 0) + $amount);
+    }
+}
+
 sub RefundEOM {
     my ($client, $amount) = @_;
     $client->AddAlternateCurrencyValue($eom_id, $amount);
@@ -144,9 +154,18 @@ sub ApplyWorldWideBuff {
 
 sub UpdateEoMAward {
     my $client = shift;
+
+    $client->ReloadDataBuckets();
     if ($client->GetBucket("EoM-Award")) {
         plugin::AwardEOM($client, $client->GetBucket("EoM-Award"));
         quest::ding();
         $client->DeleteBucket("EoM-Award");
+    }
+
+    # TODO - change this whole system at some point.
+    if ($client->GetBucket("EoM-Award-Auto")) {
+        plugin::AwardEOM($client, $client->GetBucket("EoM-Award-Auto"));
+        quest::ding();
+        $client->DeleteBucket("EoM-Award-Auto");
     }
 }
