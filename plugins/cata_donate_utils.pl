@@ -164,7 +164,7 @@ sub UpdateEoMAward {
 
     # TODO - change this whole system at some point.
     if ($client->GetBucket("EoM-Award-Auto")) {
-        plugin::AwardEOM($client, $client->GetBucket("EoM-Award-Auto"));
+        plugin::AwardEOMAuto($client, $client->GetBucket("EoM-Award-Auto"));
         quest::ding();
         $client->DeleteBucket("EoM-Award-Auto");
     }
