@@ -79,10 +79,10 @@ my %waypoints = (
     'qvic'          => ["Qvic, Prayer Grounds of Calling", 7, -1018, -1403, -490, 3],
     'txevu'         => ["Txevu, Lair of the Elite", 7, -316, -20, -420, 430],
     'timorous'      => ["The Firepot Room (Secret)", 3, 4366.5, -12256.8, -278, 256],
-    'tox'           => ["The Toxxulia Forest", 2, 2707, 38, -916, -1510, -33],
+    'tox'           => ["The Toxxulia Forest", 2, 38, -916, -1510, -33],
     'twilight'      => ["The Twilight Sea", 5, 3615, 170, -1028, 1338, 39],
     'stonebrunt'    => ["Stonebrunt Mountains", 2, 3794, 100, 673, -4531, 0],
-    
+
 );
 
 sub AwardBonusUnlocks {
