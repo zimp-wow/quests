@@ -21,7 +21,6 @@ my %waypoints = (
     'eastkarana'    => ["Eastern Plains of Karana (Druid Ring)", 0, 423, 1333, 1, 210],
     'blackburrow'   => ["Blackburrow", 0, -7, 38, 3, 300],
     'commons'       => ["West Commonlands (Roadside Inn)", 0, 503, -127, -51, 128],
-    'ecommons'      => ["East Commonlands", 0, 4176, 22, 0140, 1520, 3],
     'erudnext'      => ["Erudin", 2, -240, -1216, 52, 510],
     'lavastorm'     => ["Lavastorm Mountains (Druid Ring)", 0, 1318, 918, 119, 270],
     'halas'         => ["Halas", 0, 0, 26, 3.75, 256],
@@ -80,9 +79,6 @@ my %waypoints = (
     'txevu'         => ["Txevu, Lair of the Elite", 7, -316, -20, -420, 430],
     'timorous'      => ["The Firepot Room (Secret)", 3, 4366.5, -12256.8, -278, 256],
     'tox'           => ["The Toxxulia Forest", 2, 38, -916, -1510, -33],
-    'twilight'      => ["The Twilight Sea", 5, 3615, 170, -1028, 1338, 39],
-    'stonebrunt'    => ["Stonebrunt Mountains", 2, 3794, 100, 673, -4531, 0],
-
 );
 
 sub AwardBonusUnlocks {
