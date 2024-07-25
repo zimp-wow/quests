@@ -105,9 +105,6 @@ my %waypoints = (
 );
 
 sub AwardBonusUnlocks {
-    #No-Op
-    return;
-
     my $client = plugin::val('$client');
     my $eligible = quest::get_data($client->AccountID() . "-TL-Account-A") ||
                    quest::get_data($client->AccountID() . "-TL-Account-O") ||
@@ -196,6 +193,46 @@ sub AddDefaultAttunement {
         AddWaypoint('cabeast');
         AddWaypoint('sharvahl');
         AddWaypoint('paineel');
+
+        if (plugin::is_eligible_for_zone($client, 'hateplaneb', 0) && $client->GetLevel() >= 46) {
+            AddWaypoint("hateplaneb");
+        }
+
+        if (plugin::is_eligible_for_zone($client, 'airplane', 0) && $client->GetLevel() >= 46) {
+            AddWaypoint("airplane");
+        }
+
+        if (plugin::is_eligible_for_zone($client, 'dreadlands', 0)) {
+            AddWaypoint("dreadlands");
+        }
+
+        if (plugin::is_eligible_for_zone($client, 'iceclad', 0)) {
+            AddWaypoint("iceclad");
+        }
+
+        if (plugin::is_eligible_for_zone($client, 'twilight', 0)) {
+            AddWaypoint("twilight");
+        }
+
+        if (plugin::is_eligible_for_zone($client, 'stonebrunt', 0)) {
+            AddWaypoint("stonebrunt");
+        }
+
+        if (plugin::is_eligible_for_zone($client, 'wallofslaughter', 0)) {
+            AddWaypoint("wallofslaughter");
+        }
+
+        if (plugin::is_eligible_for_zone($client, 'scarlet', 0)) {
+            AddWaypoint("scarlet");
+        }
+
+        if (plugin::is_eligible_for_zone($client, 'cobaltscar', 0)) {
+            AddWaypoint("cobaltscar");
+        }
+
+        if (plugin::is_eligible_for_zone($client, 'barindu', 0)) {
+            AddWaypoint("barindu");
+        }
     }
 }
 

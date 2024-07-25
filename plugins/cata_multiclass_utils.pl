@@ -13,7 +13,6 @@ sub CommonCharacterUpdate {
 
         plugin::CheckWorldWideBuffs($client);
         plugin::UpdateCharMaxLevel($client);
-        plugin::AddDefaultAttunement($client);
         plugin::UpdateEoMAward($client);
         plugin::RegisterSeasonalLogin($client);
         plugin::EnableTitles($client);

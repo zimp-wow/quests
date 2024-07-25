@@ -4,6 +4,9 @@ sub EVENT_SAY {
   my $cost            = 1000 * get_cost_for_level();
   my %waypoints       = plugin::GetWaypoints(-1, $client);
 
+  plugin::AwardBonusUnlocks($client);
+  plugin::AddDefaultAttunement($client);
+
   if ($text=~/hail/i) { 
     quest::say("Greetings $name! I can help you get to almost anywhere! I sell
                     [teleportion stones] which, when handed back to me, will attune this magic map 
