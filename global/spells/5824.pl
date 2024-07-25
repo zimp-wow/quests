@@ -13,7 +13,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         $client->SetBucket("Return-Zone", $zoneid);
         $client->SetBucket("Return-Instance", $instanceid);
 
-        $client->MovePCInstance(151, 0, 185, -834, 4, -125);
+        $client->MovePCInstance(151, -10, -600, -834, 5, 240);
     } else {
         #quest::debug("We are in Bazaar");
         my $ReturnX = $client->GetBucket("Return-X");
