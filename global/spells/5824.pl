@@ -11,9 +11,9 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         $client->SetBucket("Return-Z", $client->GetZ());
         $client->SetBucket("Return-H", $client->GetHeading());
         $client->SetBucket("Return-Zone", $zoneid);
-        $client->SetBucket("Return-Instance", $instanceid);
+        $client->SetBucket("Return-Instance", $instanceid);       
 
-        $client->MovePCInstance(151, -10, -600, -834, 5, 240);
+        $client->MovePC(151, quest::GetZoneSafeX(151), quest::GetZoneSafeY(151), quest::GetZoneSafeZ(151), quest::GetZoneSafeHeading(151));
     } else {
         #quest::debug("We are in Bazaar");
         my $ReturnX = $client->GetBucket("Return-X");
