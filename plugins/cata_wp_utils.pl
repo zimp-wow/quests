@@ -193,45 +193,26 @@ sub AddDefaultAttunement {
         AddWaypoint('cabeast');
         AddWaypoint('sharvahl');
         AddWaypoint('paineel');
+        AddWaypoint("lavastorm");
+        AddWaypoint("northkarana");
+        AddWaypoint("tox");
+        AddWaypoint("iceclad");
+        AddWaypoint("cobaltscar");
+        AddWaypoint("twilight");
+        AddWaypoint("wallofslaughter");
+        AddWaypoint("barindu");
+        AddWaypoint("potimea");
+        AddWaypoint("fieldofbone");
+        AddWaypoint("westwastes");
+        AddWaypoint("scarlet");
+        AddWaypoint("everfrost");
 
-        if (plugin::is_eligible_for_zone($client, 'hateplaneb', 0) && $client->GetLevel() >= 46) {
+        if ($client->GetLevel() >= 46) {
             AddWaypoint("hateplaneb");
         }
 
-        if (plugin::is_eligible_for_zone($client, 'airplane', 0) && $client->GetLevel() >= 46) {
+        if ($client->GetLevel() >= 46) {
             AddWaypoint("airplane");
-        }
-
-        if (plugin::is_eligible_for_zone($client, 'dreadlands', 0)) {
-            AddWaypoint("dreadlands");
-        }
-
-        if (plugin::is_eligible_for_zone($client, 'iceclad', 0)) {
-            AddWaypoint("iceclad");
-        }
-
-        if (plugin::is_eligible_for_zone($client, 'twilight', 0)) {
-            AddWaypoint("twilight");
-        }
-
-        if (plugin::is_eligible_for_zone($client, 'stonebrunt', 0)) {
-            AddWaypoint("stonebrunt");
-        }
-
-        if (plugin::is_eligible_for_zone($client, 'wallofslaughter', 0)) {
-            AddWaypoint("wallofslaughter");
-        }
-
-        if (plugin::is_eligible_for_zone($client, 'scarlet', 0)) {
-            AddWaypoint("scarlet");
-        }
-
-        if (plugin::is_eligible_for_zone($client, 'cobaltscar', 0)) {
-            AddWaypoint("cobaltscar");
-        }
-
-        if (plugin::is_eligible_for_zone($client, 'barindu', 0)) {
-            AddWaypoint("barindu");
         }
     }
 }
@@ -257,7 +238,7 @@ sub AddWaypoint {
     my $client   = shift || plugin::val('$client');
     my $return_feedback = 0;
 
-    if ($client) {
+    if ($client && plugin::is_eligible_for_zone($client, $waypoint, 0)) {
         my %account_data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
         my %character_data = map { $_ => 1 } split(',', $client->GetBucket("Waypoints"));        
 
