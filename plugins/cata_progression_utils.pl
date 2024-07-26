@@ -56,6 +56,7 @@ my %atlas = (
     'frozenshadow'   => 'SoV',
     'wakening'       => 'SoV',
     'westwastes'     => 'SoV',
+    'stonebrunt'     => 'SoV',
     
     'gunthak'        => 'SoL',
     'nadox'          => 'SoL',
@@ -86,7 +87,6 @@ my %atlas = (
     'vexthal'        => 'SoL',
     'nexus'          => 'SoL',
     'jaggedpine'     => 'SoL',
-    'stonebrunt'     => 'SoL',
     
     'soldungc'       => 'PoP', # Out of Era
     'poknowledge'    => 'PoP',
