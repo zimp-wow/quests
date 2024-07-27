@@ -131,7 +131,6 @@ sub AwardBonusUnlocks {
         AddWaypoint('hole');
         AddWaypoint('neriakb');
         AddWaypoint('feerrott');
-        AddWaypoint('cazicthule');
         AddWaypoint('oggok');
         AddWaypoint('grobb');
         AddWaypoint('gfaydark');
@@ -238,26 +237,28 @@ sub AddWaypoint {
     my $client   = shift || plugin::val('$client');
     my $return_feedback = 0;
 
-    if ($client && plugin::is_eligible_for_zone($client, $waypoint, 0)) {
-        my %account_data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
-        my %character_data = map { $_ => 1 } split(',', $client->GetBucket("Waypoints"));        
+    if ($client) {
+        if (plugin::is_eligible_for_zone($client, $waypoint, 0)) {
+            my %account_data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
+            my %character_data = map { $_ => 1 } split(',', $client->GetBucket("Waypoints"));        
 
-        if (exists $waypoints{$waypoint}) {
-            if (!exists $account_data{$waypoint}) {
-                $account_data{$waypoint} = 1;
-                quest::set_data("Waypoints-" . $client->AccountID(), join(',', keys %account_data));
-                $return_feedback = 1;
-            }
-
-            if (!exists $character_data{$waypoint}) {
-                $character_data{$waypoint} = 1;
-                $client->SetBucket("Waypoints", join(',', keys %character_data));
-                if ($client->IsSeasonal() || $client->IsHardcore()) {
+            if (exists $waypoints{$waypoint}) {
+                if (!exists $account_data{$waypoint}) {
+                    $account_data{$waypoint} = 1;
+                    quest::set_data("Waypoints-" . $client->AccountID(), join(',', keys %account_data));
                     $return_feedback = 1;
                 }
+
+                if (!exists $character_data{$waypoint}) {
+                    $character_data{$waypoint} = 1;
+                    $client->SetBucket("Waypoints", join(',', keys %character_data));
+                    if ($client->IsSeasonal() || $client->IsHardcore()) {
+                        $return_feedback = 1;
+                    }
+                }
+            } else {
+                quest::debug("Attempted to add an invalid or undefined waypoint ($waypoint) to " . $client->GetName());
             }
-        } else {
-            quest::debug("Attempted to add an invalid or undefined waypoint ($waypoint) to " . $client->GetName());
         }
     } else {
         quest::debug("Attempted to add a waypoint to a nonspecified client.");

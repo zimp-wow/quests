@@ -1,7 +1,7 @@
 sub EVENT_TICK {
     my $phara_dar = $entity_list->GetNPCByNPCTypeID(108048);
     my @pd_hatelist = $phara_dar->GetHateList();
-    if (@pd_hatelist) {
+    if ($phara_dar && @pd_hatelist) {
         my $rand_hater = $pd_hatelist[$int(rand(@pd_hatelist))];
         if ($rand_hater) {
             $npc->AddToHateList($rand_hater, 1000);
