@@ -603,7 +603,7 @@ sub GrantClassAA {
         );
         
         foreach my $aa_id (keys %{$class_aa{$PCClass}}) {
-            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id});
+            $client->GrantAlternateAdvancementAbility($aa_id, $class_aa{$PCClass}{$aa_id}, 1);
         }
 
     }
