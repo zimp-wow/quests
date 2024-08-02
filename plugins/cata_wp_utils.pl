@@ -19,7 +19,6 @@ my %waypoints = (
     'feerrott'      => ["The Feerrott", 0, -1830, 430, 18, 33],
     'freportw'      => ["West Freeport", 0, -396, -283, -23, 500],
     'grobb'         => ["Grobb", 0, -200, 223, 3.75, 414],
-    'gunthak'       => ["The Gulf of Gunthak", 0, -410, 1402, 3, 0],
     'everfrost'     => ["Everfrost", 0, -6972, 2133, -58, 163],
     'halas'         => ["Halas", 0, 0, 26, 3.75, 256],
     'highkeep'      => ["High Keep", 0, -1, -17, -4, 388],
@@ -48,7 +47,9 @@ my %waypoints = (
     'hole'          => ["The Ruins of Old Paineel", 2, -543, 287, -140, 125],
     'paineel'       => ["Paineel", 2, 210, 839, 4, 275],
     'tox'           => ["The Toxxulia Forest", 2, -916, -1510, -33, 0],
-    'stonebrunt'    => ["Stonebrunt Mountains", 673, -4531, 0, 0],
+    'stonebrunt'    => ["Stonebrunt Mountains", 2, 673, -4531, 0],
+    'dulak'         => ["Dulak Harbor", 2, -1190, -190, 4, 128],
+    'gunthak'       => ["The Gulf of Gunthak", 2, -410, 1402, 3, 0],
 
     # Kunark (3)
     'burningwood'   => ["Burning Wood (Chardok)", 3, -3876, 7407, -233, 303],
