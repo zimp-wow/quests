@@ -80,6 +80,9 @@ sub AwardEOM {
     quest::discordsend("admin", $client->GetCleanName() . " collected $amount EoM.");
     if (!$client->GetGM()) {
         quest::set_data($eom_award_log, (quest::get_data($eom_award_log) || 0) + $amount);
+        
+        my $act_eom_total_key = $client->AccountID(). " -total-eom-awarded";
+        quest::set_data($act_eom_total_key, (quest::get_data($act_eom_total_key) || 0) + $amount);
     }
 }
 
@@ -90,6 +93,9 @@ sub AwardEOMAuto {
     quest::discordsend("admin", $client->GetCleanName() . " collected $amount EoM (From Web Donation).");
     if (!$client->GetGM()) {
         quest::set_data($eom_award_log, (quest::get_data($eom_award_log) || 0) + $amount);
+
+        my $act_eom_total_key = $client->AccountID(). " -total-eom-awarded";
+        quest::set_data($act_eom_total_key, (quest::get_data($act_eom_total_key) || 0) + $amount);
     }
 }
 
