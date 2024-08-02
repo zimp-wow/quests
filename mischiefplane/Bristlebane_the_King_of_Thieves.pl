@@ -121,5 +121,11 @@ sub EVENT_DEATH_COMPLETE {
 	quest::signal(126376,10); # NPC: a_tricky_guardian_jester
 	quest::signal(126377,10); # NPC: a_dazed_guardian_jester
 	quest::signal(126378,10); # NPC: a_charming_guardian_jester
+
+	my $killer = $entity_list->GetClientByID($killer_id);   
+
+    if ($killer && plugin::IsSeasonal($killer)) {
+        plugin::AddTitleFlag(204);
+    }
 }
 

@@ -4,6 +4,12 @@ function event_death_complete(e)
 	-- do not aggro these mobs #_Tunare (127001), #Tunare (127098), a_warm_light (127004)
 	-- #BouncerMan (127097), Flighty_Viridian_Wisp (127105), a_thifling_focuser (127006 and 127005)
 	send_signal_to_all_npc_in_zone(2, {127001,127004,127097,127098,127105,127005,127006});
+
+	local killer = eq.get_entity_list():GetClientByID(e.killer_id)
+    if killer and killer:GetLevel() <= 60 then
+        killer:CastToClient():SetBucket('flag-semaphore', '204')
+        killer:Signal(0)
+    end
 end
 
 function event_combat(e)
