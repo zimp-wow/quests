@@ -433,17 +433,17 @@ sub is_stage_complete {
         my $lc_prerequisite = lc($prerequisite);
 
         unless ($objective_progress{$lc_prerequisite}) {
-            quest::debug("Prerequisite not met: $lc_prerequisite");
+            #quest::debug("Prerequisite not met: $lc_prerequisite");
             if ($inform) {
                 $client->Message(263, "You are not yet ready to experience that memory.");
             }
             return 0;
         }
-        quest::debug("Prerequisite met: $lc_prerequisite");
+        #quest::debug("Prerequisite met: $lc_prerequisite");
     }
 
     # If all prerequisites are met
-    quest::debug("All prerequisites for stage $stage have been met");
+    #quest::debug("All prerequisites for stage $stage have been met");
     return 1;
 }
 
