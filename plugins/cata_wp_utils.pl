@@ -76,7 +76,7 @@ my %waypoints = (
     'wakening'      => ["The Wakening Land", 4, 4552, 1455, -60, 130],
     'westwastes'    => ["The Western Wastes (Temple of Veeshan)", 4, 808, 1323, -196, 373],
     'cobaltscar'    => ["Cobalt Scar", 4, -1634, -1065, 299, 0],
-    'sirensgrotto'  => ["Siren's Grotto", 4, 20, -590, -93, 0],
+    'sirens'        => ["Siren's Grotto", 4, 20, -590, -93, 0],
 
     # Luclin (5)
     'dawnshroud'    => ["The Dawnshroud Peaks", 5, -1260, -280, 97, 500],
