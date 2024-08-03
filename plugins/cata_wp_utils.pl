@@ -66,6 +66,7 @@ my %waypoints = (
     'southkarana'   => ["Southern Plains of Karana (Aviak Village)", 0, 1027, -6689, 0, 260],
     'timorous'      => ["The Firepot Room (Secret)", 3, 4366.5, -12256.8, -278, 256],
     'trakanon'      => ["Trakanon's Teeth", 3, -4720, -1620, -473, 320],
+    'chardokb'      => ["The Halls of Betrayal", 3, -220, 195, 1.5, 159],
 
     # Velious (4)
     'cobaltscar'    => ["Cobalt Scar", 4, -1633, -1064, 296, 115],
@@ -75,6 +76,7 @@ my %waypoints = (
     'wakening'      => ["The Wakening Land", 4, 4552, 1455, -60, 130],
     'westwastes'    => ["The Western Wastes (Temple of Veeshan)", 4, 808, 1323, -196, 373],
     'cobaltscar'    => ["Cobalt Scar", 4, -1634, -1065, 299, 0],
+    'sirensgrotto'  => ["Siren's Grotto", 4, 20, -590, -93, 0],
 
     # Luclin (5)
     'dawnshroud'    => ["The Dawnshroud Peaks", 5, -1260, -280, 97, 500],
