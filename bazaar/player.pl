@@ -70,7 +70,7 @@ sub EVENT_TIMER {
                 if (!$idle ) {
                     $client->DeleteEntityVariable("idle_warning");
                 }
-                elsif ($idle and $idle_track >= (300 * 1)) {
+                elsif ($idle and $idle_track >= (300 * 2)) {
                     my $instance = quest::CreateInstance('bazaar', 0, 144000000);
                     $client->Message(15, "You have been idle for ten minutes. Transporting you to a private instance of the Bazaar...");                    
                     $client->AssignToInstance($instance);
