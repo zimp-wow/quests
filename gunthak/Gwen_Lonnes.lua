@@ -2,7 +2,7 @@
 
 -- say block
 function event_say(e)
-    if(e.other:GetClass() == Class.WARRIOR or e.other:GetClass() == Class.MONK or e.other:GetClass() == Class.ROGUE or e.other:GetClass() == Class.BERSERKER) then -- War, Mnk, Rog, Ber
+    if(e.other:HasClass(Class.WARRIOR) or e.other:HasClass(Class.MONK) or e.other:HasClass(Class.ROGUE) or e.other:HasClass(Class.BERSERKER)) then -- War, Mnk, Rog, Ber
         if(e.message:findi("Hail")) then
             e.self:Emote("swirls her leg around and nearly takes your head off with a powerful roundhouse kick. Apparently she doesn't like to be surprised while practicing her forms. 'What is it whelp, I have little time to waste speaking to weaklings. I must be in top form if I am to do battle with the pirates of Broken Skull, not to mention their fishy friends the [" .. eq.say_link("What are the Luggalds?", false, "Luggalds") .. "].' She then turns back to her forms.");
         elseif(e.message:findi("Luggalds")) then

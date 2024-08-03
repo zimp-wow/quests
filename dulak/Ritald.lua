@@ -35,7 +35,7 @@
 ---- SubField - 7 - Give Essence and Innoruuk's Voice to Fillgno - 2.0, AA, Title - Completed
 
 function event_say(e)
-	if e.other:GetClass() == Class.SHADOWKNIGHT then -- Shadow Knight Only
+	if e.other:HasClass(Class.SHADOWKNIGHT) then -- Shadow Knight Only
 
 		local data_bucket = ("Epic-ShadowKnight-"..e.other:CharacterID());
 
@@ -76,7 +76,7 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if e.other:GetClass() == Class.SHADOWKNIGHT then -- Ranger Only
+	if e.other:HasClass(Class.SHADOWKNIGHT) then -- Ranger Only
 		local data_bucket = ("Epic-ShadowKnight-"..e.other:CharacterID());
 
 

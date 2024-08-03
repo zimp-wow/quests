@@ -7,7 +7,7 @@ function event_say(e)
 	local epic_two			= 0;
 	local epic_twofive		= 0;
 
-	if e.other:GetClass() == Class.ENCHANTER then
+	if e.other:HasClass(Class.ENCHANTER) then
 		local data_bucket = ("Epic-Enchanter-"..e.other:CharacterID());
 
 		local s					= nil;	-- Status Array
@@ -58,7 +58,7 @@ function event_trade(e)
 	local epic_two			= 0;
 	local epic_twofive		= 0;
 
-	if e.other:GetClass() == Class.ENCHANTER then
+	if e.other:HasClass(Class.ENCHANTER) then
 		local data_bucket = ("Epic-Enchanter-"..e.other:CharacterID());
 
 		local s					= nil;	-- Status Array

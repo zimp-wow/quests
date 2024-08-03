@@ -51,7 +51,7 @@ function event_timer(e)
 end
 
 function event_killed_merit(e) -- Triggers on everyone
-	if e.other:GetClass() == Class.BERSERKER then
+	if e.other:HasClass(Class.BERSERKER) then
 		local data_bucket = ("Epic-Berserker-"..e.other:CharacterID());
 
 		if eq.get_data(data_bucket) ~= "" then

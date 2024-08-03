@@ -78,7 +78,7 @@
 ---- SubField - 1 = Completed Epic 2.5
 
 function event_say(e)
-	if e.other:GetClass() == Class.DRUID then
+	if e.other:HasClass(Class.DRUID) then
 
 		local data_bucket = ("Epic-Druid-"..e.other:CharacterID());
 
@@ -128,7 +128,7 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if e.other:GetClass() == Class.DRUID then
+	if e.other:HasClass(Class.DRUID) then
 		local data_bucket = ("Epic-Druid-"..e.other:CharacterID());
 
 		if eq.get_data(data_bucket) ~= "" then

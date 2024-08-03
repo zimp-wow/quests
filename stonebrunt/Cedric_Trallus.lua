@@ -24,13 +24,13 @@ function event_trade(e)
     local qglobals = eq.get_qglobals(e.self,e.other);
     local item_lib = require("items");
     if(item_lib.check_turn_in(e.self, e.trade, {item1 = 59035, item2 = 59035})) then -- Luggald Organs x2
-        if(e.other:GetClass() == Class.SHADOWKNIGHT or e.other:GetClass() == Class.NECROMANCER) then -- Shadow Knight or Necro
+        if(e.other:HasClass(Class.SHADOWKNIGHT) or e.other:HasClass(Class.NECROMANCER)) then -- Shadow Knight or Necro
             eq.set_global("luggald","1",0,"F"); -- Set Global for 2nd step
             e.self:Emote("takes the organs from you and lays them down on the ground before him. He begins to slice and separate the organs from one another with a wicked looking dagger. Dark blue blood stains his robe as he probes the strange flesh. Finally after several minutes he smiles and pulls a parchment from a bag at his side and begins to draw several runes using the dark blue blood.");
             e.self:Say("Take this, I have discovered the secret of their magic, or so I believe. Of course it might not work and you'll end up actually dead, but we'll never know till you try, will we?");
-            if(e.other:GetClass() == Class.NECROMANCER) then -- Necro
+            if(e.other:HasClass(Class.NECROMANCER)) then -- Necro
                 e.other:QuestReward(e.self,0,0,0,0,59019,10000); -- Spell: Auspice
-            elseif(e.other:GetClass() == Class.SHADOWKNIGHT) then -- Shadow Knight
+            elseif(e.other:HasClass(Class.SHADOWKNIGHT)) then -- Shadow Knight
                 e.other:QuestReward(e.self,0,0,0,0,59006,10000); -- Spell: Blood of Pain
             end
             e.other:Message(MT.Yellow, "As you take the scroll from him you notice a sickly burning odor in the air. You glance down at Cedric's robes and notice several holes beginning to form where the blood touches his [" .. eq.say_link("robes") .. "].");

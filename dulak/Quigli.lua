@@ -1,7 +1,7 @@
 -- Monk Epic 1.5
 
 function event_say(e)
-	if e.other:GetClass() == Class.MONK then
+	if e.other:HasClass(Class.MONK) then
 		local data_bucket = ("Epic-Monk-"..e.other:CharacterID());
 		if eq.get_data(data_bucket) ~= "" then -- Has Started
 			local temp = eq.get_data(data_bucket);

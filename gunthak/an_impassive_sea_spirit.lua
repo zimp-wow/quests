@@ -2,7 +2,7 @@
 
 -- say block
 function event_say(e)
-    if(e.other:GetClass() == Class.SHAMAN) then -- Shaman
+    if(e.other:HasClass(Class.SHAMAN)) then -- Shaman
         if(e.message:findi("Hail")) then
             e.self:Emote("sways back and forth, rocking with the gentle motions of the tide. You are nearly mesmerized by its periodic fluctuation, when it suddenly speaks. 'I watch you as you watch me, and I wonder. Do you realize how to become empty of wishes, of dreams, of hope and sorrow? What do you know, strange one, about the virtue of null emotion? Do you understand how to be as unwavering as the ocean itself? Can you envision yourself as the pebble in the river? Can you mute feeling? Do you [" .. eq.say_link("I dare to learn!", false, "dare to learn") .. "]?'");
         elseif(e.message:findi("learn")) then

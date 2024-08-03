@@ -2,7 +2,7 @@
 
 -- say block
 function event_say(e)
-    if(e.other:GetClass() == Class.DRUID) then -- Druid
+    if(e.other:HasClass(Class.DRUID)) then -- Druid
         if(e.message:findi("Hail")) then
             e.self:Say("The salty air grows stale in this place. As if the essence of Tunare and Karana have been shut out by the dark tide of Broken Skull. The wind of Karana grows wild and restless, and the water of the mother turns black as it touches the tainted stone of Innoruuk. Were it not for my [" .. eq.say_link("promise") .. "] to Xanuusus I would not be here.");
         elseif(e.message:findi("promise")) then
@@ -25,7 +25,7 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(e.other:GetClass() == Class.DRUID and item_lib.check_turn_in(e.self, e.trade, {item1 = 59061, item2 = 59062})) then -- Golden Emblem (Symbol of Tunare) and Golden Emblem (Symbol of Karana)
+    if(e.other:HasClass(Class.DRUID) and item_lib.check_turn_in(e.self, e.trade, {item1 = 59061, item2 = 59062})) then -- Golden Emblem (Symbol of Tunare) and Golden Emblem (Symbol of Karana)
         e.self:Emote("gasps as you hand him the two symbols. 'I am in your debt, " .. e.other:GetName() .. ". There is nothing I can ever do to repay you, but I can at least teach you of the healing water that Tunare has shown me how to control. Take this scroll, I pray to Tunare that it will serve you well.' ");
         e.other:QuestReward(e.self,0,0,0,0,59014,eq.ExpHelper(39)); -- Spell: Healing Water
     end

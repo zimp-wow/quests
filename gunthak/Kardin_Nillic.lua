@@ -2,7 +2,7 @@
 
 -- say block
 function event_say(e)
-    if(e.other:GetClass() == Class.BARD) then -- Bard
+    if(e.other:HasClass(Class.BARD)) then -- Bard
         if(e.message:findi("Hail")) then
             e.self:Emote("lifts his gaze from the whitened corpse lying on the bed in front of him. He holds the pale fingers tightly in his hands. As he opens his mouth to speak you shiver as what you thought was a corpse makes a soft moaning sound on the bed next to him. 'What business do you have here? Death grows near for him, what comfort can you hope to bring him in this [" .. eq.say_link("What plagues this place?", false, "plagued") .. "] place?");
         elseif(e.message:findi("plagues")) then
@@ -21,7 +21,7 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(e.other:GetClass() == Class.BARD and item_lib.check_turn_in(e.self, e.trade, {item1 = 59022})) then -- Faded, Watermarked Book
+    if(e.other:HasClass(Class.BARD) and item_lib.check_turn_in(e.self, e.trade, {item1 = 59022})) then -- Faded, Watermarked Book
         e.self:Emote("begins to flip through the pages of the faded song book. He studies one page, shakes his head and then flips through several more pages. Finally a smile of recognition creeps across his lips and he chuckles, 'Definitely a student of Jusean, but there's something else. Some of the chords are unfamiliar even to me. You'll have to ask Evanesque to take a look at them. Maybe he can tell you who wrote it.' ");
         e.other:SummonItem(59023) -- Faded Songbook;
 

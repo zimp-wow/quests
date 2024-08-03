@@ -15,7 +15,7 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(e.other:GetClass() == Class.BARD and item_lib.check_turn_in(e.self, e.trade, {item1 = 59025})) then -- Old Waterlogged Lute
+    if(e.other:HasClass(Class.BARD) and item_lib.check_turn_in(e.self, e.trade, {item1 = 59025})) then -- Old Waterlogged Lute
         e.self:Emote("looks over the lute for a moment. He sets his fingers carefully over the strings, closes his eyes, and begins to play. A soft aria fills the stale air of the cavern with a strange warmth. Something inside you awakens that you had long forgotten. So long forgotten that you are unable to conjure a name for it from your memory. As the song ends the strange feeling leaves you as the darkness of the cavern closes in once more around you.");
         e.self:Say("Thank you my friends, for returning my senses to me. The dark dust of the mines had torn my sanity from me. Luckily my hands remembered the songs my mind had forgotten. Here, take this note to my son Jusean in Qeynos. He'll be able to transcribe a proper song for you from it. I must stay here and attempt to save the other miners from the dark insanity of the mines.")
         e.self:Say("Tell Jusean. . . 'Suddenly you hear a bowstring snap as an arrow sails through the air and strikes Heltin in the chest. He lies twitching before you for a moment before he stops and lies completely still.'")

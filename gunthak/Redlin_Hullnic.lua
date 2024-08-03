@@ -2,7 +2,7 @@
 
 -- say block
 function event_say(e)
-    if(e.other:GetClass() == Class.WIZARD) then -- Wizard
+    if(e.other:HasClass(Class.WIZARD)) then -- Wizard
         if(e.message:findi("Hail")) then
             e.self:Say("'Eh, who's there? Yender is that you? No you're far too tall to be Yender. You must be one o' them [" .. eq.say_link("I am not a pirate", false, "pirates") .. "]!' Redlin then begins to beat furiously on your ankle with his staff. Furiously might be a slightly strong word, as he doesn't seem to be doing any real damage.");
         elseif(e.message:findi("pirate")) then
@@ -17,7 +17,7 @@ end
 function event_trade(e)
     local item_lib = require("items");
     
-    if(e.other:GetClass() == Class.WIZARD and item_lib.check_turn_in(e.self, e.trade, {item1 = 59054})) then -- Gnomish Spectacles
+    if(e.other:HasClass(Class.WIZARD) and item_lib.check_turn_in(e.self, e.trade, {item1 = 59054})) then -- Gnomish Spectacles
         e.self:Emote("takes the spectacles from your hands and puts them up to his eyes and blinks several times. Many thanks, " .. e.other:GetName() .. "! I don't know what I would have done without you. Probably stagger around the island half blind for the rest of my life! At any rate I can repay you with a little trick I picked up along the way. If you ever get in a jam, hopefully you won't be as forgetful as I was!' He hands you a scroll with several runes scrawled across it.");
         e.other:QuestReward(e.self,0,0,0,0,59020,eq.ExpHelper(44)); -- Spell: Vision Shift
     end

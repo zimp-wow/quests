@@ -37,7 +37,7 @@ function event_timer(e)
 end
 
 function event_say(e)
-	if e.other:GetClass() == Class.RANGER then -- Ranger Only
+	if e.other:HasClass(Class.RANGER) then -- Ranger Only
 		local data_bucket = ("Epic-Ranger-"..e.other:CharacterID());
 		local s					= nil;	-- Status Array
 

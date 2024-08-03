@@ -1,6 +1,6 @@
 -- Beastlord 1.5
 function event_say(e)
-	if e.other:GetClass() == Class.BEASTLORD then -- Beastlords Only
+	if e.other:HasClass(Class.BEASTLORD) then -- Beastlords Only
 		local data_bucket = ("Epic-Beastlord-"..e.other:CharacterID());
 
 		if eq.get_data(data_bucket) ~= "" then -- Has Started

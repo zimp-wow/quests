@@ -11,7 +11,7 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 59028}) and e.other:GetClass() == Class.PALADIN) then -- Glowing Black Medallion
+    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 59028}) and e.other:HasClass(Class.PALADIN)) then -- Glowing Black Medallion
         e.self:Emote("twitches as the necklace touches the ethereal form. You feel unfamiliar hands in your packs, but before you can check them, the stern face of the ghost turns into a snarl. The spirit's hands dart forward and take hold of your throat with an unholy strength.");
         e.other:QuestReward(e.self,0,0,0,0,59004,eq.ExpHelper(51)); -- Spell: Light of Life
         e.self:AddToHateList(e.other, 5000) -- lots of hate!

@@ -1,6 +1,6 @@
 function event_say(e)
     local qglobals = eq.get_qglobals(e.self,e.other);
-    if(e.other:GetClass() == Class.BEASTLORD) then
+    if(e.other:HasClass(Class.BEASTLORD)) then
         if(e.message:findi("Hail")) then
             e.self:Emote("glances at you with eyes of energy. He peers across your armor and then finally seems to come to a decision and points to the ground. He kneels down and then begins to draw something in the dirt. You see the outline of a wolf begin to take shape. You then see a humanoid figure standing next to the animal. He draws a circle around them, presumably to show that they are connected somehow. Craegin looks up at you and points to the wolf and then at you. You think he is asking if you are a ["..eq.say_link("I am a Beastlord",false,"Beastlord").."]. His gaze pierces your eyes waiting for an answer.");
         elseif(e.message:findi("Beastlord")) then
@@ -20,11 +20,11 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(e.other:GetClass() == Class.BEASTLORD and item_lib.check_turn_in(e.self, e.trade, {item1 = 59033})) then -- Glowing Collar
+    if(e.other:HasClass(Class.BEASTLORD) and item_lib.check_turn_in(e.self, e.trade, {item1 = 59033})) then -- Glowing Collar
         e.self:Emote("looks at you in amazement as you hand the glowing collar to him. He looks as if he might weep for joy at any moment. He holds the collar firmly by the clasp and brings it down to his side. He mumbles some words and the wolf immediately appears beside him. He reaches into his bags and grabs a small stone similar to the one fit into the collar. You reach forward and take it from him. He points at the dirt once more as if he wishes to ["..eq.say_link("What do you wish to draw for me?",false,"draw").."] something for you.");
         eq.set_global("Craegin_Spell","1",0,"F");
         e.other:QuestReward(e.self,0,0,0,0,59010,eq.ExpHelper(51)); -- Spell: Bond of the Wild
-    elseif(e.other:GetClass() == Class.BEASTLORD and item_lib.check_turn_in(e.self, e.trade, {item1 = 59034})) then -- Strange Dark Powder
+    elseif(e.other:HasClass(Class.BEASTLORD) and item_lib.check_turn_in(e.self, e.trade, {item1 = 59034})) then -- Strange Dark Powder
         e.self:Emote("looks over the dark powder carefully for a moment and then nods at you. He grabs a small bag from his waist and places the dust inside of it. He then takes a second bag and empties another odd powder into the bag. He closes and shakes the bag vehemently and then looks at you expectantly. You nod. He reaches into the bag and pulls a bit of the mixtures out. Unexpectedly he blows the mixture into your face, causing your eyes to burn and your lungs to uncontrollably cough in pain. You fall to the ground for a moment, but the burning subsides. You rise back to your feet and Craegin hands you the rest of the bag of powder.");
         eq.delete_global("Craegin_Spell");
         e.other:QuestReward(e.self,0,0,0,0,59009,eq.ExpHelper(39)); -- Spell: Malaria
