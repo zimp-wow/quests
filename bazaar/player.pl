@@ -25,13 +25,11 @@ sub EVENT_POPUPRESPONSE {
 sub EVENT_ENTERZONE {
     set_current_position();
     quest::settimer("check_idle", get_idle_time());
-    quest::debug("EnterZone");
 }
 
 sub EVENT_CONNECT {
     set_current_position();
     quest::settimer("check_idle", get_idle_time());
-    quest::debug("Connect");
 }
 
 sub EVENT_TIMER {
