@@ -42,12 +42,12 @@ sub EVENT_TIMER {
         }
         else {
             my $idle        = check_position();
-            my $idle_track  = $client->GetEntityVariable("idle_warning") ? int($client->GetEntityVariable("idle_warning")) : 1;
+            my $idle_track  = $client->GetEntityVariable("idle_warning") ? int($client->GetEntityVariable("idle_warning")) : 0;
             my $non_idle_c  = $client->GetEntityVariable("non_idle_count") ? int($client->GetEntityVariable("non_idle_count")) : 1;
 
             $client->SetEntityVariable("idle_warning", $idle_track + 1);
 
-            #quest::debug("idle: $idle, idle_track: $idle_track, non_idle_c: $non_idle_c");
+            quest::debug("idle: $idle, idle_track: $idle_track, non_idle_c: $non_idle_c");
 
             if ($instanceid) { # inside private instance   
                 if ($idle and $idle_track % 300 == 0) {
