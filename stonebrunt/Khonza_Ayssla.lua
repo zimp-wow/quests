@@ -15,7 +15,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 6975  })) then --Full Gathering Satchel
+    if(item_lib.check_turn_in(e.trade, {item1 = 6975  })) then --Full Gathering Satchel
         e.self:Say("I thought the kobolds would have you for dinner, but you made it back.");
         e.self:Emote("Ayssla takes the satchel and begins to pour different vials of foul smelling liquid into it. She then takes the entire contents of the bag and dumps it into a large kettle and begins to chant in an unknown language. After a few minutes, she takes a small amount of the now boiling liquid and puts it in a vial.");
         e.self:Say("Take this vial back to Jali. I pray to the Titan Spirits that it works.");

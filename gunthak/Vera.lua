@@ -23,19 +23,19 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(e.other:HasClass(Class.MAGICIAN) and item_lib.check_turn_in(e.self, e.trade, {item1 = 58001, item2 = 58002})) then -- Flicker of Lava, Flicker of Sea
+    if(e.other:HasClass(Class.MAGICIAN) and item_lib.check_turn_in(e.trade, {item1 = 58001, item2 = 58002})) then -- Flicker of Lava, Flicker of Sea
         e.self:Emote("takes the flickers from you, places them in a metal brazier and begins to chant in a deep rumbling tone. After a few moments of chanting, the flickers coalesce into one and form a pale, light blue liquid in the bottom of the brazier. Vera picks up a vial, corks half the substance within, and hands it to you. 'Wonderful! This should do the trick. Take this vial to my sister, Vira, in the Temple of Solusek Ro. I would make the trip, but I have discovered something I must investigate further.");
         e.other:SummonItem(58003); -- Vial of Liquid
 
-    elseif(e.other:HasClass(Class.MAGICIAN) and item_lib.check_turn_in(e.self, e.trade, {item1 = 58004})) then -- Note to Vera
+    elseif(e.other:HasClass(Class.MAGICIAN) and item_lib.check_turn_in(e.trade, {item1 = 58004})) then -- Note to Vera
         e.self:Say("Thank goodness my sister is feeling better. While you were gone, I was able to figure out the exact healing power of the flicker liquid. I have transcribed it on this piece of parchment. Here, memorize this and may it serve you well. Now, if I can just figure out what sustains the lava elementals of Broken Skull. If you are up to it, I could use some [" .. eq.say_link("more assistance") .. "].");
         e.other:QuestReward(e.self,0,0,0,0,59017,eq.ExpHelper(44)); -- Spell: Primal Remedy, ~2% exp at lvl 44
 
-    elseif(e.other:HasClass(Class.MAGICIAN) and item_lib.check_turn_in(e.self, e.trade, {item1 = 58005, item2 = 58005, item3 = 58005})) then -- 3x Strength of Lava
+    elseif(e.other:HasClass(Class.MAGICIAN) and item_lib.check_turn_in(e.trade, {item1 = 58005, item2 = 58005, item3 = 58005})) then -- 3x Strength of Lava
         e.self:Emote("takes the components from you and again puts them in her brazier. She begins a chant and raises her arms towards the sky. As she chants, the elements in the brazier light up brightly and begin to fragment. As they drift skyward they form into patterns of archaic runes. Vera's chant forces the runes into a pattern. The pattern is burned into your vision, even when you close your eyes. Knowing that the runes will fade, you quickly pluck up a pen and parchment to jot the runes down. Vera's chant fades and the night grows dark again. She looks over your parchment and says, 'Let me translate that into something useful for you.'");
         e.other:SummonItem(58006); -- Scribed Runes
 
-    elseif(e.other:HasClass(Class.MAGICIAN) and item_lib.check_turn_in(e.self, e.trade, {item1 = 58006})) then -- Scribed Runes
+    elseif(e.other:HasClass(Class.MAGICIAN) and item_lib.check_turn_in(e.trade, {item1 = 58006})) then -- Scribed Runes
         e.self:Emote("makes a copy of your parchment, adding some extra symbols at the end. 'See, I told you it would be useless to you until I translated it. I shall journey home now, and place this new scroll within the libraries of Solusek. I thank you for your help and wish you hearty adventures.'");
         e.other:QuestReward(e.self,0,0,0,0,59018,eq.ExpHelper(51)); -- Spell: Elemental Empathy, ~2% exp at lvl 52
     end

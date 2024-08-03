@@ -18,19 +18,19 @@ function event_trade(e)
 	local fac = e.other:GetFaction(e.self);
 		
 	if (fac <= 4) then
-		if(tonumber(qglobals.qeynos_badge5) == 1 and item_lib.check_turn_in(e.self, e.trade, {item1 = 8283})) then -- Official Warning
+		if(tonumber(qglobals.qeynos_badge5) == 1 and item_lib.check_turn_in(e.trade, {item1 = 8283})) then -- Official Warning
 			e.self:Say("So he wants to send me to jail simply because I'm not filling out some silly reports? How can I be expected to think in such a decrepit state? Maybe you could help me. If I had a meal worthy of someone of my breeding then maybe I could think. Bring me something elegant, I don't want anything dull and pedestrian. I don't know what I want though. Do you have any suggestions?");
 			e.other:QuestReward(e.self,0,0,0,0,0,1000); -- exp
 			eq.set_global("qeynos_badge5","2",5,"F"); -- Badge Gloebals
-		elseif(tonumber(qglobals.qeynos_badge5) == 2 and item_lib.check_turn_in(e.self, e.trade, {item1 = 8199})) then -- Dryad Pate
+		elseif(tonumber(qglobals.qeynos_badge5) == 2 and item_lib.check_turn_in(e.trade, {item1 = 8199})) then -- Dryad Pate
 			e.self:Say("Hmm. . . This is interesting. . . The tast is very refined but sort of. . . odd. . . We're almost there but I don't think you have the recipe quite right. Rather than that peassant Brandy, use this in your recipe instead. And rather than whatever other 'meat' you were using before use a Panther Liver. You do seem to have some skill as a chef, mayhaps you could work for me some day. Prepare some Panther Pate for me. Give me the Panther Pate and let me read that warning again.");
 			e.other:QuestReward(e.self,0,0,0,0,8284,1000); -- Finewine Family Brandy
 			e.other:SummonItem(8283) -- Gives back Official Warning
-		elseif(tonumber(qglobals.qeynos_badge5) == 2 and item_lib.check_turn_in(e.self, e.trade, {item1 = 8198})) then -- Potameid Pate
+		elseif(tonumber(qglobals.qeynos_badge5) == 2 and item_lib.check_turn_in(e.trade, {item1 = 8198})) then -- Potameid Pate
 			e.self:Say("Hmm. . . This is interesting. . . The tast is very refined but sort of. . . odd. . . We're almost there but I don't think you have the recipe quite right. Rather than that peassant Brandy, use this in your recipe instead. And rather than whatever other 'meat' you were using before use a Panther Liver. You do seem to have some skill as a chef, mayhaps you could work for me some day. Prepare some Panther Pate for me. Give me the Panther Pate and let me read that warning again.");
 			e.other:QuestReward(e.self,0,0,0,0,8284,1000); -- Finewine Family Brandy
 			e.other:SummonItem(8283) -- Gives back Official Warning
-		elseif(tonumber(qglobals.qeynos_badge5) == 2 and item_lib.check_turn_in(e.self, e.trade, {item1 = 8278, item2 = 8283})) then -- Panther Pate and Official Warning
+		elseif(tonumber(qglobals.qeynos_badge5) == 2 and item_lib.check_turn_in(e.trade, {item1 = 8278, item2 = 8283})) then -- Panther Pate and Official Warning
 			e.self:Say("Ah yes, this is perfect! I feel my head clearing already. Wait, is that the sun poking through the trees there or the moon? Hard to tell in this hideous jungle. . . Oh wait yes. My shift reports for teh last few weeks. Why don't you go ahead and turn these into Sergeant Caelin for me. I'm going to enjoy this fine pate.");
 			e.other:QuestReward(e.self,0,0,0,0,8279,5000); -- Stack of Shift Reports
 		end

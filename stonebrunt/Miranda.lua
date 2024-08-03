@@ -10,13 +10,13 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 19992  })) then --Chocolate Marr Cherries
+    if(item_lib.check_turn_in(e.trade, {item1 = 19992  })) then --Chocolate Marr Cherries
         e.self:Emote("claps her hands with excitement.");
         e.self:Say("Chocolate cherries!! My favorite!! Here try some of this!!");
         e.other:QuestReward(e.self,0,0,0,0,20115,100);  -- Pouch of Kejek Catnip
         e.other:Faction(172, 5, 0); -- Kejek Villiage
         e.other:Faction(247, 2, 0); -- Peace Keepers
-    elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 2088  })) then --Tiny Pouch of Bone Dice
+    elseif(item_lib.check_turn_in(e.trade, {item1 = 2088  })) then --Tiny Pouch of Bone Dice
         e.self:Say("You found my dice!!! Thank you!!");
         e.other:QuestReward(e.self,0,0,0,0,20116,500);  -- Ball of Burlap Yarn
         e.other:Faction(172, 5, 0); -- Kejek Villiage

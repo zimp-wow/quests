@@ -17,7 +17,7 @@ end
 -- trade block
 function event_trade(e)
     local item_lib = require("items");
-    if(e.other:HasClass(Class.RANGER) and item_lib.check_turn_in(e.self, e.trade, {item1 = 59041})) then -- Cracked Zraxthril Amulet
+    if(e.other:HasClass(Class.RANGER) and item_lib.check_turn_in(e.trade, {item1 = 59041})) then -- Cracked Zraxthril Amulet
         e.self:Emote("takes the amulet from you and holds it in its watery hand. The wind around you rises and the sea begins to swell. The spirit melts into a swirling pool at your feet. You gaze down into the pool and notice it begin to shrink in circumference. It continues to shrink and spin until finally there is nothing left but a small blue amulet on the ground. You reach to pick it up and hear an echo from the sea. 'Call us and we will aid you.'");
         e.other:QuestReward(e.self,0,0,0,0,59008,eq.ExpHelper(51)); -- Spell: Icewind, ~2% exp at lvl 52
         eq.depop();

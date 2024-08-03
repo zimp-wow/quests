@@ -14,12 +14,12 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if(item_lib.check_turn_in(e.self, e.trade, {item1 = 6969})) then -- Satchel of Heretic Heads
+	if(item_lib.check_turn_in(e.trade, {item1 = 6969})) then -- Satchel of Heretic Heads
 		e.self:Say("Less heretics to defile the lands and spirits. You have the gratitude of Kejek for your assistance in repelling the heretic threat.");
 		e.other:QuestReward(e.self,8,0,7,3,eq.ChooseRandom(6955,6955,6953,0,0),200); -- 20% chance for Swiftclaw - 40% for Kejekan Tribal Headband and 40% for no items
 		e.other:Faction(172, 8, 0); -- Kejek Village
 		e.other:Faction(247, 1, 0); -- Peace Keepers
-	elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 6968})) then -- Kobold Head (Head of Rognarog the Infuriated)
+	elseif(item_lib.check_turn_in(e.trade, {item1 = 6968})) then -- Kobold Head (Head of Rognarog the Infuriated)
 		e.self:Say("By slaying Rognarog you have spared the lives of those who would have crossed his path. I thank you for your assistance, the spirits have noticed your actions and are pleased.");
 		e.other:QuestReward(e.self,0,9,6,0,eq.ChooseRandom(6982,6983,6984),200); -- 33.33% Titan Blessed Tanto or Titan Blessed Tachi or Titan Blessed Bokken
 		e.other:Faction(172, 3, 0); -- Kejek Village

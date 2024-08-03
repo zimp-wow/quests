@@ -44,23 +44,23 @@ function event_trade(e)
     fac = e.other:GetFaction(e.self);
 	
 	if(fac <= 2) then			--requires warmly faction to Residents of Jaggedpine
-		if(item_lib.check_turn_in(e.self, e.trade, {item1 = 8790, item2 = 8769})) then -- Moss-Threaded Rawhide Leggings & Polished Jade Acorns
+		if(item_lib.check_turn_in(e.trade, {item1 = 8790, item2 = 8769})) then -- Moss-Threaded Rawhide Leggings & Polished Jade Acorns
 			e.self:Emote("smiles warmly at " .. e.other:GetName() .. "");
 			e.self:Say("Excellent work, friend.  I have sewn the Polished Jade Acorns into your leggings.  May they serve you as well as you have served the natural world.");
 			e.other:QuestReward(e.self,0,0,0,0,8442,1000); -- Leggings of the Pine
-		elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 8796, item2 = 8795})) then -- Shark Tooth Sleeves & Polished Jade Leaves
+		elseif(item_lib.check_turn_in(e.trade, {item1 = 8796, item2 = 8795})) then -- Shark Tooth Sleeves & Polished Jade Leaves
 			e.self:Say("Marvelously done, my friend. I am pleased to know that the natural world has embraced and recognized you so. I have bound the moss thread to the Polished Jade Leaves and your sleeves are complete. Take them and wear them with the selfless knowledge that you are equal to all of nature's most devoted warders.");
 			e.other:QuestReward(e.self,0,0,0,0,8445,1000); -- Sleeves of the Pine
-		elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 8877, item2 = 8876, item3 = 8876})) then -- Mithril Fern Boots & Polished Jade Plate
+		elseif(item_lib.check_turn_in(e.trade, {item1 = 8877, item2 = 8876, item3 = 8876})) then -- Mithril Fern Boots & Polished Jade Plate
 			e.self:Say("Aaaah. . . these will do nicely. Lerian's gifts upon the hide that you have expertly sewn into the boots have proved an extra enchantment that allowed me to appropriately fit the plates onto the toes and sides of the boots. You have earned this reward justly and without a selfish nature or compromise of your dedication to nature. May they serve you as you have served the world that has granted them to you.");
 			e.other:QuestReward(e.self,0,0,0,0,8758,1000); -- Boots of the Pine
-		elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 8865, item2 = 8864})) then -- Bracer of Braided Pine & Polished Jade Blossoms
+		elseif(item_lib.check_turn_in(e.trade, {item1 = 8865, item2 = 8864})) then -- Bracer of Braided Pine & Polished Jade Blossoms
 			e.self:Say("Marvelously done, my friend. I am pleased to know that the natural world has embraced and recognized you so. I have bound the braided pine to the Polished Jade Blossoms and your bracer is complete. Take it and wear it with the selfless knowledge that you are equal to all of nature's most devoted warders.");
 			e.other:QuestReward(e.self,0,0,0,0,8499,1000); -- Bracer of the Pine
-		elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 8871, item2 = 8870})) then -- Forest Woven Gloves & Polished Jade Studs
+		elseif(item_lib.check_turn_in(e.trade, {item1 = 8871, item2 = 8870})) then -- Forest Woven Gloves & Polished Jade Studs
 			e.self:Say("Well done, " .. e.other:GetName() .. ". The Jade Studs have been easily bound to the enchantment of the Forest Woven Gloves. Although you will not see bindings to hold the studs in-place, know that they are quite secure. Lerian's gifts are not to be underestimated, nor taken for granted. You have earned this item selflessly in displaying your protection of the natural order of this world, and in-turn, your ward has blessed you in many ways with the creation of this item. May it protect you as you have protected the land and order that forged it.");
 			e.other:QuestReward(e.self,0,0,0,0,8757,1000); -- Gloves of the Pine
-		elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 8883, item2 = 8882})) then -- Shadowjade Circlet & Polished Jade Tear
+		elseif(item_lib.check_turn_in(e.trade, {item1 = 8883, item2 = 8882})) then -- Shadowjade Circlet & Polished Jade Tear
 			e.self:Say("Marvelously done, my friend. I am pleased to know that the natural world has embraced and recognized you so. I have bound the shadowjade circlet to the Polished Jade Tear. Take it and wear it with the selfless knowledge that you are equal to all of nature's most devoted warders.");
 			e.other:QuestReward(e.self,0,0,0,0,8759,1000); -- Circlet of the Pine
 		end

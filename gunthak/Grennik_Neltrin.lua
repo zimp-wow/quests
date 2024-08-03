@@ -15,7 +15,7 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 59053})) then -- Glowing Black Potion
+    if(item_lib.check_turn_in(e.trade, {item1 = 59053})) then -- Glowing Black Potion
         e.self:Emote("holds the vial carefully between her fingers as she spins it slowly in the light. 'Yes I believe the potion is complete now. Of course we can never be certain until one of us drinks it. Since you prepared it would stand to reason for you to try it.'");
         e.self:Emote("lifts the dark potion towards you and you reach out and take it from her. You take a deep breath and bring the potion to your lips. The smell nearly makes you faint, but you regain your composure and swallow it in one giant gulp."); -- modified from original 3rd person perspective, which made no sense...
         e.other:Message(MT.Yellow,"You are suddenly filled with dark warmth as the potion slides down into your stomach. You can almost sense it invading your body, battling with your defenses. You stomach turns as the venom and blood mixes in your stomach and you fight the urge to pass out. You focus all of your energy on combating the poison inside you and your body begins to turn the venom. Eventually the poison grows silent inside you and only a slight warmth is left in its place. You have conquered the poison.'")

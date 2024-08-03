@@ -21,11 +21,11 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(e.other:HasClass(Class.BARD) and item_lib.check_turn_in(e.self, e.trade, {item1 = 59022})) then -- Faded, Watermarked Book
+    if(e.other:HasClass(Class.BARD) and item_lib.check_turn_in(e.trade, {item1 = 59022})) then -- Faded, Watermarked Book
         e.self:Emote("begins to flip through the pages of the faded song book. He studies one page, shakes his head and then flips through several more pages. Finally a smile of recognition creeps across his lips and he chuckles, 'Definitely a student of Jusean, but there's something else. Some of the chords are unfamiliar even to me. You'll have to ask Evanesque to take a look at them. Maybe he can tell you who wrote it.' ");
         e.other:SummonItem(59023) -- Faded Songbook;
 
-    elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 59024})) then -- Transcribed Songbook
+    elseif(item_lib.check_turn_in(e.trade, {item1 = 59024})) then -- Transcribed Songbook
         e.self:Emote("takes the book from you and begins to hum the tune scawled on the pages. As you listen, you notice the whitened body next to Kardin cough. He seems to have regained some of his strength. You begin to notice that as Kardin sings the tune, his friend is regaining strength. By the end of the song, he is able to prop himself up on one arm and reach toward Kardin. 'So now we know the secret of the pirate's health. The power of the song keeps the disease at bay. Thank you for saving my friend, Loanni. We are in your debt, but we are even more in debt to whoever it was that wrote this song. Whoever it was certainly has much to offer a student of music.' ");
         e.other:QuestReward(e.self,0,0,0,0,59002,eq.ExpHelper(51)); -- Song: Aria of Asceticism
     end

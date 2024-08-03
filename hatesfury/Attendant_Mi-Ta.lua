@@ -21,7 +21,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 56004, item2 = 56005, item3 = 56006, item4 = 56007})) then -- Ancient Compass, Mystical Spyglass, Map of Norrath's Oceans, Krasnok's Private Reserve
+    if(item_lib.check_turn_in(e.trade, {item1 = 56004, item2 = 56005, item3 = 56006, item4 = 56007})) then -- Ancient Compass, Mystical Spyglass, Map of Norrath's Oceans, Krasnok's Private Reserve
 
         -- Depop Doors In and Out
         eq.signal(228119,1,0); -- #door_enter

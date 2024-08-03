@@ -140,20 +140,20 @@ function event_trade(e)
 			local epic_two			= tonumber(s[3]);
 			local epic_twofive		= tonumber(s[4]);
 
-			if epic_pre_onefive == 1 and item_lib.check_turn_in(e.self, e.trade, {item1 = 62800}) then -- Items: Redwood Seed
+			if epic_pre_onefive == 1 and item_lib.check_turn_in(e.trade, {item1 = 62800}) then -- Items: Redwood Seed
 				e.other:Message(MT.NPCQuestSay, "Derick Goodroot says 'This is a wonderful specimen, unblemished and healthy. You know, if I had a seed like this I might just try one of those Unkempt [seed rituals], that is if they hadn't been lost along with the Unkempt so many years ago. It's unlikely that any record of them exists these days. Why, there was one ritual that they say could evolve a redwood seed into something new and powerful.'");
 				e.other:SummonItem(62800); -- Item: Redwood Seed
 				update_druid_epic_databucket(e,2,epic_onefive,epic_two,epic_twofive);
-			elseif epic_pre_onefive == 2 and item_lib.check_turn_in(e.self, e.trade, {item1 = 62801}) then -- Items: Unkempt Seed Rituals
+			elseif epic_pre_onefive == 2 and item_lib.check_turn_in(e.trade, {item1 = 62801}) then -- Items: Unkempt Seed Rituals
 				e.other:Message(MT.NPCQuestSay, "Derick Goodroot says 'Well you actually found it. It has a new cover, but most of the original pages seem to be here. I can't read all of this very well. Nobody reads this language anymore, but I think I understand the basics. You will need some high quality loam and some magic earth. Marshes are a good place to find loam. Magical soil might be a problem, but certainly you can find some that will work. These two items are used to create the cleansing loam. It's the third item that I don't like. I know the Unkempt were different than we are, but I find this hard to believe. The ritual seems to say that you must take the seed and insert it into the heart of a noble creature to give it strength, then rest that in the loam and earth. I don't like the idea of killing anything noble for such a ritual. I'm not sure what I think of this whole thing now. I'll leave that up to you. Here is a pot that you can use for the ritual. If you still want to do this and you find a heart that might work, bring it to me and I'll see if I can help.'");
 				e.other:SummonItem(62802); -- Item: Aerated Pot
 				update_druid_epic_databucket(e,3,epic_onefive,epic_two,epic_twofive);
-			elseif epic_pre_onefive == 4 and item_lib.check_turn_in(e.self, e.trade, {item1 = 62805}) then -- Items: Corrupted Storm Giant Heart
+			elseif epic_pre_onefive == 4 and item_lib.check_turn_in(e.trade, {item1 = 62805}) then -- Items: Corrupted Storm Giant Heart
 				e.other:Message(MT.NPCQuestSay, "Derick Goodroot sighs. 'I suppose you had no option if he was corrupt. I might even be able to help you purify it for use. I'm not sure how well it will work with the seed ritual. I'm certain that the original intent was to rip the heart from an honorable foe. Here, take this bowl. You'll need to go back to the Plane of Storms and find some pure rain water to cleanse the hart. Pouring the water over the heart while in the bowl, should purify it, though it might also destroy the bowl. Never mind that, though. If it works you should be able to use the heart for the ritual. Please bring me the seed when you are done. I'd like to see it.'");
 				e.other:SummonItem(62805); -- Item: Corrupted Storm Giant Heart
 				e.other:SummonItem(62807); -- Item: Cleansing Bowl
 				update_druid_epic_databucket(e,5,epic_onefive,epic_two,epic_twofive);
-			elseif epic_pre_onefive == 5 and item_lib.check_turn_in(e.self, e.trade, {item1 = 62809}) then -- Items: Seed of Wrath
+			elseif epic_pre_onefive == 5 and item_lib.check_turn_in(e.trade, {item1 = 62809}) then -- Items: Seed of Wrath
 				e.other:Message(MT.NPCQuestSay, "Derick Goodroot says, 'Wonderful! This is an amazing seed. It has a resonance of the power of life that seems familiar. It reminds me very much of the feeling I get when one of the Storm Wardens come through here with their Nature Walkers Scimitars. It's a thrill to be able to examine it, thank you.'");
 				e.other:SummonItem(62809); -- Items: Seed of Wrath
 				update_druid_epic_databucket(e,6,epic_onefive,epic_two,epic_twofive);

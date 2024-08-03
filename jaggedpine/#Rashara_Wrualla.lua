@@ -58,10 +58,10 @@ function event_trade(e)
 		local epic_two			= tonumber(s[3]);
 		local epic_twofive		= tonumber(s[4]);
 
-		if epic_onefive == 8 and item_lib.check_turn_in(e.self, e.trade, {item1 = 57008}) then -- Item: Letter from Muada
+		if epic_onefive == 8 and item_lib.check_turn_in(e.trade, {item1 = 57008}) then -- Item: Letter from Muada
 			e.other:Message(MT.NPCQuestSay, "Rashara Wrualla says 'Terrible. Just terrible. I had a feeling something was wrong. You may return this to him--I have signed it. Interesting place here, isn't it? Those potameids do cause some trouble. I find them very hard to study as they are quite feisty. I specialize in the advancement and power of warders and the spirits of the wild I command are very dear and special. Many of them are of an ilk you have never seen and they are much sought after. All that will have to [wait]. I must go.'");
 			update_databucket(e,epic_pre_onefive,9,epic_two,epic_twofive);
-		elseif epic_onefive == 33 and item_lib.check_turn_in(e.self, e.trade, {item1 = 52907,item2 = 52908}) then -- Item: Rashara's Warder's Essence and Sealed Response to the Elders
+		elseif epic_onefive == 33 and item_lib.check_turn_in(e.trade, {item1 = 52907,item2 = 52908}) then -- Item: Rashara's Warder's Essence and Sealed Response to the Elders
 			e.other:Message(MT.NPCQuestSay, "Rashara Wrualla says 'I am speechless. You have done what I thought was impossible. You've restored my place as a beastlord and an elder. I am forever in your debt. Return to Muada and tell him I sent you so you may hear the most-troubling news . . . it seems we know more about a true enemy of beastlords in Discord. I can say no more.'");
 			update_databucket(e,epic_pre_onefive,34,epic_two,epic_twofive);
 		end

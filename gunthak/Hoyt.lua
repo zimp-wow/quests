@@ -11,13 +11,13 @@ end
 function event_trade(e)
     local item_lib = require("items");
     
-	if(item_lib.check_turn_in(e.self, e.trade, {item1 = 59500})) then -- Small White Drum
+	if(item_lib.check_turn_in(e.trade, {item1 = 59500})) then -- Small White Drum
 		e.other:SummonItem(21820); -- Bag of Platinum Pieces
-	elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 59501})) then -- White Drum
+	elseif(item_lib.check_turn_in(e.trade, {item1 = 59501})) then -- White Drum
 		e.other:SummonItem(21821); -- Heavy Bag of Platinum
-	elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 59502})) then -- Large White Drum
+	elseif(item_lib.check_turn_in(e.trade, {item1 = 59502})) then -- Large White Drum
 		e.other:SummonItem(21822); -- Big Bag of Platinum
-	elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 59503})) then -- Giant White Drum
+	elseif(item_lib.check_turn_in(e.trade, {item1 = 59503})) then -- Giant White Drum
 		e.other:SummonItem(21823); -- Huge Bag of Platinum
     end
     

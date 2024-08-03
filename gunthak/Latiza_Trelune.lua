@@ -13,7 +13,7 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 54005})) then -- Blue Lotus Petal
+    if(item_lib.check_turn_in(e.trade, {item1 = 54005})) then -- Blue Lotus Petal
         e.self:Emote("looks delighted and tucks the petal into a lock of her hair. 'How lovely! Here then, a scale you shall have. Do not be surprised if nothing comes of it, but I do thank you for the gift. Best of luck to you, dear mortal.'");
         e.other:SummonItem(54004); -- Shiny Mermaid Scale
     end

@@ -34,7 +34,7 @@ function event_trade(e)
     local fac = e.other:GetFaction(e.self);
 	
 	if(fac <= 2) then			--requires warmly faction to Residents of Jaggedpine	
-		if(item_lib.check_turn_in(e.self, e.trade, {item1 = 8761, item2 = 8760})) then -- Silver Griffon Feathers & Jade Studded Rawhide Tunic
+		if(item_lib.check_turn_in(e.trade, {item1 = 8761, item2 = 8760})) then -- Silver Griffon Feathers & Jade Studded Rawhide Tunic
 			e.self:Say("You have done well, " .. e.other:GetName() .. ". I am impressed and most pleased to know that you are adapting and accepting our ways so easily. Take this and may it protect you in these troubling times.");
 			e.other:QuestReward(e.self,0,0,0,0,8400,5000); -- Tunic of the Pine
 		end

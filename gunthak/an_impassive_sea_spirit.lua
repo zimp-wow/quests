@@ -20,16 +20,16 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 58010})) then -- Empty Flask
+    if(item_lib.check_turn_in(e.trade, {item1 = 58010})) then -- Empty Flask
         e.self:Say("Well done, strange one. Your perception is admirable.' The spirit hands you an incredibly heavy rock. 'Can you, " .. e.other:GetName() .. ", be as [" .. eq.say_link("I can be impassive as the sea", false, "impassive as the sea") .. "]?");
         e.other:SummonItem(58013); -- Large Rock
 
-    elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 58013})) then -- Large Rock
+    elseif(item_lib.check_turn_in(e.trade, {item1 = 58013})) then -- Large Rock
         e.self:Emote("melds with the murky ocean water, and two elements of the sea appear.");
         eq.spawn2(224345,0,0,-284.48,650,-148.25, 480); -- Flotsam
         eq.spawn2(224346,0,0,-267.10,665.95,-148.25, 440); -- Jetsam
     
-    elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 58014, item2 = 58015})) then -- Small Piece of Flotsam and Small Piece of Jetsam
+    elseif(item_lib.check_turn_in(e.trade, {item1 = 58014, item2 = 58015})) then -- Small Piece of Flotsam and Small Piece of Jetsam
         e.self:Say("Now you comprehend. This is the way things are, and the way they have always been. Your acceptance of these truths proves your worthiness.");
         e.other:QuestReward(e.self,0,0,0,0,59013,eq.ExpHelper(44, 5)); -- Spell: Stoicism
     end

@@ -89,7 +89,7 @@ function event_trade(e)
 			local epic_two			= tonumber(s[3]);
 			local epic_twofive		= tonumber(s[4]);
 
-			if epic_pre_onefive == 1 and item_lib.check_turn_in(e.self, e.trade, {item1 = 55902, item2 = 21870, item3 = 21782}) then -- Items: Ancient Flamberge of Hatred, Essence of Hate, and Stormborn Phylactery
+			if epic_pre_onefive == 1 and item_lib.check_turn_in(e.trade, {item1 = 55902, item2 = 21870, item3 = 21782}) then -- Items: Ancient Flamberge of Hatred, Essence of Hate, and Stormborn Phylactery
 				e.other:Message(MT.NPCQuestSay, "Ritald says 'You have done well. The flamberge you have brought to me will act as a vessel for the summoning of the sword. The essence of hate will help generate hatred needed to fuel the summoning, and the phylactery should hopefully help contain that hate to be used in the summoning.' Ritald holds the flamberge above his head with both hands and begins to chant. Dark storm clouds gather overhead as a flash of lightning momentarily blinds you. When you regain your sight, Ritald holds the summoned sword of Innoruuk's Voice. 'I [have done it]!'");
 				e.other:SummonItem(22944); -- Item: Innoruuk's Voice [non-functional]
 				update_shadowknight_epic_databucket(e,2,epic_onefive,epic_two,epic_twofive);

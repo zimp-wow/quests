@@ -23,7 +23,7 @@ end
 function event_trade(e)
     local qglobals = eq.get_qglobals(e.self,e.other);
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 59035, item2 = 59035})) then -- Luggald Organs x2
+    if(item_lib.check_turn_in(e.trade, {item1 = 59035, item2 = 59035})) then -- Luggald Organs x2
         if(e.other:HasClass(Class.SHADOWKNIGHT) or e.other:HasClass(Class.NECROMANCER)) then -- Shadow Knight or Necro
             eq.set_global("luggald","1",0,"F"); -- Set Global for 2nd step
             e.self:Emote("takes the organs from you and lays them down on the ground before him. He begins to slice and separate the organs from one another with a wicked looking dagger. Dark blue blood stains his robe as he probes the strange flesh. Finally after several minutes he smiles and pulls a parchment from a bag at his side and begins to draw several runes using the dark blue blood.");
@@ -39,7 +39,7 @@ function event_trade(e)
             e.other:SummonItem(59035); -- Luggald Organs
             e.other:SummonItem(59035); -- Luggald Organs
         end
-    elseif(qglobals["luggald"] == "1" and item_lib.check_turn_in(e.self, e.trade, {item1 = 59050, item2 = 59036, item3 = 59051})) then -- Luggald bile, Luggald Blood, Luggald saliva
+    elseif(qglobals["luggald"] == "1" and item_lib.check_turn_in(e.trade, {item1 = 59050, item2 = 59036, item3 = 59051})) then -- Luggald bile, Luggald Blood, Luggald saliva
         e.self:Emote("takes the vials and holds them out in front of him. He begins to recite an incantation and the vials rise and float in the air in front of him. He continues to chant as each of the vials begins to glow and then grow dim in turn. Cedric picks up a large potion bottle and places a rolled piece of parchment inside. He then holds it before him causing it to float in the air as well. Each of the first three vials floats over the potion bottle and a distinct amount of each liquid is poured in, causing it to bubble and shake. Cedric reaches out before him and takes the bottle from the air and hands it to you.");
         e.self:Say("Fear is a weapon to be used against your enemies, ".. e.other:GetName() .. ", but we can not afford to let it cloud our judgment as well. Drink the potion and new power will energize your being.");
         e.other:QuestReward(e.self,0,0,0,0,59037,10000); -- Glowing dark blue potion

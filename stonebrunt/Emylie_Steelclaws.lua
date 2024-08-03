@@ -10,7 +10,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 10469,item2 = 10456})) then -- Large Brick of High Quality Ore, Oak Shaft
+    if(item_lib.check_turn_in(e.trade, {item1 = 10469,item2 = 10456})) then -- Large Brick of High Quality Ore, Oak Shaft
         e.self:Emote("takes the supplies and begins to work on the hammer. She works swiftly and efficiently then cools the finished hammer and hands it to you.");
         e.other:QuestReward(e.self,0,0,0,0,6981,100);  -- Kejekan Smithy Hammer
         e.other:Faction(172, 2, 0); -- Kejek Villiage

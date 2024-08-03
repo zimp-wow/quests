@@ -5,7 +5,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 2297})) then -- Idol of Fear
+    if(item_lib.check_turn_in(e.trade, {item1 = 2297})) then -- Idol of Fear
         e.self:Emote("takes the idol into his spectral hand and shoves the lance into your arms. After letting go of the lance, the ghost immediately begins to fade away. Before it is gone completely, it looks into your eyes and says, 'Suffer.'");
         e.other:QuestReward(e.self,0,0,0,0,2099,100);  -- Soulfiend Lance
         eq.stop_timer("depop");

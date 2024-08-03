@@ -29,7 +29,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 9270, item2 = 9271, item3 = 9272, item4 = 9273})) then -- Head of Elishia Blackguard, Head of Reynold Blackguard, Head of Zed Sticklebush & Head of Vaurien Sticklebush
+    if(item_lib.check_turn_in(e.trade, {item1 = 9270, item2 = 9271, item3 = 9272, item4 = 9273})) then -- Head of Elishia Blackguard, Head of Reynold Blackguard, Head of Zed Sticklebush & Head of Vaurien Sticklebush
         e.self:Say("Great Karana's blessing!! I see justice by your hand is both swift and eternal. I would never have had the skill nor the heart to carry out these miscreant's punishment the way you have. I'm glad to call you a friend and not an enemy. Well, I did promise just compensation for your efforts and I'm true to my word. Please take this ring as a token of my gratitude.");
         e.other:Faction(271,50); -- Residents of Jaggedpine
         e.other:Faction(159,25); -- Jaggedpine Treefolk

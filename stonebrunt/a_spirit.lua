@@ -12,7 +12,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 2100})) then -- Grimy Lance
+    if(item_lib.check_turn_in(e.trade, {item1 = 2100})) then -- Grimy Lance
         e.self:Say("Yes! The lance.");
         e.self:Emote("and begins to glow as it draws power from the lance, which now floats in mid air next to the spirit. The form of the spirit expands and takes on a humanoid shape. The air itself then seems to condense about the spirit as bits of matter appear within the glowing form. The bits soon take the shape of bones and ropes of muscle. Within minutes, an emaciated Erudite male stands before you. Despite his frail appearance, he stands upright and strong, a fierce red light burning in his eyes.");
         e.other:QuestReward(e.self,0,0,0,0,2297,100);  -- Idol of Fear

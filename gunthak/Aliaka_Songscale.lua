@@ -17,7 +17,7 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 58007})) then -- Luggald Heart
+    if(item_lib.check_turn_in(e.trade, {item1 = 58007})) then -- Luggald Heart
         e.self:Emote("clenches her jaw as she wrenches a glimmering obsidian shard from between her scales. 'As promised, here is what you desired. What I wouldn't give to have them taste their own bitter magic.'");
         e.other:SummonItem(58008); -- Fragment of Dark Ice
     end

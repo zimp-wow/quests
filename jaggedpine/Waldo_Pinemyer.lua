@@ -7,7 +7,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 8271})) then -- Lunch Bag
+    if(item_lib.check_turn_in(e.trade, {item1 = 8271})) then -- Lunch Bag
         e.self:Say("Huh... Who are you? Oh, you have my lunch. Thank you. Mmmm... This is great. Nerdala sure is an amazing cook.");
         e.other:QuestReward(e.self,0,0,0,0,8272,100); -- Empty Lunch Bag
     end

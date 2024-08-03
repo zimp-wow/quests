@@ -23,17 +23,17 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(e.other:HasClass(Class.PALADIN) and item_lib.check_turn_in(e.self, e.trade, {item1 = 59026})) then -- Black Medallion
+    if(e.other:HasClass(Class.PALADIN) and item_lib.check_turn_in(e.trade, {item1 = 59026})) then -- Black Medallion
         e.self:Say("Taken form one of the pirates you said? Interesting. This medallion does seem to resemble what Chester described in his last letter to Erudin. I can sense the spirit of one of our order nearby. It is in terrible torment, I suspect Chester's spirit has been bound here by the dark curse of Innoruuk. You must find him and set him free. If you find him, show him this necklace to remind him of this unfinished errand. Perhaps he can help you complete what he could not do alone.");
         eq.set_global("Millius_Paladin", "1", 1, "F");
         e.other:SummonItem(59027); -- Black Skull Necklace
 
-    elseif(e.other:HasClass(Class.CLERIC) and item_lib.check_turn_in(e.self, e.trade, {item1 = 59029})) then -- Deepwater Emblem
+    elseif(e.other:HasClass(Class.CLERIC) and item_lib.check_turn_in(e.trade, {item1 = 59029})) then -- Deepwater Emblem
         e.self:Emote("bows his head quietly as his eyes bring recognition to his mind. 'Alina at least has met a bitter end. Her spirit surely lingers nearby. Find her and free her from her burden, " .. e.other:GetName() .. ". Her quest goes unfinished.'");
         e.other:SummonItem(59030); -- Alina's emblem
         eq.set_global("Millius_Cleric", "1", 1, "F");
 
-    elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 59028})) then -- Glowing Black Skull Necklace
+    elseif(item_lib.check_turn_in(e.trade, {item1 = 59028})) then -- Glowing Black Skull Necklace
         e.self:Emote("takes the necklace from you and inspects it carefully. 'Thank you for rescuing this man, " .. e.other:GetName() .. ". Unfortunately, he was not Chester,but one of his companions. I fear that Chester may be lost even deeper in this accursed place.' He traces a few runes on the amulet and hands it back to you. 'Continue your search, Chester's spirit is still out there.'");
         e.other:SummonItem(59028); -- Glowing Black Skull Necklace - it really seems like this should be a different item...
     end

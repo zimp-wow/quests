@@ -14,7 +14,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 6970, item2 = 6971, item3 = 6972})) then -- Valley Spiritling Stone, Jungle Spiritling Stone, Mountain Spiritling Stone
+    if(item_lib.check_turn_in(e.trade, {item1 = 6970, item2 = 6971, item3 = 6972})) then -- Valley Spiritling Stone, Jungle Spiritling Stone, Mountain Spiritling Stone
         e.self:Emote("grinds the spiritling stones in a mortar and pestle with foreign runes scratched into the ceramic. 'This powder will assist in matters concerning the contacting or freeing of spirits.'");
         e.other:QuestReward(e.self,0,0,0,0,0,100);
         for i=1,math.random(1,4) do
@@ -22,7 +22,7 @@ function event_trade(e)
         end
         e.other:Faction(172, 1, 0); -- Kejek Villiage
         e.other:Faction(247, 1, 0); -- Peace Keepers
-    elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 6980, item2 = 6977})) then -- Kejek Spirit Powder, Soul Orb
+    elseif(item_lib.check_turn_in(e.trade, {item1 = 6980, item2 = 6977})) then -- Kejek Spirit Powder, Soul Orb
         e.self:Say("I require a Soul Orb and Kejek Spirit Dust in order to perform the ritual that will free the imprisoned souls.");
         e.self:Emote("scrawls an arcane symbol on the ground with an odd powder and places the orb in its center. He then begins reciting an incantation and waving his arms over the symbol and orb. Moments later the orb shatters and an apparition appears.");
         e.other:QuestReward(e.self,0,0,0,0,2576,100); -- Shattered Soul Orb

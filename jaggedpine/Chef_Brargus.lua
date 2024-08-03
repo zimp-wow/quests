@@ -74,13 +74,13 @@ function event_trade(e)
 		end
 	end
 
-	if (epic_two == 11 or epic_two == 12) and not eq.get_entity_list():IsMobSpawnedByNpcTypeID(181010) and item_lib.check_turn_in(e.self, e.trade, {item1 = 54240}) then -- Item: Mountain Pooka Meat
+	if (epic_two == 11 or epic_two == 12) and not eq.get_entity_list():IsMobSpawnedByNpcTypeID(181010) and item_lib.check_turn_in(e.trade, {item1 = 54240}) then -- Item: Mountain Pooka Meat
 		e.other:Message(MT.NPCQuestSay, "Chef Brargus says 'That should do nicely. Now, about Firwyn. You should be able to find her in the forest nearby but I would be careful if I were you. She can be a bit feisty, and you don't exactly look like a warrior if you know what I mean.'");
 		eq.spawn2(181010, 0, 0,-386,-37,-27.3,100); -- NPC: #Firwyn
 		update_enchanter_epic_databucket(e,epic_pre_onefive,epic_onefive,12,epic_twofive);
 	end
 
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 8194})) then -- Patty Melt
+    if(item_lib.check_turn_in(e.trade, {item1 = 8194})) then -- Patty Melt
         e.self:Emote("wolfs down the Patty Melt in one bite.");
         e.self:Say("Yeah, this isn't too bad I guess. Not nearly as good as I could have done though.");
         e.self:Emote("scribbles on a piece of paper and hands it to " .. e.other:GetName() .. ".");

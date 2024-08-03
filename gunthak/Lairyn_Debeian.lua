@@ -90,12 +90,12 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if e.other:HasClass(Class.WIZARD) and item_lib.check_turn_in(e.self, e.trade, {item1 = 58009}) then -- Item: Pouch of Dark Ice
+	if e.other:HasClass(Class.WIZARD) and item_lib.check_turn_in(e.trade, {item1 = 58009}) then -- Item: Pouch of Dark Ice
 		e.self:Say("You did it. I can scarely believe my eyes! This is wonderful. Let me have a closer look. Lairyn unbuckles the leather satchel and pours out the contents then begins arranging the shards in a pattern on the ground. He slides them around like pieces of a complex puzzle, swapping them backwards and forwards faster than your eyes can track. Ah yes, very clever. I am beginning to understand. This is not such a challenge after all, once you know the trick. Enough talk, I would like you to be the first to try it! Lairyn withdraws his journal again and flips through it until he locates a blank page. He scribbles furiously with a quill for several moments, then tears the page from the binding and hands it to you.");
 		e.other:QuestReward(e.self,0,0,0,0,59021,eq.ExpHelper(51)); -- Spell: Frozen Harpoon
-	elseif item_lib.check_turn_in(e.self, e.trade, {item1 = 52354}) then -- Cloudy Silver Potion
+	elseif item_lib.check_turn_in(e.trade, {item1 = 52354}) then -- Cloudy Silver Potion
 		e.self:SetHP(e.self:GetHP() + 3000);
-	elseif e.other:HasClass(Class.ROGUE) and e.other:HasItem(52347) and item_lib.check_turn_in(e.self, e.trade, {item1 = 52344}) then -- Item: Krill's Head
+	elseif e.other:HasClass(Class.ROGUE) and e.other:HasItem(52347) and item_lib.check_turn_in(e.trade, {item1 = 52344}) then -- Item: Krill's Head
 		e.self:Emote("adjusts his spectacles and peers at the head, 'True enough. This is a Wayfarer . . . Errr, was at one time. I imagine he renounced his membership in the Brotherhood sometime before he took up a career of tormenting a poor scholar. They must have been trying to get to Nedaria by coming after me. I am famliar with Krill and he is a follower, not a leader. Someone else is the mastermind behind this - a person with access to magical disguises to hide their identity. [Lirprin] must know of this at once, ".. e.other:GetName() .. ".");
 		eq.set_data("Epic-Rogue-Lairyn-"..e.other:CharacterID(), "1");
 		eq.depop_with_timer();

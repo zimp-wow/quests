@@ -48,7 +48,7 @@ function event_trade(e)
 		e.other:Faction(219,1); 		-- Antonious Bayle
 		e.other:QuestReward(e.self,0,0,0,0,18937,200);
 	-- need MQ implementation.
-	-- elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 18937,item2 = 13947,item3 = 18828,item4 = 12197},1,text)) then -- A Note, Brilliant Sword of Faith, Testimony, Glowing Sword Hilt
+	-- elseif(item_lib.check_turn_in(e.trade, {item1 = 18937,item2 = 13947,item3 = 18828,item4 = 12197},1,text)) then -- A Note, Brilliant Sword of Faith, Testimony, Glowing Sword Hilt
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 18937,item2 = 13947,item3 = 18828,item4 = 12197})) then
 		if(e.other:GetModCharacterFactionLevel(e.self:GetPrimaryFaction()) >= 750) then -- items will get eaten if faction not high enough.
 			e.self:Say("You have proven yourself worthy to hold Soulfire. Do not let her slip into the hands of evil. There are many who wish to free the many trapped souls of shadowknights and necromancers trapped inside the blade. The power of the blade can be called upon to heal you if need be. May Rodcet Nife and the twins of Marr hold you in their glory.");

@@ -21,13 +21,13 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 59055, item2 = 59056})) then -- Torn Luggald Robe, Sharp Glass Shard
+    if(item_lib.check_turn_in(e.trade, {item1 = 59055, item2 = 59056})) then -- Torn Luggald Robe, Sharp Glass Shard
         e.self:Emote("stops her practice cold as you show her the torn robe. She seems to be fairly impressed, but her words convey a different message. 'Where did you get this? You're trying to tell me you took it from a Luggald yourself? What, did you find one on a rotting corpse somewhere? Bah, whatever the method it is still somewhat useful. Not exactly a prime specimen, but it will do.' She takes the glass shard and begins to cut long sections of fabric from the robe. She takes several strands and begins to weave them into a sort of braid. She hands it to you when she's made a sizeable length of cord.");
         e.self:Say("Here, place this around your neck and it should offer you some small bit of protection. As long as you're interested in scavenging, you might try to find a few [" .. eq.say_link("What other things?", false, "other things") .. "] for me as well.");
         eq.set_global("relics_of_the_luggalds","1",0,"F");
         e.other:QuestReward(e.self,0,0,0,0,59057,175000); -- Dark Cord of Broken Skull
 
-    elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 59057, item2 = 59058, item3 = 59059}) and eq.get_qglobals(e.self,e.other)["relics_of_the_luggalds"] == "1") then -- Jar of Broken Skill Clain Ink, Dark Ore Amulet, Dark Cord of Broken Skull
+    elseif(item_lib.check_turn_in(e.trade, {item1 = 59057, item2 = 59058, item3 = 59059}) and eq.get_qglobals(e.self,e.other)["relics_of_the_luggalds"] == "1") then -- Jar of Broken Skill Clain Ink, Dark Ore Amulet, Dark Cord of Broken Skull
         e.self:Emote("takes the stone from you and dips her finger in the jar of ink. She then begins to mark runes all across the surface of the stone. She then takes the stone and hangs it from your dark cord and hands it back to you. 'I find it hard to believe you managed to do this " .. e.other:GetCleanName() .. ", but I have kept my promise. I have either vastly overestimated the Luggalds or I have considerably understestimated you.");
         eq.delete_global("relics_of_the_luggalds");
         e.other:QuestReward(e.self,0,0,0,0,59060,500000); -- Amulet of Dark Waters

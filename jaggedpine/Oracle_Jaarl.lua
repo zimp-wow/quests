@@ -59,10 +59,10 @@ function event_trade(e)
     local item_lib = require("items");
 	local fac = e.other:GetFaction(e.self);
 	
-    if((fac <= 4) and (item_lib.check_turn_in(e.self, e.trade, {item1 = 8265, item2 = 8266, item3 = 8267, item4 = 8268}))) then -- Diseased Bear Liver, Griffon Down, Griffon Skull & Treant Finger
+    if((fac <= 4) and (item_lib.check_turn_in(e.trade, {item1 = 8265, item2 = 8266, item3 = 8267, item4 = 8268}))) then -- Diseased Bear Liver, Griffon Down, Griffon Skull & Treant Finger
         e.self:Say("Grr, Bark. Here is your item");
         e.other:QuestReward(e.self,0,0,0,0,8071,1000); -- Rod of Ulceration
-    elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 8258,item2 = 8261,item3 = 8257})) then -- Wolf Fang Necklace, Bear Fang Necklace, Panther Fang Necklace
+    elseif(item_lib.check_turn_in(e.trade, {item1 = 8258,item2 = 8261,item3 = 8257})) then -- Wolf Fang Necklace, Bear Fang Necklace, Panther Fang Necklace
         e.self:Emote("puts the necklaces around his neck as his body shakes, causing the various bits and pieces of bone and tooth to clatter loudly. 'Ah yes! I feel the power flowing through me, I am ever closer to the spirit world! I thank you for your devotion to the temple!'");
         e.other:Faction(6,100); -- Anchorites of Brell Serilis
         e.other:QuestReward(e.self,0,0,0,0,0,0);

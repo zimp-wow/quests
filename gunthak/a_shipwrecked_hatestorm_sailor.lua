@@ -19,7 +19,7 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 55007})) then -- Note of safe passage
+    if(item_lib.check_turn_in(e.trade, {item1 = 55007})) then -- Note of safe passage
         e.self:Say("Dis be gud. Better not trick me, becuz I get angry and it not good when me get angry. Me saw a lot of da loots come up to da beach. Da troll zombee mens come to da loots and take all. I not fights dem. Date be truble dere.");
         e.other:QuestReward(e.self, math.random(0,10), math.random(0,10), math.random(0,10), math.random(5), 0, eq.ExpHelper(20)); -- little bit of money and exp
     end

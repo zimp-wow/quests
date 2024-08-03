@@ -58,7 +58,7 @@ function event_trade(e)
 	local fac = e.other:GetFaction(e.self);
 	
 	if(fac == 1) then	--requires Ally faction to Residents of Jaggedpine	
-		if(item_lib.check_turn_in(e.self, e.trade, {item1 = 9232, item2 = 9231})) then -- Ancient Ashwood Tome & Gleaming Crystal Scepter
+		if(item_lib.check_turn_in(e.trade, {item1 = 9232, item2 = 9231})) then -- Ancient Ashwood Tome & Gleaming Crystal Scepter
 			e.self:Say("Aaah. . . yes. Well done. Well done, indeed, my friend. The tome still contains the Toliara's ancient notes and we shall be able to restore the lost magic to the scepter.'' Shayna holds the scepter firmly in one hand and the opened tome in the other. In a powerful voice, she recites several arcane words. As she speaks in the magical rhythm of the spell, the scepter in her hand begins to faintly glow and seems almost to haze as if enshrouded in a blanket of dense fog for but a moment. Shayna reaches the last word of her spell and extends the misted scepter to you, ''This is the Scepter of Storms. It is not yet complete and requires its original pieces to be whole once again. If you wish to continue to [" .. eq.say_link("aid the Order of the Storm Caller") .. "], I shall be more than willing to complete the scepter for you -- as your worth to us shall be proven in the task.");
 			e.other:Faction(271,10); -- Residents of Jaggedpine
 			e.other:Faction(159,5); -- Jaggedpine Treefolk

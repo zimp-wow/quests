@@ -16,7 +16,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 6976 })) then --vial of healing liquid
+    if(item_lib.check_turn_in(e.trade, {item1 = 6976 })) then --vial of healing liquid
         e.self:Say("Jali opens the vial and gently tilts back Yuio's head. He pours the liquid into her mouth and waits. Miraculously, Yuios fur begins to take on a healthy sheen and the sores begin to disappear! Yuio falls into Jali's arms then goes slack, passing out.");
         e.self:Emote("Anger wracks Jali's face as he speaks.");
         e.self:Say("She needs much rest. I cannot begin to thank you enough for helping us. Please accept this as a reward. It is not much but it should be of some use. You are indeed a friend of ours and if you ever need shelter from the wilds, please visit us again.");

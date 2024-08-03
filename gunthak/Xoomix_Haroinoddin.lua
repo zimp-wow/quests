@@ -20,15 +20,15 @@ function event_trade(e)
     local item_lib = require("items");
     local qglobals = eq.get_qglobals(e.self, e.other);
 
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 21979})) then -- Clockwork Eye
+    if(item_lib.check_turn_in(e.trade, {item1 = 21979})) then -- Clockwork Eye
         e.self:Say("How did you get this? Is it possible you come from my friend Golsodix? I am very sorry for yelling at you. You have no idea how being here has broken my spirit. I almost lost all hope and given up many times, but I knew my friend was out there and would send someone for me. If you can help me escape, I will certainly need my [" .. eq.say_link("What tools?", false, "tools") .. "].");
         eq.set_global("Helping_Xoomix", "1", 0, "F"); -- set qglobal to indicate that player has started to help Xoomix
 
-	elseif(qglobals["Helping_Xoomix"] == "1" and item_lib.check_turn_in(e.self, e.trade, {item1 = 21980, item2 = 21981, item3 = 21982, item4 = 21983})) then -- Xoomix's Quarterstaff, Metallic Oil, Silvered Micro Servos, Xoomix's Toolbox
+	elseif(qglobals["Helping_Xoomix"] == "1" and item_lib.check_turn_in(e.trade, {item1 = 21980, item2 = 21981, item3 = 21982, item4 = 21983})) then -- Xoomix's Quarterstaff, Metallic Oil, Silvered Micro Servos, Xoomix's Toolbox
         e.self:Say("I don't believe it. I never thought I would ever see these tools again. It is quite clear that you intend to help me and for that I am grateful. Here is a quick little something that put together for Golsodix. Bring him this and ask him for my gearbox. Once I have that, I think I can finally get home! Please come back soon!");
         e.other:SummonItem(21984); -- Tinkered Contraption
 
-    elseif(qglobals["Helping_Xoomix"] == "1" and item_lib.check_turn_in(e.self, e.trade, {item1 = 21985})) then -- Xoomix's Gearbox
+    elseif(qglobals["Helping_Xoomix"] == "1" and item_lib.check_turn_in(e.trade, {item1 = 21985})) then -- Xoomix's Gearbox
         e.self:Say("his is it indeed! It has everything I need in here to return home. Please take this charm that I have carried with me for many years. It has brought me good luck throughout my ordeal here and now that I am returning home, I do not think I will need it anymore. Safe travels to you " .. e.other:GetName() .. ", I must now ready my boat and finish my compass. May Lord Brell bless you forever!");
         e.other:QuestReward(e.self,0,0,0,0,61003,eq.ExpHelper(51, 5)); -- Xoomix's Mystical Charm, ~5% lvl 51 exp
         eq.delete_global("Helping_Xoomix"); -- clean up qglobal at quest completion

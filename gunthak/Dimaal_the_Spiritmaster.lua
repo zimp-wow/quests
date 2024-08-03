@@ -68,19 +68,19 @@ function event_trade(e)
     local item_lib = require("items");
 
     if (event_started == 0) then
-        if (item_lib.check_turn_in(e.self, e.trade, {item1 = 56001,item2 = 56001,item3 = 56001,item4 = 56001})) then -- Cracked Finger Bone x4 (Easy)
+        if (item_lib.check_turn_in(e.trade, {item1 = 56001,item2 = 56001,item3 = 56001,item4 = 56001})) then -- Cracked Finger Bone x4 (Easy)
             e.self:Say("'The spirits shall come. Ready yourselves.'");
             event_started = 1;
             wave = 1;
             difficulty = 1;
             eq.set_timer('Event', 6 * 1000); -- 6s
-        elseif (item_lib.check_turn_in(e.self, e.trade, {item1 = 56002,item2 = 56002,item3 = 56002,item4 = 56002})) then -- Broken Finger Bone x4 (Medium)
+        elseif (item_lib.check_turn_in(e.trade, {item1 = 56002,item2 = 56002,item3 = 56002,item4 = 56002})) then -- Broken Finger Bone x4 (Medium)
             e.self:Say("'The spirits shall come. Ready yourselves.'");
             event_started = 1;
             wave = 1;
             difficulty = 2;
             eq.set_timer('Event', 6 * 1000); -- 6s
-        elseif (item_lib.check_turn_in(e.self, e.trade, {item1 = 56003,item2 = 56003,item3 = 56003,item4 = 56003})) then -- Pristine Finger Bone x4 (Hard)
+        elseif (item_lib.check_turn_in(e.trade, {item1 = 56003,item2 = 56003,item3 = 56003,item4 = 56003})) then -- Pristine Finger Bone x4 (Hard)
             e.self:Say("'The spirits shall come. Ready yourselves.'");
             event_started = 1;
             wave = 1;

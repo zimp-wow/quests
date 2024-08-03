@@ -53,14 +53,14 @@ function event_trade(e)
     local fac = e.other:GetFaction(e.self);
 	
 	if(fac == 1) then	--requires Ally faction to Residents of Jaggedpine	
-		if(item_lib.check_turn_in(e.self, e.trade, {item1 = 8918, item2 = 8917})) then -- Nyreins Tome & Earthen Crown of the Underfoot
+		if(item_lib.check_turn_in(e.trade, {item1 = 8918, item2 = 8917})) then -- Nyreins Tome & Earthen Crown of the Underfoot
 			e.self:Say("You have done well thus far and I commend your actions and success. Now, the trials shall continue and this shall be the walk that tests your faith -- judging its suitability to bear the symbol. Take this, Nyrein's Prayer, to one known as Lord Mrallon in the city of Qeynos. He is aware of the rites of the Tempest Guard and will know full well of the path that has been set before you. With the prayer, he will expect the [" .. eq.say_link("Tempest Rune") .. "] that you must obtain before seeking him. Once you have the rune, you shall return it and the prayer to Lord Mrallon and should you prove successful in this task and thus worthy of the final trial, he shall guide you further.");
 			e.other:Faction(271,50); -- Residents of Jaggedpine
 			e.other:Faction(159,50); -- Jaggedpine Treefolk
 			e.other:Faction(265,50); -- Protectors of Pine
 			e.other:Faction(135,50); -- Guards of Qeynos
 			e.other:QuestReward(e.self,0,0,0,0,8919,1000); -- Nyrein's Prayer
-		elseif(item_lib.check_turn_in(e.self, e.trade, {item1 = 234038})) then -- Tempest Guard Stone
+		elseif(item_lib.check_turn_in(e.trade, {item1 = 234038})) then -- Tempest Guard Stone
 			e.self:Emote("gives a warm, gentle smile and a deep bow of respect to " .. e.other:GetName() .. " as she extends a white steel crown ornamented with a single blue gem.");
 			e.self:Say("Welcome to the Veterans of the Storm, and we honor you as Tempest Guard " .. e.other:GetName() .. ". Bear this symbol in humility and as a sign of your eternal pledge in service and protection of all that The Rainkeeper holds dear and sacred.");
 			e.other:Faction(271,100); -- Residents of Jaggedpine

@@ -33,7 +33,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 8276})) then -- Head of Guard Nash
+    if(item_lib.check_turn_in(e.trade, {item1 = 8276})) then -- Head of Guard Nash
         e.self:Say("You've done well, I see we are of a like mind. I'll lure the bear outside so you can do your work.");
         e.other:QuestReward(e.self,0,0,0,0,0,500); -- Faction and EXP
         e.self:SetGrid(257);

@@ -14,7 +14,7 @@ end
 
 function event_trade(e)
     local item_lib = require("items");
-    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 8272})) then -- Empty Lunch Bag
+    if(item_lib.check_turn_in(e.trade, {item1 = 8272})) then -- Empty Lunch Bag
         e.self:Say("Oh why thank you dear. Here's the pasta recipes as I promised.");
         e.other:QuestReward(e.self,0,0,0,0,184270,100); -- Book: Pasta for All
     end
