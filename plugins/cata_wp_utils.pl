@@ -66,7 +66,7 @@ my %waypoints = (
     'southkarana'   => ["Southern Plains of Karana (Aviak Village)", 0, 1027, -6689, 0, 260],
     'timorous'      => ["The Firepot Room (Secret)", 3, 4366.5, -12256.8, -278, 256],
     'trakanon'      => ["Trakanon's Teeth", 3, -4720, -1620, -473, 320],
-    'chardokb'      => ["The Halls of Betrayal", 3, -220, 195, 1.5, 159],
+    'chardokb'      => ["The Halls of Betrayal", 3, -210, 315, 1.5, 200],
 
     # Velious (4)
     'cobaltscar'    => ["Cobalt Scar", 4, -1633, -1064, 296, 115],
