@@ -7,7 +7,7 @@ sub EVENT_COMBAT {
 
 sub EVENT_ITEM {
 	#:: Match a 18891 - Tattered Cloth Note (Note to Hubard L'rodd)
-	if (plugin::takeItems(18891 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18891 => 1)) {
 		quest::say("Search!! Find Windstream. Find the mallet!! One. Two. Three.");
 		# Spawn Befallen >> Cmdr_Windstream (36096)
 		quest::spawn2(36096, 0, 0, -88, -637, -66, 127);
@@ -15,5 +15,5 @@ sub EVENT_ITEM {
 		quest::ding();
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

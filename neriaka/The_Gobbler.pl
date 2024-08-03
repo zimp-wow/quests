@@ -27,7 +27,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13384 - Preserved Leg
-	if (plugin::takeItems(13384 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13384 => 1)) {
 		quest::say("Uggh!! Froglok legs!! Me hate smelly legs, but me need it for fat trolls.");
 		my $RandomChance = quest::ChooseRandom(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 		if ($RandomChance == 10) {
@@ -85,6 +85,5 @@ sub EVENT_ITEM {
 			quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 		}	
 	}
-	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

@@ -14,6 +14,7 @@ sub EVENT_ITEM {
 	#:: Create scalar variables for mob race and gender
 	my $npcrace = $npc->GetRace();
 	my $npcgender = $npc->GetGender();
+
 	#:: Match copper
 	if ($copper == 1) {
 		if ($npcrace == 8 && $npcgender == 0) {
@@ -24,9 +25,9 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 20016 - Shackle Key 16
-	elsif (plugin::takeItems(20016 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 20016 => 1)) {
 		if ($npcrace == 8 && $npcgender == 0) {
-			quest::say("Good work!! I shall be on my way.  Farewell my friend!!");
+			quest::say("Good work!! I shall be on my way. Farewell my friend!!");
 			#:: Ding!
 			quest::ding();
 			#:: Set factions
@@ -50,7 +51,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 10351 - Brass Earring
-	if (plugin::takeItems(10351 =>1)) {
+	elsif (plugin::check_handin(\%itemcount, 10351 => 1)) {
 		if ($npcrace == 8 && $npcgender == 0) {
 			quest::say("You killed the taskmaster?!  Absolutely amazing! The orcs will be fighting among themselves for power now and I can disappear in the commotion. Thanks, friend! Take this for your deeds!");
 			#:: Give a 18905 - Worn Rune (Csb 1.O.U. Dwf 1)
@@ -75,7 +76,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 20017 - Shackle Key 17
-	if (plugin::check_handin(\%itemcount, 20017 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 20017 => 1)) {
 		if ($npcrace == 8 && $npcgender == 1) {
 			quest::say("Good work!! I shall be on my way. Farewell my friend!!");
 			#:: Ding!
@@ -101,7 +102,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
 
 sub EVENT_TIMER {

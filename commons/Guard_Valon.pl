@@ -24,7 +24,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match four 13885 - Orc Pawn Pick
-	if (plugin::takeItems(13885 => 4)) {
+	if (plugin::check_handin(\%itemcount, 13885 => 4)) {
 		quest::say("You have done well. Keep up the good work and we may trust you to [hunt dervish cutthroats] which in turn will allow you to join the Reserve Freeport Militia.");
 		#:: Ding!
 		quest::ding();
@@ -39,7 +39,7 @@ sub EVENT_ITEM {
 		quest::givecash(0, 0, 1, 0);
 	}
 	#:: Match three 13885 - Orc Pawn Pick
-	elsif (plugin::takeItems(13885 => 3)) {
+	elsif (plugin::check_handin(\%itemcount, 13885 => 3)) {
 		quest::say("I cannot reward you until you hand me four Orc Pawn Picks. So says Captain Hazran.");
 		#:: Return three 13885 - Orc Pawn Pick
 		quest::summonitem(13885); # Item: Orc Pawn Pick
@@ -47,20 +47,20 @@ sub EVENT_ITEM {
 		quest::summonitem(13885); # Item: Orc Pawn Pick
 	}
 	#:: Match two 13885 - Orc Pawn Pick
-	elsif (plugin::takeItems(13885 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13885 => 2)) {
 		quest::say("I cannot reward you until you hand me four Orc Pawn Picks. So says Captain Hazran.");
 		#:: Return two 13885 - Orc Pawn Pick
 		quest::summonitem(13885); # Item: Orc Pawn Pick
 		quest::summonitem(13885); # Item: Orc Pawn Pick
 	}
 	#:: Match one 13885 - Orc Pawn Pick
-	elsif (plugin::takeItems(13885 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13885 => 1)) {
 		quest::say("I cannot reward you until you hand me four Orc Pawn Picks. So says Captain Hazran.");
 		#:: Return one 13885 - Orc Pawn Pick
 		quest::summonitem(13885); # Item: Orc Pawn Pick
 	}
 	#:: Match a 12272 - Bag of Cutthroat Rings
- 	elsif (plugin::takeItems(12272 => 1)) {
+ 	elsif (plugin::check_handin(\%itemcount, 12272 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Excellent work, $name!! You are quite formidable. Maybe soon you shall aid in our efforts to rid the Northern part of Freeport of the paladins!! Until then keep up the good work. Take this Armory Token to the Militia Armorer in the Militia House in Freeport to receive your tunic. He may not be there, but I assure you he will show up at some time. On the second floor. Hail Sir Lucan!!");
@@ -81,5 +81,5 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

@@ -6,7 +6,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12184 - Useless Token
-	if (plugin::takeItems(12184 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12184 => 1)) {
 		quest::say("You were sent by Geeda!! Here. Take the information. Maybe next you shall earn your Scout Blade from Laren. Quickly!! Leave at once!!");
 		#:: Give item 12183 - Crushbone Information
 		quest::summonitem(12183);
@@ -16,5 +16,5 @@ sub EVENT_ITEM {
 		quest::exp(500);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

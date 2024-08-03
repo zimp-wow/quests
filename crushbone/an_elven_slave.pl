@@ -14,6 +14,7 @@ sub EVENT_ITEM {
 	#:: Create scalar variables for mob race and gender
 	my $npcrace = $npc->GetRace();
 	my $npcgender = $npc->GetGender();
+	
 	#:: Match one copper
 	if ($copper == 1) {
 		#:: Match Male High Elf
@@ -34,7 +35,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 20020 - Shackle Key 20
-	elsif (plugin::takeItems(20020 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 20020 => 1)) {
 		#:: Match Male High Elf
 		if ($npcrace == 5 && $npcgender == 0) {
 			quest::say("Good work!! I shall be on my way.  Farewell my friend!!");
@@ -55,12 +56,12 @@ sub EVENT_ITEM {
 		#:: Match Female High Elf
 		elsif ($npcrace == 5 && $npcgender == 1) {
 			quest::say("I have no need for this item $name, you can have it back.");
-			#:: Give a 20020 - Shackle Key 20
+			#:: Return item
 			quest::summonitem(20020);
 		}
 	}
 	#:: Match a 10351 - Brass Earring
-	elsif (plugin::takeItems(10351 =>1)) {
+	elsif (plugin::check_handin(\%itemcount, 10351 => 1)) {
 		#:: Match Male High Elf
 		if ($npcrace == 5 && $npcgender == 0) {
 			quest::say("You killed the taskmaster?!  Absolutely amazing! The orcs will be fighting among themselves for power now and I can disappear in the commotion. Thanks, friend! Take this for your deeds!");
@@ -111,7 +112,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 20021 - Shackle Key 21
-	if (plugin::takeItems(20021 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 20021 => 1)) {
 		#:: Match Female High Elf
 		if ($npcrace == 5 && $npcgender == 1) {
 			quest::say("Good work!! I shall be on my way. Farewell my friend!!");
@@ -132,12 +133,12 @@ sub EVENT_ITEM {
 		#:: Match Male High Elf
 		elsif ($npcrace == 5 && $npcgender == 0) {
 			quest::say("I have no need for this item $name, you can have it back.");
-			#:: Give a 20021 - Shackle Key 21
+			#:: Return item
 			quest::summonitem(20021);
 		}
 	}
 	#:: Match a 20018 - Shackle Key 18
-	if (plugin::takeItems(20018 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 20018 => 1)) {
 		#:: Match Male Wood Elf
 		if ($npcrace == 4 && $npcgender == 0) {
 			quest::say("Good work!! I shall be on my way. Farewell my friend!!");
@@ -158,13 +159,13 @@ sub EVENT_ITEM {
 		}
 		#:: Match Female Wood Elf
 		elsif ($npcrace == 4 && $npcgender == 1) {
-			quest::say("I have no need for this item $name, you can have it back.");
-			#:: Give a 20018 - Shackle Key 18
+				quest::say("I have no need for this item $name, you can have it back.");
+			#:: Return item
 			quest::summonitem(20018);
 		}
 	}
 	#:: Match a 20019 - Shackle Key 19
-	if (plugin::takeItems(20019 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 20019 => 1)) {
 		#:: Match Female Wood Elf
 		if ($npcrace == 4 && $npcgender == 1) {
 			quest::say("Good work!! I shall be on my way. Farewell my friend!!");
@@ -186,12 +187,12 @@ sub EVENT_ITEM {
 		#:: Match Male Wood Elf
 		elsif ($npcrace == 4 && $npcgender == 0) {
 			quest::say("I have no need for this item $name, you can have it back.");
-			#:: Give a 20019 - Shackle Key 19
+			#:: Return item
 			quest::summonitem(20019);
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
 
 sub EVENT_TIMER {

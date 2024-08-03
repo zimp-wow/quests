@@ -17,7 +17,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 1839 - Full Muffin Crate
-	if (plugin::takeItems(1839 => 1)) {
+	if (plugin::check_handin(\%itemcount, 1839 => 1)) {
 		quest::say("Thanks, you are a dear. You are one top notch baker!  Here's some coin for your trouble.");
 		#:: Ding!
 		quest::ding();
@@ -31,11 +31,11 @@ sub EVENT_ITEM {
 		my %cash = plugin::RandomCash(200, 300);
 		#:: Grant a random cash reward
 		quest::givecash($cash{copper}, $cash{silver}, $cash{gold}, $cash{platinum});
-		#:: Grant a small amount of leve-based experience
+		#:: Grant a small amount of level-based experience
 		$client->AddLevelBasedExp(4, 14);
 	}
 	#:: Match a 1838 - Bag of Bread Loaves
-	elsif (plugin::takeItems(1838 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 1838 => 1)) {
 		quest::say("Oh, wonderful fresh bread! Thank you for making the trip, that is such a long way. Here, I hope this covers your travel expenses. You have my deepest thanks.");
 		#:: Ding!
 		quest::ding();
@@ -47,9 +47,9 @@ sub EVENT_ITEM {
 		my %cash = plugin::RandomCash(1600, 1800);
 		#:: Grant a random cash reward
 		quest::givecash($cash{copper}, $cash{silver}, $cash{gold}, $cash{platinum});
-		#:: Grant a small amount of leve-based experience
+		#:: Grant a small amount of level-based experience
 		$client->AddLevelBasedExp(4, 14);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

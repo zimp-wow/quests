@@ -12,7 +12,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 20015 - Shackle Key 15
-	if (plugin::takeItems(20015 => 1)) {
+	if (plugin::check_handin(\%itemcount, 20015 => 1)) {
 		quest::say("Good work!! I shall be on my way. Farewell my friend!!");
 		#:: Ding!
 		quest::ding();
@@ -20,7 +20,7 @@ sub EVENT_ITEM {
 		quest::faction(245, 1); 		#:: + Eldritch Collective
 		quest::faction(333, 1); 		#:: + King Ak'Anon
 		quest::faction(255, 1); 		#:: + Gem Choppers
-		quest::faction(239, -2); 		#:: - The Dead	
+		quest::faction(239, -2); 		#:: - The Dead
 		#:: Grant a moderate amount of experience
 		quest::exp(5000);
 		#:: Create a hash for storing cash - 600 to 800cp
@@ -30,8 +30,8 @@ sub EVENT_ITEM {
 		#:: Create a timer 'depop' that triggers every 240 seconds (4 minutes)
 		quest::settimer("depop", 240);
 	}
-	#:: Match a 18887 -  Sealed Letter (Note to Retlon Brenclog)
-	elsif (plugin::takeItems(18887 => 1)) {
+	#:: Match a 18887 - Sealed Letter (Note to Retlon Brenclog)
+	elsif (plugin::check_handin(\%itemcount, 18887 => 1)) {
 		quest::say("Ah! A letter from my brother! Mmm... no... no I don't have Tergon's spellbook. The orc's prophet took it and then they locked me in chains! Now why don't you go do something useful and get me key number 15!!");
 		#:: Ding!
 		quest::ding();
@@ -48,7 +48,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
 
 sub EVENT_TIMER {

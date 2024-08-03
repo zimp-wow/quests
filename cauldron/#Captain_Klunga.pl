@@ -5,14 +5,14 @@ sub EVENT_SPAWN {
 
 sub EVENT_ITEM {
 	#:: Match a 12278 - Abandoned Orc Shovel
-	if (plugin::takeItems(12278 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12278 => 1)) {
 		#:: Appearance 0 - Stand
 		$npc->SetAppearance(0);
 		#:: Move to the specified location and guard 
 		quest::moveto(-395.87, 807.04, 71.78, 0, 1);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
 
 sub EVENT_WAYPOINT_ARRIVE {

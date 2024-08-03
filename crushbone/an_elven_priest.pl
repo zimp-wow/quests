@@ -6,7 +6,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 2301 - Bracers of Battle
-	if (plugin::takeItems(2301 => 1)) {
+	if (plugin::check_handin(\%itemcount, 2301 => 1)) {
 		quest::say("Erollisi be praised! You slew the orc lord! Well, here is a token of my appreciation! Should you wish to have that mace enchanted, just hand me the mace and my token and I shall uphold my end of the bargain!");
 		#:: Give a 1900 - Prayer Cloth of Tunare
 		quest::summonitem(11900);
@@ -16,7 +16,7 @@ sub EVENT_ITEM {
 		quest::exp(5000);
 	}
 	#:: Match a 1900 - Prayer Cloth of Tunare, and a 6315 - Dwarven Mace
-	elsif (plugin::takeItems(1900 => 1, 6315 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 11900 => 1, 16315 => 1)) {
 		quest::say("Erollisi be praised! You slew the orc lord! Well, here is a token of my appreciation! Should you wish to have that mace enchanted, just hand me the mace and my token and I shall uphold my end of the bargain!");
 		#:: Give a 6305 - Screaming Mace
 		quest::summonitem(16305);
@@ -26,17 +26,17 @@ sub EVENT_ITEM {
 		quest::exp(10000);
 	}
 	#:: Match a 1900 - Prayer Cloth of Tunare
-	elsif (plugin::takeItems(1900 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 11900 => 1)) {
 		quest::say("Have you the other item I require?");
 		#:: Return a 1900 - Prayer Cloth of Tunare
 		quest::summonitem(11900);
 	}
 	#:: Match a 6315 - Dwarven Mace
-	elsif (plugin::takeItems(6315 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 16315 => 1)) {
 		quest::say("Have you the other item I require?");
 		#:: Return a 6315 - Dwarven Mace
 		quest::summonitem(16315);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
