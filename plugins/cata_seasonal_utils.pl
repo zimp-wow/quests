@@ -62,5 +62,25 @@ sub RegisterSeasonalLogin {
             quest::set_data($client->AccountID() . "-season-1-date-flag", "$day-$mon-$year");
             quest::set_data($client->AccountID() . "-season-1-participation", (quest::get_data($client->AccountID() . "-season-1-participation") || 0) + 1);
         }
+
+        if (!quest::get_data($client->AccountID() . "-season-1-participation-RoK") && plugin::is_stage_complete($client, 'RoK')) {
+            quest::set_data($client->AccountID() . "-season-1-participation-RoK", 1);
+        }
+
+        if (!quest::get_data($client->AccountID() . "-season-1-participation-SoV") && plugin::is_stage_complete($client, 'SoV')) {
+            quest::set_data($client->AccountID() . "-season-1-participation-SoV", 1);
+        }
+
+        if (!quest::get_data($client->AccountID() . "-season-1-participation-SoL") && plugin::is_stage_complete($client, 'SoL')) {
+            quest::set_data($client->AccountID() . "-season-1-participation-SoL", 1);
+        } 
+        
+        if (!quest::get_data($client->AccountID() . "-season-1-participation-PoP") && plugin::is_stage_complete($client, 'PoP')) {
+            quest::set_data($client->AccountID() . "-season-1-participation-PoP", 1);
+        } 
+
+        if (!quest::get_data($client->AccountID() . "-season-1-participation-FNagafen") && plugin::is_stage_complete($client, 'FNagafen')) {
+            quest::set_data($client->AccountID() . "-season-1-participation-FNagafen", 1);
+        }
     }
 }
