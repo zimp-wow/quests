@@ -16,7 +16,7 @@ sub EVENT_SAY {
 sub EVENT_ITEM {
     foreach my $key (keys %itemcount) {
         my $value = $itemcount{$key};
-        quest::debug("Key: $key, Value: $value");
+        #quest::debug("Key: $key, Value: $value");
     }
 
     if (plugin::CheckCashPayment(5000000, $copper, $silver, $gold, $platinum)) { # 5000 Platinum

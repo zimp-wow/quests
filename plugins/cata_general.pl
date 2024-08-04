@@ -42,7 +42,7 @@ sub CheckCashPayment {
     my $total_value = $initial{platinum} * 1000 + $initial{gold} * 100 + $initial{silver} * 10 + $initial{copper};
     my $remaining_value = $total_value - $target_value;
 
-    quest::debug("total_value: $total_value");
+    #quest::debug("total_value: $total_value");
 
     if ($remaining_value >= 0 && $target_value > 0) {
         # Calculate the change to give back as well as the actual amounts spent        
@@ -85,7 +85,7 @@ sub CheckCashPayment {
         $client->AddMoneyToPP($change_copper, $change_silver, $change_gold, $change_platinum, 1);
         
         my $change_value = $change_platinum * 1000 + $change_gold * 100 + $change_silver * 10 + $change_copper;
-        quest::debug("change_value: $change_value");
+        #quest::debug("change_value: $change_value");
 
         return 1;
     } elsif ($total_value > 0) {
