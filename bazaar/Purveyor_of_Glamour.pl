@@ -147,31 +147,41 @@ sub get_random_glamour {
     
     # Prepare the SQL statement
     my $sql = q{
-			WITH filtered_items AS (
-			SELECT name, idfile, MIN(id) AS lowest_id
-			FROM items
-			WHERE slots & (16384 | 8192 | 2048)
-			AND races > 0
-			AND classes > 0
-			AND ((slots & 2048 AND itemtype = 5) OR (slots & (16384 | 8192)))
-			AND itemtype != 54
-			AND name NOT LIKE 'Summoned%'
-			AND id < 1000000
-			GROUP BY idfile, name
-		)
-		SELECT gi.id
-		FROM filtered_items fi
-		JOIN items gi
-		ON gi.name = CONCAT("'", fi.name, "' Glamour-Stone")
-		AND NOT gi.idfile IN ('IT0')
-		AND gi.id = (
-			SELECT MIN(id)
-			FROM items
-			WHERE name = CONCAT("'", fi.name, "' Glamour-Stone")
-			AND idfile = fi.idfile
-		) GROUP BY gi.idfile
-			ORDER BY RAND()
-		LIMIT 1;
+				WITH limited_items AS (
+					SELECT
+						name,
+						idfile,
+						MIN(id) AS lowest_id
+					FROM (
+						SELECT
+							name,
+							idfile,
+							id,
+							ROW_NUMBER() OVER (PARTITION BY idfile ORDER BY id ASC) AS rn
+						FROM
+							items
+						WHERE
+							slots & (16384 | 8192 | 2048)
+							AND races > 0
+							AND classes > 0
+							AND ((slots & 2048 AND itemtype = 5) OR (slots & (16384 | 8192)))
+							AND itemtype != 54
+							AND name NOT LIKE 'Summoned%'
+							AND id < 1000000
+					) sub
+					WHERE
+						rn <= 10
+					GROUP BY
+						idfile, name
+				)
+				SELECT
+					i.id
+				FROM
+					items i
+				JOIN
+					limited_items li ON i.name = CONCAT("'", li.name, "' Glamour-Stone")
+				ORDER BY RAND()
+				LIMIT 1;
     };
 
     # Prepare the SQL statement
