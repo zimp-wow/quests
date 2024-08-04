@@ -137,16 +137,52 @@ sub DeserializeList {
 }
 
 sub get_random_glamour {
-	my $dbh = plugin::LoadMysql();
+    my $dbh = plugin::LoadMysql();
+    
     # Prepare the SQL statement
-    my $sth = $dbh->prepare('SELECT id FROM items WHERE items.name LIKE "%Glamour-Stone%" ORDER BY RAND() LIMIT 1;');
+    my $sql = q{
+			WITH filtered_items AS (
+			SELECT name, idfile, MIN(id) AS lowest_id
+			FROM items
+			WHERE slots & (16384 | 8192 | 2048)
+			AND races > 0
+			AND classes > 0
+			AND ((slots & 2048 AND itemtype = 5) OR (slots & (16384 | 8192)))
+			AND itemtype != 54
+			AND name NOT LIKE 'Summoned%'
+			AND id < 1000000
+			GROUP BY idfile, name
+		)
+		SELECT gi.id
+		FROM filtered_items fi
+		JOIN items gi
+		ON gi.name = CONCAT("'", fi.name, "' Glamour-Stone")
+		AND NOT gi.idfile IN ('IT0')
+		AND gi.id = (
+			SELECT MIN(id)
+			FROM items
+			WHERE name = CONCAT("'", fi.name, "' Glamour-Stone")
+			AND idfile = fi.idfile
+		) GROUP BY gi.idfile
+			ORDER BY RAND()
+		LIMIT 1;
+    };
+
+    # Prepare the SQL statement
+    my $sth = $dbh->prepare($sql);
     
     # Execute the statement
     $sth->execute();
 
     # Fetch the result (a random item id)
     my $id = $sth->fetchrow(); 
+    if (defined $id) {
+        quest::debug("Random Ornament: $id");
+    } else {
+        $client->Message(13, "ERROR: Unable to retrieve random ornament. Seek help on #bugs in Discord.");
+    }
 
     # Return the fetched ID
     return $id;
 }
+
