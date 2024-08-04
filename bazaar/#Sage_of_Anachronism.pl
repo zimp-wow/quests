@@ -30,7 +30,8 @@ sub EVENT_SAY {
             plugin::NPCTell("Hail, Adventurer. I am here in order to grant you access certain [Fabled Memories], through which you can experience past events in a new light.");
             if (quest::get_data($client->AccountID() . "-season-1-participation") && !plugin::check_hasitem($client, 200000) && $client->IsSeasonal()) {
                 plugin::NPCTell("It also appears as if you have lost your [".quest::saylink("First Orb of Retribution", 1)."]. Would you like me to replace it?");
-            }    
+            }
+            quest::debug(quest::get_data($client->AccountID() . "-season-1-participation") .":". !plugin::check_hasitem($client, 200000) .":". $client->IsSeasonal());
         }        
         # Never continue after handling a basic hail.
         return;
