@@ -35,7 +35,7 @@ sub EVENT_CONNECT {
 sub EVENT_TIMER {
     quest::settimer("check_idle", get_idle_time());
     if ($timer eq "check_idle") {
-        if ($client->IsTrader()) {
+        if ($client->IsTrader() || $client->GetGM()) {
             # NOP
         }
         else {
