@@ -33,6 +33,7 @@ sub EVENT_CONNECT {
 }
 
 sub EVENT_TIMER {
+    return; # NOP THIS
     quest::settimer("check_idle", get_idle_time());
     if ($timer eq "check_idle") {
         if ($client->IsTrader() || $client->GetGM()) {
@@ -69,10 +70,10 @@ sub EVENT_TIMER {
                     $client->DeleteEntityVariable("idle_warning");
                 }
                 elsif ($idle and $idle_track >= (300 * 2)) {
-                    my $instance = quest::CreateInstance('bazaar', 0, 144000000);
-                    $client->Message(15, "You have been idle for ten minutes. Transporting you to a private instance of the Bazaar...");                    
-                    $client->AssignToInstance($instance);
-                    $client->MovePCInstance(151, $instance, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
+                    # my $instance = quest::CreateInstance('bazaar', 0, 144000000);
+                    # $client->Message(15, "You have been idle for ten minutes. Transporting you to a private instance of the Bazaar...");                    
+                    # $client->AssignToInstance($instance);
+                    # $client->MovePCInstance(151, $instance, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
                 }
                 elsif ($idle) {
                     my $minutes_idle = int($idle_track / 60);
