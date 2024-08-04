@@ -100,21 +100,27 @@ sub EVENT_SAY {
 
 		if ($eom_available < 5) {
 			$response = "I'm sorry, $clientName. You don't have enough Echo of Memory, please return when you have enough to pay me.";
-		} elsif (my $random_result = get_random_glamour()) {
+		} else {
+			# Deserialize the existing list of glamour IDs
+			my @glamour_list = DeserializeList($client->GetBucket("random_glamours"));
+			my %glamour_hash = map { $_ => 1 } @glamour_list;  # Convert list to hash for quick lookup
+			my $random_result;
 
-			if (plugin::SpendEOM($client, 5)) {			
+			while (1) {
+				$random_result = get_random_glamour();
+				
+				# Check if the new glamour ID is already in the list or if the client already has the item
+				if ($random_result && !$glamour_hash{$random_result} && !plugin::check_hasitem($client, $random_result)) {
+					last;  # Found a suitable random result, break out of the loop
+				}
+			}
+
+			if ($random_result && plugin::SpendEOM($client, 5)) {
 				$client->SummonItem($random_result);
 
-				# Deserialize the existing list of glamour IDs
-				my @glamour_list = DeserializeList($client->GetBucket("random_glamours"));
-
-				# Check if the new glamour ID is already in the list
-				unless (grep { $_ == $random_result } @glamour_list) {
-					# Add the new glamour ID to the list if it's not a duplicate
-					push(@glamour_list, $random_result);
-					# Serialize and store the updated list back into the bucket
-					$client->SetBucket("random_glamours", SerializeList(@glamour_list));
-				}
+				# Add the new glamour ID to the list and store it back into the bucket
+				push(@glamour_list, $random_result);
+				$client->SetBucket("random_glamours", SerializeList(@glamour_list));
 			}
 		}
 	}
