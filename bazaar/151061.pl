@@ -165,5 +165,6 @@ sub get_races {
         128 => 'Iksar',
         130 => 'Vah Shir',
         330 => 'Froglok',
+        522 => 'Drakkin',
     };
 }
