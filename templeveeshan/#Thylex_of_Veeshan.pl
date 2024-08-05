@@ -3,7 +3,7 @@ my $check = 0;
 
 sub EVENT_SPAWN {  
 $check = 0;
-quest::settimer("vulak",60);
+quest::settimer("vulak",6000);
 }
 
 sub EVENT_TIMER {
