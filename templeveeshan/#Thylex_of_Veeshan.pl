@@ -14,7 +14,7 @@ sub EVENT_TICK {
   } elsif ($counter % 100 == 0) {
     my $entity;
     while (!$entity) {
-      $entity = plugin::ChooseRandom((124077, 124076, 124008, 124010, 124074, 124017));
+      $entity = quest::ChooseRandom((124077, 124076, 124008, 124010, 124074, 124017));
     }
 
     my $entity_name = $entity->GetCleanName();
@@ -41,7 +41,7 @@ sub EVENT_TICK {
           "$entity_name, let no intruder escape your sight. The temple must be defended."
         );
 
-    $npc->Shout(plugin::ChooseRandom(@messages));
+    $npc->Shout(quest::ChooseRandom(@messages));
   }
 
   $npc->SetEntityVariable("counter", ($counter + 1));
