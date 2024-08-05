@@ -17,7 +17,7 @@ sub EVENT_TICK {
       $entity = quest::ChooseRandom((124077, 124076, 124008, 124010, 124074, 124017));
     }
 
-    my $entity_name = $entity_list->GetMobByNpcTypeID($entity);
+    my $entity_name = $entity_list->GetMobByNpcTypeID($entity)->GetCleanName();
     my @messages = (
           "Intruders threaten our domain, $entity_name. Ensure their demise swiftly!",
           "$entity_name, what is the status of your patrols? Report immediately!",
