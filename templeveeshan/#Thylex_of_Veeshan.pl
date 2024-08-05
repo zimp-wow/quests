@@ -10,7 +10,7 @@ sub EVENT_TICK {
   if ($check) {
     quest::debug("Spawning Vulak!");    
     quest::spawn2(124155, 0, 0, -739.4, 517.2, 121, 510); # Vulak`Aerr
-    $npc->Shout("Intruders! Your doom is upon you! Vulak`Aerr comes to humble you, and return you to your pathetic Gods.")
+    $npc->Shout("Intruders! Your doom is upon you! Vulak`Aerr comes to humble you, and return you to your pathetic Gods.");
     $npc->Depop(1); # Depop and start spawn timer.
   } elsif ($counter % 100 == 0) {
     my $entity;
