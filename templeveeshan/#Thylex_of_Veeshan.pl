@@ -13,5 +13,7 @@ sub EVENT_TICK {
     quest::debug("Spawning Vulak!");
     quest::spawn2(124155,0,0,-739.4,517.2,121,510); # Vulak`Aerr
     $npc->Depop(1); # Depop and start spawn timer.
+  } else {
+    quest::debug("Someone is still alive...");
   }
 }
