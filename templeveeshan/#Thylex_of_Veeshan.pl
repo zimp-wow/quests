@@ -1,5 +1,5 @@
 sub EVENT_TICK {
-  my $counter   = $npc->GetEntityVariable("counter");
+  my $counter   = $npc->GetEntityVariable("counter") || 0;
   my $check     = !$entity_list->GetMobByNpcTypeID(124077) && # Lady_Mirenilla
                   !$entity_list->GetMobByNpcTypeID(124076) && # Lady_Nevederia
                   !$entity_list->GetMobByNpcTypeID(124008) && # Lord_Feshlak
