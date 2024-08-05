@@ -13,8 +13,8 @@ sub EVENT_TICK {
     $npc->Shout("Intruders! Your doom is upon you! Vulak`Aerr comes to humble you, and return you to your pathetic Gods.");
     $npc->Depop(1); # Depop and start spawn timer.
   } elsif ($counter % 100 == 0) {
-    my $entity;
-    while (!$entity) {
+    my $entity = 0;
+    while (!$entity_list->GetMobByNpcTypeID($entity)) {
       $entity = quest::ChooseRandom((124077, 124076, 124008, 124010, 124074, 124017));
     }
 
