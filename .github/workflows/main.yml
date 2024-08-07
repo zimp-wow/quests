@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  Deploy_Quests:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,11 +28,11 @@ jobs:
     - name: Pull latest changes on remote server
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_DEPLOY_USER }}@${{ secrets.THJ_HOST_ADDR }} '
-           cd /opt/eqemu/thj-prod/server/quests &&
+           cd /opt/thj/eqemu/server/quests &&
            git fetch origin &&
            git reset --hard origin/main'
 
         ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_DEPLOY_USER }}@${{ secrets.RET_HOST_ADDR }} '
-           cd /opt/eqemu/ret-prod/server/quests &&
+           cd /opt/retribution/eqemu/server/quests &&
            git fetch origin &&
            git reset --hard origin/main'
