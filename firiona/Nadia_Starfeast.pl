@@ -36,6 +36,7 @@ sub EVENT_ITEM {
   if (plugin::check_handin(\%itemcount, 10604 => 1)) { #Jeb's Seal
     quest::say("Oh it must be time to reveal the staff! The piece I will help you craft is encrusted with magical gems. These gems contain the essence of various creatures. Alone they have very little power. Combined together they are much more powerful. They must be combined in a sack. Just ask if you don't have one.");
     quest::summonitem(10604); #Jeb's Seal
+    quest::summonitem(17861); #An Enchanters Sack for people that don't know to say the phrase.
   }
   elsif (plugin::check_handin(\%itemcount, 10637 => 1)) { #A Sack For Nadia
     quest::say("Lovely! You are indeed quite the charmer. Here, take the third part, and seek out the last master. The time draws near.");
