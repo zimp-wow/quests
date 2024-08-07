@@ -31,6 +31,6 @@ function event_timer(e)
 	if e.timer == "smallPause" then
 		eq.stop_timer("smallPause")
 		eq.zone_emote(MT.DimGray, 'The sound of a mighty horn echoes through the area. All local inhabitants scurry to take cover.');
-		eq.load_encounter("RingTen");
+		eq.load_encounter("ring_war");
 	end
 end
