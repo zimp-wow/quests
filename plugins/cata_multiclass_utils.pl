@@ -262,6 +262,10 @@ sub GrantGeneralAA {
         '334' => 5,  # Mystical Attuning
     );
 
+    if (plugin::MultiClassingEnabled()) {
+            $general_aa{'347'} = 4;
+    }
+
     # Loop through each AA ID in the hash and grant the ability
     foreach my $aa_id (keys %general_aa) {
         $client->GrantAlternateAdvancementAbility($aa_id, $general_aa{$aa_id}, 1);
