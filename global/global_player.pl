@@ -1,5 +1,4 @@
 sub EVENT_SIGNAL {
-    LogDebug("Got Signal: $signal");
     if ($signal == 666) {
         quest::debug("Got EoM Signal");
         plugin::UpdateEoMAward($client);
