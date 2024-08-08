@@ -123,7 +123,7 @@ sub AddClass {
         my $full_class_name = GetPrettyClassString();        
 
         $client->Message(15, "You have permanently gained access to the $class_name class, and are now a $full_class_name.");
-        GrantClassesAA();
+        CommonCharacterUpdate();
 
         if (GetClassesCount() > 2 && CheckUniqueClass($client->GetClassesBitmask())) {
             my $class_bits          = $client->GetClassesBitmask();
