@@ -264,7 +264,7 @@ sub GrantGeneralAA {
 
     if (plugin::MultiClassingEnabled()) {
             $general_aa{'347'}      = 4;
-            $general_aa{'100332'}   = 1;
+            $general_aa{'17785'}   = 1;
     }
 
     # Loop through each AA ID in the hash and grant the ability
