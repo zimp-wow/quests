@@ -1,11 +1,34 @@
 # Bazaar Portal
 sub EVENT_SPELL_EFFECT_CLIENT {
     my $client = plugin::val('$client');
+    use List::Util qw(shuffle);
+    
+    # Define a hash of possible locations in zone 151 (Bazaar)
+    my %locations = (
+        'safe_location' => [quest::GetZoneSafeX(151), quest::GetZoneSafeY(151), quest::GetZoneSafeZ(151), quest::GetZoneSafeHeading(151)],
+        'Location A'    => [-135, -550, 5, 300],
+        'Location B'    => [100, -500, 5, 300],
+        'Location C'    => [95, -300, 5, 300],
+        'Location D'    => [170, -95, -15, 400],
+        'Location E'    => [-170, -95, -15, 400],
+        'Location F'    => [-33, -50, -65, 400],
+        'Location G'    => [45, -820, 4, 450],
+        'Location H'    => [15, -655, 27, 290]
+        # Add more locations as needed
+    );
 
-    #quest::debug("Cast Bazaar Portal");
+    # Shuffle the keys and pick a random location
+    my @keys = shuffle(keys %locations);
+    my $chosen_loc = $locations{$keys[0]};
+
+    # Apply the randomization of +/- 5 to X and Y
+    my $randomized_x = $chosen_loc->[0] + int(rand(11)) - 5;
+    my $randomized_y = $chosen_loc->[1] + int(rand(11)) - 5;
+    my $z = $chosen_loc->[2];
+    my $heading = $chosen_loc->[3];
 
     if ($zoneid != 151) {
-        #quest::debug("Not in Bazaar");
+        # Save the current location
         $client->SetBucket("Return-X", $client->GetX());
         $client->SetBucket("Return-Y", $client->GetY());
         $client->SetBucket("Return-Z", $client->GetZ());
@@ -13,9 +36,10 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         $client->SetBucket("Return-Zone", $zoneid);
         $client->SetBucket("Return-Instance", $instanceid);       
 
-        $client->MovePC(151, quest::GetZoneSafeX(151), quest::GetZoneSafeY(151), quest::GetZoneSafeZ(151), quest::GetZoneSafeHeading(151));
+        # Move the player to the Bazaar at a randomized location
+        $client->MovePC(151, $randomized_x, $randomized_y, $z, $heading);
     } else {
-        #quest::debug("We are in Bazaar");
+        # Return player to the saved location or bind point if no saved location exists
         my $ReturnX = $client->GetBucket("Return-X");
         my $ReturnY = $client->GetBucket("Return-Y");
         my $ReturnZ = $client->GetBucket("Return-Z");
@@ -28,8 +52,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
             defined($ReturnZ) && $ReturnZ ne '' && 
             defined($ReturnH) && $ReturnH ne '' && 
             defined($ReturnZone) && $ReturnZone ne '') {
-            #quest::debug("Found a return location");
-
+            # Delete the saved location
             $client->DeleteBucket("Return-X");
             $client->DeleteBucket("Return-Y");
             $client->DeleteBucket("Return-Z");
@@ -37,8 +60,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
             $client->DeleteBucket("Return-Zone");
             $client->DeleteBucket("Return-Instance");            
         } else {            
-            #quest::debug("Returning to default location");
-
+            # Use the bind location if no saved location exists
             $ReturnX = $client->GetBindX();
             $ReturnY = $client->GetBindY();
             $ReturnZ = $client->GetBindZ();
@@ -47,7 +69,9 @@ sub EVENT_SPELL_EFFECT_CLIENT {
             $ReturnInstance = 0;          
         }
 
+        # Move the player back to the original location or bind point
         $client->MovePCInstance($ReturnZone, $ReturnInstance, $ReturnX, $ReturnY, $ReturnZ, $ReturnH);
     }
 }
+
 
