@@ -6,9 +6,10 @@ sub EVENT_SAY {
   plugin::AddDefaultAttunement($client);
 
   if ($text=~/hail/i) {        
+    if (!group_flg) { $group_flg = " However, that magic, like teleporting an entire group, will require [special reagents]." }
+    else { $group_flg = "" };
     plugin::NPCTell("Greetings, $name. I am Tearel, the Keeper of the Map. I can [attune the map] to any rune circles you have previously discovered. If you are 
-                    part of [an expedition] I can also help you return to the heat of the battle. However, that magic, like teleporting an entire group, will 
-                    require [special reagents].");
+                    part of [an expedition] I can also help you return to the heat of the battle.$group_flg");
     return;
   }
 
@@ -37,9 +38,12 @@ sub EVENT_SAY {
   }
 
   if ($text=~/special reagents/i) {
-    
-    plugin::NPCTell("If you can provide me with Five [".$eom_link."], I will [perform this ritual] for you.");
-    plugin::YellowText("Once unlocked, the group transport and instance return abilities will be available to all characters on this account.");
+    if ($group_flg) {
+      plugin::NPCTell("You already have performed this ritual, and have these abilities available to you.");
+    } else {
+      plugin::NPCTell("If you can provide me with Five [".$eom_link."], I will [perform this ritual] for you.");
+      plugin::YellowText("Once unlocked, the group transport and instance return abilities will be available to all characters on this account.");
+    }
     return;
   }
 
