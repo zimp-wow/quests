@@ -55,17 +55,19 @@ sub EVENT_POPUPRESPONSE {
                 if ($group) {
                     # Get the expedition object
                     my $dz = $client->GetExpedition();
-                    my $expedition_members_ref = $dz->GetMembers();
-                    my %expedition_members = %{$expedition_members_ref};
+                    if ($dz) {
+                        my $expedition_members_ref = $dz->GetMembers();
+                        my %expedition_members = %{$expedition_members_ref};
 
-                    for (my $count = 0; $count < $group->GroupCount(); $count++) {
-                        my $player = $group->GetMember($count);
-                        if ($player) {
-                            # Check if the player is a member of the expedition
-                            my $player_name = $player->GetName();
-                            if ($dz && !exists $expedition_members{$player_name}) {
-                                plugin::YellowText("$player_name is not a member of this expedition.");
-                                return;
+                        for (my $count = 0; $count < $group->GroupCount(); $count++) {
+                            my $player = $group->GetMember($count);
+                            if ($player) {
+                                # Check if the player is a member of the expedition
+                                my $player_name = $player->GetName();
+                                if ($dz && !exists $expedition_members{$player_name}) {
+                                    plugin::YellowText("$player_name is not a member of this expedition.");
+                                    return;
+                                }
                             }
                         }
                     }
