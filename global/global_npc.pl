@@ -112,13 +112,14 @@ sub EVENT_AGGRO {
     plugin::FadeWorldWideBuffs($npc);
 }
 
+
 sub EVENT_SPAWN {
     plugin::CheckSpawnWaypoints();
     
     # Resize Pets
     if ($npc->IsPet() && $npc->GetOwner() && $npc->GetOwner()->IsClient()) {
         my @spell_ids = (2612, 2633, 2614, 2616, 2618, 2621, 2623, 2626, 2627, 2631, 3457, 3461, 5531, 5538, 10379);
-        if (any { $_ == $npc->GetPetSpellID() } @spell_ids) {
+        #if (any { $_ == $npc->GetPetSpellID() } @spell_ids) {
             my $size = 4;
             if (0) {}
             # Beastlord pets
@@ -170,7 +171,7 @@ sub EVENT_SPAWN {
 
             $size *= 1 + ($npc->GetLevel() * 0.01);
             $npc->ChangeSize($size);
-        }
+        #}
     }
 }
 
