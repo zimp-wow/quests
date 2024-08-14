@@ -8,7 +8,7 @@ sub OfferStandardInstance {
   my $dz_version      = 0;
   my $dz_duration     = 64800; # 18 hours
   my $dz_lifetime     = 604800;
-  my ($expedition_name, $min_players, $max_players, $dz_zone) = @_;
+  my ($expedition_name, $min_players, $max_players, $dz_zone, $x, $y, $z, $heading) = @_;
 
   if (plugin::IsSeasonal($client) || plugin::MultiClassingEnabled()) {
     $max_players = 6;
@@ -43,7 +43,14 @@ sub OfferStandardInstance {
   elsif ($text =~ /ready/i) {
     my $dz = $client->GetExpedition();
     if ($dz && ($dz->GetName() eq $expedition_name || $dz->GetName() eq ($expedition_name . " (Static)"))) {
-      $client->MovePCDynamicZone($dz_zone);
+      
+      # Fallback to safe zone coordinates if x, y, z, or heading are not defined
+      my $final_x = defined $x ? $x : quest::GetZoneSafeX($dz->GetZoneID());
+      my $final_y = defined $y ? $y : quest::GetZoneSafeY($dz->GetZoneID());
+      my $final_z = defined $z ? $z : quest::GetZoneSafeZ($dz->GetZoneID());
+      my $final_heading = defined $heading ? $heading : quest::GetZoneSafeHeading($dz->GetZoneID());
+
+      $client->MovePCInstance($dz->GetZoneID(), $dz->GetInstanceID(), $final_x, $final_y, $final_z, $final_heading);
     }
   }  
 }
