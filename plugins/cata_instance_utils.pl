@@ -41,6 +41,9 @@ sub OfferStandardInstance {
   }
 
   elsif ($text =~ /ready/i) {
-    $client->MovePCDynamicZone($dz_zone);
+    my $dz = $client->GetExpedition();
+    if ($dz && ($dz->GetName() eq $expedition_name || $dz->GetName() eq ($expedition_name . " (Static)"))) {
+      $client->MovePCDynamicZone($dz_zone);
+    }
   }  
 }

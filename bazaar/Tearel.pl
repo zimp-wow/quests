@@ -1,137 +1,117 @@
 sub EVENT_SAY {
-  my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled");  
-  my $eom_available   = $client->GetAlternateCurrencyValue(6);
-  my $cost            = 1000 * get_cost_for_level();
-  my %waypoints       = plugin::GetWaypoints(-1, $client);
+  my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled") || "";  
+  my $eom_link        = quest::varlink(46779);
 
   plugin::AwardBonusUnlocks($client);
   plugin::AddDefaultAttunement($client);
 
-  if ($text=~/hail/i) { 
-    quest::say("Greetings $name! I can help you get to almost anywhere! I sell
-                    [teleportion stones] which, when handed back to me, will attune this magic map 
-                    to several notable places that I've visted before. If you are a more experienced adventurer however, 
-                    I can [transport you] or [your group] to places that you have visted, in this life or in others, 
-                    and attuned yourself to by discovering Rune Circles.");
-  }
-
-  elsif ($text=~/teleportion stones/i) {
-    quest::say("Absolutely. The process is simple! Purchase the teleportation stone of your choosing 
-                    then give it to me. I will then enchant the map to take you to your destination! 
-                    Simply click on the map afterwards and you will be off!");
-  }
-
-  elsif ($text=~/your group/i && !$group_flg) {
-    quest::say("If you'd like for me to transport your group, I'll need a stronger connection to your memories. Bring me five
-                [Echo of Memory], and I can transport all of you any time you ask.");
+  if ($text=~/hail/i) {        
+    plugin::NPCTell("Greetings, $name. I am Tearel, the Keeper of the Map. I can [attune the map] to any rune circles you have previously discovered. If you are 
+                    part of [an expedition] I can also help you return to the heat of the battle. However, that magic, like teleporting an entire group, will 
+                    require [special reagents].");
     return;
   }
 
-  elsif ($text=~/Echo of Memory/i && !$group_flg) {
-    if ($eom_available >= 5) {
-      quest::say("Simply [confirm] to me that you'd like to spend your Echoes in this way, and it will be done.");
+  if ($text=~/attune the map/i) {
+      my @continent_names;
+
+      # Collect eligible continent names into an array and surround them with [ ]
+      foreach my $value (sort {$a <=> $b} plugin::GetContinents($client)) {
+          push @continent_names, "[" . plugin::GetContinentName($value) . "]";
+      }
+      
+      # Formulate a grammatically correct list
+      my $location_append = "";
+      if (@continent_names == 1) {
+          $location_append = $continent_names[0];
+      } elsif (@continent_names == 2) {
+          $location_append = $continent_names[0] . " or " . $continent_names[1];
+      } elsif (@continent_names > 2) {
+          $location_append = join(', ', @continent_names[0..$#continent_names-1]) . ", or " . $continent_names[-1];
+      }
+
+      plugin::NPCTell("If you look closely, you'll see circles of rune-stones scattered throughout Norrath, and beyond. These serve as anchors for travel, and the map can be attuned to any of them. 
+                      Let's narrow down where you want to go? $location_append?");
+    
+      return;
+  }
+
+  if ($text=~/special reagents/i) {
+    
+    plugin::NPCTell("If you can provide me with Five [".$eom_link."], I will [perform this ritual] for you.");
+    plugin::YellowText("Once unlocked, the group transport and instance return abilities will be available to all characters on this account.");
+    return;
+  }
+
+  if ($text=~/perform this ritual/i) {
+    if ($group_flg) {
+      plugin::NPCTell("You already have performed this ritual, and have these abilities available to you.");
     } else {
-      quest::say("I'm sorry, but you don't have enough Echoes in order to resonante with those memories at the moment.");
+      if (plugin::SpendEOM($client, 5)) {
+        quest::set_data($client->AccountID() ."-group-ports-enabled", 1);
+        plugin::NPCTell("$name, forevermore you and yours can transport your entire group to anywhere you have [attuned].");
+      } else {
+        plugin::NPCTell("I'm sorry, $name, you do not have enough [".$eom_link."] available to you right now. When you have more...");
+      }
     }
   }
 
-  elsif ($text=~/confirm/ && !$group_flg && $eom_available >= 5) {
-    if (plugin::SpendEOM($client, 5)) {
-        quest::set_data($client->AccountID() ."-group-ports-enabled",1);
-        quest::say("Excellent! I can transport [your group], whenever you'd like.");
+  if ($text=~/an expedition/i || $text=~/instance/i) {
+    if ($group_flg) {
+      my $dz = $client->GetExpedition();
+      if ($dz) {
+        plugin::NPCTell("I can sense that you are attuned to a particular time and place. I have attuned the map to it!");
+        plugin::YellowText("The Magic Map has been attuned to your instance: ". $dz->GetName());
+        $client->SetEntityVariable("magic_map_attune", 'instance');
+      } else {
+        plugin::NPCTell("I do not sense any particular expedition affinity with you.");
+      }
+    } else {
+      plugin::NPCTell("Unfortunately, I will need some [special reagents] in order to transport you in this way.");
     }
   }
+ 
+  my ($continent_pattern, $continent_map) = plugin::GetContinentCapturePattern(); 
 
-  elsif ($text =~ /transport you/i || ($text =~ /your group/i && $group_flg)) {
-      quest::say("Very good! Tell me about this place that you remember. This transportation will cost " . get_cost_for_level() . " platinum pieces.");
-      $client->Message(257, " ------- Select a Continent ------- ");   
+  if ($text =~ $continent_pattern) {
+      my $matched_continent = $1;  # $1 contains the captured match
+        
+      if (exists $continent_map->{$matched_continent}) {
+          my $continent_id = $continent_map->{$matched_continent};
+          my %waypoints = plugin::GetWaypoints($continent_id, $client);
 
-      # Get the list of all continents
-      my @categories = plugin::GetContinents();
-
-      # Display only those continents which have waypoints
-      while (my ($index, $continent) = each @categories) {
-          if (plugin::GetWaypoints($index, $client)) {  
-              my $mode_indicator = $text =~ /group/i ? "group" : "single";
-              $client->Message(257, "-[ " . quest::saylink("select-continent-$index-$mode_indicator", 1, $continent));
+          # Collect the long names for the waypoints with quest::saylink
+          my @waypoint_links;
+          foreach my $key (sort {$a cmp $b} keys %waypoints) {
+              my $long_name = $waypoints{$key}->[0];  # Get the long name
+              my $short_name = $key;  # The key is the short name
+              push @waypoint_links, "[".quest::saylink($short_name, 0, $long_name)."]";  # Create a clickable link
           }
-      }
+
+          # Send each waypoint as a separate line
+          plugin::NPCTell("$matched_continent... Let's see... I can send you to a number of places there...");
+          foreach my $link (@waypoint_links) {
+              plugin::PurpleText("---". $link);
+          }
+      } else {
+          plugin::NPCTell("I'm not sure where that is... at least not yet.");
+      }   
   }
 
-  elsif ($text =~ /select-continent-(\d+)-(group|single)/) {
-    my $continent_id = $1 || 0;
-    my $mode = $2;
-    
-    my %waypoints = plugin::GetWaypoints($continent_id, $client);
+  my ($waypoint_pattern, $eligible_waypoints) = plugin::GetWaypointCapturePattern(-1, $client);
+  if ($text =~ $waypoint_pattern) {
+      my $matched_waypoint_key = $1;  # $1 contains the captured waypoint key (shortname), e.g., 'rivervale'
 
-    $client->Message(257, " ------- Select a Location ------- ");
-
-    if (keys %waypoints) {
-      my @keys = sort keys %waypoints;
-      foreach my $wp_id (@keys) {
-        $client->Message(257, "-[ " . quest::saylink("teleport-$wp_id-$2", 1, $waypoints{$wp_id}[0]));
+      if ($matched_waypoint_key) {
+        # Use the $eligible_waypoints hash to get the full waypoint data
+        my $waypoint_name = $eligible_waypoints->{$matched_waypoint_key}->[0];  # Get the long name for the matched waypoint
+        if (plugin::is_eligible_for_zone($client, $matched_waypoint_key, 1)) {
+            plugin::NPCTell("Perfect. I will attune the map to $waypoint_name, immediately!");
+            plugin::YellowText("The Magic Map has been attuned to $waypoint_name!");
+            $client->SetEntityVariable("magic_map_attune", $matched_waypoint_key);
+          }
+      } else {
+          plugin::NPCTell("I'm not sure where that is... at least not yet.");
       }
-    }
-  }
-
-  elsif ($text =~ /teleport-([a-zA-Z0-9_]+)-(group|single)/) {
-    my $wp_id = $1;
-    my $mode = $2;
-    my %waypoints = plugin::GetWaypoints(-1, $client);
-
-    if (exists $waypoints{$wp_id} && $client->TakeMoneyFromPP($cost, 1)) {
-      my $destination = $waypoints{$wp_id};
-
-      if ($2 eq 'group' && $group_flg) {
-        my $raid = $client->GetRaid();
-        my $group = $client->GetGroup();
-
-        if ($raid) {
-          $client->MoveZoneRaid($wp_id, $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
-        }
-
-        if ($group) {
-          $client->MoveZoneGroup($wp_id, $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
-        }
-      }
-      $client->MovePC(quest::GetZoneID($wp_id), $destination->[2], $destination->[3], $destination->[4], $destination->[5]);
-    } else {
-      quest::say("I'm sorry, but you don't have enough platinum to pay for this transport.");
-    }
-  }
-}
-
-sub EVENT_ITEM {
-    my %portal_destinations = %{ plugin::get_portal_destinations() };
-    
-    foreach my $item (keys %portal_destinations) {
-        if (plugin::check_handin(\%itemcount, $item => 1)) {
-            # Set the destination using the item ID
-            quest::set_data("magic_map_target", $item); 
-            quest::emote("takes the crystal from you and mutters some arcane words over it. 'The floating map is now active! Just click on the map and you'll be whisked away to your destination! I hope you don't get motion sickness!'");
-            quest::ze(15, "The Magic Map has been aligned to " . $portal_destinations{$item}[0]);
-            plugin::return_items(\%itemcount);
-            return;
-        }
-    }
-
-    plugin::return_items(\%itemcount); # Ensure items are returned if no matching case is found
-}
-
-sub get_cost_for_level {
-  my $client = plugin::val('$client');
-  my $level  = $client->GetLevel();
-
-  my %cost_map = (
-    0  => 0,   # Default for levels 1-20
-    20 => 5,   # Cost for levels 20-39
-    40 => 10,  # Cost for levels 40-50
-    51 => 25,  # Cost for levels 51-60
-    61 => 75,  # Cost for levels 61-65
-    66 => 150, # Cost for levels above 65
-  );
-
-  for my $threshold (sort { $b <=> $a } keys %cost_map) {
-    return $cost_map{$threshold} if $level >= $threshold;
   }
 }

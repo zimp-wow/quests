@@ -219,10 +219,6 @@ sub AddDefaultAttunement {
     }
 }
 
-sub GetContinents {
-    return @categories;
-}
-
 sub CheckSpawnWaypoints {
     my $entity_list = plugin::val('$entity_list');
     my $zonesn      = plugin::val('$zonesn');
@@ -270,6 +266,29 @@ sub AddWaypoint {
     return $return_feedback;
 }
 
+sub GetContinents {
+    my $client = shift;
+    my %eligible_continents;
+    
+    if (defined $client) {
+        foreach my $key (keys %waypoints) {
+            my $continent = $waypoints{$key}[1];
+            if (plugin::is_eligible_for_zone($client, $key, 0)) {
+                $eligible_continents{$continent} = 1;
+            }
+        }
+    } else {
+        quest::debug("Attempted to get continents for an invalid or unspecified client.");
+        return ();
+    }
+
+    return keys %eligible_continents;
+}
+
+sub GetContinentName {
+    my $index = shift;
+    return $categories[$index];
+}
 
 sub GetWaypoints {
     my $continent = shift;
@@ -278,44 +297,78 @@ sub GetWaypoints {
     my %return;
     
     if ($client) {        
-        if (!($client->IsSeasonal() || $client->IsHardcore())) {
-            %data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
-        } else {
-            %data = map { $_ => 1 } split(',', $client->GetBucket("Waypoints"));
-        }
+        %data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
 
         foreach my $key (keys %waypoints) {
-            if (exists $data{$key} && ($continent == -1 || $waypoints{$key}[1] == $continent)) {
+            if (exists $data{$key} && 
+                ($continent == -1 || $waypoints{$key}[1] == $continent) &&
+                plugin::is_eligible_for_zone($client, $key, 0)) {
                 $return{$key} = $waypoints{$key};
             }
         }          
     } else {
         quest::debug("Attempted to get waypoints for an invalid or unspecified client.");
-        return undef;
+        return ();
     }
     return %return;
 }
 
-sub get_portal_destinations {
-    return {
-        10092   => ['The Plane of Hate', 666, 186, -393, 656, 3],
-        10094   => ['The Plane of Sky', 674, 71, 539, 1384, -664],
-        876000  => ['The Northern Plains of Karana', 2708, 13, 1209, -3685, -5],
-        876001  => ['East Commonlands', 4176, 22, -140, -1520, 3],
-        876002  => ['The Lavastorm Mountains', 534, 27, 460, 460, -86],
-        876003  => ['Toxxulia Forest', 2707, 38, -916, -1510, -33],
-        876004  => ['The Greater Faydark', 2706, 54, -441, -2023, 4],
-        876005  => ['The Dreadlands', 2709, 86, 9658, 3047, 1052],
-        876006  => ['The Iceclad Ocean', 2284, 110, 385, 5321, -17],
-        876007  => ['Cobalt Scar', 2031, 117, -1634, -1065, 299],
-        876009  => ['The Twilight Sea', 3615, 170, -1028, 1338, 39],
-        876010  => ['Stonebrunt Mountains', 3794, 100, 673, -4531, 0],
-        876011  => ['Wall of Slaughter', 6180, 300, -943, 13, 130],
-        976016  => ['Barindu, Hanging Gardens', 5733, 283, 590, -1457, -123],
-        88739   => ['The Plane of Time', 20543, 219, 0, 110, 8],
-        976015  => ['Field of Bone', 11178, 78, 2802, 1194, -7],
-        976014  => ['Western Wastes', 111120, 120, 2307, 889, -21],
-        976013  => ['Scarlet Desert', 111175, 175, -1777, -956, -99],
-        976010  => ['Everfrost', 11130, 30, 590, -791, -54],
-    };
+sub GetWaypointCapturePattern {
+    my $continent = shift;
+    my $client = shift;
+
+    my %data;
+    my %eligible_waypoints;  # Hash to store eligible waypoints
+    my @eligible_keys;  # Array to store the keys for the regex pattern
+
+    if ($client) {
+        %data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
+
+        foreach my $key (keys %waypoints) {
+            if (exists $data{$key} && 
+                ($continent == -1 || $waypoints{$key}->[1] == $continent) &&  # Correctly access the continent from the waypoint array
+                plugin::is_eligible_for_zone($client, $key, 0)) {
+                $eligible_waypoints{$key} = $waypoints{$key};  # Store the full waypoint data
+                push @eligible_keys, quotemeta($key);  # Escape special characters in keys and add to regex list
+            }
+        }
+    } else {
+        quest::debug("Attempted to get waypoints for an invalid or unspecified client.");
+        return;
+    }
+
+    # Join the eligible waypoint keys into a regex pattern
+    my $pattern = join('|', @eligible_keys);
+    
+    # Return the pattern wrapped in a capturing group and the eligible waypoints hash
+    return (qr/\b($pattern)\b/i, \%eligible_waypoints);
+}
+
+sub GetContinentCapturePattern {
+    # Create a mapping of names to IDs
+    my %continent_map = map { $categories[$_] => $_ } 0..$#categories;
+
+    # Join the category names into a regex pattern
+    my $pattern = join('|', map { quotemeta($_) } @categories);
+    
+    # Return the pattern wrapped in a capturing group and the map
+    return (qr/\b($pattern)\b/i, \%continent_map);
+}
+
+sub GetWaypoint {
+    my ($shortname, $client) = @_;
+
+    # Check if the shortname exists in the waypoints hash
+    if (exists $waypoints{$shortname}) {
+        # Check if the client is eligible for this waypoint
+        if (plugin::is_eligible_for_zone($client, $shortname, 0)) {
+            # Check if the waypoint is attuned for the client
+            my %attuned_waypoints = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
+            if (exists $attuned_waypoints{$shortname}) {
+                return $waypoints{$shortname};  # Return the array reference for the waypoint
+            }
+        }
+    }
+
+    return undef;  # Return undef if the waypoint does not exist, is not attuned, or the client is not eligible
 }
