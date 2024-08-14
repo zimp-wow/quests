@@ -79,7 +79,7 @@ sub EVENT_POPUPRESPONSE {
                                 $dz = $client->GetExpedition();
                                 $player->MovePCDynamicZone($dz->GetZoneID());                                      
                             } else {
-                                $player->MovePC($attuned_shortname, $x, $y, $z, $heading);
+                                $player->MovePC(quest::GetZoneID($attuned_shortname), $x, $y, $z, $heading);
                             }
                             $player->SpellEffect(218, 1);
                         }
@@ -91,7 +91,7 @@ sub EVENT_POPUPRESPONSE {
                 $dz = $client->GetExpedition();
                 $client->MovePCDynamicZone($dz->GetZoneID());
             } else {                
-                $client->MovePC($attuned_shortname, $x, $y, $z, $heading);
+                $client->MovePC(quest::GetZoneID($attuned_shortname), $x, $y, $z, $heading);
             }
             $client->SpellEffect(218,1);
         }        
