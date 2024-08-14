@@ -79,11 +79,12 @@ sub EVENT_POPUPRESPONSE {
                         if ($player && (plugin::is_eligible_for_zone($player->CastToClient(), $attuned_shortname, 1) || $attuned_shortname eq 'instance')) {                            
                             if ($attuned_shortname eq 'instance' && $client->GetExpedition()) {
                                 $dz = $client->GetExpedition();
+                                $client->SpellEffect(218,1);
                                 $player->MovePCDynamicZone($dz->GetZoneID());                                      
                             } else {
+                                $client->SpellEffect(218,1);
                                 $player->MovePC(quest::GetZoneID($attuned_shortname), $x, $y, $z, $heading);
                             }
-                            $player->SpellEffect(218, 1);
                         }
                     }
                 }
@@ -91,11 +92,12 @@ sub EVENT_POPUPRESPONSE {
 
             if ($attuned_shortname eq 'instance' && $client->GetExpedition()) {
                 $dz = $client->GetExpedition();
+                $client->SpellEffect(218,1);
                 $client->MovePCDynamicZone($dz->GetZoneID());
             } else {                
+                $client->SpellEffect(218,1);
                 $client->MovePC(quest::GetZoneID($attuned_shortname), $x, $y, $z, $heading);
-            }
-            $client->SpellEffect(218,1);
+            }            
         }        
     }
 }
