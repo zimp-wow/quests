@@ -50,41 +50,41 @@ sub EVENT_POPUPRESPONSE {
                 return;
             }
 
-            if ($popupid == 1461 ) { 
+            if ($popupid == 1461) { 
                 my $group = $client->GetGroup();
                 if ($group) {
                     if ($attuned_shortname eq 'instance') {
-                    # Get the expedition object
-                    my $dz = $client->GetExpedition();
-                    if ($dz) {
-                        my $expedition_members_ref = $dz->GetMembers();
-                        my %expedition_members = %{$expedition_members_ref};
+                        # Get the expedition object
+                        my $dz = $client->GetExpedition();
+                        if ($dz) {
+                            my $expedition_members_ref = $dz->GetMembers();
+                            my %expedition_members = %{$expedition_members_ref};
 
-                        for (my $count = 0; $count < $group->GroupCount(); $count++) {
-                            my $player = $group->GetMember($count);
-                            if ($player) {
-                                # Check if the player is a member of the expedition
-                                my $player_name = $player->GetName();
-                                if ($dz && !exists $expedition_members{$player_name}) {
-                                    plugin::YellowText("$player_name is not a member of this expedition.");
-                                    return;
+                            for (my $count = 0; $count < $group->GroupCount(); $count++) {
+                                my $player = $group->GetMember($count);
+                                if ($player) {
+                                    # Check if the player is a member of the expedition
+                                    my $player_name = $player->GetName();
+                                    if ($dz && !exists $expedition_members{$player_name}) {
+                                        plugin::YellowText("$player_name is not a member of this expedition.");
+                                        return;
+                                    }
                                 }
-                            }
+                             }
                         }
-                    }
                     }
 
                     # If all checks pass, move the group members who are within range
                     for (my $count = 0; $count < $group->GroupCount(); $count++) {
                         my $player = $group->GetMember($count);                  
 
-                        if ($player && (plugin::is_eligible_for_zone($player->CastToClient(), $attuned_shortname, 1) || $attuned_shortname eq 'instance')) {                            
+                        if ($player && $player->GetID() != $client->GetID() && (plugin::is_eligible_for_zone($player->CastToClient(), $attuned_shortname, 1) || $attuned_shortname eq 'instance')) {                            
                             if ($attuned_shortname eq 'instance' && $client->GetExpedition()) {
                                 $dz = $client->GetExpedition();
-                                $client->SpellEffect(218,1);
+                                $player->SpellEffect(218,1);
                                 $player->MovePCDynamicZone($dz->GetZoneID());                                      
                             } else {
-                                $client->SpellEffect(218,1);
+                                $player->SpellEffect(218,1);
                                 $player->MovePC(quest::GetZoneID($attuned_shortname), $x, $y, $z, $heading);
                             }
                         }
