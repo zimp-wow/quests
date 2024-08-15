@@ -50,10 +50,9 @@ sub EVENT_POPUPRESPONSE {
                 return;
             }
 
-            if ($popupid == 1461 ) { 
+            if ($popupid == 1461 && $attuned_shortname eq 'instance') { 
                 my $group = $client->GetGroup();
                 if ($group) {
-                    if ($attuned_shortname eq 'instance') {
                     # Get the expedition object
                     my $dz = $client->GetExpedition();
                     if ($dz) {
@@ -71,7 +70,6 @@ sub EVENT_POPUPRESPONSE {
                                 }
                             }
                         }
-                    }
                     }
 
                     # If all checks pass, move the group members who are within range
