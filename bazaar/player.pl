@@ -50,7 +50,7 @@ sub EVENT_POPUPRESPONSE {
                 return;
             }
 
-            if ($popupid == 1461 && $attuned_shortname eq 'instance') { 
+            if ($popupid == 1461) { 
                 my $group = $client->GetGroup();
                 if ($group) {
                     # Get the expedition object
