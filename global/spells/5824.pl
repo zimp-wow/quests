@@ -22,10 +22,10 @@ sub EVENT_SPELL_EFFECT_CLIENT {
     my $chosen_loc = $locations{$keys[0]};
 
     # Apply the randomization of +/- 5 to X and Y
-    my $randomized_x = $chosen_loc->[0] + int(rand(11)) - 5;
-    my $randomized_y = $chosen_loc->[1] + int(rand(11)) - 5;
-    my $z = $chosen_loc->[2];
-    my $heading = $chosen_loc->[3];
+    my $randomized_x    = $chosen_loc->[0] + int(rand(11)) - 5;
+    my $randomized_y    = $chosen_loc->[1] + int(rand(11)) - 5;
+    my $z               = $chosen_loc->[2];
+    my $heading         = $chosen_loc->[3];
 
     if ($zoneid != 151) {
         # Save the current location
@@ -34,7 +34,26 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         $client->SetBucket("Return-Z", $client->GetZ());
         $client->SetBucket("Return-H", $client->GetHeading());
         $client->SetBucket("Return-Zone", $zoneid);
-        $client->SetBucket("Return-Instance", $instanceid);       
+        $client->SetBucket("Return-Instance", $instanceid);
+
+        my $group = $client->GetGroup();
+        if ($group) {
+            for (my $count = 0; $count < $group->GroupCount(); $count++) {
+                my $player = $group->GetMember($count);
+                if ($player && $player->GetID() != $client->GetID() && $client->CalculateDistance($player) <= 200) {
+                    my $popup_title = "Return to the Bazaar";
+                    my $popup_text  = "Would you like to return to the Bazaar with your groupmate?";
+                    my $popup_yes   = 58240;
+                    my $popup_no    = 58241;
+
+                    $player->Popup2($popup_title, $popup_text, $popup_yes, $popup_no, 2);
+                    $player->SetEntityVariable("bazaar_x", $chosen_loc->[0]);
+                    $player->SetEntityVariable("bazaar_y", $chosen_loc->[1]);
+                    $player->SetEntityVariable("bazaar_z", $chosen_loc->[2]);
+                    $player->SetEntityVariable("bazaar_h", $chosen_loc->[3]);
+                }
+            }
+        }
 
         # Move the player to the Bazaar at a randomized location
         $client->MovePC(151, $randomized_x, $randomized_y, $z, $heading);

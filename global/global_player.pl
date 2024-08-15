@@ -51,6 +51,16 @@ sub EVENT_CONNECT {
     }
 }
 
+sub EVENT_POPUPRESPONSE {
+    if ($popupid == 58240) {
+        my $x = $client->GetEntityVariable("bazaar_x") + int(rand(11)) - 5;
+        my $y = $client->GetEntityVariable("bazaar_y") + int(rand(11)) - 5;
+        my $z = $client->GetEntityVariable("bazaar_z");
+        my $h = $client->GetEntityVariable("bazaar_h");
+        $client->MovePC(151, $x, $y, $z, $h);
+    }
+}
+
 sub EVENT_LEVEL_UP {
     plugin::CommonCharacterUpdate($client);
     my $new_level = $client->GetLevel();
