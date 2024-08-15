@@ -114,12 +114,59 @@ sub EVENT_AGGRO {
 
 sub EVENT_SPAWN {
     plugin::CheckSpawnWaypoints();
-    
-    if ($npc->IsPet() && $npc->GetOwner() && $npc->GetOwner()->IsClient()) {
-        my @spell_ids = (2612, 2633, 2614, 2616, 2618, 2621, 2623, 2626, 2627, 2631, 3457, 3461, 5531, 5538, 10379);
-        
-        # Check if the PetSpellID is in the @spell_ids array
-        if (grep { $_ == $npc->GetPetSpellID() } @spell_ids) {
+
+    if ($npc->GetOwner() && $npc->GetOwner()->IsClient()) {
+        # Define spell ID arrays for different pet types
+        my @warders             = (2612, 2614, 2616, 2618, 2621, 2623, 2626, 2627, 2631, 2633, 3457, 3461, 5531, 5538, 10379);
+        my @air_elementals      = (317, 396, 400, 404, 499, 572, 576, 623, 627, 631, 635, 1674, 1678, 5473, 10695, 3317);
+        my @earth_elementals    = (58, 335, 397, 401, 496, 569, 573, 620, 624, 628, 632, 1671, 1675, 5495, 10753, 3324);
+        my @water_elementals    = (315, 336, 398, 402, 497, 570, 574, 621, 625, 629, 633, 1672, 1676, 5480, 10708, 3320);
+        my @fire_elementals     = (316, 395, 399, 403, 498, 571, 575, 622, 626, 630, 634, 1673, 1677, 5485, 10719, 3322);
+        my @monster_summons     = (1400, 1402, 1404, 4888, 10769);
+        my @manifest            = (1936);
+        my @skeletons           = (338, 351, 362, 440, 441, 442, 443, 491, 492, 493, 494, 495);
+        my @spectres            = (1621, 1622, 1623, 3304, 3310, 3314, 5431, 5438, 10506, 10561);
+        my @animations          = (285, 295, 681, 682, 683, 684, 685, 686, 687, 688, 689, 690, 1723, 3034, 5505, 10586);
+        my @animated_swords     = (1722, 5460, 10840);
+        my @hammers             = (1721, 5256, 11750, 11751, 11752);
+
+        my $owner = $npc->GetOwner();
+
+        # Map keys to the corresponding arrays
+        my %pet_type_map = (
+            'skeletons'        => \@skeletons,
+            'spectres'         => \@spectres,
+            'warders'          => \@warders,
+            'air_elementals'   => \@air_elementals,
+            'earth_elementals' => \@earth_elementals,
+            'water_elementals' => \@water_elementals,
+            'fire_elementals'  => \@fire_elementals,
+            'monster_summons'  => \@monster_summons,
+            'manifest'         => \@manifest,
+            'animations'       => \@animations,
+            'animated_swords'  => \@animated_swords,
+            'hammers'          => \@hammers,
+        );
+
+        # Initialize a hash to track counts for different pet types
+        my %pet_counts = map { $_ => 1 } keys %pet_type_map;
+
+        # Fetch the list of NPCs owned by the player
+        my @npc_list = $entity_list->GetNPCList();
+
+        foreach my $ent (@npc_list) {
+            if ($ent->GetOwner() && $ent->GetOwner()->GetID() == $owner->GetID()) {
+                foreach my $type (keys %pet_type_map) {
+                    if (grep { $_ == $ent->GetPetSpellID() } @{$pet_type_map{$type}}) {
+                        $pet_counts{$type}++;
+                        quest::debug("Incrementing $type count to $pet_counts{$type}");
+                    }
+                }
+            }
+        }
+
+        # Do Warder Sizing Stuff
+        if (grep { $_ == $npc->GetPetSpellID() } @warders) {
             my %size_map = (
                 1   => 8,
                 2   => 4,
@@ -153,6 +200,195 @@ sub EVENT_SPAWN {
 
         if ($npc->GetPetSpellID() == 1475) {
             $npc->ChangeSize(3);
+        }
+
+        # Warder Names
+        if (grep { $_ == $npc->GetPetSpellID() } @warders) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("warder_name_$pet_counts{'warders'}");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    # Generate a random bestial name
+                    my @prefixes = qw(Gnar Krag Bru Vor Thok Dra Gar Zhar Kro Skaar Fang Ruk Grim 
+                                    Tharn Bar Krull Vorn Drak Krog Mar Groth Skorn Grak Harg 
+                                    Ruk Narz Vul Krath Rorg Tark Bruk Grimz Thrak Brak Mor Drak Kill
+                                    Gnash Vrak Zur Grorn Koth Vorash Thrash Zorag Gruk Rak Vorn Goth);
+
+                    my @suffixes = qw(
+                                        fang claw tusk bite maw roar rend gore gnash bark slash 
+                                        snap rip tear thorn howl grunt wing quill tail fur 
+                                        king snout scale jaw hide horn talon 
+                                        hoof paw mane purr hiss sting snarl growl screech 
+                                        coil lunge scowl chomp gnarl gash whip bristle creep 
+                                        slink scratch gnaw rake squeal hiss snort 
+                                        rasp tread bound lunge lash slither thrash  
+                                        peck snip snatch 
+                                        bite shred gouge flinch grunt grunt pierce 
+                                        clamp grind rake carve shred crunch 
+                                        batter crush mash snub dozer
+                                    );
+
+
+                    my $random_name = ucfirst($prefixes[int(rand(@prefixes))] .
+                                            $suffixes[int(rand(@suffixes))]);
+
+                    $npc->TempName($random_name);
+                    $owner->SetBucket("warder_name_$pet_counts{'warders'}", $random_name);
+                }
+            }
+        }
+
+        # Air Elementals
+        if (grep { $_ == $npc->GetPetSpellID() } @air_elementals) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("air_elemental_name_$pet_counts{'air_elementals'}");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {                   
+                    $owner->SetBucket("air_elemental_name_$pet_counts{'air_elementals'}", $npc->GetName());
+                }
+            }
+        }
+
+        # Earth Elementals
+        if (grep { $_ == $npc->GetPetSpellID() } @earth_elementals) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("earth_elemental_name_$pet_counts{'earth_elementals'}");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    $owner->SetBucket("earth_elemental_name_$pet_counts{'earth_elementals'}", $npc->GetName());
+                }
+            }
+        }
+
+        # Water Elementals
+        if (grep { $_ == $npc->GetPetSpellID() } @water_elementals) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("water_elemental_name_$pet_counts{'water_elementals'}");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    $owner->SetBucket("water_elemental_name_$pet_counts{'water_elementals'}", $npc->GetName());
+                }
+            }
+        }
+
+        # Fire Elementals
+        if (grep { $_ == $npc->GetPetSpellID() } @fire_elementals) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("fire_elemental_name_$pet_counts{'fire_elementals'}");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    $owner->SetBucket("fire_elemental_name_$pet_counts{'fire_elementals'}", $npc->GetName());
+                }
+            }
+        }
+
+        # Monster Summons
+        if (grep { $_ == $npc->GetPetSpellID() } @monster_summons) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("monster_summon_name_$pet_counts{'monster_summons'}");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    #$owner->SetBucket("monster_summon_name_$pet_counts{'monster_summons'}", $npc->GetName());
+                }
+            }
+        }
+
+        # Manifest
+        if (grep { $_ == $npc->GetPetSpellID() } @manifest) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("manifest_name_$pet_counts{'manifest'}");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    $owner->SetBucket("manifest_name_$pet_counts{'manifest'}", $npc->GetName());
+                }
+            }
+        }
+
+        # Skeletons
+        if (grep { $_ == $npc->GetPetSpellID() } @skeletons) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("skeleton_name_$pet_counts{'skeletons'}");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    # Generate a random skeletal name directly
+                    my @prefixes = qw(Mor Skel Grim Varn Mar Karn Zor Gor Thal Tor Nar Thrax);
+                    my @middles = qw(ak or th ar al ro im uth on an en ol amun);
+                    my @suffixes = qw(rik thos nar grim thal ok ath ur mar oth ros ak dar);
+
+                    my $random_name = ucfirst($prefixes[int(rand(@prefixes))] .
+                                            $middles[int(rand(@middles))] .
+                                            $suffixes[int(rand(@suffixes))]);
+
+                    $npc->TempName($random_name);
+                    $owner->SetBucket("skeleton_name_$pet_counts{'skeletons'}", $random_name);
+                }
+            }
+        }
+
+        # Spectres
+        if (grep { $_ == $npc->GetPetSpellID() } @spectres) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("spectre_name_$pet_counts{'spectres'}");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    # Generate a random ghostly name directly
+                    my @prefixes = qw(Shad Vel Mor Xyl Eld Zar Thar Lur Vor Dra Thrax Amun Grim);
+                    my @middles = qw(rax drim vath ris ros vok nis rok rath lor amun);
+                    my @suffixes = qw(thar is al ar os eth or ith as ok dar ra);
+
+                    my $random_name = ucfirst($prefixes[int(rand(@prefixes))] .
+                                            $middles[int(rand(@middles))] .
+                                            $suffixes[int(rand(@suffixes))]);
+
+                    $npc->TempName($random_name);
+                    $owner->SetBucket("spectre_name_$pet_counts{'spectres'}", $random_name);
+                }
+            }
+        }
+
+        # Animations 
+        if (grep { $_ == $npc->GetPetSpellID() } @animations) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("animation_name");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    #$owner->SetBucket("animation_name", $npc->GetName());
+                }
+            }
+        } 
+
+        # Animated Swords 
+        if (grep { $_ == $npc->GetPetSpellID() } @animated_swords) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("animated_sword_name");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    #$owner->SetBucket("animated_sword_name", $npc->GetName());
+                }
+            }
+        } 
+
+        # Hammers 
+        if (grep { $_ == $npc->GetPetSpellID() } @hammers) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("hammer_name");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    #$owner->SetBucket("hammer_name", $npc->GetName());
+                }
+            }
         }
     }
 }
