@@ -65,6 +65,7 @@ sub EVENT_POPUPRESPONSE {
         $client->SetBucket("Return-Zone", $zoneid);
         $client->SetBucket("Return-Instance", $instanceid);
         
+        $client->SpellEffect(218,1);
         $client->MovePC(151, $x, $y, $z, $h);
     }
 }
