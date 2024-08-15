@@ -35,8 +35,9 @@ sub EVENT_POPUPRESPONSE {
     if ($popupid == 1460 || $popupid == 1461) {
         my $group_flg           = quest::get_data($client->AccountID() ."-group-ports-enabled") || "";
         my $attuned_shortname   = $client->GetEntityVariable("magic_map_attune");
-        my $waypoint_data = plugin::GetWaypoint($attuned_shortname, $client);
+        my $waypoint_data       = plugin::GetWaypoint($attuned_shortname, $client);
 
+        # Check if we have valid config data, either a waypoint or an expedition
         if ($waypoint_data || ($attuned_shortname eq 'instance' && $client->GetExpedition())) {
             my $long_name = $waypoint_data->[0];  # Access the long name (first element in the array)
             my $continent = $waypoint_data->[1];  # Access the continent ID
@@ -45,28 +46,35 @@ sub EVENT_POPUPRESPONSE {
             my $z = $waypoint_data->[4];          # Z coordinate
             my $heading = $waypoint_data->[5];    # Heading
 
+            # Group option locked behind EoM
             if ($popupid == 1461 && !$group_flg) {
                 plugin::YellowText("Your account does not have the ability to transport your group this way unlocked.");
                 return;
             }
 
+            # Group port option
             if ($popupid == 1461) { 
                 my $group = $client->GetGroup();
+                my $dz    = $client->GetExpedition();
                 if ($group) {
-                    # Get the expedition object
-                    my $dz = $client->GetExpedition();
+                    
+                    # DZ validation branch
                     if ($dz) {
-                        my $expedition_members_ref = $dz->GetMembers();
-                        my %expedition_members = %{$expedition_members_ref};
+                        # Get the expedition object
+                        my $dz = $client->GetExpedition();
+                        if ($dz) {
+                            my $expedition_members_ref = $dz->GetMembers();
+                            my %expedition_members = %{$expedition_members_ref};
 
-                        for (my $count = 0; $count < $group->GroupCount(); $count++) {
-                            my $player = $group->GetMember($count);
-                            if ($player) {
-                                # Check if the player is a member of the expedition
-                                my $player_name = $player->GetName();
-                                if ($dz && !exists $expedition_members{$player_name}) {
-                                    plugin::YellowText("$player_name is not a member of this expedition.");
-                                    return;
+                            for (my $count = 0; $count < $group->GroupCount(); $count++) {
+                                my $player = $group->GetMember($count);
+                                if ($player) {
+                                    # Check if the player is a member of the expedition
+                                    my $player_name = $player->GetName();
+                                    if ($dz && !exists $expedition_members{$player_name}) {
+                                        plugin::YellowText("$player_name is not a member of this expedition.");
+                                        return;
+                                    }
                                 }
                             }
                         }
@@ -74,17 +82,28 @@ sub EVENT_POPUPRESPONSE {
 
                     # If all checks pass, move the group members who are within range
                     for (my $count = 0; $count < $group->GroupCount(); $count++) {
-                        my $player = $group->GetMember($count);                  
-
-                        if ($player && (plugin::is_eligible_for_zone($player->CastToClient(), $attuned_shortname, 1) || $attuned_shortname eq 'instance')) {                            
-                            if ($attuned_shortname eq 'instance' && $client->GetExpedition()) {
-                                $dz = $client->GetExpedition();
-                                $client->SpellEffect(218,1);
-                                $player->MovePCDynamicZone($dz->GetZoneID());                                      
-                            } else {
-                                $client->SpellEffect(218,1);
-                                $player->MovePC(quest::GetZoneID($attuned_shortname), $x, $y, $z, $heading);
+                        my $player = $group->GetMember($count);
+                        if ($player && plugin::is_eligible_for_zone($player->CastToClient(), $attuned_shortname, 1)) {
+                            if ($player == $client) {
+                                next;
                             }
+
+                            #DZ Branch
+                            if ($dz && $attuned_shortname eq 'instance') {
+                                $player->SpellEffect(218,1);
+                                $player->MovePCDynamicZone($dz->GetZoneID());
+                                next;
+                            }
+
+                            #Attuned Branch
+                            if ($attuned_shortname ne 'instance') {
+                                $player->SpellEffect(218,1);
+                                $player->MovePC(quest::GetZoneID($attuned_shortname), $x, $y, $z, $heading);
+                                next;
+                            }
+
+                            quest::debug("Failed to find valid port condition for " . $player->GetCleanName());
+                            return;
                         }
                     }
                 }
