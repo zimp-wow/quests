@@ -9,11 +9,12 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         'Location A'    => [-135, -550, 5, 300],
         'Location B'    => [100, -500, 5, 300],
         'Location C'    => [95, -300, 5, 300],
-        'Location D'    => [170, -95, -15, 400],
-        'Location E'    => [-170, -95, -15, 400],
-        'Location F'    => [-33, -50, -65, 400],
         'Location G'    => [45, -820, 4, 450],
-        'Location H'    => [15, -655, 27, 290]
+        'Upstairs'      => [15, -655, 27, 290],
+        'Aporia 1'      => [217, -578, 2, 3],
+        'Aporia 2'      => [-179, -151, -16, 254],
+        'Aporia 3'      => [168, -149, -16, 259],
+        'Aporia 4'      => [-148, -481, 3, 310],
         # Add more locations as needed
     );
 
@@ -25,7 +26,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
     my $randomized_x    = $chosen_loc->[0] + int(rand(11)) - 5;
     my $randomized_y    = $chosen_loc->[1] + int(rand(11)) - 5;
     my $z               = $chosen_loc->[2];
-    my $heading         = $chosen_loc->[3];
+    my $heading         = rand(512);
 
     if ($zoneid != 151) {
         # Save the current location
