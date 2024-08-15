@@ -112,66 +112,48 @@ sub EVENT_AGGRO {
     plugin::FadeWorldWideBuffs($npc);
 }
 
-
 sub EVENT_SPAWN {
     plugin::CheckSpawnWaypoints();
     
-    # Resize Pets
     if ($npc->IsPet() && $npc->GetOwner() && $npc->GetOwner()->IsClient()) {
         my @spell_ids = (2612, 2633, 2614, 2616, 2618, 2621, 2623, 2626, 2627, 2631, 3457, 3461, 5531, 5538, 10379);
-        #if (any { $_ == $npc->GetPetSpellID() } @spell_ids) {
-            my $size = 4;
-            if (0) {}
-            # Beastlord pets
-            elsif ($npc->GetRace() == 439 && $npc->GetOwner()->GetRace() == 1) {
-                $size = 8;
-            }   
-            elsif ($npc->GetRace() == 42 && $npc->GetOwner()->GetRace() == 2) {
-                $size = 4;
-            }
-            elsif ($npc->GetRace() == 455 && $npc->GetOwner()->GetRace() == 3) {
-                $size = 5;
-            }
-            elsif ($npc->GetRace() == 432 && $npc->GetOwner()->GetRace() == 4) {
-                $size = 9;
-            }
-            elsif ($npc->GetRace() == 432 && $npc->GetOwner()->GetRace() == 5) {
-                $size = 6;
-            }
-            elsif ($npc->GetRace() == 432 && $npc->GetOwner()->GetRace() == 6) {
-                $size = 6;
-            }
-            elsif ($npc->GetRace() == 432 && $npc->GetOwner()->GetRace() == 7) {
-                $size = 6;
-            }
-            elsif ($npc->GetRace() == 369 && $npc->GetOwner()->GetRace() == 8) {
-                $size = 3;
-            }
-            elsif ($npc->GetRace() == 91 && $npc->GetOwner()->GetRace() == 9) {
-                $size = 12;
-            }
-            elsif ($npc->GetRace() == 305 && $npc->GetOwner()->GetRace() == 10) {
-                $size = 4;
-            }
-            elsif ($npc->GetRace() == 468 && $npc->GetOwner()->GetRace() == 11) {
-                $size = 5;
-            }
-            elsif ($npc->GetRace() == 273 && $npc->GetOwner()->GetRace() == 12) {
-                $size = 3;
-            }
-            elsif ($npc->GetRace() == 42 && $npc->GetOwner()->GetRace() == 128) {
-                $size = 3;
-            }
-            elsif ($npc->GetRace() == 439 && $npc->GetOwner()->GetRace() == 130) {
-                $size = 8;
-            }
-            elsif ($npc->GetRace() == 273 && $npc->GetOwner()->GetRace() == 330) {
-            $size = 3;
+        
+        # Check if the PetSpellID is in the @spell_ids array
+        if (grep { $_ == $npc->GetPetSpellID() } @spell_ids) {
+            my %size_map = (
+                1   => 8,
+                2   => 4,
+                3   => 5,
+                4   => 9,
+                5   => 6,
+                6   => 6,
+                7   => 6,
+                8   => 3,
+                9   => 12,
+                10  => 4,
+                11  => 5,
+                12  => 3,
+                128 => 3,
+                130 => 8,
+                330 => 3,
+            );
+
+            my $size = 4;  # Default size
+
+            # Check if the owner's race is in the size map and set the size accordingly
+            my $owner_race = $npc->GetOwner()->GetRace();
+            if (exists $size_map{$owner_race}) {
+                $size = $size_map{$owner_race};
             }
 
+            # Adjust size based on the NPC's level
             $size *= 1 + ($npc->GetLevel() * 0.01);
             $npc->ChangeSize($size);
-        #}
+        }
+
+        if ($npc->GetPetSpellID() == 1475) {
+            $npc->ChangeSize(3);
+        }
     }
 }
 
