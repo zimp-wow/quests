@@ -129,6 +129,7 @@ sub EVENT_SPAWN {
         my @animations          = (285, 295, 681, 682, 683, 684, 685, 686, 687, 688, 689, 690, 1723, 3034, 5505, 10586);
         my @animated_swords     = (1722, 5460, 10840);
         my @hammers             = (1721, 5256, 11750, 11751, 11752);
+        my @spirits             = (164, 165, 166, 577, 1574, 3377, 5389, 9983);  # Added spirits
 
         my $owner = $npc->GetOwner();
 
@@ -146,6 +147,7 @@ sub EVENT_SPAWN {
             'animations'       => \@animations,
             'animated_swords'  => \@animated_swords,
             'hammers'          => \@hammers,
+            'spirits'          => \@spirits,  # Added spirits to the pet type map
         );
 
         # Initialize a hash to track counts for different pet types
@@ -235,6 +237,33 @@ sub EVENT_SPAWN {
 
                     $npc->TempName($random_name);
                     $owner->SetBucket("warder_name_$pet_counts{'warders'}", $random_name);
+                }
+            }
+        }
+
+        # Loop to generate a name for ancestral spirit wolves
+        if (grep { $_ == $npc->GetPetSpellID() } @spirits) {            
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("spirits_name_$pet_counts{'spirits'}");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    my @spirit_wolf_prefixes = qw(Ancient Wise Shadow Mystic Spirit Ghost Phantom Ancestral Elder Sacred 
+                              Thunder Moon Frost Blood Night Storm Silent Echo Fire Earth Sky 
+                              Star Dark Silver Grim Fierce Wild Whisper Winter Steel Iron 
+                              Noble Proud Fierce Glimmer Ember Savage Brave Noble Shimmer 
+                              Golden Crimson Lone Eternal Wraith Stone);
+
+                    my @spirit_wolf_suffixes = qw(Wolf Lupus Fang Howl Prowl Claw Eye Breath Maw Snarl Fur Tail Howler
+                                                Bite Heart Shade Stalker Hunter Runner Roar Spirit Bane Fury 
+                                                Warden Shroud Shadow Ripper Guardian Strider Nightshade Sentry 
+                                                Whisper Fangblade Razorback Warg Sentinel Watcher Ghostwalker);
+                    # Generate a random ancestral spirit wolf name with an underscore
+                    my $random_name = ucfirst($spirit_wolf_prefixes[int(rand(@spirit_wolf_prefixes))]) . '_' .
+                                    ucfirst($spirit_wolf_suffixes[int(rand(@spirit_wolf_suffixes))]);
+
+                    $npc->TempName($random_name);
+                    $owner->SetBucket("spirits_name_$pet_counts{'spirits'}", $random_name);
                 }
             }
         }
