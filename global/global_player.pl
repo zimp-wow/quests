@@ -57,6 +57,14 @@ sub EVENT_POPUPRESPONSE {
         my $y = $client->GetEntityVariable("bazaar_y") + int(rand(11)) - 5;
         my $z = $client->GetEntityVariable("bazaar_z");
         my $h = $client->GetEntityVariable("bazaar_h");
+
+        $client->SetBucket("Return-X", $client->GetX());
+        $client->SetBucket("Return-Y", $client->GetY());
+        $client->SetBucket("Return-Z", $client->GetZ());
+        $client->SetBucket("Return-H", $client->GetHeading());
+        $client->SetBucket("Return-Zone", $zoneid);
+        $client->SetBucket("Return-Instance", $instanceid);
+        
         $client->MovePC(151, $x, $y, $z, $h);
     }
 }
