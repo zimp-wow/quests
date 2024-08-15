@@ -52,7 +52,7 @@ sub EVENT_CONNECT {
 }
 
 sub EVENT_POPUPRESPONSE {
-    if ($popupid == 58240) {
+    if ($popupid == 58240 && $zone != 151) {
         my $x = $client->GetEntityVariable("bazaar_x") + int(rand(11)) - 5;
         my $y = $client->GetEntityVariable("bazaar_y") + int(rand(11)) - 5;
         my $z = $client->GetEntityVariable("bazaar_z");
