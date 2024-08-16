@@ -173,7 +173,7 @@ sub EVENT_SPAWN {
         if (grep { $_ == $npc->GetPetSpellID() } @warders) {
             my %size_map = (
                 1   => 8,
-                2   => 1,
+                2   => 2,
                 3   => 5,
                 4   => 9,
                 5   => 6,

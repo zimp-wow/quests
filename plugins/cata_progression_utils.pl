@@ -512,9 +512,7 @@ sub delete_all_progress {
 
 sub is_time_locked {
     # Return 1 if locked, 0 if unlocked
-    my $stage = shift;
-
-     if (plugin::MulticlassingEnabled()) { return 1; }
+    my $stage = shift;   
 
     if ($stage eq 'RoK') {       
         return 0;
