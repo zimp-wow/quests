@@ -173,7 +173,7 @@ sub EVENT_SPAWN {
         if (grep { $_ == $npc->GetPetSpellID() } @warders) {
             my %size_map = (
                 1   => 8,
-                2   => 4,
+                2   => 1,
                 3   => 5,
                 4   => 9,
                 5   => 6,
@@ -189,10 +189,8 @@ sub EVENT_SPAWN {
                 330 => 3,
             );
 
-            my $size = 4;  # Default size
-
             # Check if the owner's race is in the size map and set the size accordingly
-            my $owner_race = $npc->GetOwner()->GetRace();
+            my $owner_race = $owner->GetBaseRace();
             if (exists $size_map{$owner_race}) {
                 $size = $size_map{$owner_race};
             }
