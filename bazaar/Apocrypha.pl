@@ -158,11 +158,11 @@ sub EVENT_SAY {
         $cost = 10;
     }
 
-    elsif ($text=~/buffs/i) {        
+    elsif ($text=~/buffs/i && !($client->IsSeasonal() || plugin::MultiClassingEnabled())) {        
         handle_buff_for_level();
     }
 
-    elsif ($text=~/double/i) {        
+    elsif ($text=~/double/i && !($client->IsSeasonal() || plugin::MultiClassingEnabled())) {        
         handle_buff_for_level(2, 3);
     }
 
