@@ -54,15 +54,19 @@ sub RewardItems {
     my $rewardGiven = 0;
 
     if ($rewardedClassesBitmask == 0) {
-      $client->SummonFixedItem(17423);
+        $client->SummonFixedItem(17423);
     }
 
     foreach my $classBitmask (keys %classRewards) {
         if (($playerClassBitmask & $classBitmask) && !($rewardedClassesBitmask & $classBitmask)) { 
-            # Summon the fixed items for the class
+            # Summon the fixed items for the class if the player does not already have them
             foreach my $item (@{$classRewards{$classBitmask}->{items}}) {
-                $client->SummonFixedItem($item);
+                if (!$client->HasItem($item) || $item == 2008500) { # Check if the player already has the item
+                    $client->SummonFixedItem($item);
+                }
             }
+
+            $client->AddMoneyToPP(0, $classRewards{$classBitmask}->{cash}, 0, 0);
             
             $rewardedClassesBitmask |= $classBitmask; 
             $rewardGiven = 1;
@@ -74,7 +78,7 @@ sub RewardItems {
 
         my $response = "Hmmm… Does this refresh your memory at all? I think you’ll find that if you look around here long enough, things will seem more and more like you remember. If you are ready to start your adventure, speak to Tearel to learn how to get around.";
         if (plugin::MultiClassingEnabled()) {
-          $response = "Hmmm… Does this refresh your memory at all? Perhaps your spirit yearns for something different this time around. Go and speak to the guild masters that have taken refuge here. They may just be willing to let you learn their ways. After you've decided which paths are for you, return to me for equipment more suited to your new endeavors. If you are ready to start your adventure, speak to Tearel to learn how to get around."; # Add multiclass response text here
+            $response = "Hmmm… Does this refresh your memory at all? Perhaps your spirit yearns for something different this time around. Go and speak to the guild masters that have taken refuge here. They may just be willing to let you learn their ways. After you've decided which paths are for you, return to me for equipment more suited to your new endeavors. If you are ready to start your adventure, speak to Tearel to learn how to get around."; # Add multiclass response text here
         }
 
         quest::say($response);
