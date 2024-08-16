@@ -130,6 +130,7 @@ sub EVENT_SPAWN {
         my @animated_swords     = (1722, 5460, 10840);
         my @hammers             = (1721, 5256, 11750, 11751, 11752);
         my @spirits             = (164, 165, 166, 577, 1574, 3377, 5389, 9983);  # Added spirits
+        my @bears               = (1475);
 
         my $owner = $npc->GetOwner();
 
@@ -148,6 +149,7 @@ sub EVENT_SPAWN {
             'animated_swords'  => \@animated_swords,
             'hammers'          => \@hammers,
             'spirits'          => \@spirits,  # Added spirits to the pet type map
+            'bears'            => \@bears,
         );
 
         # Initialize a hash to track counts for different pet types
@@ -198,10 +200,50 @@ sub EVENT_SPAWN {
             # Adjust size based on the NPC's level
             $size *= 1 + ($npc->GetLevel() * 0.01);
             $npc->ChangeSize($size);
-        }
+        }        
 
-        if ($npc->GetPetSpellID() == 1475) {
-            $npc->ChangeSize(3);
+        # Bear Names
+        if (grep { $_ == $npc->GetPetSpellID() } @bears) {
+            if ($owner) {
+                my $pet_name = $owner->GetBucket("bear_name_$pet_counts{'bears'}");
+                if ($pet_name) {
+                    $npc->TempName($pet_name);
+                } else {
+                    my @bearNames = (
+                        "Yogi", "Boo", "Pip", "Nugget", "Snick", "Pebble", "Fizz", "Munch", "Squirt", "Binky",
+                        "Tiny Grizzle", "Snugglepaws", "Honey Nibbles", "Bearly There", "Cuddlycub", "Fuzzlet",
+                        "Pint-Sized Paws", "Mini Growl", "Buttonbear", "Teacup Teddie",
+                        "Coco", "Bubba", "Milo", "Teddy", "Biscuit", "Frodo", "Gizmo", "Fluffy", "Mochi", "Waffles",
+                        "Bamboo", "Chomp", "Sprout", "Rolo", "Munchkin", "Pudding", "Pipsqueak", "Fuzzball", "Nibbles",
+                        "Pickles", "Popcorn", "Ziggy", "Sparky", "Scooter", "Whiskers", "Snickers", "Wiggles",
+                        "Bubbles", "Chubby", "Choco", "Snickerdoodle", "Cupcake", "Tootsie", "Doodle", "Muffin",
+                        "Peanut", "Buttons", "Truffles", "Brownie", "Gingersnap", "Poppy", "Puff", "Smores",
+                        "Marshmallow", "Cuddles", "Pumpkin", "Ruffles", "Tater", "Sprinkles", "Chewy", "Puffball",
+                        "Cupcake", "Fudge", "Chester", "Cosmo", "Clover", "Dobby", "Squeaky", "Nibbler", "Tater Tot",
+                        "Dumpling", "Wombat", "BoBo", "Churro", "Scooby", "Pudding", "Ducky", "Peaches", "Rascal",
+                        "Smidge", "Bean", "Scruffy", "Gus", "Rugrat", "Hobbit", "Beary_McBearface", "Paddington",
+                        "Bearlock Holmes", "Bearon von Growl", "Bearcules", "Winnie the Boo", "Grizzly Adams",
+                        "Bear Grylls", "Bearfoot", "Bearth Vader", "Bearin' Square", "Paw Bear",
+                        "Bearzooka", "Bear Hugz", "Bearister", "Gummy Bearson", "Bearalicious",
+                        "Robin Hoodbear", "Bearthoven", "Sir Growls-a-Lot", "Bearington",
+                        "Honeybear Hound", "Bearminator", "Bear Necessities", "Grizz Lee",
+                        "Polar Oppawsite", "Growlbert Einstein", "Bearoness", "Bearrific",
+                        "Bearcat", "Bearly Legal", "Unbearlievable", "Teddy Ruxbin", "Bear Hugger",
+                        "Bearoness von Snuggles", "Bearbie Doll", "Clawdia Pawlsen", "Grizzelda",
+                        "Fuzz Lightyear", "Pawdrey Hepbear", "Furrari", "Bearbados Slim", "Bearlin",
+                        "Furrnando", "Growlberto", "Bearloaf", "Bearianna Grande", "Bearon the Red",
+                        "Clawrence of Arabia", "Paddingpaw", "Pawtrick Swayze", "Bearami Brown",
+                        "Grizzabella", "Bearlentine", "Bearthday Boy", "Paw McCartney", "Clawdette",
+                        "Bearon Brando", "Beartholomew", "Bear Hugington", "Fluff Daddy", "Chewbearca",
+                        "Growldemort", "Bearicane", "Bearlosaurus Rex", "Bear-lenium Falcon", "Bearborator"
+                    );
+                    # Randomly select a bear name from the array
+                    srand;
+                    my $random_bear_name = $bearNames[int(rand(@bearNames))];
+                    $npc->TempName($random_bear_name);
+                    $owner->SetBucket("bear_name_$pet_counts{'bears'}", $random_bear_name);
+                }
+            }
         }
 
         # Warder Names
