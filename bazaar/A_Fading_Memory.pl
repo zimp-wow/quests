@@ -71,6 +71,12 @@ sub RewardItems {
 
     if ($rewardGiven) {
         $client->SetBucket('newbieRewardBits', $rewardedClassesBitmask);
-        quest::say("Hmmm… Does this refresh your memory at all? I think you’ll find that if you look around here long enough, things will seem more and more like you remember.");
+
+        my $response = "Hmmm… Does this refresh your memory at all? I think you’ll find that if you look around here long enough, things will seem more and more like you remember.";
+        if (plugin::MultiClassingEnabled()) else {
+          $response = ""; # Add multiclass response text here
+        }
+
+        quest::say($response);
     }
 }
