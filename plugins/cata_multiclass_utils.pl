@@ -554,7 +554,7 @@ sub GrantClassAA {
         }    
     }
 
-    if ($client->GetLevel() >= 51 && $client->IsSeasonal()) {
+    if ($client->GetLevel() >= 51 && ($client->IsSeasonal() || plugin::MultiClassingEnabled() )) {
         my %class_aa = (
             1 => {
                 '2011' => 1, # Imperator's Command
