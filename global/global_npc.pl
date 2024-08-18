@@ -134,42 +134,16 @@ sub EVENT_SPAWN {
 
         my $owner = $npc->GetOwner();
 
-        # Map keys to the corresponding arrays
-        my %pet_type_map = (
-            'skeletons'        => \@skeletons,
-            'spectres'         => \@spectres,
-            'warders'          => \@warders,
-            'air_elementals'   => \@air_elementals,
-            'earth_elementals' => \@earth_elementals,
-            'water_elementals' => \@water_elementals,
-            'fire_elementals'  => \@fire_elementals,
-            'monster_summons'  => \@monster_summons,
-            'manifest'         => \@manifest,
-            'animations'       => \@animations,
-            'animated_swords'  => \@animated_swords,
-            'hammers'          => \@hammers,
-            'spirits'          => \@spirits,  # Added spirits to the pet type map
-            'bears'            => \@bears,
-        );
-
-        # Initialize a hash to track counts for different pet types
-        my %pet_counts = map { $_ => 1 } keys %pet_type_map;
-
-        # Fetch the list of NPCs owned by the player
+        # Collect existing pet names for the owner
+        my @existing_pet_names;
         my @npc_list = $entity_list->GetNPCList();
-
-        foreach my $ent (@npc_list) {
+        foreach my $ent (@npc_list)  {
             if ($ent->GetOwner() && $ent->GetOwner()->GetID() == $owner->GetID()) {
-                foreach my $type (keys %pet_type_map) {
-                    if (grep { $_ == $ent->GetPetSpellID() } @{$pet_type_map{$type}}) {
-                        $pet_counts{$type}++;
-                        quest::debug("Incrementing $type count to $pet_counts{$type}");
-                    }
-                }
-            }
+                push @existing_pet_names, $ent->GetCleanName();
+            } 
         }
 
-        # Do Warder Sizing Stuff
+        # Warder Sizing
         if (grep { $_ == $npc->GetPetSpellID() } @warders) {
             my %size_map = (
                 1   => 8,
@@ -190,24 +164,35 @@ sub EVENT_SPAWN {
                 522 => 10,
             );
 
-            # Check if the owner's race is in the size map and set the size accordingly
             my $owner_race = $owner->GetBaseRace();
             if (exists $size_map{$owner_race}) {
-                $size = $size_map{$owner_race};
+                my $size = $size_map{$owner_race};
+                $size *= 1 + ($npc->GetLevel() * 0.01);
+                $npc->ChangeSize($size);
             }
-
-            # Adjust size based on the NPC's level
-            $size *= 1 + ($npc->GetLevel() * 0.01);
-            $npc->ChangeSize($size);
-        }        
+        }
 
         # Bear Names
         if (grep { $_ == $npc->GetPetSpellID() } @bears) {
             if ($owner) {
-                my $pet_name = $owner->GetBucket("bear_name_$pet_counts{'bears'}");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
+                my $pet_name;
+                my $name_found = 0;
+
+                # Attempt to find an existing bear name that isn't already used
+                for my $i (1..100) {
+                    my $bucket_name = "bear_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                # If no existing name is found, generate a new one
+                if (!$name_found) {
                     my @bearNames = (
                         "Yogi", "Boo", "Pip", "Nugget", "Snick", "Pebble", "Fizz", "Munch", "Squirt", "Binky",
                         "Tiny Grizzle", "Snugglepaws", "Honey Nibbles", "Bearly There", "Cuddlycub", "Fuzzlet",
@@ -236,11 +221,21 @@ sub EVENT_SPAWN {
                         "Bearon Brando", "Beartholomew", "Bear Hugington", "Fluff Daddy", "Chewbearca",
                         "Growldemort", "Bearicane", "Bearlosaurus Rex", "Bear-lenium Falcon", "Bearborator"
                     );
-                    # Randomly select a bear name from the array
-                    srand;
-                    my $random_bear_name = $bearNames[int(rand(@bearNames))];
-                    $npc->TempName($random_bear_name);
-                    $owner->SetBucket("bear_name_$pet_counts{'bears'}", $random_bear_name);
+
+                    do {
+                        $pet_name = $bearNames[int(rand(@bearNames))];
+                    } while (grep { $_ eq $pet_name } @existing_pet_names);
+
+                    # Store the new name in the next available bucket
+                    for my $i (1..100) {
+                        my $bucket_name = "bear_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
+
+                    $npc->TempName($pet_name);
                 }
             }
         }
@@ -248,215 +243,424 @@ sub EVENT_SPAWN {
         # Warder Names
         if (grep { $_ == $npc->GetPetSpellID() } @warders) {
             if ($owner) {
-                my $pet_name = $owner->GetBucket("warder_name_$pet_counts{'warders'}");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
-                    # Generate a random bestial name
+                my $pet_name;
+                my $name_found = 0;
+
+                for my $i (1..10) {
+                    my $bucket_name = "warder_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                if (!$name_found) {
                     my @prefixes = qw(Gnar Krag Bru Vor Thok Dra Gar Zhar Kro Skaar Fang Ruk Grim 
-                                    Tharn Bar Krull Vorn Drak Krog Mar Groth Skorn Grak Harg 
-                                    Ruk Narz Vul Krath Rorg Tark Bruk Grimz Thrak Brak Mor Drak Kill
-                                    Gnash Vrak Zur Grorn Koth Vorash Thrash Zorag Gruk Rak Vorn Goth);
+                                      Tharn Bar Krull Vorn Drak Krog Mar Groth Skorn Grak Harg 
+                                      Ruk Narz Vul Krath Rorg Tark Bruk Grimz Thrak Brak Mor Drak Kill
+                                      Gnash Vrak Zur Grorn Koth Vorash Thrash Zorag Gruk Rak Vorn Goth);
 
-                    my @suffixes = qw(
-                                        fang claw tusk bite maw roar rend gore gnash bark slash 
-                                        snap rip tear thorn howl grunt wing quill tail fur 
-                                        king snout scale jaw hide horn talon 
-                                        hoof paw mane purr hiss sting snarl growl screech 
-                                        coil lunge scowl chomp gnarl gash whip bristle creep 
-                                        slink scratch gnaw rake squeal hiss snort 
-                                        rasp tread bound lunge lash slither thrash  
-                                        peck snip snatch 
-                                        bite shred gouge flinch grunt grunt pierce 
-                                        clamp grind rake carve shred crunch 
-                                        batter crush mash snub dozer
-                                    );
+                    my @suffixes = qw(fang claw tusk bite maw roar rend gore gnash bark slash 
+                                      snap rip tear thorn howl grunt wing quill tail fur 
+                                      king snout scale jaw hide horn talon 
+                                      hoof paw mane purr hiss sting snarl growl screech 
+                                      coil lunge scowl chomp gnarl gash whip bristle creep 
+                                      slink scratch gnaw rake squeal hiss snort 
+                                      rasp tread bound lunge lash slither thrash  
+                                      peck snip snatch 
+                                      bite shred gouge flinch grunt grunt pierce 
+                                      clamp grind rake carve shred crunch 
+                                      batter crush mash snub dozer);
 
+                    do {
+                        $pet_name = ucfirst($prefixes[int(rand(@prefixes))] . $suffixes[int(rand(@suffixes))]);
+                    } while (grep { $_ eq $pet_name } @existing_pet_names);
 
-                    my $random_name = ucfirst($prefixes[int(rand(@prefixes))] .
-                                            $suffixes[int(rand(@suffixes))]);
+                    for my $i (1..10) {
+                        my $bucket_name = "warder_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
 
-                    $npc->TempName($random_name);
-                    $owner->SetBucket("warder_name_$pet_counts{'warders'}", $random_name);
+                    $npc->TempName($pet_name);
                 }
             }
         }
 
-        # Loop to generate a name for ancestral spirit wolves
+        # Spirit Names
         if (grep { $_ == $npc->GetPetSpellID() } @spirits) {            
             if ($owner) {
-                my $pet_name = $owner->GetBucket("spirits_name_$pet_counts{'spirits'}");
-                if ($pet_name) {
+                my $pet_name;
+                my $name_found = 0;
+
+                for my $i (1..10) {
+                    my $bucket_name = "spirit_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                if (!$name_found) {
+                    my @prefixes = qw(Ancient Wise Shadow Mystic Spirit Ghost Phantom Ancestral Elder Sacred 
+                                      Thunder Moon Frost Blood Night Storm Silent Echo Fire Earth Sky 
+                                      Star Dark Silver Grim Fierce Wild Whisper Winter Steel Iron 
+                                      Noble Proud Fierce Glimmer Ember Savage Brave Noble Shimmer 
+                                      Golden Crimson Lone Eternal Wraith Stone);
+
+                    my @suffixes = qw(Wolf Lupus Fang Howl Prowl Claw Eye Breath Maw Snarl Fur Tail Howler
+                                      Bite Heart Shade Stalker Hunter Runner Roar Spirit Bane Fury 
+                                      Warden Shroud Shadow Ripper Guardian Strider Nightshade Sentry 
+                                      Whisper Fangblade Razorback Warg Sentinel Watcher Ghostwalker);
+
+                    do {
+                        $pet_name = ucfirst($prefixes[int(rand(@prefixes))]) . '_' . ucfirst($suffixes[int(rand(@suffixes))]);
+                    } while (grep { $_ eq $pet_name } @existing_pet_names);
+
+                    for my $i (1..10) {
+                        my $bucket_name = "spirit_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
+
                     $npc->TempName($pet_name);
-                } else {
-                    my @spirit_wolf_prefixes = qw(Ancient Wise Shadow Mystic Spirit Ghost Phantom Ancestral Elder Sacred 
-                              Thunder Moon Frost Blood Night Storm Silent Echo Fire Earth Sky 
-                              Star Dark Silver Grim Fierce Wild Whisper Winter Steel Iron 
-                              Noble Proud Fierce Glimmer Ember Savage Brave Noble Shimmer 
-                              Golden Crimson Lone Eternal Wraith Stone);
-
-                    my @spirit_wolf_suffixes = qw(Wolf Lupus Fang Howl Prowl Claw Eye Breath Maw Snarl Fur Tail Howler
-                                                Bite Heart Shade Stalker Hunter Runner Roar Spirit Bane Fury 
-                                                Warden Shroud Shadow Ripper Guardian Strider Nightshade Sentry 
-                                                Whisper Fangblade Razorback Warg Sentinel Watcher Ghostwalker);
-                    # Generate a random ancestral spirit wolf name with an underscore
-                    my $random_name = ucfirst($spirit_wolf_prefixes[int(rand(@spirit_wolf_prefixes))]) . '_' .
-                                    ucfirst($spirit_wolf_suffixes[int(rand(@spirit_wolf_suffixes))]);
-
-                    $npc->TempName($random_name);
-                    $owner->SetBucket("spirits_name_$pet_counts{'spirits'}", $random_name);
                 }
             }
         }
 
-        # Air Elementals
+        # Air Elemental Names
         if (grep { $_ == $npc->GetPetSpellID() } @air_elementals) {
             if ($owner) {
-                my $pet_name = $owner->GetBucket("air_elemental_name_$pet_counts{'air_elementals'}");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {                   
-                    $owner->SetBucket("air_elemental_name_$pet_counts{'air_elementals'}", $npc->GetName());
+                my $pet_name;
+                my $name_found = 0;
+
+                for my $i (1..100) {
+                    my $bucket_name = "air_elemental_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                if (!$name_found) {
+                    $pet_name = $npc->GetCleanName();  # Keep the elemental's default name unique
+                    for my $i (1..100) {
+                        my $bucket_name = "air_elemental_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
                 }
             }
         }
 
-        # Earth Elementals
+        # Earth Elemental Names
         if (grep { $_ == $npc->GetPetSpellID() } @earth_elementals) {
             if ($owner) {
-                my $pet_name = $owner->GetBucket("earth_elemental_name_$pet_counts{'earth_elementals'}");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
-                    $owner->SetBucket("earth_elemental_name_$pet_counts{'earth_elementals'}", $npc->GetName());
+                my $pet_name;
+                my $name_found = 0;
+
+                for my $i (1..100) {
+                    my $bucket_name = "earth_elemental_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                if (!$name_found) {
+                    $pet_name = $npc->GetCleanName();  # Keep the elemental's default name unique
+                    for my $i (1..100) {
+                        my $bucket_name = "earth_elemental_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
                 }
             }
         }
 
-        # Water Elementals
+        # Water Elemental Names
         if (grep { $_ == $npc->GetPetSpellID() } @water_elementals) {
             if ($owner) {
-                my $pet_name = $owner->GetBucket("water_elemental_name_$pet_counts{'water_elementals'}");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
-                    $owner->SetBucket("water_elemental_name_$pet_counts{'water_elementals'}", $npc->GetName());
+                my $pet_name;
+                my $name_found = 0;
+
+                for my $i (1..100) {
+                    my $bucket_name = "water_elemental_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                if (!$name_found) {
+                    $pet_name = $npc->GetCleanName();  # Keep the elemental's default name unique
+                    for my $i (1..100) {
+                        my $bucket_name = "water_elemental_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
                 }
             }
         }
 
-        # Fire Elementals
+        # Fire Elemental Names
         if (grep { $_ == $npc->GetPetSpellID() } @fire_elementals) {
             if ($owner) {
-                my $pet_name = $owner->GetBucket("fire_elemental_name_$pet_counts{'fire_elementals'}");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
-                    $owner->SetBucket("fire_elemental_name_$pet_counts{'fire_elementals'}", $npc->GetName());
+                my $pet_name;
+                my $name_found = 0;
+
+                for my $i (1..100) {
+                    my $bucket_name = "fire_elemental_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                if (!$name_found) {
+                    $pet_name = $npc->GetCleanName();  # Keep the elemental's default name unique
+                    for my $i (1..100) {
+                        my $bucket_name = "fire_elemental_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
                 }
             }
         }
 
-        # Monster Summons
-        if (grep { $_ == $npc->GetPetSpellID() } @monster_summons) {
-            if ($owner) {
-                my $pet_name = $owner->GetBucket("monster_summon_name_$pet_counts{'monster_summons'}");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
-                    #$owner->SetBucket("monster_summon_name_$pet_counts{'monster_summons'}", $npc->GetName());
-                }
-            }
-        }
-
-        # Manifest
-        if (grep { $_ == $npc->GetPetSpellID() } @manifest) {
-            if ($owner) {
-                my $pet_name = $owner->GetBucket("manifest_name_$pet_counts{'manifest'}");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
-                    $owner->SetBucket("manifest_name_$pet_counts{'manifest'}", $npc->GetName());
-                }
-            }
-        }
-
-        # Skeletons
+        # Skeleton Names
         if (grep { $_ == $npc->GetPetSpellID() } @skeletons) {
             if ($owner) {
-                my $pet_name = $owner->GetBucket("skeleton_name_$pet_counts{'skeletons'}");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
-                    # Generate a random skeletal name directly
+                my $pet_name;
+                my $name_found = 0;
+
+                for my $i (1..100) {
+                    my $bucket_name = "skeleton_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                if (!$name_found) {
                     my @prefixes = qw(Mor Skel Grim Varn Mar Karn Zor Gor Thal Tor Nar Thrax);
                     my @middles = qw(ak or th ar al ro im uth on an en ol amun);
                     my @suffixes = qw(rik thos nar grim thal ok ath ur mar oth ros ak dar);
 
-                    my $random_name = ucfirst($prefixes[int(rand(@prefixes))] .
-                                            $middles[int(rand(@middles))] .
-                                            $suffixes[int(rand(@suffixes))]);
+                    do {
+                        $pet_name = ucfirst($prefixes[int(rand(@prefixes))] . $middles[int(rand(@middles))] . $suffixes[int(rand(@suffixes))]);
+                    } while (grep { $_ eq $pet_name } @existing_pet_names);
 
-                    $npc->TempName($random_name);
-                    $owner->SetBucket("skeleton_name_$pet_counts{'skeletons'}", $random_name);
+                    for my $i (1..100) {
+                        my $bucket_name = "skeleton_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
+
+                    $npc->TempName($pet_name);
                 }
             }
         }
 
-        # Spectres
+        # Spectre Names
         if (grep { $_ == $npc->GetPetSpellID() } @spectres) {
             if ($owner) {
-                my $pet_name = $owner->GetBucket("spectre_name_$pet_counts{'spectres'}");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
-                    # Generate a random ghostly name directly
+                my $pet_name;
+                my $name_found = 0;
+
+                for my $i (1..100) {
+                    my $bucket_name = "spectre_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                if (!$name_found) {
                     my @prefixes = qw(Shad Vel Mor Xyl Eld Zar Thar Lur Vor Dra Thrax Amun Grim);
                     my @middles = qw(rax drim vath ris ros vok nis rok rath lor amun);
                     my @suffixes = qw(thar is al ar os eth or ith as ok dar ra);
 
-                    my $random_name = ucfirst($prefixes[int(rand(@prefixes))] .
-                                            $middles[int(rand(@middles))] .
-                                            $suffixes[int(rand(@suffixes))]);
+                    do {
+                        $pet_name = ucfirst($prefixes[int(rand(@prefixes))] . $middles[int(rand(@middles))] . $suffixes[int(rand(@suffixes))]);
+                    } while (grep { $_ eq $pet_name } @existing_pet_names);
 
-                    $npc->TempName($random_name);
-                    $owner->SetBucket("spectre_name_$pet_counts{'spectres'}", $random_name);
+                    for my $i (1..100) {
+                        my $bucket_name = "spectre_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
+
+                    $npc->TempName($pet_name);
                 }
             }
         }
 
-        # Animations 
+        # Animation Names
         if (grep { $_ == $npc->GetPetSpellID() } @animations) {
             if ($owner) {
-                my $pet_name = $owner->GetBucket("animation_name");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
-                    #$owner->SetBucket("animation_name", $npc->GetName());
+                my $pet_name;
+                my $name_found = 0;
+
+                for my $i (1..100) {
+                    my $bucket_name = "animation_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                if (!$name_found) {
+                    $pet_name = $npc->GetCleanName();  # Keep the animation's default name unique
+                    for my $i (1..100) {
+                        my $bucket_name = "animation_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
                 }
             }
-        } 
+        }
 
-        # Animated Swords 
+        # Animated Sword Names
         if (grep { $_ == $npc->GetPetSpellID() } @animated_swords) {
             if ($owner) {
-                my $pet_name = $owner->GetBucket("animated_sword_name");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
-                    #$owner->SetBucket("animated_sword_name", $npc->GetName());
+                my $pet_name;
+                my $name_found = 0;
+
+                for my $i (1..100) {
+                    my $bucket_name = "animated_sword_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                if (!$name_found) {
+                    $pet_name = $npc->GetCleanName();  # Keep the sword's default name unique
+                    for my $i (1..100) {
+                        my $bucket_name = "animated_sword_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
                 }
             }
-        } 
+        }
 
-        # Hammers 
+        # Hammer Names
         if (grep { $_ == $npc->GetPetSpellID() } @hammers) {
             if ($owner) {
-                my $pet_name = $owner->GetBucket("hammer_name");
-                if ($pet_name) {
-                    $npc->TempName($pet_name);
-                } else {
-                    #$owner->SetBucket("hammer_name", $npc->GetName());
+                my $pet_name;
+                my $name_found = 0;
+
+                for my $i (1..100) {
+                    my $bucket_name = "hammer_name_$i";
+                    $pet_name = $owner->GetBucket($bucket_name);
+                    if ($pet_name) {
+                        if (!grep { $_ eq $pet_name } @existing_pet_names) {
+                            $npc->TempName($pet_name);
+                            $name_found = 1;
+                            last;
+                        }
+                    }
+                }
+
+                if (!$name_found) {
+                    $pet_name = $npc->GetCleanName();  # Keep the hammer's default name unique
+                    for my $i (1..100) {
+                        my $bucket_name = "hammer_name_$i";
+                        unless ($owner->GetBucket($bucket_name)) {
+                            $owner->SetBucket($bucket_name, $pet_name);
+                            last;
+                        }
+                    }
+                }
+            }
+        }
+
+        # Monster Summons (unique names per summon)
+        if (grep { $_ == $npc->GetPetSpellID() } @monster_summons) {
+            if ($owner) {
+                my $pet_name = $npc->GetCleanName();  # Keep the monster summon default name unique
+                for my $i (1..100) {
+                    my $bucket_name = "monster_summon_name_$i";
+                    unless ($owner->GetBucket($bucket_name)) {
+                        $owner->SetBucket($bucket_name, $pet_name);
+                        last;
+                    }
+                }
+            }
+        }
+
+        # Manifest (unique names per summon)
+        if (grep { $_ == $npc->GetPetSpellID() } @manifest) {
+            if ($owner) {
+                my $pet_name = $npc->GetCleanName();  # Keep the manifest's default name unique
+                for my $i (1..100) {
+                    my $bucket_name = "manifest_name_$i";
+                    unless ($owner->GetBucket($bucket_name)) {
+                        $owner->SetBucket($bucket_name, $pet_name);
+                        last;
+                    }
                 }
             }
         }
