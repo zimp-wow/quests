@@ -409,7 +409,7 @@ sub is_stage_complete {
         return 0;
     }
 
-    if (plugin::IsSeasonal($client)) {
+    if (plugin::IsSeasonal($client) || plugin::MultiClassingEnabled()) {
         #quest::debug("is_stage_complete going down seasonal bramch");
         if (is_time_locked($stage)) {            
             return 0;
