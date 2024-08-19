@@ -405,6 +405,14 @@ sub EVENT_SPAWN {
         # Water Elemental Names
         if (grep { $_ == $npc->GetPetSpellID() } @water_elementals) {
             if ($owner) {
+                my $current_name = $npc->GetCleanName();
+                
+                # Check if the current name is already one of the allowed names
+                if (grep { $_ eq $current_name } @existing_pet_names) {
+                    # If the current name is allowed, do nothing
+                    return;
+                }
+
                 my $pet_name;
                 my $name_found = 0;
 
