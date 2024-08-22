@@ -14,6 +14,8 @@ sub EVENT_ENTERZONE {
 		return;
 	}
 
+	$expedition = $client->GetExpedition();
+
 	if ($expedition->GetZoneVersion() != 1) {
 		return;
 	}
