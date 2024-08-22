@@ -1,5 +1,5 @@
 function event_say(e)
-	if(e.other:GetFaction(e.self) == 1) then -- CoV Ally
+	if(e.other:GetFaction(e.self) <= 3) then -- CoV Ally
 	    if(e.message:findi("hail")) then
 		    e.self:Say("Hello, " .. e.other:GetName() .. ". It is not very often that I see adventurers back in this cave unless they have intentions of hurting the kind wurms here. I can only hope that for your sake that your intentions are good.");
         elseif(e.message:findi("glanitar")) then
@@ -14,7 +14,7 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if(e.other:GetFaction(e.self) <= 1) then -- CoV Ally    
+	if(e.other:GetFaction(e.self) <= 3) then -- CoV Ally    
 	    if(item_lib.check_turn_in(e.self, e.trade, {item1 = 1861, item2 = 1862})) then
 	    	e.self:Say("What is it you have here, " ..e.other:GetName().. "? Could this possibly be the talisman of [" .. eq.say_link("Glantitar") .. "]? I am afraid I am having trouble identifying if it is indeed is. I can see that you had a great battle with one of the wicked giants. I appreciate that you present to me this head of the evil Kromzek Taskmaster along with the talisman. It proves to me that you are one that is here to aid us in our fight. However, you must seek out [" .. eq.say_link("Rolandal") .. "] to proceed further for only he can help you identify this talisman.");
     		e.other:Faction(362,20); --# Yelinak

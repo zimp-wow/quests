@@ -6,8 +6,10 @@ sub EVENT_SPAWN {
 }
 
 sub EVENT_COMBAT {
-	# if phara leaves combat, reset the hp event to stop exploiters / cheaters / baddies
+	# if phara leaves combat, reset the hp and depop adds
  	if ($combat_state == 0) {
+		$npc->SetHP(100);
+		quest::depopall(108518);
 		quest::setnexthpevent(80);
  	}
 }
