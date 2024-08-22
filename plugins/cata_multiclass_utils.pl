@@ -16,6 +16,20 @@ sub CommonCharacterUpdate {
         plugin::UpdateEoMAward($client);
         plugin::RegisterSeasonalLogin($client);
         plugin::EnableTitles($client);
+
+
+        my @skip_ids = (69, 68, 65, 64, 63, 61, 60, 59, 58, 57, 56, 55);
+        for my $i (grep { !($_ ~~ @skip_ids) } 0..77) {
+            if ($client->GetLevel() == 1) {
+                if ($client->GetSkill($i) < 50 && $client->MaxSkill($i) > 0 && $client->GetSkill($i) < $client->MaxSkill($i)) {
+                    $client->SetSkill($i, $client->MaxSkill($i));
+                }
+            } else {
+                if ($client->GetSkill($i) == 0 && $client->MaxSkill($i) > 0) {
+                    $client->SetSkill($i, 1);
+                }
+            }
+        }
     }    
 }
 
