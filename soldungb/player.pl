@@ -10,13 +10,9 @@ sub EVENT_TARGET_CHANGE {
 	}
 }
 sub EVENT_ENTERZONE {
-	if (!$client->GetExpedition()) {
-		return;
-	}
-
 	$expedition = $client->GetExpedition();
 
-	if ($expedition->GetZoneVersion() != 1) {
+	if (!$expedition || $expedition->GetZoneVersion() != 1) {
 		return;
 	}
 
