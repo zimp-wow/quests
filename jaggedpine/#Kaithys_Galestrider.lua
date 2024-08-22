@@ -61,26 +61,26 @@ function event_trade(e)
 	if(fac == 1) then	--requires Ally faction to Residents of Jaggedpine	
 		if(item_lib.check_turn_in(e.trade, {item1 = 8907})) then -- Tome of Thunder
 			e.self:Emote("examines the tome carefully, running his callused hands over the cover and spine and flipping through the ancient parchement within, 'Yes...nicely done, child. It is in miraculous condition for the recent fate that befell it. I am indebted to you and have the noblest intentions to repay your efforts. However, whilst you were away, my smithy was raided and most of my needed supplies to create the item I think a suitable reward for your efforts were stolen by the poachers. I will need to retrieve one of the [" .. eq.say_link("key materials") .. "] and take it with the Writ of Thunder to my assistant, Gurrin Nitestorm who you may find in the Surefall Glade.'");
-			e.other:Faction(271,5); -- Residents of Jaggedpine
-			e.other:Faction(159,2); -- Jaggedpine Treefolk
-			e.other:Faction(265,2); -- Protectors of Pine
-			e.other:Faction(135,1); -- Guards of Qeynos
+			e.other:Faction(1597,5); -- Residents of Jaggedpine
+            e.other:Faction(272,2); -- Jaggedpine Treefolk
+            e.other:Faction(302,2); -- Protectors of Pine
+            e.other:Faction(262,1); -- Guards of Qeynos
 			eq.set_global("silverbladeofthunder","1",0,"F"); -- Globals
 			e.other:QuestReward(e.self,0,0,0,0,8908,1000); -- Writ of Thunder
 		elseif(item_lib.check_turn_in(e.trade, {item1 = 8915}) and tonumber(qglobals.silverbladeofthunder) == 1) then -- Purified Silver Blade
 			e.self:Emote("takes the blade and intently examines it. Satisfied with the purified quality, he nods to himself and proceeds to remove the gem from the hilt of the blade before returning it to Malvesti, 'You will need to seek out two items and return them to me. Those items are the Essence of Thunder and the Voice of Karana. The essence you will find in The Hole where one known as Ikurenm the Sly resides. Some time ago, before my initial acquisition of the blade, this imp stole the sacred rune from my mentor and only now are we able to retrieve it for its purpose has now reached its dawn. The second item, the Voice of Karana, you will find in the possession of Zrithsadioun the Tainted who wanders the planes of Southern Karana. Zrithsadioun is one of the plague worshiping gnolls of Infected Paw who is so twisted and vile that even his own people have cast him out. Very recently, one of our scouts overheard the gnolls of the shrine discussing a recent loss of their stolen bounty. One of the items that were stolen from them...");
-			e.other:Faction(271,5); -- Residents of Jaggedpine
-			e.other:Faction(159,2); -- Jaggedpine Treefolk
-			e.other:Faction(265,2); -- Protectors of Pine
-			e.other:Faction(135,1); -- Guards of Qeynos
+			e.other:Faction(1597,5); -- Residents of Jaggedpine
+            e.other:Faction(272,2); -- Jaggedpine Treefolk
+            e.other:Faction(302,2); -- Protectors of Pine
+            e.other:Faction(262,1); -- Guards of Qeynos
 	--		eq.delete_global("silverbladeofthunder"); --Remove global
 			e.other:QuestReward(e.self,0,0,0,0,17505,10000); -- Purified Silver Blade
 		elseif(item_lib.check_turn_in(e.trade, {item1 = 8912,item2 = 8913}) and tonumber(qglobals.silverbladeofthunder) == 1) then -- Essence of Thunder, Voice of Karana
 			e.self:Emote("takes the hollow, smoky orb in one hand and the tiny wooden charm in the other. Slowly, the ancient ranger begins to speak in an unknown dialect. His chant causes the small charm to glow and the air around you to begin to sway in a gentle, chilled breeze. The scent of the storm fills your nostrils as the magical zephyr begins to rage, simulating the coming of a powerful tempest. The old ranger's voice booms out beyond the tempest gale and suddenly, he forces both of his hands together, sealing the small wooden charm of Karana's divine voice into the orb. The magical storm steadily fades as the two pieces are conjoined and handed to Trod, 'This is the Orb of Thunder. Place it within the hilt where the gem had once been and your task will be complete and your reward fulfilled. It has been a pleasure and I thank you for all that you have endeavored to aid me in completing this near half a century long goal of mine. May it serve you well, my friend.");
-			e.other:Faction(271,10); -- Residents of Jaggedpine
-			e.other:Faction(159,5); -- Jaggedpine Treefolk
-			e.other:Faction(265,5); -- Protectors of Pine
-			e.other:Faction(135,1); -- Guards of Qeynos
+			e.other:Faction(1597,5); -- Residents of Jaggedpine
+            e.other:Faction(272,2); -- Jaggedpine Treefolk
+            e.other:Faction(302,2); -- Protectors of Pine
+            e.other:Faction(262,1); -- Guards of Qeynos
 			eq.delete_global("silverbladeofthunder"); --Remove global
 			e.other:QuestReward(e.self,0,0,0,0,8914,10000); -- Orb of Thunder
 		end

@@ -25,31 +25,31 @@ function event_trade(e)
 	
     if(item_lib.check_turn_in(e.trade, {item1 = 8264, item2 = 8264, item3 = 8264, item4 = 8264})) then -- 4x Gnoll Canine
         e.self:Say("Good work, that is one less gnoll we need to worry about!");
-        e.other:Faction(135,4); -- Guards of Qeynos
-        e.other:Faction(159,8); -- Jaggedpine Treefolk
-        e.other:Faction(265,8); -- Protectors of Pine
-        e.other:Faction(271,20); -- Residents of Jaggedpine
+        e.other:Faction(1597,4); -- Residents of Jaggedpine
+        e.other:Faction(272,8); -- Jaggedpine Treefolk
+        e.other:Faction(302,8); -- Protectors of Pine
+        e.other:Faction(262,20); -- Guards of Qeynos
         e.other:QuestReward(e.self,0,0,0,0,0,1000); -- EXP & Faction
     elseif(item_lib.check_turn_in(e.trade, {item1 = 8264, item2 = 8264, item3 = 8264})) then -- 3x Gnoll Canine
         e.self:Say("Good work, that is one less gnoll we need to worry about!");
-        e.other:Faction(135,3); -- Guards of Qeynos
-        e.other:Faction(159,6); -- Jaggedpine Treefolk
-        e.other:Faction(265,6); -- Protectors of Pine
-        e.other:Faction(271,15); -- Residents of Jaggedpine
+        e.other:Faction(1597,3); -- Residents of Jaggedpine
+        e.other:Faction(272,6); -- Jaggedpine Treefolk
+        e.other:Faction(302,6); -- Protectors of Pine
+        e.other:Faction(262,15); -- Guards of Qeynos
         e.other:QuestReward(e.self,0,0,0,0,0,750); -- EXP & Faction
     elseif(item_lib.check_turn_in(e.trade, {item1 = 8264, item2 = 8264})) then -- 2x Gnoll Canine
         e.self:Say("Good work, that is one less gnoll we need to worry about!");
-        e.other:Faction(135,2); -- Guards of Qeynos
-        e.other:Faction(159,4); -- Jaggedpine Treefolk
-        e.other:Faction(265,4); -- Protectors of Pine
-        e.other:Faction(271,10); -- Residents of Jaggedpine
+        e.other:Faction(1597,2); -- Residents of Jaggedpine
+        e.other:Faction(272,4); -- Jaggedpine Treefolk
+        e.other:Faction(302,4); -- Protectors of Pine
+        e.other:Faction(262,10); -- Guards of Qeynos
         e.other:QuestReward(e.self,0,0,0,0,0,500); -- EXP & Faction
     elseif(item_lib.check_turn_in(e.trade, {item1 = 8264})) then -- Gnoll Canine
         e.self:Say("Good work, that is one less gnoll we need to worry about!");
-        e.other:Faction(135,1); -- Guards of Qeynos
-        e.other:Faction(159,2); -- Jaggedpine Treefolk
-        e.other:Faction(265,2); -- Protectors of Pine
-        e.other:Faction(271,5); -- Residents of Jaggedpine
+        e.other:Faction(1597,1); -- Residents of Jaggedpine
+        e.other:Faction(272,2); -- Jaggedpine Treefolk
+        e.other:Faction(302,2); -- Protectors of Pine
+        e.other:Faction(262,5); -- Guards of Qeynos
         e.other:QuestReward(e.self,0,0,0,0,0,250); -- EXP & Faction
     elseif(fac <= 4 and item_lib.check_turn_in(e.trade, {item1 = 2388})) then -- Qeynos Badge of Honor
         e.self:Emote("takes your badge and places his mark upon it.");

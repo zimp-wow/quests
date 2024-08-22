@@ -16,10 +16,10 @@ function event_trade(e)
     local item_lib = require("items");
     if(item_lib.check_turn_in(e.trade, {item1 = 8970})) then -- Letter to Jeremy
         e.self:Say("Thank you very much!");
-        e.other:Faction(271,10); -- Residents of Jaggedpine
-        e.other:Faction(159,5); -- Jaggedpine Treefolk
-        e.other:Faction(265,5); -- Protectors of Pine
-        e.other:Faction(135,1); -- Guards of Qeynos
+        e.other:Faction(1597,10); -- Residents of Jaggedpine
+        e.other:Faction(272,5); -- Jaggedpine Treefolk
+        e.other:Faction(302,5); -- Protectors of Pine
+        e.other:Faction(262,1); -- Guards of Qeynos
         e.other:QuestReward(e.self,0,0,0,0,0,500); -- Faction and EXP
     end
     item_lib.return_items(e.self, e.other, e.trade)
