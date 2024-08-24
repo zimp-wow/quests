@@ -64,6 +64,7 @@ my %atlas = (
     'hatesfury'      => 'RoK',
     'torgiran'       => 'RoK',
     'mischiefplane'  => 'SoV',
+    'grimling'       => 'SoL',
     'acrylia'        => 'SoL',
     'akheva'         => 'SoL',
     'dawnshroud'     => 'SoL',
