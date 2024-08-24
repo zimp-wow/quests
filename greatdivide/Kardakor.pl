@@ -18,7 +18,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 
-  if ($faction==1) {
+  if ($faction<=3) {
     # 1862 : Head of the Taskmaster
     # 1861 : An old worn Talisman
     if (plugin::check_handin(\%itemcount,1861=>1,1862=>1)) {
