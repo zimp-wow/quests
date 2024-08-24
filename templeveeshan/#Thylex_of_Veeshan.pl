@@ -7,12 +7,10 @@ sub EVENT_TICK {
                   !$entity_list->GetMobByNpcTypeID(124074) && # Lord_Kreizenn
                   !$entity_list->GetMobByNpcTypeID(124017);   # Lord_Vyemm
 
-  if ($check) {
-    quest::debug("Spawning Vulak!");    
-    quest::spawn2(124155, 0, 0, -739.4, 517.2, 121, 510); # Vulak`Aerr
+  if ($check && !$entity_list->GetMobByNpcTypeID(124155)) {
     $npc->Shout("Intruders! Your doom is upon you! Vulak`Aerr comes to humble you, and return you to your pathetic Gods.");
-    $npc->Depop(1); # Depop and start spawn timer.
-  } elsif ($counter % 100 == 0) {
+    quest::spawn2(124155, 0, 0, -739.4, 517.2, 121, 510); # Vulak`Aerr
+  } elsif ($counter % 100 == 0 && !$entity_list->GetMobByNpcTypeID(124155)) {
     my $entity = 0;
     while (!$entity_list->GetMobByNpcTypeID($entity)) {
       $entity = quest::ChooseRandom((124077, 124076, 124008, 124010, 124074, 124017));
@@ -44,6 +42,4 @@ sub EVENT_TICK {
 
     $npc->Shout(quest::ChooseRandom(@messages));
   }
-
-  $npc->SetEntityVariable("counter", ($counter + 1));
 }

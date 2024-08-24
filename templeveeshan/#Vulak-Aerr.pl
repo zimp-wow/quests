@@ -13,4 +13,6 @@ sub EVENT_DEATH_COMPLETE {
     if ($killer && plugin::IsSeasonal($killer)) {
         plugin::AddTitleFlag(205);
     }
+
+    quest::depop(124000); #Thylex of Veeshan (Vulak Event Controller)
 }
