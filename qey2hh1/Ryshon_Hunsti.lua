@@ -5,7 +5,7 @@ function event_say(e)
 	if(e.message:findi("hail")) then
 		e.self:Say(string.format("Hello, %s. What brings you to the Karanas? Do you seek [enlightenment]?",e.other:GetName()));
 	elseif(e.message:findi("enlightenment")) then
-		e.self:Say("Ahh, i could see by the look in your eyes that you are looking for something more than just enlightenment. Perhaps you are looking for a [sword] crafted by a noble man.");
+		e.self:Say("Ahh, i could see by the look in your eyes that you are looking for something more than just enlightenment. Perhaps you are [looking for a sword] crafted by a noble man.");
 	elseif(e.message:findi("looking for a sword")) then
 		e.self:Say("It is not just a sword friend. It is much more than that. This sword carries with it special [power], something unlike anything else within this realm.");
 	elseif(e.message:findi("power")) then
