@@ -1,94 +1,27 @@
-my $check;
-my $variance = int(rand(600));
-my $spawntime = 4320 + $variance;
+sub EVENT_TICK {
+  my $counter   = $npc->GetEntityVariable("counter") || 0;
+  my $check     = !$entity_list->GetMobByNpcTypeID(162012) && # Taskmaster_Kavamezh (162012)
+                  !$entity_list->GetMobByNpcTypeID(162021) && # Taskmaster_Keuzozh (162021)
+                  !$entity_list->GetMobByNpcTypeID(162013) && # Taskmaster_Mikazha (162013)
+                  !$entity_list->GetMobByNpcTypeID(162060) && # Taskmaster_Revan`Kezh (162060)
+                  !$entity_list->GetMobByNpcTypeID(162024) && # Taskmaster_Vezhkah (162024)
+                  !$entity_list->GetMobByNpcTypeID(162011) && # Taskmaster_Zerumaz (162011)
+                  !$entity_list->GetMobByNpcTypeID(162059) && # Taskmaster_Zhe`Vozh (162059)
+                  !$entity_list->GetMobByNpcTypeID(162258) && # #Rhozth_Ssrakezh (162258)
+                  !$entity_list->GetMobByNpcTypeID(162089) && # #Rhozth_Ssravizh (162089)
+                  !$entity_list->GetMobByNpcTypeID(162023);   # Warden_Mekuzh (162023)
+    
+  my $glyph     = !$entity_list->GetMobByNpcTypeID(162261);   # #a_glyph_covered_serpent (162261)
 
-sub EVENT_SPAWN {
-  quest::settimer("cursed",60);
-}
+  my $spawn_x = -30;
+  my $spawn_y = -10;
+  my $spawn_z = -223;
+  my $spawn_h = 130;
 
-sub EVENT_TIMER {
-  $check = 0;
-  if($timer eq "cursed") {
-    $check_boss = $entity_list->GetMobByNpcTypeID(162270);#cursed_one
-    if ($check_boss) {
-      $check = 1;
-    }
-    $check_boss = $entity_list->GetMobByNpcTypeID(162271);#cursed_two
-    if ($check_boss) {
-      $check = 1;
-    }
-    $check_boss = $entity_list->GetMobByNpcTypeID(162272);#cursed_three
-    if ($check_boss) {
-      $check = 1;
-    }
-    $check_boss = $entity_list->GetMobByNpcTypeID(162273);#cursed_four
-    if ($check_boss) {
-      $check = 1;
-    }
-    $check_boss = $entity_list->GetMobByNpcTypeID(162274);#cursed_five
-    if ($check_boss) {
-      $check = 1;
-    }
-    $check_boss = $entity_list->GetMobByNpcTypeID(162275);#cursed_six
-    if ($check_boss) {
-      $check = 1;
-    }
-    $check_boss = $entity_list->GetMobByNpcTypeID(162276);#cursed_seven
-    if ($check_boss) {
-      $check = 1;
-    }
-    $check_boss = $entity_list->GetMobByNpcTypeID(162277);#cursed_eight
-    if ($check_boss) {
-      $check = 1;
-    }
-    $check_boss = $entity_list->GetMobByNpcTypeID(162278);#cursed_nine
-    if ($check_boss) {
-      $check = 1;
-    }
-    $check_boss = $entity_list->GetMobByNpcTypeID(162279);#cursed_ten
-    if ($check_boss) {
-      $check = 1;
-    }
-    if ($check == 1) {
-    }
-    if ($check == 0 && defined $qglobals{cursed_dead}) {
-    }
-    elsif ($check == 0) {
-      if (defined $qglobals{glyphed_dead}) {
-        quest::spawn2(162253,0,0,-51,-9,-218.1,126);#runed
-      }
-      elsif (!defined $qglobals{glyphed_dead}) {
-        quest::spawn2(162261,0,0,-51,-9,-218.1,126);#glyphed
-      }
-      quest::stoptimer("cursed");
-      quest::stoptimer("one");
-      quest::settimer("one",21600);
-    }
-  }
-  if ($timer eq "one" && !defined $qglobals{cursed_dead}) {
-    quest::stoptimer("one");
-    quest::depop(162206);
-    quest::depop(162232);
-    quest::depop(162214);
-    quest::depop(162261);
-    quest::depop(162253);
-    quest::depop_withtimer();
-  }
-}
+  if ($check && $glyph) {
+    my $glyph_id  = quest::spawn2(162261, 0, 0, $spawn_x, $spawn_y, $spawn_z, $spawn_h);
+    my $glyph_npc = $entity_list->GetMobID($glyph_id);
 
-sub EVENT_SIGNAL {
-  if ($signal == 1 && defined $qglobals{exiled_dead}) {
-    quest::spawn2(162214,0,0,-51,-9,-218.1,126);#Banished
-  }
-  elsif ($signal == 1 && !defined $qglobals{exiled_dead}) {
-    quest::spawn2(162232,0,0,-51,-9,-218.1,126);#Exiled
-  }
-  if ($signal == 2 && !defined $qglobals{cursed_dead}) {
-    quest::spawn2(162206,0,0,-51,-9,-218.1,126);#Cursed
-  }
-  if ($signal == 3) {	
-    quest::setglobal("cursed_dead",1,3,"M$spawntime");
-    quest::stoptimer("one");
-    quest::depop_withtimer();
+    $glyph_npc->Shout("I will not be contained! My prison weakens, and I will claw my way back into this world, even if it dooms me!");
   }
 }

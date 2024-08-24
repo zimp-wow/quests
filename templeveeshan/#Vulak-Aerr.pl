@@ -14,5 +14,5 @@ sub EVENT_DEATH_COMPLETE {
         plugin::AddTitleFlag(205);
     }
 
-    quest::depop(124000); #Thylex of Veeshan (Vulak Event Controller)
+    quest::depop_withtimer(124000); #Thylex of Veeshan (Vulak Event Controller)
 }
