@@ -23,5 +23,6 @@ sub EVENT_TICK {
     my $glyph_npc = $entity_list->GetMobID($glyph_id);
 
     $glyph_npc->Shout("I will not be contained! My prison weakens, and I will claw my way back into this world, even if it dooms me!");
+    $npc->Depop(1);
   }
 }
