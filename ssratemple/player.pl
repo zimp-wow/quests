@@ -4,7 +4,7 @@ sub EVENT_CLICKDOOR {
         return 0;
     }
 
-    if ($client->KeyRingCheck(19719)) {
+    if ($doorid == 54 && $client->KeyRingCheck(19719)) {
         $client->MovePCInstance($zoneid, $instanceid, 620, -324, 405, 126);
     }
 }
