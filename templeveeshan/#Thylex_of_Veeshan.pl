@@ -42,4 +42,5 @@ sub EVENT_TICK {
 
     $npc->Shout(quest::ChooseRandom(@messages));
   }
+  $npc->SetEntityVariable("counter", $counter + 1);
 }
