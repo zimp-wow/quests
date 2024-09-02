@@ -28,8 +28,7 @@ sub OfferStandardInstance {
   elsif ($text eq 'Respawning' || $text eq 'Non-Respawning') {
     if ($text eq 'Non-Respawning') {
       $dz_version = 100;
-
-      #$expedition_name = $expedition_name . " (Static)";
+      $expedition_name = $expedition_name . " (Static)";
     }
     
     my $dz = $client->CreateExpedition($dz_zone, $dz_version, $dz_lifetime, $expedition_name, $min_players, $max_players);
