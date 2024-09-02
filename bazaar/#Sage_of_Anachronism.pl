@@ -107,6 +107,13 @@ sub EVENT_ITEM {
     }
 
     if (plugin::is_stage_complete_2($client, 'PoP') && $client->IsSeasonal()) {
+        if (plugin::check_handin(\%itemcount, 199993 => 1)) {
+            $client->SummonFixedItem(199994);
+            plugin::NPCTell("I have expanded your hole! (That's what she said).");
+        }
+    }
+
+    if (plugin::is_stage_complete_2($client, 'GoD') && $client->IsSeasonal()) {
         if (plugin::check_handin(\%itemcount, 199994 => 1)) {
             $client->SummonFixedItem(199995);
             plugin::NPCTell("I have expanded your hole! (That's what she said).");
