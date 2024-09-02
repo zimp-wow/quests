@@ -24,33 +24,43 @@ sub EVENT_TICK {
   if ($check && !$entity_list->GetMobByNpcTypeID(158096)) {
     my $ahr_id = quest::unique_spawn(158096,0,0,1417,0,236,384);
     my $ahr = $entity_list->GetMobByID($ahr_id);
-    $ahr->Shout("Akelha'Ra Vius, Itraer xi Vyl, Tekar Xundrau!");
+    $ahr->Shout("Bow before Aten Ha Ra, High Priestess of Luclin, or face eternal darkness!");
   } elsif ($counter % 100 == 0) {
     my @alive_mobs = grep { $entity_list->GetMobByNpcTypeID($_) } @named_mobs;
     if (@alive_mobs) {
       my $mob_id = quest::ChooseRandom(@alive_mobs);
       if (my $mob = $entity_list->GetMobByNpcTypeID($mob_id)) {
         my @messages = (
-          "Vius Xi Akelha, Xeturis Tekar xi Xundrau!",
-          "Kaas Thox Ruluor, Tekar Vius!",
-          "Xeturi Xi Kaas, Vius Akelha Tekar!",
-          "Aten Ha Ra Xundrau, Vius Xi Tekar!",
-          "Ans Xundraux Tekar, Thox Vius xi Ruluor!",
-          "Vius Kaas Xi, Xeturis Akelha!",
-          "Xi Xiall Kaas, Ruluor Xundrau Vius!",
-          "Vius Xi Kaas Thox, Xakra Tekar!",
-          "Akelha’Ra Vius, Xi Xakra Tekar!",
-          "Xundrau Xi Akelha, Xeturis Tekar!",
-          "Kaas Thox Xi Vius, Xakra Ruluor!",
-          "Vius Xi Akelha, Thall Xakra Tekar!",
-          "Xeturi Thall Kaas, Xi Xundraux Vius!",
-          "Ans Xundrau Vius, Akelha Xi Tekar!",
-          "Kaas Thox Xi Vius, Xakra Akelha!",
-          "Vius Xi Tekar, Xundrau Ruluor!",
-          "Ans Xundraux Vius, Akelha Xakra!",
-          "Tekar Xi Vius, Xundrau Akelha!",
-          "Xundrau Akelha’Ra, Vius Tekar Xi!",
-          "Xi Xundraux Vius, Akelha Tekar!"
+          "Xau xaui rentha sa akha!",   # I guard the city against invaders!
+          "Xin thosu xeturis!",         # Warriors, dishonor the intruders!
+          "Xys ril xeturisun!",         # He is dishonored!
+          "Tarveuel kel draeth!",       # Torture the lone enemy!
+          "Ans dariar visis sa rentha!",# The minions agree to defend the city!
+          "Ura aus xeturisun!",         # You have dishonored!
+          "Xys xenuek sivuela!",        # He wields against the outsider!
+          "Phet ka xauiim!",            # We are guarding!
+          "Ans xin dabo sivuela!",      # The warrior destroys the outsider!
+          "Kel dariar xaui!",           # One minion guards!
+          "Dabo draeths sa rentha!",    # Destroy the enemies of the city!
+          "Xaus air aus xeturisun!",    # I shall have dishonored!
+          "Xenturis ans sivuela!",      # Dishonor the outsider!
+          "Ka vis sa akha!",            # Agree to the defense!
+          "Ans tarveuel akha kel!",     # The torture begins now!
+          "Iashtu kel xin sa akha!",    # Worship the lone warrior defending!
+          "Dariar ka xi rentha!",       # Minions are in the city!
+          "Xys ia ka!",                 # He is now!
+          "Ans xenuek sa sivuela!",     # Wield against the outsider!
+          "Ura ial di xeturisun!",      # You will be dishonored!
+          "Xaus ril xeturisun sa akha!",# I am dishonored by these invaders!
+          "Vius Xi Kaas, Xeturis Vyla!",# Defend the city, dishonor the weak!
+          "Xin Akelha Xetra!",          # Warriors of the dark, arise!
+          "Kaas thox xi aken, sivuela!",# Our city stands against the outsiders!
+          "Dariar xaui sa Ruluor!",     # The minions guard with fury!
+          "Xys ril xentu sa akha!",     # He is the shield of the city!
+          "Ura dabo sa akha!",          # You will destroy for the city!
+          "Tarveuel vius ka!",          # Torture for our cause!
+          "Ans vius xi akelha!",        # The city must stand!
+          "Kaas Thox Xi, Riluor Xetra!" # Defend with the fury of shadows!
         );
         $mob->Shout(quest::ChooseRandom(@messages));
       }
