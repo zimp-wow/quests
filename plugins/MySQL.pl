@@ -17,11 +17,11 @@ sub LoadMysql {
 
 sub load_config {
     my $config_file = shift;
-	open(my $fh, '<', "eqemu_config.json") or die "cannot open file $filename"; {
-		local $/;
-		$content = <$fh>;
-	}
-	close($fh);
+    open(my $fh, '<', $config_file) or die "cannot open file $config_file"; {
+        local $/;
+        $content = <$fh>;
+    }
+    close($fh);
     return JSON->new->decode($content);
 }
 
@@ -33,7 +33,10 @@ sub try_connect {
     my @required_keys = qw(db host username password);
     return unless all_keys_exist($db_config, @required_keys);
     
-    my $dsn = "dbi:mysql:dbname=$db_config->{db};host=$db_config->{host};port=3306";
+    # Use the port if it's specified in the config; otherwise, use the default port 3306
+    my $port = $db_config->{port} // 3306;
+    
+    my $dsn = "dbi:mysql:dbname=$db_config->{db};host=$db_config->{host};port=$port";
     my $connect = DBI->connect($dsn, $db_config->{username}, $db_config->{password}, { RaiseError => 0, PrintError => 0 });
     
     return $connect if $connect;
