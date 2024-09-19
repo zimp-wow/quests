@@ -467,6 +467,9 @@ sub GrantClassAA {
             },
             5 => { # Shadow Knight
                 '6000' => 5, # Harm Touch
+            },
+            7 => { # Monk
+                '376' => 1,  # Distant Strike
             }
         );
 
