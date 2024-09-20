@@ -516,6 +516,10 @@ sub is_time_locked {
     my $stage = shift;
 
     if (plugin::MultiClassingEnabled()) {
+        if ($stage eq 'RoK') {       
+            return 0;
+        }
+        
         return 1;
     }
 
