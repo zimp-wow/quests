@@ -3,7 +3,7 @@
 
 function event_say(e)
 
-	if(e.other:GetClass() == 16 or e.other:GetGM()) then -- Berserker and GM bypass
+	if(e.other:HasClass(Class.BERSERKER) or e.other:GetGM()) then -- Berserker and GM bypass
 		if e.other:GetLevel() >= 45 then
 				if e.message:findi("beast fights") then
 					e.self:Say("Da only way to learn is to fight. It called Praklion of the Cauldron or sometin. Me hear it live here very long time, but rarely come out. It feed at weird times. Course, dat when it most mad. McArik found it traveling through deep craggy lands. Dat is how he decided it was good beast to test his ability to beat a baddy dat had some [sense of strategy]. It even took him long time to defeat it.");
