@@ -94,7 +94,6 @@ function ZMYV_Death(e)
 	eq.depop(298004);
 	eq.depop(298005);
 	eq.depop(298006);
-	e.self:DeathNotification(e);
 end
 
 function event_encounter_load(e)

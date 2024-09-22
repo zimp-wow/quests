@@ -7,7 +7,6 @@ function event_death_complete(e)
     eq.signal(228117,2,0); -- #languish_spell
     eq.signal(228118,2,0); -- #spell_target
     eq.signal(228122,1,0); -- #Fist_of_Krasnok
-	e.self:DeathNotification(e);
 end
 
 function event_signal(e)
