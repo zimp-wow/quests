@@ -4,22 +4,22 @@
 
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);
-	if(qglobals["cleric_epic"] >= "4" and e.message:findi("hail")) then
-		e.self:Emote("looks at you for a moment before his eyes shine with recognition. 'Its you, I've heard about you. We will not allow you to interfere with our plans again!");
+	-- Ensure qglobals["cleric_epic"] is not nil before comparison
+	if qglobals and qglobals["cleric_epic"] and tonumber(qglobals["cleric_epic"]) >= 4 and e.message:findi("hail") then
+		e.self:Emote("looks at you for a moment before his eyes shine with recognition. 'It's you, I've heard about you. We will not allow you to interfere with our plans again!'");
 		e.self:SetInvisible(2);
 		e.self:SetTargetable(false);
-		e.self:GMMove(3435.6,-79.3,-2.8,500);
+		e.self:GMMove(3435.6, -79.3, -2.8, 500);
 		eq.depop_all(57152);
-		eq.spawn2(57153,0,0,3430,-13.5,-1.9,180); -- NPC: #a_Wayfarer
-		eq.spawn2(57153,0,0, 3425,-25 ,-1.9,330); -- needs_heading_validation
-		eq.spawn2(57153,0,0, 3430,-33.5 ,-1.9,0); -- NPC: #a_Wayfarer
-		eq.spawn2(57153,0,0, 3443,-25.5 ,-1.9,360); -- NPC: #a_Wayfarer
-		eq.spawn2(57153,0,0, 3440,-33.5 ,-1.9,270); -- needs_heading_validation
-		eq.spawn2(57153,0,0, 3443,-15.5 ,-1.9,360); -- NPC: #a_Wayfarer
-	elseif(e.message:findi("hail")) then
-			e.self:Say("I am sorry, we don't currently have any work available. We are still setting up, and cleaning up the orcish filth from this area. Return later, I should have some work available.");
+		eq.spawn2(57153, 0, 0, 3430, -13.5, -1.9, 180); -- NPC: #a_Wayfarer
+		eq.spawn2(57153, 0, 0, 3425, -25, -1.9, 330);   -- with heading
+		eq.spawn2(57153, 0, 0, 3430, -33.5, -1.9, 0);   -- NPC: #a_Wayfarer
+		eq.spawn2(57153, 0, 0, 3443, -25.5, -1.9, 360); -- NPC: #a_Wayfarer
+		eq.spawn2(57153, 0, 0, 3440, -33.5, -1.9, 270); -- with heading
+		eq.spawn2(57153, 0, 0, 3443, -15.5, -1.9, 360); -- NPC: #a_Wayfarer
+	elseif e.message:findi("hail") then
+		e.self:Say("I am sorry, we don't currently have any work available. We are still setting up, and cleaning up the orcish filth from this area. Return later, I should have some work available.");
 	end
-
 end
 
 function event_spawn(e)
