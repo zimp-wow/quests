@@ -77,7 +77,7 @@ sub AwardEOM {
     my ($client, $amount) = @_;
     $client->AddAlternateCurrencyValue($eom_id, $amount);
     $client->Message(15, "You have gained $amount [".quest::varlink($eom_item_id)."].");
-    quest::discordsend("admin", $client->GetCleanName() . " collected $amount EoM.");
+    quest::discordsend("donations", $client->GetCleanName() . " collected $amount EoM.");
     if (!$client->GetGM()) {
         quest::set_data($eom_award_log, (quest::get_data($eom_award_log) || 0) + $amount);
         
@@ -90,7 +90,7 @@ sub AwardEOMAuto {
     my ($client, $amount) = @_;
     $client->AddAlternateCurrencyValue($eom_id, $amount);
     $client->Message(15, "You have gained $amount [".quest::varlink($eom_item_id)."].");
-    quest::discordsend("admin", $client->GetCleanName() . " collected $amount EoM (From Web Donation).");
+    quest::discordsend("donations", $client->GetCleanName() . " collected $amount EoM (From Web Donation).");
     if (!$client->GetGM()) {
         quest::set_data($eom_award_log, (quest::get_data($eom_award_log) || 0) + $amount);
 
