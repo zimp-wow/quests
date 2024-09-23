@@ -89,7 +89,7 @@ sub AwardEOM {
 sub AwardEOMAuto {
     my ($client, $amount) = @_;
     $client->AddAlternateCurrencyValue($eom_id, $amount);
-    $client->Message(15, "You have gained $amount [".quest::varlink($eom_item_id)."].");
+    $client->Message(15, "You have gained $amount [".quest::varlink($eom_item_id)."]. Thank you for your donation!");
     quest::discordsend("donations", $client->GetCleanName() . " collected $amount EoM (From Web Donation).");
     if (!$client->GetGM()) {
         quest::set_data($eom_award_log, (quest::get_data($eom_award_log) || 0) + $amount);
