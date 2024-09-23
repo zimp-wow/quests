@@ -1,6 +1,5 @@
 function event_spawn(e)
 	eq.set_timer("dreadlands_timer", 60 * 1000); -- Spire Cycle Time : 13 minutes 30 seconds
-	asdasd
 	minute = 0
 end
 
