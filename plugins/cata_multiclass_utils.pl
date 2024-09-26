@@ -305,6 +305,7 @@ sub GrantClassAA {
             '800' => 1, # Vehement Rage
             '733' => 1, # Killing Spree
             '552' => 1, # Call of Challenge
+            '109' => 1, # Rampage
         },
         2 => { # Cleric
             '1405' => 1, # Twincast
@@ -405,6 +406,7 @@ sub GrantClassAA {
             '733' => 1, # Killing Spree
             '109' => 1,  # Rampage
             '800' => 1, # Vehement Rage
+            '109' => 1, # Rampage
         }
     );   
 
