@@ -263,7 +263,7 @@ sub EVENT_SAY {
                     my $number = $1; # Captures the number
                     # Proceed with awarding the title using $number
                     
-                    Message(13, "Awarding TitleSet $number to " . $tar_client->GetName());
+                    $client->Message(13, "Awarding TitleSet $number to " . $tar_client->GetName());
                     plugin::AddTitleFlag($number, $tar_client->CastToClient());
                     plugin::CommonCharacterUpdate($tar_client);
                 } else {
