@@ -255,8 +255,7 @@ sub EVENT_SAY {
         if ($text=~/#awardtitle\s*(.*)/i) {
             $client->Message(13, "Disregard the command not recognized error.");
             my $arguments = $1; # Captures everything after #awardtitle
-            quest::debug("Arguments to #awardtitle: $arguments");
-
+            
             my $tar_client = $client->GetTarget();
             if ($tar_client && $tar_client->IsClient()) {
                 # Validate that there is exactly one argument which is a number
@@ -264,6 +263,7 @@ sub EVENT_SAY {
                     my $number = $1; # Captures the number
                     # Proceed with awarding the title using $number
                     
+                    Message(13, "Awarding TitleSet $number to " . $tar_client->GetName());
                     plugin::AddTitleFlag($number, $tar_client->CastToClient());
                 } else {
                     $client->Message(13, "Invalid input. Please provide a single numeric argument.");
