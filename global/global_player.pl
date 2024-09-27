@@ -265,6 +265,7 @@ sub EVENT_SAY {
                     
                     Message(13, "Awarding TitleSet $number to " . $tar_client->GetName());
                     plugin::AddTitleFlag($number, $tar_client->CastToClient());
+                    plugin::CommonCharacterUpdate($tar_client);
                 } else {
                     $client->Message(13, "Invalid input. Please provide a single numeric argument.");
                 }
