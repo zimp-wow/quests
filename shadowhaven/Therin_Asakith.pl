@@ -30,7 +30,7 @@ quest::summonitem(16880); # Item: Gnomish Firework
  }
  #potions
 elsif($itemcount{66616} && $random_result>2401 && $random_result<2800){  
-quest::summonitem(quest::ChooseRandom(17966,66614,14521,11631,66613,14402,96454,96456,96465,96453,96455,96459,96458,96462,96457,96463,96451,96461,96464,96452,96460)); # Item(s): Deluxe Sewing Kit (17966), Elixir (66614), Illusionists Stone (14521), Prayers of Life (11631), Vial of Ethereal Mist (66613), Vial of Swirling Smoke (14402), Essence of Troll (96454), Essence of Wood Elf (96456), Essence of Vah Shir (96465), Essence of Ogre (96453), Essence of Iksar (96455), Essence of Human (96459), Essence of High Elf (96458), Essence of Halfling (96462), Essence of Half Elf (96457), Essence of Gnome (96463), Essence of Froglok (96451), Essence of Erudite (96461), Essence of Dwarf (96464), Essence of Dark Elf (96452), Essence of Barbarian (96460)
+quest::summonitem(quest::ChooseRandom(17966,66614,14521,11631,66613,14402,65072,65084,65081,65083,51141,65077,65082,65078,65079,65075,65073,65074,65085,65076)); # Item(s): Deluxe Sewing Kit (17966), Elixir (66614), Illusionists Stone (14521), Prayers of Life (11631), Vial of Ethereal Mist (66613), Vial of Swirling Smoke (14402), Essence of Troll (96454), Essence of Wood Elf (96456), Essence of Vah Shir (96465), Essence of Ogre (96453), Essence of Iksar (96455), Essence of Human (96459), Essence of High Elf (96458), Essence of Halfling (96462), Essence of Half Elf (96457), Essence of Gnome (96463), Essence of Froglok (96451), Essence of Erudite (96461), Essence of Dwarf (96464), Essence of Dark Elf (96452), Essence of Barbarian (96460)
 
  }
  #stat items
