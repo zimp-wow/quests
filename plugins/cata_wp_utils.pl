@@ -33,7 +33,7 @@ my %waypoints = (
     'qeynos2'       => ["North Qeynos", 0, 392, 165, 4, 310],
     'qrg'           => ["Surefall Glade", 0, -66, 45, 4, 200],
     'rivervale'     => ["Rivervale", 0, -140, -10, 4, 220],
-    'gukbottom'     => ["Lower Guk (Safe Hall)", 0, -711, 832, -192, 200],
+    'gukbottom'     => ["Lower Guk (Undead Side)", 0, -233, 1157, -80, 418],
 
     # Faydwer (1)
     'akanon'        => ["Ak'anon", 1, -761, 1279, -24.25, 182.25],
