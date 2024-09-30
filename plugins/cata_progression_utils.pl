@@ -871,7 +871,8 @@ sub GetProgressFlag {
         my $account_flag = quest::get_data($client->AccountID() . "-season-$season_id-progress-flag-$stage");
         my $character_flag = $client->GetBucket("progress-flag-$stage");
 
-        if (length($character_flag) > length($account_flag)) {
+        if (length($character_flag) > length($account_flag)) {  
+            quest::debug("Adapting Character Seasonal flag.");
             $account_flag = $character_flag;
             quest::set_data($client->AccountID() . "-season-$season_id-progress-flag-$stage", $character_flag);           
         }
