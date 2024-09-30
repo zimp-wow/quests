@@ -868,7 +868,7 @@ sub GetProgressFlag {
 
     quest::debug("Check 1 - $season_id, $seasonal");
 
-    if ($seaonal && $season_id) {
+    if ($seasonal && $season_id) {
         quest::debug("Check 2");
         # Get the Serialized account flag
         my $account_flag = quest::get_data($client->AccountID() . "-season-$season_id-progress-flag-$stage");
