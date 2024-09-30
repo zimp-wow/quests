@@ -17,6 +17,10 @@ sub CommonCharacterUpdate {
         plugin::RegisterSeasonalLogin($client);
         plugin::EnableTitles($client);
 
+        plugin::GetProgressFlag($client, "RoK");
+        plugin::GetProgressFlag($client, "SoV");
+        plugin::GetProgressFlag($client, "SoL");
+        plugin::GetProgressFlag($client, "PoP");
 
         my @skip_ids = (69, 68, 65, 64, 63, 61, 60, 59, 58, 57, 56, 55);
         for my $i (grep { !($_ ~~ @skip_ids) } 0..77) {
