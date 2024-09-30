@@ -16,7 +16,7 @@ sub EVENT_SAY {
                 return;
             }
         }  
-        plugin::SetSubFlag($client, $flag_stage, $flag_name);
+        plugin::SetSubflag($client, $flag_stage, $flag_name);
     }
 }
 
