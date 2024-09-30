@@ -296,7 +296,7 @@ sub GetSubflag {
     return $normalized_flag{$objective};
 }
 
-sub SetSubflag {
+sub SetSubFlag {
     my ($client, $stage, $objective, $value) = @_;
     $value //= 1;  # Default value is 1 if not otherwise defined
     $objective = lc($objective);  # Normalize the objective
