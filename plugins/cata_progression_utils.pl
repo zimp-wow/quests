@@ -277,7 +277,7 @@ sub get_next_stage {
 # This is stored as a serialized hash using plugin::SerializeHash and plugin::DeserializeHash
 # set_subflag does all the heavy lifting of setting flags
 
-sub GetSubFlag {
+sub GetSubflag {
     my ($client, $stage, $objective) = @_;
     $objective = lc($objective);  # Normalize the objective to lowercase
 
