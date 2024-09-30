@@ -114,6 +114,13 @@ sub EVENT_AGGRO {
 
 sub EVENT_SPAWN {
     plugin::CheckSpawnWaypoints();
+
+    
+    if ($instanceversion > 0) {        
+        if ($npc->GetName() =~ /TPTriggerN/) {
+            $npc->Depop(0);
+        }
+    }
 }
 
 sub EVENT_DAMAGE_GIVEN 
