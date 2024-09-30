@@ -866,7 +866,7 @@ sub GetProgressFlag {
     my $season_id = plugin::GetSeasonID();
     my $seasonal  = plugin::IsSeasonal($client);
 
-    quest::debug("Check 1");
+    quest::debug("Check 1 - $season_id, $seasonal");
 
     if ($seaonal && $season_id) {
         quest::debug("Check 2");
