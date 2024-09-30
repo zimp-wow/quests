@@ -316,7 +316,7 @@ sub SetSubflag {
     $account_progress{$objective} = $value;
 
     # Set the updated flag using the new setter
-    SetProgressFlag($client, plugin::SerializeHash(%account_progress));
+    SetProgressFlag($client, $stage, plugin::SerializeHash(%account_progress));
 
     if ($stage eq 'RoK') {
         plugin::BlueText("Your mind flashes with recollections of savage lands; dense jungles, desolate swamps, and fiery wastes.");
@@ -887,7 +887,7 @@ sub GetProgressFlag {
 }
 
 sub SetProgressFlag {
-    my ($client, $flag_value) = @_;
+    my ($client, $stage, $flag_value) = @_;
     my $season_id = plugin::GetSeasonID();
     my $seasonal  = plugin::IsSeasonal($client);
 
