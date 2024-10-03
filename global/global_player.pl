@@ -25,6 +25,12 @@ sub EVENT_ENTERZONE {
 	}
 }
 
+sub EVENT_EQUIP_ITEM_CLIENT {
+    if ($slot_id == 21) {
+        plugin::dispatch_popup("power_source");
+    }
+}
+
 sub EVENT_CONNECT {
     $client->ReloadDataBuckets();    
     plugin::CommonCharacterUpdate($client);  
@@ -49,9 +55,13 @@ sub EVENT_CONNECT {
     if (plugin::GetSoulmark($client)) {
         plugin::DisplayWarning($client);
     }
+
+    plugin::dispatch_popup("welcome");
 }
 
 sub EVENT_POPUPRESPONSE {
+    plugin::check_tutorial_popup_response($popupid, $client);
+
     if ($popupid == 58240 && $zone != 151) {
         my $x = $client->GetEntityVariable("bazaar_x") + int(rand(11)) - 5;
         my $y = $client->GetEntityVariable("bazaar_y") + int(rand(11)) - 5;
