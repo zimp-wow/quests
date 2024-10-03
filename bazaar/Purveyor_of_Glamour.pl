@@ -12,13 +12,7 @@ sub EVENT_ITEM {
 	  if ($item_id != 0) {
 		 quest::debug("I was handed: $item_id with a count of $itemcount{$item_id}");
 
-		 my $item_name = quest::getitemname($item_id);
-
-		 # Strip prefix with possible whitespace
-		 $item_name =~ s/^\s*(Rose Colored|Apocryphal|Fabled)\s*//;
-
-		 # Strip suffix with possible whitespace
-		 $item_name =~ s/\s*\+\d{1,2}\s*$//;
+		 my $item_name = quest::getitemname($item_id % 1000000);
 
 		 quest::debug("looking for: '" . $item_name . "' Glamour-Stone");
 
