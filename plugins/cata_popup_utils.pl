@@ -50,14 +50,9 @@ my %popups_text = (
                ."and you can unlock more by visiting $color_normal Rune Circles$color_end scattered throughout the world.<br>"
                ."* $color_object Large Bags$color_end - Bags greater than size 10 are available, Find $color_enchanted Enchanted$color_end or $color_legendary Legendary$color_end from mobs!<br>"
                ."* $color_object Multi-Pet$color_end - Class combinations with more than one pet class can have more than one pet! You can have one per per class (including charm pets). Switch between them by targeting them! <br>"
-               
                ."<br>$color_normal Next Steps!$color_end<br>"
                ."* Visit our <a href=\"https://heroesjourneyeq.com\">Website</a> (heroesjourneyeq.com) and grab the client. You will absolutely need this client, and cannot leave $color_normal The Bazaar$color_end unless you are using it!<br>"
-               ."* Join our <a href=\"https://discord.heroesjourneyeq.com\">Discord</a> (86bm92mZaZ) to find guides, and resources.<br>"
-               
-
-               
-               ,
+               ."* Join our <a href=\"https://discord.heroesjourneyeq.com\">Discord</a> (86bm92mZaZ) to find guides, and resources.<br>",         
 );
 
 sub popup_enabled {
