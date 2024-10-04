@@ -499,7 +499,7 @@ sub is_time_locked {
     }
 
     if ($stage eq 'PoP') {
-        return 1;
+        return 0;
     }
 
     if ($stage eq 'GoD') {
