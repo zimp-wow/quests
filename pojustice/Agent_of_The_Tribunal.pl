@@ -25,7 +25,8 @@ sub EVENT_SAY {
       if (($x == 141) && ($y == -1045)) {
          if ($hold_execution == 0) {
             quest::say("Very well.");
-            quest::movepc(201,456,825,9); # Zone: pojustice
+            # quest::movepc(201,456,825,9); # Zone: pojustice
+            $client->MovePCInstance(201, $instanceid, 456, 825, 9); #zone PoJustice inside instance
          }
          else {
             quest::say("You have gotten this far, mortal, you must finish this or die trying.");#Text made up
@@ -35,7 +36,8 @@ sub EVENT_SAY {
       elsif (($x == 911) && ($y == -794)) {
          if ($hold_flame == 0) {
             quest::say("Very well.");
-            quest::movepc(201,456,825,9); # Zone: pojustice
+            # quest::movepc(201,456,825,9); 
+            $client->MovePCInstance(201, $instanceid, 456, 825, 9); #zone PoJustice inside instance
          }
          else {
             quest::say("You have gotten this far, mortal, you must finish this or die trying.");#Text made up
@@ -45,7 +47,8 @@ sub EVENT_SAY {
       elsif (($x == 490) && ($y == -1047)) {
          if ($hold_hanging == 0) {
             quest::say("Very well.");
-            quest::movepc(201,456,825,9); # Zone: pojustice
+            # quest::movepc(201,456,825,9); # Zone: pojustice
+            $client->MovePCInstance(201, $instanceid, 456, 825, 9); #zone PoJustice inside instance
          }
          else {
             quest::say("You have gotten this far, mortal, you must finish this or die trying.");#Text made up
@@ -55,7 +58,8 @@ sub EVENT_SAY {
       elsif (($x == 1343) && ($y == -1138)) {
          if ($hold_lashing == 0) {
             quest::say("Very well.");
-            quest::movepc(201,456,825,9); # Zone: pojustice
+            # quest::movepc(201,456,825,9); # Zone: pojustice
+            $client->MovePCInstance(201, $instanceid, 456, 825, 9); #zone PoJustice inside instance
          }
          else {
             quest::say("You have gotten this far, mortal, you must finish this or die trying.");#Text made up
@@ -65,7 +69,8 @@ sub EVENT_SAY {
       elsif (($x == -149) && ($y == -1196)) {
          if ($hold_stoning == 0) {
             quest::say("Very well.");
-            quest::movepc(201,456,825,9); # Zone: pojustice
+            # quest::movepc(201,456,825,9); # Zone: pojustice
+            $client->MovePCInstance(201, $instanceid, 456, 825, 9); #zone PoJustice inside instance
          }
          else {
             quest::say("You have gotten this far, mortal, you must finish this or die trying.");#Text made up
@@ -75,7 +80,8 @@ sub EVENT_SAY {
       elsif (($x == 772) && ($y == -1148)) {
          if ($hold_torture == 0) {
             quest::say("Very well.");
-            quest::movepc(201,456,825,9); # Zone: pojustice
+            # quest::movepc(201,456,825,9); # Zone: pojustice
+            $client->MovePCInstance(201, $instanceid, 456, 825, 9); #zone PoJustice inside instance
          }
          else {
             quest::say("You have gotten this far, mortal, you must finish this or die trying.");#Text made up
