@@ -17,12 +17,14 @@ my %popups = (
     "power_source" => 6280010,
     "welcome" => 6280020,
     "self_buff" => 6280030,
+    "symp_tutorial" => 6280040,
 );
 
 my %popups_title = (
     6280010 => "Power Source Tutorial",
     6280020 => "Welcome to The Heroes' Journey",
-    6280030 => "Suspended Buffs Tutorial"
+    6280030 => "Suspended Buffs Tutorial",
+    6280040 => "Sympathetic Strike Tutorial",
 );
 
 my %popups_text = (
@@ -67,7 +69,14 @@ my %popups_text = (
                ."$color_object Bard Songs$color_end - Bard Songs are also a little bit different on THJ! Beneficial songs will automatically repeat, without twisting, for as long as they remain memorized. Instrument bonuses are applied whenever "
                ."the next pulse occurs. Detrimental songs must be used as normal. /melody does work, but has some awkward interactions with normal spells.<br><br>"
                ."$color_object AA Abilities$color_end - Many AA Abilities which have recast times shorter than their durations will also never expire naturally.<br><br>"
-               ."$color_object Short-Duration Buffs$color_end - Several buffs and AA abilities have been moved to the Short Buff\\Song window. These buffs are never suspended (unless they are Songs which meet the criteria above).<br>"           
+               ."$color_object Short-Duration Buffs$color_end - Several buffs and AA abilities have been moved to the Short Buff\\Song window. These buffs are never suspended (unless they are Songs which meet the criteria above).<br>",
+
+    6280040 => "You have found an item which either has, or has the ability to be upgraded to have a$color_object Sympathetic Proc$color_end."
+               ."These are some of the most critical gear you can obtain on $color_legendary The Heroes' Journey$color_end, vastly enhancing your overall power.<br><br>"
+               ."These effects are generally only available on $color_legendary Legendary$color_end items, and you may need to upgrade this item using your Power Source slot to gain this effect.<br><br>"
+               ."$color_object Sympathetic Strike$color_end - These abilities will deal additional damage whenever you $color_normal cast a damaging spell from a spell gem$color_end. Your $color_normal Spell Damage$color_end will also be applied.<br><br>"
+               ."$color_object Sympathetic Healing$color_end - On the other hand, these abilities will add a healing component to $color_normal every beneficial spell you cast from a spell gem$color_end. Your $color_normal Heal Amount$color_end will also be applied.<br><br>"    
+               ."It is important to note that these are, for the most part, $color_object Click Effects$color_end, not worn buffs, and each type will stack with each other.",
 );
 
 sub popup_enabled {

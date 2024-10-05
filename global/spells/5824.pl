@@ -65,6 +65,11 @@ sub EVENT_SPELL_EFFECT_CLIENT {
             }
         }
 
+        # intro quest
+        if ($client->IsTaskActivityActive(3, 0)) {
+            $client->UpdateTaskActivity(3, 0, 1); #Update 'Travel to Bazaar'
+        }
+
         # Move the player to the Bazaar at a randomized location
         $client->MovePC(151, $randomized_x, $randomized_y, $z, $heading);
     } else {
@@ -96,6 +101,11 @@ sub EVENT_SPELL_EFFECT_CLIENT {
             $ReturnH = $client->GetBindHeading();
             $ReturnZone = $client->GetBindZoneID();
             $ReturnInstance = 0;          
+        }
+
+        # intro quest
+        if ($client->IsTaskActivityActive(3, 4)) {
+            $client->UpdateTaskActivity(3, 4, 1); # Update 'return from Bazaar
         }
 
         # Move the player back to the original location or bind point

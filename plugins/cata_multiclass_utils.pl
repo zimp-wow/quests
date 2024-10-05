@@ -22,6 +22,10 @@ sub CommonCharacterUpdate {
         plugin::GetProgressFlag($client, "SoL");
         plugin::GetProgressFlag($client, "PoP");
 
+        if ($client->IsTaskActivityActive(3, 5) && $client->GetLevel() >= 5) {
+            $client->UpdateTaskActivity(3, 5, 1);
+        }
+
         my @skip_ids = (69, 68, 65, 64, 63, 61, 60, 59, 58, 57, 56, 55);
         for my $i (grep { !($_ ~~ @skip_ids) } 0..77) {
             if ($client->GetLevel() == 1) {
@@ -142,6 +146,10 @@ sub AddClass {
 
         $client->Message(15, "You have permanently gained access to the $class_name class, and are now a $full_class_name.");
         CommonCharacterUpdate();
+
+        if ($client->IsTaskActivityActive(3, 2)) {
+            $client->UpdateTaskActivity(3, 2, 1);
+        }
 
         if (GetClassesCount() > 2 && CheckUniqueClass($client->GetClassesBitmask())) {
             my $class_bits          = $client->GetClassesBitmask();

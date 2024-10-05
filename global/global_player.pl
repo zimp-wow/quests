@@ -28,6 +28,10 @@ sub EVENT_ENTERZONE {
 sub EVENT_EQUIP_ITEM_CLIENT {
     if ($slot_id == 21) {
         plugin::dispatch_popup("power_source");
+        # Simple Ring of the Hero, for Tutorial Quest 2
+        if ($client->IsTaskActivityActive(4, 0) && $item_id == 150000) {
+            $client->UpdateTaskActivity(4, 0, 1);
+        }
     }
 }
 
@@ -47,16 +51,20 @@ sub EVENT_CONNECT {
         plugin::AwardSeasonalItems($client);
     }
 
-    if (!plugin::is_eligible_for_zone($client, $zonesn)) {
-		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
-		$client->MovePC(151, 185, -835, 4, 390); # Bazaar Safe Location.
-	}
+    if (!$client->IsTaskCompleted(3) && !$client->IsTaskActive(3)) {
+        $client->AssignTask(3);
+    }
 
     if (plugin::GetSoulmark($client)) {
         plugin::DisplayWarning($client);
     }
 
     plugin::dispatch_popup("welcome");
+
+    if (!plugin::is_eligible_for_zone($client, $zonesn)) {
+		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
+		$client->MovePC(151, 185, -835, 4, 390); # Bazaar Safe Location.
+	}
 }
 
 sub EVENT_POPUPRESPONSE {
@@ -77,6 +85,12 @@ sub EVENT_POPUPRESPONSE {
 
         $client->SpellEffect(218,1);
         $client->MovePC(151, $x, $y, $z, rand(512));
+    }
+}
+
+sub EVENT_TASK_COMPLETE {
+    if ($task_id == 3 && !$client->IsTaskCompleted(4)) {
+        $client->AssignTask(4);
     }
 }
 
@@ -158,8 +172,6 @@ sub EVENT_WARP {
     }
 }
 
-
-
 sub EVENT_DISCOVER_ITEM {
     my $name = $client->GetCleanName();
     
@@ -167,6 +179,42 @@ sub EVENT_DISCOVER_ITEM {
     if ($itemid > 999999) {        
         plugin::WorldAnnounceItem("$name has discovered: {item}.",$itemid);  
     }  
+}
+
+sub EVENT_LOOT {
+    symp_proc_tutorial_helper($item_id, $client);
+}
+
+sub EVENT_MERCHANT_BUY {
+    symp_proc_tutorial_helper($item_id, $client);
+}
+
+sub symp_proc_tutorial_helper {
+    my $item_id = shift;
+    my $client = shift;
+
+    #pre-computed list of symp proc item ID bases
+    my @sym_clicks = (
+        6307, 6309, 6313, 7305, 900012, 900014, 1113, 1117, 1156, 1173, 
+        1904, 2404, 5203, 5214, 5730, 5764, 6017, 6020, 6024, 6036, 
+        6310, 6315, 6323, 6324, 6332, 6335, 6343, 6350, 6359, 6382, 
+        6383, 6402, 6404, 6408, 6616, 6626, 7036, 7318, 7372, 7405, 
+        10333, 10383, 10404, 10994, 11028, 11906, 11973, 12375, 13168, 
+        13380, 13400, 13500, 13743, 13744, 13815, 13987, 13988, 13991, 
+        14338, 14746, 14762, 20627, 21798, 21863, 21885, 21886, 21892, 
+        22819, 22890, 23498, 24745, 24779, 24789, 24793, 25566, 25577, 
+        25980, 25998, 26000, 26001, 26009, 26553, 27280, 27717, 28812, 
+        28813, 28814, 28815, 28817, 28908, 29248, 29430, 29442, 30511, 
+        31210, 31212, 31373, 62269, 68444, 68744, 68775, 68837, 69044, 
+        69047, 69049, 69051, 69054, 69055, 69095, 69112, 69113, 69116, 
+        69155
+    );
+
+    my $item_root = $item_id % 1000000;
+
+    if (grep { $_ == $item_root } @sym_clicks) {
+        plugin::dispatch_popup("symp_tutorial", $client);
+    }
 }
 
 sub EVENT_COMBINE_VALIDATE {
@@ -246,6 +294,8 @@ sub swap_vib_gaunt_and_hammer {
     }
 }
 
+
+
 sub EVENT_CAST_ON {
     # Check for mutually-exclusive elemental form spells.
     my @spell_ids = (
@@ -258,13 +308,6 @@ sub EVENT_CAST_ON {
             $client->BuffFadeBySpellID($id);
         }
     }
-
-    quest::debug("spell_id " . $spell_id);
-	quest::debug("caster_id " . $caster_id);
-	quest::debug("caster_level " . $caster_level);
-	quest::debug("target_id " . $target_id);
-	quest::debug("target " . $target);
-	quest::debug("spell " . $spell);
 
     if ($caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
         plugin::dispatch_popup("self_buff", $client);
