@@ -294,8 +294,6 @@ sub swap_vib_gaunt_and_hammer {
     }
 }
 
-
-
 sub EVENT_CAST_ON {
     # Check for mutually-exclusive elemental form spells.
     my @spell_ids = (
@@ -309,7 +307,7 @@ sub EVENT_CAST_ON {
         }
     }
 
-    if ($caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
+    if ($caster_id == $client->GetID() && $spell && $spell->GetBuffDuration() > 0) {
         plugin::dispatch_popup("self_buff", $client);
     }
 }
