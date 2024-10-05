@@ -100,14 +100,9 @@ sub EVENT_SAY {
 			my %glamour_hash = map { $_ => 1 } @glamour_list;  # Convert list to hash for quick lookup
 			my $random_result;
 
-			while (1) {
-				$random_result = get_random_glamour();
-				
-				# Check if the new glamour ID is already in the list or if the client already has the item
-				if ($random_result && !$glamour_hash{$random_result} && !plugin::check_hasitem($client, $random_result)) {
-					last;  # Found a suitable random result, break out of the loop
-				}
-			}
+			
+			$random_result = get_random_glamour();
+
 
 			if ($random_result && plugin::SpendEOM($client, 5)) {
 				$client->SummonItem($random_result);
