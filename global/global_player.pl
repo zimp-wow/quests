@@ -102,14 +102,9 @@ sub EVENT_POPUPRESPONSE {
 }
 
 sub EVENT_TASK_COMPLETE {
-    plugin::CommonCharacterUpdate($client); 
     if ($task_id == 3 && !$client->IsTaskCompleted(4)) {
         $client->AssignTask(4);
     }
-}
-
-sub EVENT_TASK_UPDATE {
-    plugin::CommonCharacterUpdate($client); 
 }
 
 sub EVENT_LEVEL_UP {
