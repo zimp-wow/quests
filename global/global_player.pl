@@ -307,7 +307,7 @@ sub EVENT_CAST_ON {
         }
     }
 
-    if ($caster_id == $client->GetID() && $spell && $spell->GetBuffDuration() > 0) {
+    if ($caster_id && $caster_id == $client->GetID() && $spell && $spell->GetBuffDuration() > 0) {
         plugin::dispatch_popup("self_buff", $client);
     }
 }
