@@ -258,6 +258,17 @@ sub EVENT_CAST_ON {
             $client->BuffFadeBySpellID($id);
         }
     }
+
+    quest::debug("spell_id " . $spell_id);
+	quest::debug("caster_id " . $caster_id);
+	quest::debug("caster_level " . $caster_level);
+	quest::debug("target_id " . $target_id);
+	quest::debug("target " . $target);
+	quest::debug("spell " . $spell);
+
+    if ($caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
+        plugin::dispatch_popup("self_buff", $client);
+    }
 }
 
 sub EVENT_SAY {

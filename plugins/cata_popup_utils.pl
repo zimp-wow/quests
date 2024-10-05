@@ -16,11 +16,13 @@ my $color_object = "<font color='#FFFF00'>";
 my %popups = (
     "power_source" => 6280010,
     "welcome" => 6280020,
+    "self_buff" => 6280030,
 );
 
 my %popups_title = (
     6280010 => "Power Source Tutorial",
     6280020 => "Welcome to The Heroes' Journey",
+    6280030 => "Suspended Buffs Tutorial"
 );
 
 my %popups_text = (
@@ -52,7 +54,19 @@ my %popups_text = (
                ."* $color_object Multi-Pet$color_end - Class combinations with more than one pet class can have more than one pet! You can have one per per class (including charm pets). Switch between them by targeting them! <br>"
                ."<br>$color_normal Next Steps!$color_end<br>"
                ."* Visit our <a href=\"https://heroesjourneyeq.com\">Website</a> (heroesjourneyeq.com) and grab the client. You will absolutely need this client, and cannot leave $color_normal The Bazaar$color_end unless you are using it!<br>"
-               ."* Join our <a href=\"https://discord.heroesjourneyeq.com\">Discord</a> (86bm92mZaZ) to find guides, and resources.<br>",         
+               ."* Join our <a href=\"https://discord.heroesjourneyeq.com\">Discord</a> (86bm92mZaZ) to find guides, and resources.<br>",
+
+    6280030 => "You have cast a buff on yourself!$color_legendary The Heroes' Journey$color_end has special mechanics to improve quality-of-life around buffs! <br><br>"
+               ."$color_object Self Buffs$color_end - Any buffs which you cast on yourself, or your pet,$color_normal from a memorized spell$color_end will never naturally expire. The timer will count down one tick, and then reset. "
+               ."These buffs are generally permanent, though they can still be dispelled.<br><br>"
+               ."$color_object Group Buffs$color_end - When you buff a group member (or are buffed by them), these buffs will also never naturally expire for as long as you remain both grouped and in the same zone. This also applies to buffs toward "
+               ."pets.<br><br>"
+               ."$color_object Clicky Buffs$color_end - Clicky buffs are a special category. These will be 'suspended' like other buffs only for as long as the caster has the item which has that spell equipped, or the caster otherwise has it in "
+               ."their spellbook.<br><br>"
+               ."$color_object Bard Songs$color_end - Bard Songs are also a little bit different on THJ! Beneficial songs will automatically repeat, without twisting, for as long as they remain memorized. Instrument bonuses are applied whenever "
+               ."the next pulse occurs. Detrimental songs must be used as normal. /melody does work, but has some awkward interactions with normal spells.<br><br>"
+               ."$color_object AA Abilities$color_end - Many AA Abilities which have recast times shorter than their durations will also never expire naturally.<br><br>"
+               ."$color_object Short-Duration Buffs$color_end - Several buffs and AA abilities have been moved to the Short Buff\\Song window. These buffs are never suspended (unless they are Songs which meet the criteria above).<br>"           
 );
 
 sub popup_enabled {
@@ -132,7 +146,7 @@ sub dispatch_popup {
     my $text = $popups_text{$popup_id};
     my $negative_id = $popup_id + 9;
     my $buttons = 2;
-    my $duration = 60;
+    my $duration = -1;
     my $button_1 = "Remind Me Later";
     my $button_2 = "Never Show Again";
 
