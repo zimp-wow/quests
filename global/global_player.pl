@@ -31,8 +31,19 @@ sub EVENT_EQUIP_ITEM_CLIENT {
         # Simple Ring of the Hero, for Tutorial Quest 2
         if ($client->IsTaskActivityActive(4, 0) && $item_id == 150000) {
             $client->UpdateTaskActivity(4, 0, 1);
+            return;
+        }
+        if ($client->IsTaskActivityActive(4, 1) && $item_id == 1150000) {
+            $client->UpdateTaskActivity(4, 01, 1);
+            return;
+        }
+        if ($client->IsTaskActivityActive(4, 2) && $item_id == 2150000) {
+            $client->UpdateTaskActivity(4, 2, 1);
+            return;
         }
     }
+
+    symp_proc_tutorial_helper($item_id, $client);
 }
 
 sub EVENT_CONNECT {
@@ -89,9 +100,14 @@ sub EVENT_POPUPRESPONSE {
 }
 
 sub EVENT_TASK_COMPLETE {
+    plugin::CommonCharacterUpdate($client); 
     if ($task_id == 3 && !$client->IsTaskCompleted(4)) {
         $client->AssignTask(4);
     }
+}
+
+sub EVENT_TASK_UPDATE {
+    plugin::CommonCharacterUpdate($client); 
 }
 
 sub EVENT_LEVEL_UP {
