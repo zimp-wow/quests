@@ -35,7 +35,8 @@ my %popups_text = (
                ."Upgrading a $color_normal Normal$color_end item to $color_enchanted Enchanted$color_end will be <b>MUCH</b> faster than upgrading to $color_legendary Legendary$color_end. It is recommended to not try "
                ."to max out a slot until you are sure you are going to use that for a long time.<br><br>"
                ."You may also use your $color_object Consume Item$color_end AA Ability to speed up this process by consuming identical items to accelerate its growth. "
-               ."Once an item has gained any experience, it can no longer be consumed!",
+               ."Once an item has gained any experience, it can no longer be consumed!<br><br>"
+               ."You may freely remove or exchange items from the Power Source slot without losing any progress.",
     
     6280020 => "Welcome to $color_legendary The Heroes' Journey$color_end.<br><br>"
                ."You've arrived on the best $color_object Multiclass$color_end, $color_object Solo/Duo$color_end,  $color_object Single-Box$color_end, $color_object Progression$color_end EQEmu server in the world.<br><br>"
