@@ -10,6 +10,10 @@ sub OfferStandardInstance {
   my $dz_lifetime     = 604800;
   my ($expedition_name, $min_players, $max_players, $dz_zone, $x, $y, $z, $heading) = @_;
 
+  if ($client->IsTaskActivityActive(4, 4)) {
+    $client->UpdateTaskActivity(4, 4, 1);
+  }
+
   if (plugin::IsSeasonal($client) || plugin::MultiClassingEnabled()) {
     $max_players = 6;
   }
