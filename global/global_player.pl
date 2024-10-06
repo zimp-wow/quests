@@ -107,12 +107,6 @@ sub EVENT_TASK_COMPLETE {
     }
 }
 
-sub EVENT_TASK_BEFORE_UPDATE {
-    quest::debug("donecount " . $donecount);
-    quest::debug("activity_id " . $activity_id);
-    quest::debug("task_id " . $task_id);
-    quest::CommonCharacterUpdate();
-}
 sub EVENT_LEVEL_UP {
     plugin::CommonCharacterUpdate($client);
     my $new_level = $client->GetLevel();
