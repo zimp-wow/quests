@@ -283,8 +283,6 @@ sub GetSubflag {
 
     my $progress_flag = GetProgressFlag($client, $stage);
 
-    quest::debug($progress_flag);
-
     # Deserialize the flag into a hash
     my %original_flag = plugin::DeserializeHash($progress_flag);
 
