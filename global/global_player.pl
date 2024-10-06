@@ -322,6 +322,7 @@ sub EVENT_CAST_ON {
 
     if ($caster_id && $spell) {
         if ($caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
+            quest::debug("Invoking self buff window");
             plugin::dispatch_popup("self_buff", $client);
         }
     }
