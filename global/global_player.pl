@@ -322,7 +322,7 @@ sub EVENT_CAST_ON {
 
     if ($caster_id && $spell) {
         my @global_buffs = ( 43002, 43003, 43004, 43005, 43006, 43007, 43008, 17779 );
-        if (!(grep { $_ == $global_buffs }) && $caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
+        if (!grep { $_ == $global_buffs } && $caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
             quest::debug("Invoking self buff window");
             plugin::dispatch_popup("self_buff", $client);
         }
