@@ -79,6 +79,29 @@ my %popups_text = (
                ."It is important to note that these are, for the most part, $color_object Click Effects$color_end, not worn buffs, and each type will stack with each other.",
 );
 
+sub get_popup_config {
+    my $popup_id = shift;
+    my $client   = shift || plugin::val('$client');
+
+    if (!popup_exists($popup_id)) {
+        return 0;
+    }
+
+    return $client->GetBucket("popup-$popup_id-disabled");
+}
+
+sub set_popup_config {
+    my $popup_id = shift;
+    my $value    = shift;
+    my $client   = shift || plugin::val('$client');    
+
+    if (!popup_exists($popup_id)) {
+        return 0;
+    }
+
+    $client->SetBucket("popup-$popup_id-disabled", $value);
+}
+
 sub popup_enabled {
     my $popup_id = shift;
     my $client   = shift || plugin::val('$client');
@@ -87,7 +110,7 @@ sub popup_enabled {
         return 0;
     }
     
-    if (plugin::MultiClassingEnabled() && !$client->GetBucket("popup-$popup_id-disabled")) {
+    if (plugin::MultiClassingEnabled() && !get_popup_config($popup_id, $config)) {
         return 1;
     } else {
         return 0;
@@ -103,7 +126,7 @@ sub disable_tutorial_popup {
     }
 
     if ($client) {
-        $client->SetBucket("popup-$popup_id-disabled", "true");
+        $set_popup_config($popup_id, "true", $client);
         return 1;
     }
 
