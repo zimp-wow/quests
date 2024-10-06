@@ -322,12 +322,12 @@ sub EVENT_CAST_ON {
 
     if ($caster_id && $spell) {
         my @global_buffs = ( 43002, 43003, 43004, 43005, 43006, 43007, 43008, 17779 );
-        # Check if spell_id is NOT in @global_buffs array
-        if (!(grep { $_ == $spell_id } @global_buffs) && $caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
+        # Check if spell_id IS in @global_buffs array
+        if (grep { $_ == $spell_id } @global_buffs) {
+            quest::debug("Skipping buff window invocation for global buff. ID $spell_id");
+        } elsif ($caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
             quest::debug("Invoking self buff window. ID $spell_id");
             plugin::dispatch_popup("self_buff", $client);
-        } else {
-            quest::debug("Skipping buff window invocation for global buff. ID $spell_id");
         }
     }
 }
