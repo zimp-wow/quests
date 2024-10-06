@@ -326,6 +326,8 @@ sub EVENT_CAST_ON {
         if (!grep { $_ == $spell_id } @global_buffs && $caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
             quest::debug("Invoking self buff window. ID $spell_id");
             plugin::dispatch_popup("self_buff", $client);
+        } else {
+            quest::debug("Skipping buff window invocation for global buff. ID $spell_id");
         }
     }
 }
