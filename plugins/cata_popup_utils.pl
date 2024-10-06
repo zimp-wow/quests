@@ -113,43 +113,35 @@ sub disable_tutorial_popup {
 sub popup_exists {
     my $popup_id = shift;
 
-    # Check if the popup_id exists as a value in %popups
     my $exists_in_popups = grep { $_ == $popup_id } values %popups;
 
-    # Check if popup_id exists in %popups_text and %popups_title
     if ($exists_in_popups && exists $popups_text{$popup_id} && exists $popups_title{$popup_id}) {
-        return 1;  # Popup exists in all necessary places
+        return 1;
     }
     
-    return 0;  # Popup does not exist
+    return 0;
 }
 
 sub dispatch_popup {
     my $popup_identifier = shift;
     my $client = shift || plugin::val('$client');
-
-    # Determine if the identifier is a friendly name or a hex popup_id
     my $popup_id = exists $popups{$popup_identifier} ? $popups{$popup_identifier} : $popup_identifier;
 
     if (!popup_exists($popup_id)) {
         return 0;
     }
 
-    # Check if popups are enabled for this popup_id and client
     if (!popup_enabled($popup_id, $client)) {
         return 0;
     }
 
-    # Ensure the client is valid
     if (!$client) {
-        quest::debug("Tutorial popup invoked on invalid client.");
         return 0;
     }
 
-    # Check if the popup_id exists in all required hashes
     if (!exists $popups_title{$popup_id} || !exists $popups_text{$popup_id}) {
         quest::debug($client->GetCleanName() . " tried to invoke an invalid popup: $popup_id");
-        return 0;  # Return early if the popup is invalid
+        return 0;  
     }
 
     my $title = $popups_title{$popup_id};
@@ -160,33 +152,21 @@ sub dispatch_popup {
     my $button_1 = "Remind Me Later";
     my $button_2 = "Never Show Again";
 
-    # Display the popup if it's valid
     $client->Popup2($title, $text, $popup_id, $negative_id, $buttons, $duration, $button_1, $button_2);
-    return 1;  # Indicate success
+    return 1;  
 }
 
 sub check_tutorial_popup_response {
     my $response_identifier = shift;
     my $client = shift || plugin::val('$client');
 
-    if (!$client) {
-        quest::debug("No valid client provided for tutorial popup response check.");
+    if (!$client) {        
         return;
     }
 
-    # Subtract 9 to get the corresponding popup ID that ends in '0'
     my $popup_id = $response_identifier - 9;
 
-    # Debugging output to ensure subtraction is correct
-    quest::debug("Response Identifier: $response_identifier, Calculated Popup ID: $popup_id");
-
-    # Use the helper function to check if the popup exists in all necessary hashes
     if (popup_exists($popup_id)) {
-        quest::debug($client->GetCleanName() . " chose 'Never Show Again' for popup $popup_id.");
-
-        # Disable the tutorial popup for the client by setting the appropriate flag
         disable_tutorial_popup($popup_id, $client);
-    } else {
-        quest::debug("Popup ID $popup_id not found in necessary hashes for response_identifier: $response_identifier.");
     }
 }
