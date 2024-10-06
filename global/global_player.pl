@@ -27,7 +27,6 @@ sub EVENT_ENTERZONE {
 
 sub EVENT_EQUIP_ITEM_CLIENT {
     if ($slot_id == 21) {
-        plugin::dispatch_popup("power_source");
         # Simple Ring of the Hero, for Tutorial Quest 2
         if ($client->IsTaskActivityActive(4, 0) && $item_id == 150000) {
             $client->UpdateTaskActivity(4, 0, 1);
@@ -40,6 +39,11 @@ sub EVENT_EQUIP_ITEM_CLIENT {
         if ($client->IsTaskActivityActive(4, 2) && $item_id == 2150000) {
             $client->UpdateTaskActivity(4, 2, 1);
             return;
+        }
+        if ($item_id == 2150000) {
+            plugin::dispatch_popup("symp_tutorial");
+        } {
+            plugin::dispatch_popup("power_source");
         }
     }
 
@@ -324,9 +328,8 @@ sub EVENT_CAST_ON {
         my @global_buffs = ( 43002, 43003, 43004, 43005, 43006, 43007, 43008, 17779 );
         # Check if spell_id IS in @global_buffs array
         if (grep { $_ == $spell_id } @global_buffs) {
-            quest::debug("Skipping buff window invocation for global buff. ID $spell_id");
+            # no operation
         } elsif ($caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
-            quest::debug("Invoking self buff window. ID $spell_id");
             plugin::dispatch_popup("self_buff", $client);
         }
     }

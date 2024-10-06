@@ -32,7 +32,6 @@ sub OfferStandardInstance {
   elsif ($text eq 'Respawning' || $text eq 'Non-Respawning') {
     if ($text eq 'Non-Respawning') {
       $dz_version = quest::get_rule("Custom:StaticInstanceVersion") || 100;
-      quest::debug("$dz_version");
       $expedition_name = $expedition_name . " (Static)";
     }
     
