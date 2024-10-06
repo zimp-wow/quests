@@ -30,14 +30,6 @@ sub CommonCharacterUpdate {
             $client->UpdateTaskActivity(4, 3, 1);
         }
 
-        if ($client->IsTaskActivityActive(4, 5) && plugin::GetSubflag($client, "Lord Nagafen", "RoK")) {
-            $client->UpdateTaskActivity(4, 5, 1);
-        }
-
-        if ($client->IsTaskActivityActive(4, 6) && plugin::GetSubflag($client, "Lady Vox", "RoK")) {
-            $client->UpdateTaskActivity(4, 6, 1);
-        }
-
         my @skip_ids = (69, 68, 65, 64, 63, 61, 60, 59, 58, 57, 56, 55);
         for my $i (grep { !($_ ~~ @skip_ids) } 0..77) {
             if ($client->GetLevel() == 1) {
