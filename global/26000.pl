@@ -18,11 +18,13 @@ sub EVENT_SAY {
         }  
         plugin::SetSubflag($client, $flag_stage, $flag_name);
 
-        if ($flag_name eq "Lord Nagafen" && $client->IsTaskActivityActive(4, 5)) {
+        quest::debug(". $flag_name . " . $client->IsTaskActivityActive(4, 6));
+
+        if ($flag_name eq lc("Lord Nagafen") && $client->IsTaskActivityActive(4, 5)) {
             $client->UpdateTaskActivity(4, 5, 1);
         }
 
-        if ($flag_name eq "Lady Vox" && $client->IsTaskActivityActive(4, 6)) {
+        if ($flag_name eq lc("Lady Vox") && $client->IsTaskActivityActive(4, 6)) {
             $client->UpdateTaskActivity(4, 6, 1);
         }
     }

@@ -107,6 +107,12 @@ sub EVENT_TASK_COMPLETE {
     }
 }
 
+sub EVENT_TASK_BEFORE_UPDATE {
+    quest::debug("donecount " . $donecount);
+    quest::debug("activity_id " . $activity_id);
+    quest::debug("task_id " . $task_id);
+    quest::CommonCharacterUpdate();
+}
 sub EVENT_LEVEL_UP {
     plugin::CommonCharacterUpdate($client);
     my $new_level = $client->GetLevel();
@@ -308,13 +314,6 @@ sub swap_vib_gaunt_and_hammer {
 }
 
 sub EVENT_CAST_ON {
-    quest::debug("spell_id " . $spell_id);
-	quest::debug("caster_id " . $caster_id);
-	quest::debug("caster_level " . $caster_level);
-	quest::debug("target_id " . $target_id);
-	quest::debug("target " . $target);
-	quest::debug("spell " . $spell);
-    
     # Check for mutually-exclusive elemental form spells.
     my @spell_ids = (
         2789, 2790, 2791, 2792, 2793, 2794, 2795, 2796, 2797, 2798, 2799, 2800,
@@ -327,8 +326,10 @@ sub EVENT_CAST_ON {
         }
     }
 
-    if ($caster_id && $caster_id == $client->GetID() && $spell && $spell->GetBuffDuration() > 0) {
-        plugin::dispatch_popup("self_buff", $client);
+    if ($caster_id && $spell) {
+        if ($caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
+            plugin::dispatch_popup("self_buff", $client);
+        }
     }
 }
 
