@@ -308,6 +308,13 @@ sub swap_vib_gaunt_and_hammer {
 }
 
 sub EVENT_CAST_ON {
+    quest::debug("spell_id " . $spell_id);
+	quest::debug("caster_id " . $caster_id);
+	quest::debug("caster_level " . $caster_level);
+	quest::debug("target_id " . $target_id);
+	quest::debug("target " . $target);
+	quest::debug("spell " . $spell);
+    
     # Check for mutually-exclusive elemental form spells.
     my @spell_ids = (
         2789, 2790, 2791, 2792, 2793, 2794, 2795, 2796, 2797, 2798, 2799, 2800,
