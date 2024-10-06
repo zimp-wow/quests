@@ -26,6 +26,10 @@ sub CommonCharacterUpdate {
             $client->UpdateTaskActivity(3, 5, 1);
         }
 
+        if ($client->IsTaskActivityActive(3, 5) && $client->GetLevel() >= 51) {
+            $client->UpdateTaskActivity(4, 3, 1);
+        }
+
         if ($client->IsTaskActivityActive(4, 5) && GetSubflag($client, "Lord Nagafen", "RoK")) {
             $client->UpdateTaskActivity(4, 5, 1);
         }
