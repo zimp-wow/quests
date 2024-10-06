@@ -42,11 +42,9 @@ sub EVENT_SPELL_EFFECT_CLIENT {
             for (my $count = 0; $count < $group->GroupCount(); $count++) {
                 my $player = $group->GetMember($count);
                 if ($player && $player->GetID() != $client->GetID() && $client->CalculateDistance($player) <= 200) {
-                    my $player_in_combat = false;
                     foreach $npc (@npc_list)
 		            {
                         if ($npc->IsOnHatelist($player)) {
-                            $player_in_combat = true;
                             return;
                         }
                     }
