@@ -126,7 +126,7 @@ sub disable_tutorial_popup {
     }
 
     if ($client) {
-        $set_popup_config($popup_id, "true", $client);
+        set_popup_config($popup_id, "true", $client);
         return 1;
     }
 
