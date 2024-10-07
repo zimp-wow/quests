@@ -53,8 +53,9 @@ sub EVENT_SPELL_EFFECT_CLIENT {
                     my $popup_text  = "Would you like to return to the Bazaar with your groupmate?";
                     my $popup_yes   = 58240;
                     my $popup_no    = 58241;
+                    my $popup_duration = 30;
 
-                    $player->Popup2($popup_title, $popup_text, $popup_yes, $popup_no, 2);
+                    $player->Popup2($popup_title, $popup_text, $popup_yes, $popup_no, 2, $popup_duration);
                     $player->SetEntityVariable("bazaar_x", $chosen_loc->[0]);
                     $player->SetEntityVariable("bazaar_y", $chosen_loc->[1]);
                     $player->SetEntityVariable("bazaar_z", $chosen_loc->[2]);
