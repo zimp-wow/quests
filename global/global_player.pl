@@ -51,8 +51,12 @@ sub EVENT_EQUIP_ITEM_CLIENT {
 }
 
 sub EVENT_CONNECT {
+    if (plugin::GetSoulmark($client)) {
+        plugin::DisplayWarning($client);
+    }
+
     $client->ReloadDataBuckets();    
-    plugin::CommonCharacterUpdate($client);  
+    plugin::CommonCharacterUpdate($client); 
     if (!$client->GetBucket("First-Login")) {
         $client->SetBucket("First-Login", 1);
 		$client->SummonItem(18471); #A Faded Writ
@@ -66,17 +70,15 @@ sub EVENT_CONNECT {
         plugin::AwardSeasonalItems($client);
     }
 
-    if (!$client->IsTaskCompleted(3) && !$client->IsTaskActive(3)) {
-        $client->AssignTask(3);
-    } elsif ($client->IsTaskCompleted(3) && (!$client->IsTaskCompleted(4) && !$client->IsTaskActive(4))) {
-        $client->AssignTask(4);
-    }
+    if (plugin:: MultiClassingEnabled()) {
+        if (!$client->IsTaskCompleted(3) && !$client->IsTaskActive(3)) {
+            $client->AssignTask(3);
+        } elsif ($client->IsTaskCompleted(3) && (!$client->IsTaskCompleted(4) && !$client->IsTaskActive(4))) {
+            $client->AssignTask(4);
+        }
 
-    if (plugin::GetSoulmark($client)) {
-        plugin::DisplayWarning($client);
+        plugin::dispatch_popup("welcome");
     }
-
-    plugin::dispatch_popup("welcome");
 
     if (!plugin::is_eligible_for_zone($client, $zonesn)) {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
