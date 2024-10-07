@@ -70,7 +70,7 @@ sub EVENT_CONNECT {
         plugin::AwardSeasonalItems($client);
     }
 
-    if (plugin:: MultiClassingEnabled()) {
+    if (plugin::MultiClassingEnabled()) {
         if (!$client->IsTaskCompleted(3) && !$client->IsTaskActive(3)) {
             $client->AssignTask(3);
         } elsif ($client->IsTaskCompleted(3) && (!$client->IsTaskCompleted(4) && !$client->IsTaskActive(4))) {
