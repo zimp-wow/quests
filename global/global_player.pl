@@ -138,6 +138,17 @@ sub EVENT_ZONE {
     plugin::CommonCharacterUpdate($client);
 }
 
+sub EVENT_READ_ITEM {
+	quest::message(315, "Perl | book_text [$book_text]");
+	quest::message(315, "Perl | can_cast [$can_cast]");
+	quest::message(315, "Perl | can_scribe [$can_scribe]");
+	quest::message(315, "Perl | item_id [$item_id]");
+	quest::message(315, "Perl | slot_id [$slot_id]");
+	quest::message(315, "Perl | target_id [$target_id]");
+	quest::message(315, "Perl | text_file [$text_file]");
+	quest::message(315, "Perl | type [$type]");
+}
+
 sub EVENT_WARP {
     my $name = $client->GetCleanName();
     my $current_x = $client->GetX();

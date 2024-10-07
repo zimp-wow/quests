@@ -13,14 +13,10 @@ sub EVENT_SAY {
     return;
   }
 
-  if ($text=~/attune the map/i) {
-      my @continent_names;
+  if ($text =~ /attune the map/i) {
+      # Get eligible continent names
+      my @continent_names = get_eligible_continent_names($client);
 
-      # Collect eligible continent names into an array and surround them with [ ]
-      foreach my $value (sort {$a <=> $b} plugin::GetContinents($client)) {
-          push @continent_names, "[" . plugin::GetContinentName($value) . "]";
-      }
-      
       # Formulate a grammatically correct list
       my $location_append = "";
       if (@continent_names == 1) {
@@ -31,9 +27,10 @@ sub EVENT_SAY {
           $location_append = join(', ', @continent_names[0..$#continent_names-1]) . ", or " . $continent_names[-1];
       }
 
+      # NPC dialogue response
       plugin::NPCTell("If you look closely, you'll see circles of rune-stones scattered throughout Norrath, and beyond. These serve as anchors for travel, and the map can be attuned to any of them. 
                       Let's narrow down where you want to go? $location_append?");
-    
+
       return;
   }
 
@@ -87,9 +84,11 @@ sub EVENT_SAY {
           # Collect the long names for the waypoints with quest::saylink
           my @waypoint_links;
           foreach my $key (sort {$a cmp $b} keys %waypoints) {
-              my $long_name = $waypoints{$key}->[0];  # Get the long name
-              my $short_name = $key;  # The key is the short name
-              push @waypoint_links, "[".quest::saylink($short_name, 0, $long_name)."]";  # Create a clickable link
+              if (plugin::is_eligible_for_zone($client, $key, 1)) {
+                my $long_name = $waypoints{$key}->[0];  # Get the long name
+                my $short_name = $key;  # The key is the short name
+                push @waypoint_links, "[".quest::saylink($short_name, 0, $long_name)."]";  # Create a clickable link
+              }
           }
 
           # Send each waypoint as a separate line
@@ -118,4 +117,30 @@ sub EVENT_SAY {
           plugin::NPCTell("I'm not sure where that is... at least not yet.");
       }
   }
+}
+
+sub has_eligible_waypoints {
+    my ($continent_id, $client) = @_;
+    my %waypoints = plugin::GetWaypoints($continent_id, $client);
+
+    foreach my $key (keys %waypoints) {
+        if (plugin::is_eligible_for_zone($client, $key, 1)) {
+            return 1;  # Return true if at least one eligible waypoint is found
+        }
+    }
+
+    return 0;  # Return false if no eligible waypoints are found
+}
+
+sub get_eligible_continent_names {
+    my ($client) = @_;
+    my @eligible_continent_names;
+
+    foreach my $continent_id (sort { $a <=> $b } plugin::GetContinents($client)) {
+        if (has_eligible_waypoints($continent_id, $client)) {
+            push @eligible_continent_names, "[" . plugin::GetContinentName($continent_id) . "]";
+        }
+    }
+
+    return @eligible_continent_names;
 }
