@@ -94,7 +94,7 @@ my %waypoints = (
     'fearplane'     => ["The Plane of Fear", 6, 1065, -1305, 3, 500],
     'hateplaneb'    => ["The Plane of Hate", 6, -400, 680, 4, 330],
     'poknowledge'   => ["The Plane of Knowledge", 6, -215, 50, -160, 128],
-    'potranquility' => ["The Plane of Tranquility", 6, -8, -192, -528, 115],
+    'potranquility' => ["The Plane of Tranquility", 6, -8, -192, -628, 115],
     'potimea'       => ["The Plane of Time", 6, 0, 110, 8, 0],
 
     # Taelosia (7)
