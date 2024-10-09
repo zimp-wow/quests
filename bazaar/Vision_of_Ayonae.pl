@@ -1,9 +1,17 @@
+
+my $remove_class_cost = 0;
+my $remove_class_lockout = 1;
+
 sub EVENT_SAY {
+    if (!plugin::MultiClassingEnabled()) {
+        return;
+    }
+
     if ($text=~/hail/i) {
-        if (plugin::GetClassesCount($client) == 1) {
+        if (plugin::GetClassesCount($client) <= 1) {
             plugin::NPCTell("Mortal. Do you wish to throw yourself upon the [whims of blind fate]?");
         } else {
-            plugin::NPCTell("Mortal. You are unsuitable, your fate has already been tainted by your pathetic free will. Begone.");
+            plugin::NPCTell("Mortal. You are unsuitable, your fate has already been tainted by your pathetic free will. Begone, unless you would have me [reforge your path]");
         }
         return;
     }
@@ -39,4 +47,41 @@ sub EVENT_SAY {
         }
         return;
     }
+
+    if ($text=~/reforge your path/i) {
+        if (plugin::GetClassesCount > 1) {
+            my $classes_string =plugin::GetClassLinkString();
+
+            plugin::NPCTell("Which class would you have me strip from you; $classes_string?");
+        }
+    }
+
+    if ($text =~ /^del_class_(\d+)$/i) {
+        my $class_id = $1; 
+
+        if ($client->HasExpeditionLockout("Class Removal Lockout", "")) {
+            plugin::YellowText("You cannot remove a class at this time, you still are under cooldown from a previous class removal.");
+            return 0;
+        }
+
+        if (plugin::HasClass($client, $class_id)) {
+            if (plugin::GetEOM($client) >= $remove_class_cost) {
+                 plugin::YellowText("It will cost $remove_class_cost Echo of Memory in order to remove a class. Additionally, 
+                                    there is a $remove_class_lockout-day cooldown after removing a class before you can remove another. Would you
+                                    like to ".quest::saylink("proceed_$class_id", 0, "Proceed")."?");
+            
+            } else {
+                 plugin::YellowText("It costs $remove_class_cost Echo of Memory in order to remove a class. You can obtain
+                                    Echo of Memory through contributions to the sever or purchase from other players in the Bazaar.");
+            }           
+        }
+    }
+
+    if ($text =~ /^proceed_(\d+)$/i) {
+        my $class_id = $1; 
+        if (plugin::SpendEOM($client, $remove_class_cost) && plugin::HasClass($client, $class_id)) {
+            plugin::RemoveClass($class_id, $client);
+            $client->AddExpeditionLockout("Class Removal Lockout", "", $remove_class_lockout * 24 * 60 * 60);
+        }
+    }   
 }
