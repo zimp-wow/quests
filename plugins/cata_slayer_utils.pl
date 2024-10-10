@@ -462,12 +462,13 @@ sub ProcessSlayerCredit {
         
         $category_data{$category} = $total;
 
-        quest::debug("Got total of $total for $category");
+        if ($total > 0) {
+            quest::debug("Got total of $total for $category");
+        }
 
         # Determine the highest eligible tier index
         my $eligible_tier = -1;
         for (my $i = 0; $i < @tiers; $i++) {
-            quest::debug("Examining Tier $i...");
             if ($total >= $tiers[$i]) {
                 quest::debug("Eligible for Tier $i for $category with total of $total");
                 $eligible_tier = $i;
