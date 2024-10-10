@@ -447,7 +447,7 @@ sub ProcessSlayerCredit {
     my $race_data = (quest::get_data($race_key) || 0) + 1;
 
     quest::set_data($race_key, $race_data);
-    quest::debug("Saving Kill Count for [" . $npc->GetRace() . "] as [$race_data]");
+    #quest::debug("Saving Kill Count for [" . $npc->GetRace() . "] as [$race_data]");
 
     my %category_data;
 
@@ -463,14 +463,14 @@ sub ProcessSlayerCredit {
         $category_data{$category} = $total;
 
         if ($total > 0) {
-            quest::debug("Got total of $total for $category");
+            #quest::debug("Got total of $total for $category");
         }
 
         # Determine the highest eligible tier index
         my $eligible_tier = -1;
         for (my $i = 0; $i < @tiers; $i++) {
             if ($total >= $tiers[$i]) {
-                quest::debug("Eligible for Tier $i for $category with total of $total");
+                #quest::debug("Eligible for Tier $i for $category with total of $total");
                 $eligible_tier = $i;
             }
         }
@@ -480,7 +480,7 @@ sub ProcessSlayerCredit {
             # Correct loop: Iterate from $eligible_tier down to 0
             for (my $title_offset = $eligible_tier; $title_offset >= 0; $title_offset--) {
                 my $title_flag = ($creature_data{$category}->{title_flags} * 10) + $title_offset + 1;
-                quest::debug("Adding title flag " . $title_flag);
+                #quest::debug("Adding title flag " . $title_flag);
                 plugin::AddTitleFlag($title_flag, $client);
             }
         }
