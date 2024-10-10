@@ -240,7 +240,7 @@ sub symp_proc_tutorial_helper {
         69155
     );
 
-    my $item_root = $item_id % 1000000;
+    my $item_root = ($item_id % 1000000);
 
     if (grep { $_ == $item_root } @sym_clicks) {
         plugin::dispatch_popup("symp_tutorial", $client);
