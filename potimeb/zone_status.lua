@@ -157,7 +157,7 @@ function event_spawn(e)
 		eq.signal(223227,4); -- Emoter
 		SpawnPhaseFour();
 	elseif (expedition:HasLockout('Phase 1 Complete') and expedition:HasLockout('Phase 2 Complete') and expedition:HasLockout('Phase 3 Complete') and expedition:HasLockout('Phase 4 Complete') and not expedition:HasLockout('Phase 5 Complete')) then
-		-- UpdateFailTimer(240); -- TODO UPDATE TIMER BASED ON NUMBER OF P5 GODS UP
+		UpdateFailTimer(240); -- TODO UPDATE TIMER BASED ON NUMBER OF P5 GODS UP
 		current_phase = "Phase5";
 		-- send signal to flavor text NPC
 		eq.signal(223227,5); -- Emoter
@@ -252,7 +252,7 @@ function event_signal(e)
 			if not expedition:HasLockout('Phase 5 Complete') then
 				current_phase = "Phase5";
 				-- add 4 hours to the fail timer
-				-- UpdateFailTimer(240); -- 60 Minutes per God
+				UpdateFailTimer(240); -- 60 Minutes per God
 				-- send signal to flavor text NPC
 				eq.signal(223227,5); -- Emoter
 				-- reset counter for later use
@@ -492,7 +492,7 @@ function ControlPhaseThree()
 				-- send signal to flavor text NPC
 				eq.signal(223227,4); -- Emoter
 				-- add 4 hours to the fail timer
-				-- UpdateFailTimer(240); -- Switching to adding time based on number of gods up to prevent dropping and re-joining to reset time to 240 min
+				UpdateFailTimer(240); -- Switching to adding time based on number of gods up to prevent dropping and re-joining to reset time to 240 min
 				-- spawn phase 4
 				SpawnPhaseFour();
 			end
