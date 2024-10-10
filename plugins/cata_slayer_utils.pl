@@ -440,32 +440,47 @@ sub ProcessSlayerCredit {
         },
     );
 
-    # Retrieve and increment the current creature kill count for the NPC's race
-    my $new_kill_count_key = $client->AccountID() . '-' . $npc->GetRace() . '-kill-count';
-    my $current_kill_count = quest::get_data($new_kill_count_key) || 0;  # Previous kill count
-    my $new_creature_count = $current_kill_count + 1;                    # Increment by 1 for the new kill
-    quest::set_data($new_kill_count_key, $new_creature_count);           # Save the updated kill count
+    my @tiers = (500, 1000, 5000, 10000, 100000);
 
-    # Aggregate the counts based on defined categories
-    foreach my $creature_type (keys %creature_data) {
-        my $data = $creature_data{$creature_type};
+    my $race = $npc->GetRace();
+    my $race_key = $client->AccountID() . "-" . $race . "-kill-count";
+    my $race_data = (quest::get_data($race_key) || 0) + 1;
 
-        # Calculate the total creature count for all race IDs in this category
-        my $total_creature_count = 0;
-        foreach my $race_id (@{$data->{race_ids}}) {
-            my $kill_count_key = $client->AccountID() . '-' . $race_id . '-kill-count';
-            $total_creature_count += quest::get_data($kill_count_key) || 0;  # Sum kill counts for all races in the category
+    quest::set_data($race_key, $race_data);
+    quest::debug("Saving Kill Count for [" . $npc->GetRace() . "] as [$race_data]");
+
+    my %category_data;
+
+    foreach my $category (keys %creature_data) {
+        my $total = 0;
+        
+        # Calculate total kill count for this category
+        foreach my $race_id (@{$creature_data{$category}->{race_ids}}) {
+            my $race_key = $client->AccountID() . "-" . $race_id . "-kill-count";
+            $total += quest::get_data($race_key) || 0;
         }
+        
+        $category_data{$category} = $total;
 
-        # Award titles for all tiers that are eligible based on the total kill count
-        for (my $i = 0; $i < @tier_counts; $i++) {
-            if ($total_creature_count >= $tier_counts[$i]) {
-                # Calculate the title flag for the eligible tier
-                my $title_flag = $data->{title_flags} + $i;  # Base ID + tier index
-                plugin::AddTitleFlag($title_flag);
-            } else {
-                # Stop awarding further titles once an ineligible tier is found
-                last;
+        quest::debug("Got total of $total for $category");
+
+        # Determine the highest eligible tier index
+        my $eligible_tier = -1;
+        for (my $i = 0; $i < @tiers; $i++) {
+            quest::debug("Examining Tier $i...");
+            if ($total >= $tiers[$i]) {
+                quest::debug("Eligible for Tier $i for $category with total of $total");
+                $eligible_tier = $i;
+            }
+        }
+        
+        # Debug the result for this category and its eligible tier
+        if ($eligible_tier >= 0) {
+            # Correct loop: Iterate from $eligible_tier down to 0
+            for (my $title_offset = $eligible_tier; $title_offset >= 0; $title_offset--) {
+                my $title_flag = ($creature_data{$category}->{title_flags} * 10) + $title_offset + 1;
+                quest::debug("Adding title flag " . $title_flag);
+                plugin::AddTitleFlag($title_flag, $client);
             }
         }
     }
