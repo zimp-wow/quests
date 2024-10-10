@@ -84,4 +84,10 @@ sub EVENT_SAY {
             $client->AddExpeditionLockout("Class Removal Lockout", "", $remove_class_lockout * 24 * 60 * 60);
         }
     }   
+
+    if ($text =~ /unmem/i) {
+        for ($i = 0; $i < 12; $i++) {
+            $client->UnmemSpell($i, 1);
+        }
+    }
 }
