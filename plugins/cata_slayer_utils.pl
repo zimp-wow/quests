@@ -440,27 +440,32 @@ sub ProcessSlayerCredit {
         },
     );
 
-    my @tier_counts = (500, 5000, 10000, 50000, 1000000);
-
-    # Record the new race_id kills
+    # Retrieve and increment the current creature kill count for the NPC's race
     my $new_kill_count_key = $client->AccountID() . '-' . $npc->GetRace() . '-kill-count';
-    my $new_creature_count = (quest::get_data($new_kill_count_key) || 0) + 1;
-    quest::set_data($new_kill_count_key, $new_creature_count);
+    my $current_kill_count = quest::get_data($new_kill_count_key) || 0;  # Previous kill count
+    my $new_creature_count = $current_kill_count + 1;                    # Increment by 1 for the new kill
+    quest::set_data($new_kill_count_key, $new_creature_count);           # Save the updated kill count
 
     # Aggregate the counts based on defined categories
     foreach my $creature_type (keys %creature_data) {
         my $data = $creature_data{$creature_type};
 
-        if (grep { $_ == $npc->GetRace() } @{$data->{race_ids}}) {
-            # Calculate the total count including new data
-            my $total_creature_count = $new_creature_count;
+        # Calculate the total creature count for all race IDs in this category
+        my $total_creature_count = 0;
+        foreach my $race_id (@{$data->{race_ids}}) {
+            my $kill_count_key = $client->AccountID() . '-' . $race_id . '-kill-count';
+            $total_creature_count += quest::get_data($kill_count_key) || 0;  # Sum kill counts for all races in the category
+        }
 
-            for (my $i = 0; $i < @tier_counts; $i++) {
-                if ($total_creature_count >= $tier_counts[$i]) {
-                    # Calculate the title flag using the base ID and the sequence number
-                    my $title_flag = $data->{title_flags} + $i;  # Base ID + sequence (1, 2, 3, etc.)
-                    plugin::AddTitleFlag($title_flag);
-                }
+        # Award titles for all tiers that are eligible based on the total kill count
+        for (my $i = 0; $i < @tier_counts; $i++) {
+            if ($total_creature_count >= $tier_counts[$i]) {
+                # Calculate the title flag for the eligible tier
+                my $title_flag = $data->{title_flags} + $i;  # Base ID + tier index
+                plugin::AddTitleFlag($title_flag);
+            } else {
+                # Stop awarding further titles once an ineligible tier is found
+                last;
             }
         }
     }
