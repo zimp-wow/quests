@@ -11,6 +11,7 @@ local echo = false;
 local timer_echo = false;
 local p1_started = false;
 
+local total_time = tonumber(eq.get_data(eq.get_zone_instance_id() .. "-total_time")) or 0;
 
 -- These Lockouts are Live Like
 -- P1
@@ -584,16 +585,27 @@ function SpawnPhaseFive()
 end
 
 function UpdateFailTimer(minutes_to_add)
+	if (total_time == nil) then
+		total_time = tonumber(eq.get_data(eq.get_zone_instance_id() .. "-total_time")) or 0;
+	end 
 	total_time = (total_time + minutes_to_add);	
 	eq.stop_timer("player_check");
 	eq.set_timer("player_check", 10 * 1000); -- 10 Sec Player Check
 	eq.GM_Message(MT.Lime,"fail_timer set to " .. (total_time) .. " minutes");	-- debug
 	eq.set_timer("event_hb",60 * 1000); -- 60 Sec Timer Check
+	
+	eq.get_data(eq.get_zone_instance_id() .. "-total_time", total_time, 60*60*24*7);
 end
 
 function event_timer(e)
 	if (e.timer == "event_hb") then
+		if (total_time == nil) then
+			 total_time = tonumber(eq.get_data(eq.get_zone_instance_id() .. "-total_time")) or 0;
+		end 
+
 		total_time = total_time - 1;
+
+		eq.get_data(eq.get_zone_instance_id() .. "-total_time", total_time, 60*60*24*7);
 		
 		--echo time
 		if timer_echo then
@@ -632,7 +644,6 @@ function event_timer(e)
 		if total_time == 10 then
 			eq.zone_emote(MT.LightGray,"In the distance, an hourglass appears, the grains of sand falling methodically into place.  As quickly as the image was formed, it dissipates.  You have ten minutes left.");
 		end
-
 	elseif (e.timer == "player_check") then
 		local player_list = eq.get_entity_list():GetClientList();
 		local count = 0;
