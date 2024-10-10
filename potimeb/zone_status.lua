@@ -593,8 +593,8 @@ function UpdateFailTimer(minutes_to_add)
 	eq.set_timer("player_check", 10 * 1000); -- 10 Sec Player Check
 	eq.GM_Message(MT.Lime,"fail_timer set to " .. (total_time) .. " minutes");	-- debug
 	eq.set_timer("event_hb",60 * 1000); -- 60 Sec Timer Check
-	
-	eq.get_data(eq.get_zone_instance_id() .. "-total_time", total_time, 60*60*24*7);
+
+	eq.set_data(eq.get_zone_instance_id() .. "-total_time", total_time, 60*60*24*7);
 end
 
 function event_timer(e)
@@ -605,7 +605,7 @@ function event_timer(e)
 
 		total_time = total_time - 1;
 
-		eq.get_data(eq.get_zone_instance_id() .. "-total_time", total_time, 60*60*24*7);
+		eq.set_data(eq.get_zone_instance_id() .. "-total_time", total_time, 60*60*24*7);
 		
 		--echo time
 		if timer_echo then
