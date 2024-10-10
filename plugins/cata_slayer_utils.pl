@@ -450,14 +450,10 @@ sub ProcessSlayerCredit {
     # Aggregate the counts based on defined categories
     foreach my $creature_type (keys %creature_data) {
         my $data = $creature_data{$creature_type};
-        my $old_kill_count_key = $client->AccountID() . '-' . $creature_type . '-kill-count';
-
-        # Retrieve the old count data
-        my $old_creature_count = quest::get_data($old_kill_count_key) || 0;
 
         if (grep { $_ == $npc->GetRace() } @{$data->{race_ids}}) {
             # Calculate the total count including new data
-            my $total_creature_count = $old_creature_count + $new_creature_count;
+            my $total_creature_count = $new_creature_count;
 
             for (my $i = 0; $i < @tier_counts; $i++) {
                 if ($total_creature_count >= $tier_counts[$i]) {
