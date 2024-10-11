@@ -82,6 +82,17 @@ sub EVENT_SAY {
         if (plugin::SpendEOM($client, $remove_class_cost) && plugin::HasClass($client, $class_id)) {
             plugin::RemoveClass($class_id, $client);
             $client->AddExpeditionLockout("Class Removal Lockout", "", $remove_class_lockout * 24 * 60 * 60);
+
+            # This could be done better.
+            #foreach my $entity ($entity_list->GetNPCList()) {
+            #    if (!$entity->GetOwner()) {
+            #        next;
+            #    }
+            #
+            #    if ($entity->GetOwner()->GetID() == $client->GetID()) {
+            #        $entity->Kill();
+            #    }
+            #}
         }
     }   
 
