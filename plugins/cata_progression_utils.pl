@@ -500,6 +500,10 @@ sub is_time_locked {
         return 0;
     }
 
+    if ($stage eq 'FNagafen') {
+        return 0;
+    }
+
     if ($stage eq 'GoD') {
         return 1;
     }
