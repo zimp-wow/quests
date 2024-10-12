@@ -34,6 +34,7 @@ my %waypoints = (
     'qrg'           => ["Surefall Glade", 0, -66, 45, 4, 200],
     'rivervale'     => ["Rivervale", 0, -140, -10, 4, 220],
     'gukbottom'     => ["Lower Guk (Undead Side)", 0, -233, 1157, -80, 418],
+    'lakerathe'     => ["Lake Rathetear (Outside Arena)", 0, 2673, 2404, 95, 381]
 
     # Faydwer (1)
     'akanon'        => ["Ak'anon", 1, -761, 1279, -24.25, 182.25],
