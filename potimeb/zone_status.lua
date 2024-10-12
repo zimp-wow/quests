@@ -11,6 +11,7 @@ local echo = false;
 local timer_echo = false;
 local p1_started = false;
 
+local total_time = tonumber(eq.get_data(eq.get_zone_instance_id() .. "-total_time")) or 0;
 
 -- These Lockouts are Live Like
 -- P1
@@ -157,7 +158,7 @@ function event_spawn(e)
 		eq.signal(223227,4); -- Emoter
 		SpawnPhaseFour();
 	elseif (expedition:HasLockout('Phase 1 Complete') and expedition:HasLockout('Phase 2 Complete') and expedition:HasLockout('Phase 3 Complete') and expedition:HasLockout('Phase 4 Complete') and not expedition:HasLockout('Phase 5 Complete')) then
-		-- UpdateFailTimer(240); -- TODO UPDATE TIMER BASED ON NUMBER OF P5 GODS UP
+		UpdateFailTimer(240); -- TODO UPDATE TIMER BASED ON NUMBER OF P5 GODS UP
 		current_phase = "Phase5";
 		-- send signal to flavor text NPC
 		eq.signal(223227,5); -- Emoter
@@ -252,7 +253,7 @@ function event_signal(e)
 			if not expedition:HasLockout('Phase 5 Complete') then
 				current_phase = "Phase5";
 				-- add 4 hours to the fail timer
-				-- UpdateFailTimer(240); -- 60 Minutes per God
+				UpdateFailTimer(240); -- 60 Minutes per God
 				-- send signal to flavor text NPC
 				eq.signal(223227,5); -- Emoter
 				-- reset counter for later use
@@ -492,7 +493,7 @@ function ControlPhaseThree()
 				-- send signal to flavor text NPC
 				eq.signal(223227,4); -- Emoter
 				-- add 4 hours to the fail timer
-				-- UpdateFailTimer(240); -- Switching to adding time based on number of gods up to prevent dropping and re-joining to reset time to 240 min
+				UpdateFailTimer(240); -- Switching to adding time based on number of gods up to prevent dropping and re-joining to reset time to 240 min
 				-- spawn phase 4
 				SpawnPhaseFour();
 			end
@@ -584,16 +585,27 @@ function SpawnPhaseFive()
 end
 
 function UpdateFailTimer(minutes_to_add)
+	if (total_time == nil) then
+		total_time = tonumber(eq.get_data(eq.get_zone_instance_id() .. "-total_time")) or 0;
+	end 
 	total_time = (total_time + minutes_to_add);	
 	eq.stop_timer("player_check");
 	eq.set_timer("player_check", 10 * 1000); -- 10 Sec Player Check
 	eq.GM_Message(MT.Lime,"fail_timer set to " .. (total_time) .. " minutes");	-- debug
 	eq.set_timer("event_hb",60 * 1000); -- 60 Sec Timer Check
+
+	eq.set_data(eq.get_zone_instance_id() .. "-total_time", tostring(total_time), '7d');
 end
 
 function event_timer(e)
 	if (e.timer == "event_hb") then
+		if (total_time == nil) then
+			 total_time = tonumber(eq.get_data(eq.get_zone_instance_id() .. "-total_time")) or 0;
+		end 
+
 		total_time = total_time - 1;
+
+		eq.set_data(eq.get_zone_instance_id() .. "-total_time", tostring(total_time), '7d');
 		
 		--echo time
 		if timer_echo then
@@ -632,7 +644,6 @@ function event_timer(e)
 		if total_time == 10 then
 			eq.zone_emote(MT.LightGray,"In the distance, an hourglass appears, the grains of sand falling methodically into place.  As quickly as the image was formed, it dissipates.  You have ten minutes left.");
 		end
-
 	elseif (e.timer == "player_check") then
 		local player_list = eq.get_entity_list():GetClientList();
 		local count = 0;

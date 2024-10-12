@@ -163,6 +163,21 @@ sub AddClass {
     }    
 }
 
+sub RemoveClass {
+    my $class_id = shift;
+    my $client = shift || plugin::val('$client');
+
+    # This doesn't have a lot of safeties here, the server hook handles them.
+
+    if ($client->RemoveExtraClass($class_id)) {
+        my $class_name = quest::getclassname($class_id);
+
+        $client->Message(15, "You are NO LONGER a $class_name, and have lost access to all Spells, Disciplines, Skills, and Abilities of that class.");
+    } else {
+        $client->Message(13, "Remove Class Operation Failed.");
+    }
+}
+
 sub CheckUniqueClass {
     my $client              = plugin::val('$client');
     my $class_bits          = $client->GetClassesBitmask();
@@ -191,6 +206,31 @@ sub GetPrettyClassString {
 
     # Join the client's class names with slashes
     my $pretty_class_string = join('/', @client_classes);
+
+    return $pretty_class_string;
+}
+
+sub GetClassLinkString {
+    my $client = shift || plugin::val('$client');  # Ensure $client is available
+    my %class_map = GetClassMap();  # Get the full class map
+    my $class_bits = $client->GetClassesBitmask();  # Retrieve the class bits for the client
+
+    my @client_classes;
+
+    # Iterate through class IDs to check which classes the client has
+    foreach my $class_id (sort { $a <=> $b } keys %class_map) {
+        if ($class_bits & (1 << ($class_id - 1))) {
+            push @client_classes, "[".quest::saylink("del_class_$class_id", 0, $class_map{$class_id})."]";
+        }
+    }
+
+    # Join the client's class names, using ", " and " or " appropriately
+    my $pretty_class_string;
+    if (@client_classes > 1) {
+        $pretty_class_string = join(', ', @client_classes[0..$#client_classes-1]) . ' or ' . $client_classes[-1];
+    } else {
+        $pretty_class_string = $client_classes[0];  # Only one class
+    }
 
     return $pretty_class_string;
 }
