@@ -22,7 +22,7 @@ sub EVENT_ITEM {
     quest::faction( 330,-1 ); # Faction: The Freeport Militia
     quest::faction( 311,1 ); # Faction: Steel Warriors
     quest::faction( 362,1 ); # Faction: Priests of Marr
-    quest::spawn2(21136,0,0,2750,-307,-62); # NPC: Duggin_Scumber
+    quest::spawn2(21136,0,0,2750,-307,-62, 0); # NPC: Duggin_Scumber
   }
   plugin::return_items(\%itemcount);
 }
