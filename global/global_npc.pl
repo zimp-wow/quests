@@ -123,7 +123,9 @@ sub EVENT_SPAWN {
 
     if (plugin::IsTHJ() && $instanceid) {
         my $expedition = quest::get_expedition();
-        plugin::ScaleInstanceNPC($npc, $expedition->GetMemberCount());
+        if ($expedition) {
+            plugin::ScaleInstanceNPC($npc, $expedition->GetMemberCount());
+        }
     }
 }
 

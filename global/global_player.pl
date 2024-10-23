@@ -37,7 +37,9 @@ sub EVENT_ENTERZONE {
      if (plugin::IsTHJ() && $instanceid) {
         foreach my $npc (@npcs) {
             my $expedition = quest::get_expedition();
-            plugin::ScaleInstanceNPC($npc, $expedition->GetMemberCount());
+            if ($expedition) {
+                plugin::ScaleInstanceNPC($npc, $expedition->GetMemberCount());
+            }
         }
     }
 }
