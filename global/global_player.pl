@@ -23,6 +23,23 @@ sub EVENT_ENTERZONE {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
 		$client->MovePC(151, 185, -835, 4, 390); # Bazaar Safe Location.
 	}
+
+
+    # Only THJ Stuff after this point
+    if (!plugin::IsTHJ()) {
+        return;
+    }
+
+    my $entity_list = plugin::val('$entity_list');
+    my @npcs = $entity_list->GetNPCList();
+
+
+     if (plugin::IsTHJ() && $instanceid) {
+        foreach my $npc (@npcs) {
+            my $expedition = quest::get_expedition();
+            plugin::ScaleInstanceNPC($npc, $expedition->GetMemberCount());
+        }
+    }
 }
 
 sub EVENT_EQUIP_ITEM_CLIENT {

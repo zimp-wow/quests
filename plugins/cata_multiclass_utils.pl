@@ -47,10 +47,15 @@ sub CommonCharacterUpdate {
 
 sub MultiClassingEnabled
 {
-    if (quest::get_rule("Custom:MulticlassingEnabled") eq "false") {
-        return 0;
-    } else {
+    return IsTHJ();
+}
+
+sub IsTHJ
+{
+    if (quest::get_rule("Custom:MulticlassingEnabled") eq "true" && quest::get_rule("Custom:ServerAuthStats") eq "true") {
         return 1;
+    } else {
+        return 0;
     }
 }
 

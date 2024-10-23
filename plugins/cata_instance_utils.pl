@@ -1,5 +1,7 @@
 # Agent of Retribution Library
 
+use POSIX qw(ceil);
+
 sub OfferStandardInstance {
   my $client          = plugin::val('$client');
   my $npc             = plugin::val('$npc');
@@ -39,7 +41,9 @@ sub OfferStandardInstance {
     if ($dz) {
       $dz->SetCompass($zonesn, $npc->GetX(), $npc->GetY(), $npc->GetZ());
       $dz->SetSafeReturn($zonesn, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
-      $dz->AddReplayLockout($dz_duration);
+      if (!plugin::IsTHJ() || $text eq 'Non-Respawning') {
+        $dz->AddReplayLockout($dz_duration);
+      }
       quest::say("Very well. When you are [" . quest::saylink("ready", 1) . "], proceed into the portal, and remember!");
     }
   }
@@ -57,4 +61,113 @@ sub OfferStandardInstance {
       $client->MovePCInstance($dz->GetZoneID(), $dz->GetInstanceID(), $final_x, $final_y, $final_z, $final_heading);
     }
   }  
+}
+
+sub ScaleInstanceNPC {
+  if (!IsTHJ()) {
+    return;
+  }
+
+  my $npc = shift;
+  my $player_count = shift;
+
+  if (plugin::val('$instanceversion') != (quest::get_rule("Custom:StaticInstanceVersion") || 100)) {
+    if (plugin::IsBlacklistedNPC($npc)) {
+        $npc->Depop(0);
+    }
+    return;
+  }
+
+  if (!$npc || !$player_count || $player_count <= 2) {
+    return;
+  }
+
+  $player_count -= 2;
+  my $player_scale_factor = ($player_count * 0.25);
+
+  # Ensure original stats are stored
+  if (!$npc->GetEntityVariable("original_max_hp")) {
+    $npc->SetEntityVariable("original_max_hp", $npc->GetMaxHP());
+    $npc->SetEntityVariable("original_max_hit", $npc->GetNPCStat("max_hit"));
+    $npc->SetEntityVariable("original_min_hit", $npc->GetNPCStat("min_hit"));
+    $npc->SetEntityVariable("original_atk", $npc->GetNPCStat("atk"));
+    $npc->SetEntityVariable("original_avoidance", $npc->GetNPCStat("avoidance"));
+    $npc->SetEntityVariable("original_accuracy", $npc->GetNPCStat("accuracy"));
+    $npc->SetEntityVariable("original_hp_regen", $npc->GetNPCStat("hp_regen"));
+    $npc->SetEntityVariable("original_ac", $npc->GetNPCStat("ac"));
+    
+    # Resistances
+    $npc->SetEntityVariable("original_mr", $npc->GetNPCStat("mr"));
+    $npc->SetEntityVariable("original_fr", $npc->GetNPCStat("fr"));
+    $npc->SetEntityVariable("original_cr", $npc->GetNPCStat("cr"));
+    $npc->SetEntityVariable("original_dr", $npc->GetNPCStat("dr"));
+    $npc->SetEntityVariable("original_pr", $npc->GetNPCStat("pr"));
+  }
+
+  # Calculate the new scaled values based on original stats
+  my $scale_factor = 1 + $player_scale_factor;
+  my $minor_scale_factor = 1 + ($player_scale_factor * 0.5);
+
+  # Scale max_hp, max_hit, min_hit, and hp_regen by 1 + $scale_factor
+  my $new_max_hp = ceil($npc->GetEntityVariable("original_max_hp") * $scale_factor);
+  $npc->ModifyNPCStat("max_hp", $new_max_hp);
+
+  my $new_max_hit = ceil($npc->GetEntityVariable("original_max_hit") * $scale_factor);
+  $npc->ModifyNPCStat("max_hit", $new_max_hit);
+
+  my $new_min_hit = ceil($npc->GetEntityVariable("original_min_hit") * $scale_factor);
+  $npc->ModifyNPCStat("min_hit", $new_min_hit);
+
+  my $new_hp_regen = ceil($npc->GetEntityVariable("original_hp_regen") * $scale_factor);
+  $npc->ModifyNPCStat("hp_regen", $new_hp_regen);
+
+  # Scale all other stats by minor_scale_factor (50% of 1 + player_scale_factor)
+  my $new_atk = ceil($npc->GetEntityVariable("original_atk") * $minor_scale_factor);
+  $npc->ModifyNPCStat("atk", $new_atk);
+
+  my $new_avoidance = ceil($npc->GetEntityVariable("original_avoidance") * $minor_scale_factor);
+  $npc->ModifyNPCStat("avoidance", $new_avoidance);
+
+  my $new_accuracy = ceil($npc->GetEntityVariable("original_accuracy") * $minor_scale_factor);
+  $npc->ModifyNPCStat("accuracy", $new_accuracy);
+
+  my $new_ac = ceil($npc->GetEntityVariable("original_ac") * $minor_scale_factor);
+  $npc->ModifyNPCStat("ac", $new_ac);
+
+  # Scale resistances by minor_scale_factor
+  my $new_mr = ceil($npc->GetEntityVariable("original_mr") * $minor_scale_factor);
+  $npc->ModifyNPCStat("mr", $new_mr);
+
+  my $new_fr = ceil($npc->GetEntityVariable("original_fr") * $minor_scale_factor);
+  $npc->ModifyNPCStat("fr", $new_fr);
+
+  my $new_cr = ceil($npc->GetEntityVariable("original_cr") * $minor_scale_factor);
+  $npc->ModifyNPCStat("cr", $new_cr);
+
+  my $new_dr = ceil($npc->GetEntityVariable("original_dr") * $minor_scale_factor);
+  $npc->ModifyNPCStat("dr", $new_dr);
+
+  my $new_pr = ceil($npc->GetEntityVariable("original_pr") * $minor_scale_factor);
+  $npc->ModifyNPCStat("pr", $new_pr);
+
+  # These just use absolute values
+  $npc->ModifyNPCStat("spellscale", $scale_factor * 100);
+  $npc->ModifyNPCStat("healscale", $scale_factor * 100);
+}
+
+sub IsBlacklistedNPC {
+  my $npc = shift;
+  my @blacklist = (
+    'Lord Nagafen',
+    'Lady Vox',
+    'Master Yael',
+    'Phinigel Autropos',
+    # Add more names here, one per line for readability
+  );
+
+  # Normalize case by converting both to lowercase
+  my $npc_name = lc($npc->GetCleanName());
+
+  # Check if the NPC's name is in the blacklist (also normalized to lowercase)
+  return grep { lc($_) eq $npc_name } @blacklist;
 }

@@ -2,6 +2,11 @@ sub EVENT_SPAWN {
   quest::settimer(1, 1200);
   quest::emote("rises from the corpse and stares around, as if waiting...");
 
+  my $expedition = quest::get_expedition();
+  if ($expedition && plugin::IsTHJ()) {
+    $expedition->SetLocked(true);
+  }
+
   $npc->MoveTo($npc->GetX(), $npc->GetY(), $npc->FindGroundZ($npc->GetX(), $npc->GetY()));
 }
 

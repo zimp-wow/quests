@@ -114,12 +114,16 @@ sub EVENT_AGGRO {
 
 sub EVENT_SPAWN {
     plugin::CheckSpawnWaypoints();
-
     
     if ($instanceversion > 0) {        
         if ($npc->GetName() =~ /TPTriggerN/) {
             $npc->Depop(0);
         }
+    }
+
+    if (plugin::IsTHJ() && $instanceid) {
+        my $expedition = quest::get_expedition();
+        plugin::ScaleInstanceNPC($npc, $expedition->GetMemberCount());
     }
 }
 
