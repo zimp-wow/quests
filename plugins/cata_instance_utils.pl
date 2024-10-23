@@ -43,6 +43,8 @@ sub OfferStandardInstance {
       $dz->SetSafeReturn($zonesn, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
       if (!plugin::IsTHJ() || $text eq 'Non-Respawning') {
         $dz->AddReplayLockout($dz_duration);
+      } else {
+        $dz->AddReplayLockout(30 * 60); # 30 minutes
       }
       quest::say("Very well. When you are [" . quest::saylink("ready", 1) . "], proceed into the portal, and remember!");
     }
@@ -185,7 +187,6 @@ sub IsBlacklistedNPC {
       'Gorenaire',
       'Venril Sathir',
       'Talendor',
-      'Drusella Sathir',
       'Trakanon',
       'Queen Velazul Di`zok',
       'Prince Selrach Di`zok',
