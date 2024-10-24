@@ -614,8 +614,16 @@ sub UpdateCharMaxLevel
     my $update = 0;
     my $CharMaxLevel = $client->GetBucket("CharMaxLevel") || 51;
 
+    if (plugin::IsTHJ()) {
+        $CharMaxLevel = $client->GetBucket("CharMaxLevel") || 50;
+    }
+
     if (plugin::IsSeasonal($client)) {
         $CharMaxLevel = 51;
+
+        if (plugin::IsTHJ()) {
+            $CharMaxLevel = $client->GetBucket("CharMaxLevel") || 50;
+        }
 
         if (is_stage_complete($client, 'RoK') && !is_time_locked('RoK')) {
             $CharMaxLevel = 60;
