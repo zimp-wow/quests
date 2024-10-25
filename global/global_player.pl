@@ -18,7 +18,7 @@ sub EVENT_SIGNAL {
 
 sub EVENT_ENTERZONE {
     $client->ReloadDataBuckets();
-	plugin::CommonCharacterUpdate($client);    
+	plugin::CommonCharacterUpdate($client);
 	if (!plugin::is_eligible_for_zone($client, $zonesn)) {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
 		$client->MovePC(151, 185, -835, 4, 390); # Bazaar Safe Location.
@@ -74,8 +74,8 @@ sub EVENT_CONNECT {
         plugin::DisplayWarning($client);
     }
 
-    $client->ReloadDataBuckets();    
-    plugin::CommonCharacterUpdate($client); 
+    $client->ReloadDataBuckets();
+    plugin::CommonCharacterUpdate($client);
     if (!$client->GetBucket("First-Login")) {
         $client->SetBucket("First-Login", 1);
 		$client->SummonItem(18471); #A Faded Writ
@@ -85,7 +85,7 @@ sub EVENT_CONNECT {
         my $name = $client->GetCleanName();
         my $full_class_name = plugin::GetPrettyClassString($client);
 
-        plugin::WorldAnnounce("$name ($full_class_name) has logged in for the first time.");        
+        plugin::WorldAnnounce("$name ($full_class_name) has logged in for the first time.");
         plugin::AwardSeasonalItems($client);
     }
 
@@ -105,10 +105,29 @@ sub EVENT_CONNECT {
 	}
 }
 
+sub EVENT_FEIGN_DEATH {
+    $client->SetEntityVariable("bazaar_fade_timer", time()+60);
+}
+
 sub EVENT_POPUPRESPONSE {
     plugin::check_tutorial_popup_response($popupid, $client);
 
     if ($popupid == 58240 && $zone != 151) {
+        if ($client->GetAggroCount() > 0) {
+            $client->Message(13, "You cannot return to the Bazaar while in combat.");
+            return;
+        }
+        my $return_timeout = $client->GetEntityVariable("bazaar_timeout");
+        if ($return_timeout && $return_timeout > time()) {
+            $client->Message(13, "You took over 30 seconds and failed to return to the Bazaar.");
+            return;
+        }
+        my $fade_timer = $client->GetEntityVariable("bazaar_fade_timer");
+        if ($fade_timer && $fd_timer > time()) {
+            $client->Message(13, "You cannot return to the Bazaar when you recently faded aggro.");
+            return;
+        }
+
         my $x = $client->GetEntityVariable("bazaar_x") + int(rand(11)) - 5;
         my $y = $client->GetEntityVariable("bazaar_y") + int(rand(11)) - 5;
         my $z = $client->GetEntityVariable("bazaar_z");
@@ -148,13 +167,13 @@ sub EVENT_LEVEL_UP {
 sub EVENT_CLICKDOOR {
 	my $target_zone = plugin::get_target_door_zone($zonesn, $doorid, $version);
 
-    if (!plugin::is_eligible_for_zone($client, $target_zone, 1)) {		
+    if (!plugin::is_eligible_for_zone($client, $target_zone, 1)) {
 		return 1;
     }
 }
 
 sub EVENT_ZONE {
-    $client->ReloadDataBuckets(); 
+    $client->ReloadDataBuckets();
     # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
     plugin::CommonCharacterUpdate($client);
 }
@@ -191,7 +210,7 @@ sub EVENT_WARP {
         my $admin_message = "Large Warp Detected. Character: $name Zone: $zonesn From: $from_x, $from_y, $from_z To: $current_x, $current_y, $current_z Distance: $distance";
 
         if ($soulmark) {
-            $admin_message .= "\nAccount has Soulmark. Reason: $soulmark";            
+            $admin_message .= "\nAccount has Soulmark. Reason: $soulmark";
         }
 
         if ($recent_warp_count) {
@@ -215,11 +234,11 @@ sub EVENT_WARP {
 
 sub EVENT_DISCOVER_ITEM {
     my $name = $client->GetCleanName();
-    
+
     # Only announce upgraded items
-    if ($itemid > 999999) {        
-        plugin::WorldAnnounceItem("$name has discovered: {item}.",$itemid);  
-    }  
+    if ($itemid > 999999) {
+        plugin::WorldAnnounceItem("$name has discovered: {item}.",$itemid);
+    }
 }
 
 sub EVENT_LOOT {
@@ -236,18 +255,18 @@ sub symp_proc_tutorial_helper {
 
     #pre-computed list of symp proc item ID bases
     my @sym_clicks = (
-        6307, 6309, 6313, 7305, 900012, 900014, 1113, 1117, 1156, 1173, 
-        1904, 2404, 5203, 5214, 5730, 5764, 6017, 6020, 6024, 6036, 
-        6310, 6315, 6323, 6324, 6332, 6335, 6343, 6350, 6359, 6382, 
-        6383, 6402, 6404, 6408, 6616, 6626, 7036, 7318, 7372, 7405, 
-        10333, 10383, 10404, 10994, 11028, 11906, 11973, 12375, 13168, 
-        13380, 13400, 13500, 13743, 13744, 13815, 13987, 13988, 13991, 
-        14338, 14746, 14762, 20627, 21798, 21863, 21885, 21886, 21892, 
-        22819, 22890, 23498, 24745, 24779, 24789, 24793, 25566, 25577, 
-        25980, 25998, 26000, 26001, 26009, 26553, 27280, 27717, 28812, 
-        28813, 28814, 28815, 28817, 28908, 29248, 29430, 29442, 30511, 
-        31210, 31212, 31373, 62269, 68444, 68744, 68775, 68837, 69044, 
-        69047, 69049, 69051, 69054, 69055, 69095, 69112, 69113, 69116, 
+        6307, 6309, 6313, 7305, 900012, 900014, 1113, 1117, 1156, 1173,
+        1904, 2404, 5203, 5214, 5730, 5764, 6017, 6020, 6024, 6036,
+        6310, 6315, 6323, 6324, 6332, 6335, 6343, 6350, 6359, 6382,
+        6383, 6402, 6404, 6408, 6616, 6626, 7036, 7318, 7372, 7405,
+        10333, 10383, 10404, 10994, 11028, 11906, 11973, 12375, 13168,
+        13380, 13400, 13500, 13743, 13744, 13815, 13987, 13988, 13991,
+        14338, 14746, 14762, 20627, 21798, 21863, 21885, 21886, 21892,
+        22819, 22890, 23498, 24745, 24779, 24789, 24793, 25566, 25577,
+        25980, 25998, 26000, 26001, 26009, 26553, 27280, 27717, 28812,
+        28813, 28814, 28815, 28817, 28908, 29248, 29430, 29442, 30511,
+        31210, 31212, 31373, 62269, 68444, 68744, 68775, 68837, 69044,
+        69047, 69049, 69051, 69054, 69055, 69095, 69112, 69113, 69116,
         69155
     );
 
@@ -266,7 +285,7 @@ sub EVENT_COMBINE_VALIDATE {
 			}
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -313,10 +332,10 @@ sub EVENT_ITEM_CLICK_CAST_CLIENT {
 }
 
 sub swap_vib_gaunt_and_hammer {
-    my ($client, $item_id) = @_;    
+    my ($client, $item_id) = @_;
     my $src_item = 0;
     my $dst_item = 0;
-    
+
     if ($item_id % 1000000 == 11668 || $item_id % 1000000 == 11669) {
         $src_item = $item_id;
 
@@ -364,14 +383,14 @@ sub EVENT_SAY {
         if ($text=~/#awardtitle\s*(.*)/i) {
             $client->Message(13, "Disregard the command not recognized error.");
             my $arguments = $1; # Captures everything after #awardtitle
-            
+
             my $tar_client = $client->GetTarget();
             if ($tar_client && $tar_client->IsClient()) {
                 # Validate that there is exactly one argument which is a number
                 if ($arguments =~ /^\s*(\d+)\s*$/) {
                     my $number = $1; # Captures the number
                     # Proceed with awarding the title using $number
-                    
+
                     $client->Message(13, "Awarding TitleSet $number to " . $tar_client->GetName());
                     plugin::AddTitleFlag($number, $tar_client->CastToClient());
                     plugin::CommonCharacterUpdate($tar_client->CastToClient());

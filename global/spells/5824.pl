@@ -2,7 +2,7 @@
 sub EVENT_SPELL_EFFECT_CLIENT {
     my $client = plugin::val('$client');
     use List::Util qw(shuffle);
-    
+
     # Define a hash of possible locations in zone 151 (Bazaar)
     my %locations = (
         'safe_location' => [quest::GetZoneSafeX(151), quest::GetZoneSafeY(151), quest::GetZoneSafeZ(151), quest::GetZoneSafeHeading(151)],
@@ -29,6 +29,15 @@ sub EVENT_SPELL_EFFECT_CLIENT {
     my $heading         = rand(512);
 
     if ($zoneid != 151) {
+        if ($client->GetAggroCount() > 0) {
+            $client->Message(13, "You cannot return to the Bazaar while in combat.");
+            return 0;
+        }
+         my $fade_timer = $client->GetEntityVariable("bazaar_fade_timer");
+        if ($fade_timer && $fd_timer > time()) {
+            $client->Message(13, "You cannot return to the Bazaar when you recently faded aggro.");
+            return 0;
+        }
         # Save the current location
         $client->SetBucket("Return-X", $client->GetX());
         $client->SetBucket("Return-Y", $client->GetY());
@@ -60,6 +69,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
                     $player->SetEntityVariable("bazaar_y", $chosen_loc->[1]);
                     $player->SetEntityVariable("bazaar_z", $chosen_loc->[2]);
                     $player->SetEntityVariable("bazaar_h", $chosen_loc->[3]);
+                    $player->SetEntityVariable("bazaar_timeout", time() + $popup_duration);
                 }
             }
         }
@@ -80,10 +90,10 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         my $ReturnZone = $client->GetBucket("Return-Zone");
         my $ReturnInstance = $client->GetBucket("Return-Instance");
 
-        if (defined($ReturnX) && $ReturnX ne '' && 
-            defined($ReturnY) && $ReturnY ne '' && 
-            defined($ReturnZ) && $ReturnZ ne '' && 
-            defined($ReturnH) && $ReturnH ne '' && 
+        if (defined($ReturnX) && $ReturnX ne '' &&
+            defined($ReturnY) && $ReturnY ne '' &&
+            defined($ReturnZ) && $ReturnZ ne '' &&
+            defined($ReturnH) && $ReturnH ne '' &&
             defined($ReturnZone) && $ReturnZone ne '') {
             # Delete the saved location
             $client->DeleteBucket("Return-X");
@@ -91,15 +101,15 @@ sub EVENT_SPELL_EFFECT_CLIENT {
             $client->DeleteBucket("Return-Z");
             $client->DeleteBucket("Return-H");
             $client->DeleteBucket("Return-Zone");
-            $client->DeleteBucket("Return-Instance");            
-        } else {            
+            $client->DeleteBucket("Return-Instance");
+        } else {
             # Use the bind location if no saved location exists
             $ReturnX = $client->GetBindX();
             $ReturnY = $client->GetBindY();
             $ReturnZ = $client->GetBindZ();
             $ReturnH = $client->GetBindHeading();
             $ReturnZone = $client->GetBindZoneID();
-            $ReturnInstance = 0;          
+            $ReturnInstance = 0;
         }
 
         # intro quest
