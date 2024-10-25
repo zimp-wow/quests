@@ -27,7 +27,7 @@ sub EVENT_SAY {
     }
 
     if ($text=~/randomize_me_bitch/i) {
-        plugin::WorldAnnounce("$name has cast themselves upon the whims of blind fate, choosing random classes.");    
+       
         if (plugin::GetClassesCount($client) == 1) {
             my @all_classes = (1..16);
 
@@ -41,6 +41,9 @@ sub EVENT_SAY {
                 }
             }
 
+            my $full_class_name = plugin::GetPrettyClassString($client);
+
+            plugin::WorldAnnounce("$name has cast themselves upon the whims of blind fate, choosing random classes ($full_class_name).");    
             plugin::NPCTell("Your fate is sealed, go and walk it.");
         } else {
             plugin::NPCTell("Mortal. You are unsuitable, your fate has already been tainted by your pathetic free will. Begone.");
@@ -50,7 +53,7 @@ sub EVENT_SAY {
 
     if ($text=~/reforge your path/i) {
         if (plugin::GetClassesCount > 1) {
-            my $classes_string =plugin::GetClassLinkString();
+            my $classes_string = plugin::GetClassLinkString();
 
             plugin::NPCTell("Which class would you have me strip from you; $classes_string?");
         }
