@@ -26,7 +26,7 @@ sub CommonCharacterUpdate {
             $client->UpdateTaskActivity(3, 5, 1);
         }
 
-        if ($client->IsTaskActivityActive(4, 3) && $client->GetLevel() >= 51) {
+        if ($client->IsTaskActivityActive(4, 3) && $client->GetLevel() >= 50) {
             $client->UpdateTaskActivity(4, 3, 1);
         }
 
@@ -634,7 +634,7 @@ sub GrantClassAA {
         }    
     }
 
-    if ($client->GetLevel() >= 51 && ($client->IsSeasonal() || plugin::MultiClassingEnabled() )) {
+    if ($client->GetLevel() >= 50 && ($client->IsSeasonal() || plugin::MultiClassingEnabled() )) {
         my %class_aa = (
             1 => {
                 '2011' => 1, # Imperator's Command
