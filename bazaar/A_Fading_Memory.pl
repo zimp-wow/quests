@@ -46,7 +46,7 @@ sub RewardItems {
         4096  => { items => [2006012, 2013566], cash => 3 }, # Magician, 3 silver
         8192  => { items => [2006012, 2013566], cash => 3 }, # Enchanter, 3 silver
         16384 => { items => [2067133, 2013514], cash => 3 }, # Beastlord, 3 silver
-        32768 => { items => [2055623, 2013514], cash => 3 }, # Berserker, 3 silver
+        32768 => { items => [2005003, 2013514], cash => 3 }, # Berserker, 3 silver
     );
 
     my $playerClassBitmask = $client->GetClassesBitmask();
