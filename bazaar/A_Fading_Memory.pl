@@ -31,7 +31,7 @@ sub RewardItems {
     my ($client) = @_;
 
     my %classRewards = (
-        1     => { items => [2009998, 2013514], cash => 3 }, # Warrior, 3 silver
+        1     => { items => [2005008, 2013514], cash => 3 }, # Warrior, 3 silver
         2     => { items => [2009999, 2013542], cash => 3 }, # Cleric, 3 silver
         4     => { items => [2055623, 2013514], cash => 3 }, # Paladin, 3 silver
         8     => { items => [2009998, 2008009, 2008500, 2008500, 2013514], cash => 3 }, # Ranger, 3 silver
