@@ -369,7 +369,7 @@ sub GrantClassAA {
             '109' => 1, # Rampage
         },
         2 => { # Cleric
-            '1405' => 1, # Twincast
+            '41' => 1, # Purify Soul
             '169' => 1,   # Divine Arbitration
             '254' => 1,   # Divine Avatar
         },
@@ -394,8 +394,7 @@ sub GrantClassAA {
         },
         6 => { # Druid
             '185' => 1,   # Spirit of the Wood
-            '403' => 1, # Paralytic Spores
-            '259' => 1,   # Critical Affliction
+            '219' => 1, # Entrap
             '3815' => 1,  # Destructive Cascade
             '125' => 1,   # Pet Discipline
             '1215' => 1,  # Summon Companion
@@ -425,9 +424,9 @@ sub GrantClassAA {
             '1215' => 1,  # Summon Companion
             '125' => 1,   # Pet Discipline
             '250' => 1,    # Pet Affinity
+            '3815' => 1,   # Destructive Cascade
         },
         11 => { # Necromancer
-            '259' => 1,    # Critical Affliction
             '3815' => 1,   # Destructive Cascade
             '250' => 1,    # Pet Affinity
             '431' => 1,  # Pestilent Paralysis
@@ -454,6 +453,7 @@ sub GrantClassAA {
             '250' => 1,  # Pet Affinity
             '1215' => 1, # Summon Companion
             '125' => 1,  # Pet Discipline
+            '3815' => 1,   # Destructive Cascade
         },
         15 => { # Beastlord
             '11080' => 1, # Chameleon Strike
