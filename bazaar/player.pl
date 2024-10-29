@@ -7,6 +7,8 @@ sub EVENT_CLICKDOOR {
         
         # Check if attuned waypoint is either a standard one, race-specific one, or an instance
         my $is_race_specific = grep { $_ eq $attuned_shortname } @$race_specific_waypoints;
+
+        quest::debug("is_race_specific : $is_race_specific, attuned_shortname: $attuned_shortname");
         
         if ($is_race_specific || $attuned_shortname eq 'instance') {
             my $waypoint_data;
