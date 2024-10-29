@@ -1,49 +1,30 @@
 sub EVENT_CLICKDOOR {
     if ($doorid == 146) { # Magic Map
-        my $attuned_shortname = $client->GetEntityVariable("magic_map_attune");
-        
-        # Get race-specific waypoints for the client's base race
-        my $race_specific_waypoints = plugin::GetRaceSpecificWaypoint($client->GetBaseRace());
-        
-        # Check if attuned waypoint is either a standard one, race-specific one, or an instance
-        my $is_race_specific = grep { $_ eq $attuned_shortname } @$race_specific_waypoints;
+        my $attuned_shortname   = $client->GetEntityVariable("magic_map_attune");
+        my $waypoint_data = plugin::GetWaypoint($attuned_shortname, $client);
+        if ($waypoint_data || ($attuned_shortname eq 'instance' && $client->GetExpedition())) {
+            my $long_name = $waypoint_data->[0];  # Access the long name (first element in the array)
+            my $continent = $waypoint_data->[1];  # Access the continent ID
+            my $x = $waypoint_data->[2];          # X coordinate
+            my $y = $waypoint_data->[3];          # Y coordinate
+            my $z = $waypoint_data->[4];          # Z coordinate
+            my $heading = $waypoint_data->[5];    # Heading
 
-        quest::debug("is_race_specific : $is_race_specific, attuned_shortname: $attuned_shortname");
-        
-        if ($is_race_specific || $attuned_shortname eq 'instance') {
-            my $waypoint_data;
-            if ($attuned_shortname eq 'instance' && $client->GetExpedition()) {
-                $waypoint_data = [undef, undef, undef, undef, undef, undef]; # Placeholder for instance data
-            } else {
-                $waypoint_data = plugin::GetWaypoint($attuned_shortname, $client);
+            if ($attuned_shortname eq 'instance') {
+                $dz = $client->GetExpedition();
+                $long_name = $dz->GetName();
             }
 
-            if ($waypoint_data) {
-                my $long_name = $waypoint_data->[0];  # Access the long name (first element in the array)
-                my $continent = $waypoint_data->[1];  # Access the continent ID
-                my $x = $waypoint_data->[2];          # X coordinate
-                my $y = $waypoint_data->[3];          # Y coordinate
-                my $z = $waypoint_data->[4];          # Z coordinate
-                my $heading = $waypoint_data->[5];    # Heading
+            my $popup_title = "Travel with the Magic Map";
+            my $popup_text  = "Would you like to travel to $long_name?";
+            my $popup_self  = 1460;
+            my $popup_group = 1461;
+            my $popup_btns  = 2;
+            my $popup_btn_1 = "Self";
+            my $popup_btn_2 = "Group";
+            my $popup_dur   = 30;
 
-                if ($attuned_shortname eq 'instance') {
-                    my $dz = $client->GetExpedition();
-                    $long_name = $dz->GetName();
-                }
-
-                my $popup_title = "Travel with the Magic Map";
-                my $popup_text  = "Would you like to travel to $long_name?";
-                my $popup_self  = 1460;
-                my $popup_group = 1461;
-                my $popup_btns  = 2;
-                my $popup_btn_1 = "Self";
-                my $popup_btn_2 = "Group";
-                my $popup_dur   = 30;
-
-                $client->Popup2($popup_title, $popup_text, $popup_self, $popup_group, $popup_btns, $popup_dur, $popup_btn_1, $popup_btn_2);
-            } else {
-                plugin::YellowText("The Magic Map has not been attuned to you. Talk to Tearel to continue.");
-            }
+            $client->Popup2($popup_title, $popup_text, $popup_self, $popup_group, $popup_btns, $popup_dur, $popup_btn_1, $popup_btn_2);
         } else {
             plugin::YellowText("The Magic Map has not been attuned to you. Talk to Tearel to continue.");
         }
