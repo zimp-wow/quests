@@ -9,11 +9,11 @@ sub EVENT_SPAWN {
 sub EVENT_ENTER {    
     quest::debug("Attempting to update attunement point...");
 
-    # Get the race-specific waypoint for the client's base race
-    my $race_specific_waypoint = plugin::GetRaceSpecificWaypoint($client->GetBaseRace());
+    # Get the race-specific waypoints for the client's base race
+    my $race_specific_waypoints = plugin::GetRaceSpecificWaypoint($client->GetBaseRace());
 
-    # Check if the current zone is the race-specific waypoint
-    if ($zonesn eq $race_specific_waypoint) {
+    # Check if the current zone is one of the race-specific waypoints
+    if (grep { $_ eq $zonesn } @$race_specific_waypoints) {
         $client->Message(263, "This location is so familiar that you would never be able to properly explain it to another.");
     } else {
         if (plugin::AddWaypoint($zonesn, $client)) {
@@ -23,3 +23,4 @@ sub EVENT_ENTER {
         }
     }
 }
+

@@ -310,12 +310,13 @@ sub GetWaypoints {
             }
         }
 
-        # Include race-specific waypoint if it is on the correct continent
-        my $race_waypoint_key = GetRaceSpecificWaypoint($client->GetBaseRace());
-        if (defined $race_waypoint_key &&
-            exists $waypoints{$race_waypoint_key} &&
-            ($continent == -1 || $waypoints{$race_waypoint_key}[1] == $continent)) {
-            $return{$race_waypoint_key} = $waypoints{$race_waypoint_key};
+        # Include race-specific waypoints if they are on the correct continent
+        my $race_waypoints = GetRaceSpecificWaypoint($client->GetBaseRace());
+        foreach my $waypoint (@$race_waypoints) {
+            if (exists $waypoints{$waypoint} &&
+                ($continent == -1 || $waypoints{$waypoint}[1] == $continent)) {
+                $return{$waypoint} = $waypoints{$waypoint};
+            }
         }
     } else {
         quest::debug("Attempted to get waypoints for an invalid or unspecified client.");
@@ -328,28 +329,28 @@ sub GetWaypoints {
 sub GetRaceSpecificWaypoint {
     my $race_id = shift;
 
-    my %race_to_home_city = (
-        1   => 'qeynos',       # Human
-        2   => 'halas',        # Barbarian
-        3   => 'erudin',       # Erudite
-        4   => 'gfaydark',     # Wood Elf
-        5   => 'felwithea',    # High Elf
-        6   => 'neriakb',      # Dark Elf
-        7   => 'freeport',     # Half Elf        
-        8   => 'kaladim',      # Dwarf
-        9   => 'grobb',        # Troll
-        10  => 'oggok',        # Ogre        
-        11  => 'rivervale',    # Halfling        
-        12  => 'akanon',       # Gnome
-        128 => 'cabeast',      # Iksar
-        130 => 'shadeweaver',  # Vah Shir
-        330 => 'rathemtn',     # Guktan
+    my %race_to_home_cities = (
+        1   => ['freportw', 'qeynos2'],  # Human
+        2   => ['halas'],                # Barbarian
+        3   => ['erudin'],               # Erudite
+        4   => ['gfaydark'],             # Wood Elf
+        5   => ['felwithea'],            # High Elf
+        6   => ['neriakb'],              # Dark Elf
+        7   => ['freportw', 'qeynos2', 'gfaydark'], # Half Elf        
+        8   => ['kaladim'],              # Dwarf
+        9   => ['grobb', 'neriakb'],     # Troll
+        10  => ['oggok', 'neriakb'],     # Ogre        
+        11  => ['rivervale'],            # Halfling        
+        12  => ['akanon'],               # Gnome
+        128 => ['cabeast'],              # Iksar
+        130 => ['sharvahl'],             # Vah Shir
+        330 => ['qeynos2'],              # Guktan
     );
 
-    if (exists $race_to_home_city{$race_id}) {
-        return $race_to_home_city{$race_id};
+    if (exists $race_to_home_cities{$race_id}) {
+        return $race_to_home_cities{$race_id};  # Return an array reference of home cities
     } else {
-        return undef;  # No specific waypoint for this race
+        return [];  # Return an empty array reference if no specific waypoint for this race
     }
 }
 
@@ -364,12 +365,12 @@ sub GetWaypointCapturePattern {
     if ($client) {
         %data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
 
-        # Get race-specific waypoint for the client's base race
-        my $race_specific_waypoint = GetRaceSpecificWaypoint($client->GetBaseRace());
+        # Get race-specific waypoints for the client's base race
+        my $race_specific_waypoints = GetRaceSpecificWaypoint($client->GetBaseRace());
 
         foreach my $key (keys %waypoints) {
             if (
-                (exists $data{$key} || $key eq $race_specific_waypoint) && 
+                (exists $data{$key} || grep { $_ eq $key } @$race_specific_waypoints) && 
                 ($continent == -1 || $waypoints{$key}->[1] == $continent) &&  # Correctly access the continent from the waypoint array
                 plugin::is_eligible_for_zone($client, $key, 0)
             ) {
@@ -403,16 +404,16 @@ sub GetContinentCapturePattern {
 sub GetWaypoint {
     my ($shortname, $client) = @_;
 
-    # Get race-specific waypoint for the client's base race
-    my $race_specific_waypoint = GetRaceSpecificWaypoint($client->GetBaseRace());
+    # Get race-specific waypoints for the client's base race
+    my $race_specific_waypoints = GetRaceSpecificWaypoint($client->GetBaseRace());
 
     # Check if the shortname exists in the waypoints hash
     if (exists $waypoints{$shortname}) {
         # Check if the client is eligible for this waypoint
         if (plugin::is_eligible_for_zone($client, $shortname, 0)) {
-            # Check if the waypoint is attuned for the client or is the race-specific waypoint
+            # Check if the waypoint is attuned for the client or is one of the race-specific waypoints
             my %attuned_waypoints = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
-            if (exists $attuned_waypoints{$shortname} || $shortname eq $race_specific_waypoint) {
+            if (exists $attuned_waypoints{$shortname} || grep { $_ eq $shortname } @$race_specific_waypoints) {
                 return $waypoints{$shortname};  # Return the array reference for the waypoint
             }
         }

@@ -2,11 +2,13 @@ sub EVENT_CLICKDOOR {
     if ($doorid == 146) { # Magic Map
         my $attuned_shortname = $client->GetEntityVariable("magic_map_attune");
         
-        # Get race-specific waypoint for the client's base race
-        my $race_specific_waypoint = plugin::GetRaceSpecificWaypoint($client->GetBaseRace());
-
+        # Get race-specific waypoints for the client's base race
+        my $race_specific_waypoints = plugin::GetRaceSpecificWaypoint($client->GetBaseRace());
+        
         # Check if attuned waypoint is either a standard one, race-specific one, or an instance
-        if ($attuned_shortname eq $race_specific_waypoint || $attuned_shortname eq 'instance') {
+        my $is_race_specific = grep { $_ eq $attuned_shortname } @$race_specific_waypoints;
+        
+        if ($is_race_specific || $attuned_shortname eq 'instance') {
             my $waypoint_data;
             if ($attuned_shortname eq 'instance' && $client->GetExpedition()) {
                 $waypoint_data = [undef, undef, undef, undef, undef, undef]; # Placeholder for instance data
