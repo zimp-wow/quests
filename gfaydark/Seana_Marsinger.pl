@@ -42,63 +42,69 @@ sub EVENT_SAY {
 } 
 
 sub EVENT_ITEM {
-  if (plugin::check_handin(\%itemcount, 54062 => 1, 10053 => 1, 54048 => 1)) { #melee 1
-    quest::summonitem(54033); #gem of war
-    quest::say("Wonderful! I also have some more [work] for you to do in the plane of hatred if you wish."); #need real text
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54050 => 1, 54049 => 1, 54033 => 1)) { #melee 2
-    quest::summonitem(54034); #gem of contention
-    quest::say("Splendid work! Should you venture to the Plane of Hatred again, I have a [final task] that needs to be completed."); #need real text
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54051 => 1, 54034 => 1)) { #melee 3
-    quest::summonitem(54035); #gem of victory
-    quest::say("You are a far greater person than I. I must contact the League at once."); #need real text
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54040 => 1, 16537 => 1, 10037 => 1)) { #priest 1
-    quest::summonitem(54027); #gem of faith
-    quest::say("Wonderful! I also have some more [work] for you to do in the plane of hatred if you wish."); #need real text
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54042 => 1, 54041 => 1, 54027 => 1)) { #priest 2
-    quest::summonitem(54028); #gem of piety
-    quest::say("Splendid work! Should you venture to the Plane of Hatred again, I have a [final task] that needs to be completed."); #need real text
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54043 => 1, 54028 => 1)) { #priest 3
-    quest::summonitem(54029); #gem of transcendence
-    quest::say("You are a far greater person than I. I must contact the League at once."); #need real text
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54035 => 1, 54058 => 1, 54060 => 1, 54056 => 1)) { #melee 4
-    quest::summonitem(54039); # Item: Marsinger's Glimmering Gem
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54029 => 1, 54059 => 1, 54061 => 1, 54057 => 1)) { #priest 4
-    quest::summonitem(54039); # Item: Marsinger's Glimmering Gem
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 9590 => 1)) {
-    quest::emote("accepts the note and begins to read");
-	quest::say("What's this? You wish us to cease and desist spreading slander about the swashbuckler known as Stanos, or else . . .? Else what? You understand we don't fabricate the stories told in our songs. As messengers, we carry the tunes that we learn during our travels. If there's anything I can vouch for, it's that every story has a little bit of truth to it. If this Stanos gentleman is so concerned about his reputation - perhaps he should begin by taking a look at the source, himself. As for you, you're soon to find out that my twin sibling and I don't take kindly to threats.' The Marsinger crumples up the note and tosses it at your feet. 'You have earned the wrath of our most dissonant chords.");  
-	$npc->SetSpecialAbility(19,0);
-	$npc->SetSpecialAbility(20,0);
-	$npc->SetSpecialAbility(24,0);
-	$npc->SetSpecialAbility(25,0);
-
-	my $guards = $entity_list->GetMobByNpcTypeID(54101);
-
-    if ($guards) {
-      my $guards = $guards->CastToNPC();
- 	$guards->SetSpecialAbility(19,0);
-	$guards->SetSpecialAbility(20,0);
-	$guards->SetSpecialAbility(24,0);
-	$guards->SetSpecialAbility(25,0);
-    $guards->AddToHateList($client, 1);
+    if (plugin::check_handin(\%itemcount, 54062 => 1, 10053 => 1, 54048 => 1)) { # melee 1
+        quest::summonitem(54033); # gem of war
+        quest::say("Wonderful! I also have some more [work] for you to do in the plane of hatred if you wish."); # need real text
+        quest::exp(60000);
     }
-	$npc->AddToHateList($client, 1); 
-	}	
-  plugin::return_items(\%itemcount);
-} 
+    if (plugin::check_handin(\%itemcount, 54050 => 1, 54049 => 1, 54033 => 1)) { # melee 2
+        quest::summonitem(54034); # gem of contention
+        quest::say("Splendid work! Should you venture to the Plane of Hatred again, I have a [final task] that needs to be completed."); # need real text
+        quest::exp(60000);
+    }
+
+    if (plugin::check_handin(\%itemcount, 54040 => 1, 16537 => 1, 10037 => 1)) { # priest 1
+        quest::summonitem(54027); # gem of faith
+        quest::say("Wonderful! I also have some more [work] for you to do in the plane of hatred if you wish."); # need real text
+        quest::exp(60000);
+    }
+    if (plugin::check_handin(\%itemcount, 54042 => 1, 54041 => 1, 54027 => 1)) { # priest 2
+        quest::summonitem(54028); # gem of piety
+        quest::say("Splendid work! Should you venture to the Plane of Hatred again, I have a [final task] that needs to be completed."); # need real text
+        quest::exp(60000);
+    }
+
+    if (plugin::is_stage_complete($client, 'RoK', 1)) {
+        if (plugin::check_handin(\%itemcount, 54051 => 1, 54034 => 1)) { # melee 3
+            quest::summonitem(54035); # gem of victory
+            quest::say("You are a far greater person than I. I must contact the League at once."); # need real text
+            quest::exp(60000);
+        }
+        if (plugin::check_handin(\%itemcount, 54043 => 1, 54028 => 1)) { # priest 3
+            quest::summonitem(54029); # gem of transcendence
+            quest::say("You are a far greater person than I. I must contact the League at once."); # need real text
+            quest::exp(60000);
+        }
+        if (plugin::check_handin(\%itemcount, 54035 => 1, 54058 => 1, 54060 => 1, 54056 => 1)) { # melee 4
+            quest::summonitem(54039); # Item: Marsinger's Glimmering Gem
+            quest::exp(60000);
+        }
+        if (plugin::check_handin(\%itemcount, 54029 => 1, 54059 => 1, 54061 => 1, 54057 => 1)) { # priest 4
+            quest::summonitem(54039); # Item: Marsinger's Glimmering Gem
+            quest::exp(60000);
+        }
+    }
+
+    if (plugin::check_handin(\%itemcount, 9590 => 1)) {
+        quest::emote("accepts the note and begins to read");
+        quest::say("What's this? You wish us to cease and desist spreading slander about the swashbuckler known as Stanos, or else . . .? Else what? You understand we don't fabricate the stories told in our songs. As messengers, we carry the tunes that we learn during our travels. If there's anything I can vouch for, it's that every story has a little bit of truth to it. If this Stanos gentleman is so concerned about his reputation - perhaps he should begin by taking a look at the source, himself. As for you, you're soon to find out that my twin sibling and I don't take kindly to threats.' The Marsinger crumples up the note and tosses it at your feet. 'You have earned the wrath of our most dissonant chords.");  
+        $npc->SetSpecialAbility(19,0);
+        $npc->SetSpecialAbility(20,0);
+        $npc->SetSpecialAbility(24,0);
+        $npc->SetSpecialAbility(25,0);
+
+        my $guards = $entity_list->GetMobByNpcTypeID(54101);
+
+        if ($guards) {
+            my $guards = $guards->CastToNPC();
+            $guards->SetSpecialAbility(19,0);
+            $guards->SetSpecialAbility(20,0);
+            $guards->SetSpecialAbility(24,0);
+            $guards->SetSpecialAbility(25,0);
+            $guards->AddToHateList($client, 1);
+        }
+        $npc->AddToHateList($client, 1); 
+    }
+
+    plugin::return_items(\%itemcount);
+}

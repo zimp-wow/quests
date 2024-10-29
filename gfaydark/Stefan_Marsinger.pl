@@ -33,63 +33,65 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  if (plugin::check_handin(\%itemcount, 10037 => 1, 54044 => 1, 16537 => 1)) { #caster 1
-    quest::summonitem(54036); #gem of sorcery
-    quest::emote("inspects the items closely before transforming them into a small glimmering jewel. 'That should help a bit. My studies are coming along rather well, although it is still far too early to decipher what is going on for certain. Do you wish to venture further into the plane and do some more [work] for me?");
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54036 => 1, 54045 => 1, 54046 => 1)) { #caster 2
-    quest::summonitem(54037); #gem of enchantment
-    quest::say("Very interesting, I must get to this at once. I am sure the bones will prove most valuable in learning of the drakes as well. Take this with you once more; the protective properties are even more powerful now. Are you up to a [final task]?");
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54037 => 1, 54047 => 1)) { #caster 3
-    quest::summonitem(54038); #gem of conquest
-    quest::emote("grasps the book most carefully, while the cover seems so shift and move of its own will. 'What a truly beautiful book, even as it pulls at you as though it could inspire evil in all.' Seana turns and places the book carefully in a box covered in protective symbols. 'Thank you very much for all of your assistance. Please rest, I have much work to do informing the League and our city of these developments.");
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 10053 => 1, 54052 => 1, 54062 => 1)) { #hybrid 1
-    quest::summonitem(54030); #gem of courage
-    quest::emote("inspects the items closely before transforming them into a small glimmering jewel. 'That should help a bit. My studies are coming along rather well, although it is still far too early to decipher what is going on for certain. Do you wish to venture further into the plane and do some more [work] for me?");
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54030 => 1, 54053 => 1, 54054 => 1)) { #hybrid 2
-    quest::summonitem(54031); #gem of daring
-    quest::say("Very interesting, I must get to this at once. I am sure the bones will prove most valuable in learning of the drakes as well. Take this with you once more; the protective properties are even more powerful now. Are you up to a [final task]?");
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54031 => 1, 54055 => 1)) { #hybrid 3
-    quest::summonitem(54032); #gem of heroism
-   quest::emote("grasps the book most carefully, while the cover seems so shift and move of its own will. 'What a truly beautiful book, even as it pulls at you as though it could inspire evil in all.' Stefan turns and places the book carefully in a box covered in protective symbols. 'Thank you very much for all of your assistance. Please rest, I have much work to do informing the League and our city of these developments.");
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54058 => 1, 54060 => 1, 54056 => 1, 54032 => 1)) { #hybrid 4
-    quest::summonitem(54039); #glimmering gem
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 54038 => 1, 54059 => 1, 54057 => 1, 54061 => 1)) { #caster 4
-    quest::summonitem(54039); #glimmering gem
-    quest::exp(60000);
-  }
-  if (plugin::check_handin(\%itemcount, 9590 => 1)) {
-    quest::emote("accepts the note and begins to read");
-	quest::say("What's this? You wish us to cease and desist spreading slander about the swashbuckler known as Stanos, or else . . .? Else what? You understand we don't fabricate the stories told in our songs. As messengers, we carry the tunes that we learn during our travels. If there's anything I can vouch for, it's that every story has a little bit of truth to it. If this Stanos gentleman is so concerned about his reputation - perhaps he should begin by taking a look at the source, himself. As for you, you're soon to find out that my twin sibling and I don't take kindly to threats.' The Marsinger crumples up the note and tosses it at your feet. 'You have earned the wrath of our most dissonant chords.");  
-	$npc->SetSpecialAbility(19,0);
-	$npc->SetSpecialAbility(20,0);
-	$npc->SetSpecialAbility(24,0);
-	$npc->SetSpecialAbility(25,0);
-
-	my $guards = $entity_list->GetMobByNpcTypeID(54102);
-
-    if ($guards) {
-      my $guards = $guards->CastToNPC();
- 	$guards->SetSpecialAbility(19,0);
-	$guards->SetSpecialAbility(20,0);
-	$guards->SetSpecialAbility(24,0);
-	$guards->SetSpecialAbility(25,0);
-    $guards->AddToHateList($client, 1);
+    if (plugin::check_handin(\%itemcount, 10037 => 1, 54044 => 1, 16537 => 1)) { # caster 1
+        quest::summonitem(54036); # gem of sorcery
+        quest::emote("inspects the items closely before transforming them into a small glimmering jewel. 'That should help a bit. My studies are coming along rather well, although it is still far too early to decipher what is going on for certain. Do you wish to venture further into the plane and do some more [work] for me?");
+        quest::exp(60000);
     }
-	$npc->AddToHateList($client, 1);
-   }  
-  plugin::return_items(\%itemcount);    
+    if (plugin::check_handin(\%itemcount, 54036 => 1, 54045 => 1, 54046 => 1)) { # caster 2
+        quest::summonitem(54037); # gem of enchantment
+        quest::say("Very interesting, I must get to this at once. I am sure the bones will prove most valuable in learning of the drakes as well. Take this with you once more; the protective properties are even more powerful now. Are you up to a [final task]?");
+        quest::exp(60000);
+    }
+    if (plugin::check_handin(\%itemcount, 10053 => 1, 54052 => 1, 54062 => 1)) { # hybrid 1
+        quest::summonitem(54030); # gem of courage
+        quest::emote("inspects the items closely before transforming them into a small glimmering jewel. 'That should help a bit. My studies are coming along rather well, although it is still far too early to decipher what is going on for certain. Do you wish to venture further into the plane and do some more [work] for me?");
+        quest::exp(60000);
+    }
+    if (plugin::check_handin(\%itemcount, 54030 => 1, 54053 => 1, 54054 => 1)) { # hybrid 2
+        quest::summonitem(54031); # gem of daring
+        quest::say("Very interesting, I must get to this at once. I am sure the bones will prove most valuable in learning of the drakes as well. Take this with you once more; the protective properties are even more powerful now. Are you up to a [final task]?");
+        quest::exp(60000);
+    }
+    if (plugin::is_stage_complete($client, 'RoK', 1)) {
+        if (plugin::check_handin(\%itemcount, 54037 => 1, 54047 => 1)) { # caster 3
+            quest::summonitem(54038); # gem of conquest
+            quest::emote("grasps the book most carefully, while the cover seems so shift and move of its own will. 'What a truly beautiful book, even as it pulls at you as though it could inspire evil in all.' Seana turns and places the book carefully in a box covered in protective symbols. 'Thank you very much for all of your assistance. Please rest, I have much work to do informing the League and our city of these developments.");
+            quest::exp(60000);
+        }
+        if (plugin::check_handin(\%itemcount, 54031 => 1, 54055 => 1)) { # hybrid 3
+            quest::summonitem(54032); # gem of heroism
+            quest::emote("grasps the book most carefully, while the cover seems so shift and move of its own will. 'What a truly beautiful book, even as it pulls at you as though it could inspire evil in all.' Stefan turns and places the book carefully in a box covered in protective symbols. 'Thank you very much for all of your assistance. Please rest, I have much work to do informing the League and our city of these developments.");
+            quest::exp(60000);
+        }
+        if (plugin::check_handin(\%itemcount, 54058 => 1, 54060 => 1, 54056 => 1, 54032 => 1)) { # hybrid 4
+            quest::summonitem(54039); # glimmering gem
+            quest::exp(60000);
+        }
+        if (plugin::check_handin(\%itemcount, 54038 => 1, 54059 => 1, 54057 => 1, 54061 => 1)) { # caster 4
+            quest::summonitem(54039); # glimmering gem
+            quest::exp(60000);
+        }
+    }
+    if (plugin::check_handin(\%itemcount, 9590 => 1)) {
+        quest::emote("accepts the note and begins to read");
+        quest::say("What's this? You wish us to cease and desist spreading slander about the swashbuckler known as Stanos, or else . . .? Else what? You understand we don't fabricate the stories told in our songs. As messengers, we carry the tunes that we learn during our travels. If there's anything I can vouch for, it's that every story has a little bit of truth to it. If this Stanos gentleman is so concerned about his reputation - perhaps he should begin by taking a look at the source, himself. As for you, you're soon to find out that my twin sibling and I don't take kindly to threats.' The Marsinger crumples up the note and tosses it at your feet. 'You have earned the wrath of our most dissonant chords.");
+        $npc->SetSpecialAbility(19, 0);
+        $npc->SetSpecialAbility(20, 0);
+        $npc->SetSpecialAbility(24, 0);
+        $npc->SetSpecialAbility(25, 0);
+
+        my $guards = $entity_list->GetMobByNpcTypeID(54102);
+
+        if ($guards) {
+            my $guards = $guards->CastToNPC();
+            $guards->SetSpecialAbility(19, 0);
+            $guards->SetSpecialAbility(20, 0);
+            $guards->SetSpecialAbility(24, 0);
+            $guards->SetSpecialAbility(25, 0);
+            $guards->AddToHateList($client, 1);
+        }
+        $npc->AddToHateList($client, 1);
+    }
+    plugin::return_items(\%itemcount);
 }
