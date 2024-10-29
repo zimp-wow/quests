@@ -1,7 +1,7 @@
 # items: 54062, 10053, 54048, 54033, 54050, 54049, 54034, 54051, 54035, 54040, 16537, 10037, 54027, 54042, 54041, 54028, 54043, 54029, 54058, 54060, 54056, 54039, 54059, 54061, 54057, 9590
 sub EVENT_SAY {
  if($text=~/Hail/i) {
-   quest::say("Hello, my name is Seana Marsinger. I am here representing my loyalty to the League of Antonican Bards. It matters not to me whether you support the League or loathe it; propaganda is not my objective. Everyone must find their own truths in this life path. So says Quellious. To business then, are you [familiar with the Plane of Hate?]");
+   quest::say("Hello, my name is Seana Marsinger. I am here representing my loyalty to the League of Antonican Bards. It matters not to me whether you support the League or loathe it; propaganda is not my objective. Everyone must find their own truths in this life path. So says Quellious. To business then, are you [familiar with the Plane of Hate]?");
  }
  if($text=~/I am familiar with the Plane of Hate/i) {
    quest::say("Good, I need someone that has a bit of an eye for how things should look up there. My brother and I have been studying Innoruuk and his intricate dealings for years. Being raised in New Tanaan may lend us certain neutrality towards all people, yet the values our parents have instilled in us do not allow us to let him go unwatched. In fact, I have begun to believe that my paranoia may prove useful not only to the League, but to the Citizens of Tranquility and New Tanaan itself as well. We have received a simple [piece of intelligence] that may conceivably upset the entire balance of the Pantheon and have most dire repercussions here in Norrath.");
