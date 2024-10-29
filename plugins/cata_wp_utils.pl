@@ -407,18 +407,13 @@ sub GetWaypoint {
     # Get race-specific waypoints for the client's base race
     my $race_specific_waypoints = GetRaceSpecificWaypoint($client->GetBaseRace());
 
-    quest::debug("Check 1");
     # Check if the shortname exists in the waypoints hash
     if (exists $waypoints{$shortname}) {
-        quest::debug("Check 2");
         # Check if the client is eligible for this waypoint
         if (plugin::is_eligible_for_zone($client, $shortname, 0)) {
-            quest::debug("Check 3");
             # Check if the waypoint is attuned for the client or is one of the race-specific waypoints
             my %attuned_waypoints = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
-            quest::debug("Check 4");
             if (exists $attuned_waypoints{$shortname} || grep { $_ eq $shortname } @$race_specific_waypoints) {
-                quest::debug("Check 5");
                 return $waypoints{$shortname};  # Return the array reference for the waypoint
             }
         }
