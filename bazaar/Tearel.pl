@@ -2,8 +2,10 @@ sub EVENT_SAY {
   my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled") || "";  
   my $eom_link        = quest::varlink(46779);
 
-  plugin::AwardBonusUnlocks($client);
-  plugin::AddDefaultAttunement($client);
+  if (!plugin::IsTHJ()) {
+    plugin::AwardBonusUnlocks($client);
+    plugin::AddDefaultAttunement($client);
+  }
 
   if ($text=~/hail/i) {        
     if (!group_flg) { $group_flg = " However, that magic, like teleporting an entire group, will require [special reagents]." }
@@ -96,9 +98,7 @@ sub EVENT_SAY {
           foreach my $link (@waypoint_links) {
               plugin::PurpleText("---". $link);
           }
-      } else {
-          plugin::NPCTell("I'm not sure where that is... at least not yet.");
-      }   
+      }
   }
 
   my ($waypoint_pattern, $eligible_waypoints) = plugin::GetWaypointCapturePattern(-1, $client);
@@ -113,9 +113,7 @@ sub EVENT_SAY {
             plugin::YellowText("The Magic Map has been attuned to $waypoint_name!");
             $client->SetEntityVariable("magic_map_attune", $matched_waypoint_key);
           }
-      } else {
-          plugin::NPCTell("I'm not sure where that is... at least not yet.");
-      }
+      } 
   }
 }
 

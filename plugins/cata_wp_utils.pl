@@ -298,22 +298,59 @@ sub GetWaypoints {
     my $client = shift;
     my %data;
     my %return;
-    
-    if ($client) {        
+
+    if ($client) {
         %data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
 
         foreach my $key (keys %waypoints) {
-            if (exists $data{$key} && 
+            if (exists $data{$key} &&
                 ($continent == -1 || $waypoints{$key}[1] == $continent) &&
                 plugin::is_eligible_for_zone($client, $key, 0)) {
                 $return{$key} = $waypoints{$key};
             }
-        }          
+        }
+
+        # Include race-specific waypoint if it is on the correct continent
+        my $race_waypoint_key = GetRaceSpecificWaypoint($client->GetBaseRace());
+        if (defined $race_waypoint_key &&
+            exists $waypoints{$race_waypoint_key} &&
+            ($continent == -1 || $waypoints{$race_waypoint_key}[1] == $continent)) {
+            $return{$race_waypoint_key} = $waypoints{$race_waypoint_key};
+        }
     } else {
         quest::debug("Attempted to get waypoints for an invalid or unspecified client.");
         return ();
     }
+
     return %return;
+}
+
+sub GetRaceSpecificWaypoint {
+    my $race_id = shift;
+
+    my %race_to_home_city = (
+        1   => 'qeynos',       # Human
+        2   => 'halas',        # Barbarian
+        3   => 'erudin',       # Erudite
+        4   => 'gfaydark',     # Wood Elf
+        5   => 'felwithea',    # High Elf
+        6   => 'neriakb',      # Dark Elf
+        7   => 'freeport',     # Half Elf        
+        8   => 'kaladim',      # Dwarf
+        9   => 'grobb',        # Troll
+        10  => 'oggok',        # Ogre        
+        11  => 'rivervale',    # Halfling        
+        12  => 'akanon',       # Gnome
+        128 => 'cabeast',      # Iksar
+        130 => 'shadeweaver',  # Vah Shir
+        330 => 'rathemtn',     # Guktan
+    );
+
+    if (exists $race_to_home_city{$race_id}) {
+        return $race_to_home_city{$race_id};
+    } else {
+        return undef;  # No specific waypoint for this race
+    }
 }
 
 sub GetWaypointCapturePattern {
@@ -327,10 +364,15 @@ sub GetWaypointCapturePattern {
     if ($client) {
         %data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
 
+        # Get race-specific waypoint for the client's base race
+        my $race_specific_waypoint = GetRaceSpecificWaypoint($client->GetBaseRace());
+
         foreach my $key (keys %waypoints) {
-            if (exists $data{$key} && 
+            if (
+                (exists $data{$key} || $key eq $race_specific_waypoint) && 
                 ($continent == -1 || $waypoints{$key}->[1] == $continent) &&  # Correctly access the continent from the waypoint array
-                plugin::is_eligible_for_zone($client, $key, 0)) {
+                plugin::is_eligible_for_zone($client, $key, 0)
+            ) {
                 $eligible_waypoints{$key} = $waypoints{$key};  # Store the full waypoint data
                 push @eligible_keys, quotemeta($key);  # Escape special characters in keys and add to regex list
             }
@@ -361,13 +403,16 @@ sub GetContinentCapturePattern {
 sub GetWaypoint {
     my ($shortname, $client) = @_;
 
+    # Get race-specific waypoint for the client's base race
+    my $race_specific_waypoint = GetRaceSpecificWaypoint($client->GetBaseRace());
+
     # Check if the shortname exists in the waypoints hash
     if (exists $waypoints{$shortname}) {
         # Check if the client is eligible for this waypoint
         if (plugin::is_eligible_for_zone($client, $shortname, 0)) {
-            # Check if the waypoint is attuned for the client
+            # Check if the waypoint is attuned for the client or is the race-specific waypoint
             my %attuned_waypoints = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
-            if (exists $attuned_waypoints{$shortname}) {
+            if (exists $attuned_waypoints{$shortname} || $shortname eq $race_specific_waypoint) {
                 return $waypoints{$shortname};  # Return the array reference for the waypoint
             }
         }
