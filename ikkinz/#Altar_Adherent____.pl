@@ -13,16 +13,16 @@ sub EVENT_DEATH_COMPLETE {
   if ($status >= 80 ) {
 	quest::ze(0,"The adherent's debris litters the ground. It has been beaten.");
     }
-  elsif((($class eq "Bard") || ($class eq "Beastlord") || ($class eq "Paladin") || ($class eq "Ranger") || ($class eq "Shadowknight")) && ($qglobals{$instanceid.adhere5} == 2)) {
+  elsif(((plugin::HasClassName($client, "Bard")) || (plugin::HasClassName($client, "Beastlord")) || (plugin::HasClassName($client, "Paladin")) || (plugin::HasClassName($client, "Ranger")) || (plugin::HasClassName($client, "Shadowknight"))) && ($qglobals{$instanceid.adhere5} == 2)) {
 	quest::ze(0,"The adherent's debris litters the ground. It has been beaten.");
   }
-  elsif((($class eq "Berserker") || (plugin::HasClassName($client, "Monk")) || ($class eq "Rogue") || ($class eq "Warrior")) && ($qglobals{$instanceid.adhere5} == 3)) {
+  elsif(((plugin::HasClassName($client, "Berserker")) || (plugin::HasClassName($client, "Monk")) || (plugin::HasClassName($client, "Rogue")) || (plugin::HasClassName($client, "Warrior"))) && ($qglobals{$instanceid.adhere5} == 3)) {
 	quest::ze(0,"The adherent's debris litters the ground. It has been beaten.");
   }
-  elsif((($class eq "Cleric") || ($class eq "Druid") || ($class eq "Shaman")) && ($qglobals{$instanceid.adhere5} == 4)) {
+  elsif(((plugin::HasClassName($client, "Cleric")) || (plugin::HasClassName($client, "Druid")) || (plugin::HasClassName($client, "Shaman"))) && ($qglobals{$instanceid.adhere5} == 4)) {
 	quest::ze(0,"The adherent's debris litters the ground. It has been beaten.");
   }
-  elsif((($class eq "Enchanter") || ($class eq "Magician") || ($class eq "Necromancer") || ($class eq "Wizard")) && ($qglobals{$instanceid.adhere5} == 1)) {
+  elsif(((plugin::HasClassName($client, "Enchanter")) || (plugin::HasClassName($client, "Magician")) || (plugin::HasClassName($client, "Necromancer")) || (plugin::HasClassName($client, "Wizard"))) && ($qglobals{$instanceid.adhere5} == 1)) {
 	quest::ze(0,"The adherent's debris litters the ground. It has been beaten.");
   }
   else {

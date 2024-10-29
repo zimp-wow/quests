@@ -41,22 +41,22 @@ sub EVENT_TIMER {
 }
 
 sub EVENT_DEATH_COMPLETE {
-  if((($class eq "Enchanter") || ($class eq "Magician") || ($class eq "Necromancer") || ($class eq "Wizard")) && ($qglobals{$instanceid.marakill} == 1)) {
+  if(((plugin::HasClassName($client, "Enchanter")) || (plugin::HasClassName($client, "Magician")) || (plugin::HasClassName($client, "Necromancer")) || (plugin::HasClassName($client, "Wizard"))) && ($qglobals{$instanceid.marakill} == 1)) {
     quest::spawn2(294595,0,0,480,-592,-50,128); # NPC: #Vrex_Xalkak_Nixki
 	quest::delglobal($instanceid.marakill);
 	quest::ze(15,"The marauder's remains crash to the ground. It is no more.");
   }  
-  elsif((($class eq "Bard") || ($class eq "Beastlord") || ($class eq "Paladin") || ($class eq "Ranger") || ($class eq "Shadowknight")) && ($qglobals{$instanceid.marakill} == 2)) {
+  elsif(((plugin::HasClassName($client, "Bard")) || (plugin::HasClassName($client, "Beastlord")) || (plugin::HasClassName($client, "Paladin")) || (plugin::HasClassName($client, "Ranger")) || (plugin::HasClassName($client, "Shadowknight"))) && ($qglobals{$instanceid.marakill} == 2)) {
     quest::spawn2(294595,0,0,480,-592,-50,128); # NPC: #Vrex_Xalkak_Nixki
 	quest::delglobal($instanceid.marakill);
 	quest::ze(15,"The marauder's remains crash to the ground. It is no more.");
   }
-  elsif((($class eq "Berserker") || (plugin::HasClassName($client, "Monk")) || ($class eq "Rogue") || ($class eq "Warrior")) && ($qglobals{$instanceid.marakill} == 3)) {
+  elsif(((plugin::HasClassName($client, "Berserker")) || (plugin::HasClassName($client, "Monk")) || (plugin::HasClassName($client, "Rogue")) || (plugin::HasClassName($client, "Warrior"))) && ($qglobals{$instanceid.marakill} == 3)) {
     quest::spawn2(294595,0,0,480,-592,-50,128); # NPC: #Vrex_Xalkak_Nixki
 	quest::delglobal($instanceid.marakill);
 	quest::ze(15,"The marauder's remains crash to the ground. It is no more.");
   }
-  elsif((($class eq "Cleric") || ($class eq "Druid") || ($class eq "Shaman")) && ($qglobals{$instanceid.marakill} == 4)) {
+  elsif(((plugin::HasClassName($client, "Cleric")) || (plugin::HasClassName($client, "Druid")) || (plugin::HasClassName($client, "Shaman"))) && ($qglobals{$instanceid.marakill} == 4)) {
     quest::spawn2(294595,0,0,480,-592,-50,128); # NPC: #Vrex_Xalkak_Nixki
 	quest::delglobal($instanceid.marakill);
 	quest::ze(15,"The marauder's remains crash to the ground. It is no more.");

@@ -15,15 +15,15 @@ sub EVENT_ITEM {
 	if ($faction == 1) {
 		if (plugin::check_handin(\%itemcount, 69324 => 1)) {
 			quest::say("I'm somewhat impressed, stranger. You cannot imagine the power this spell may unleash. Take this reward and leave me. If the reward I have given you is not pleasing, hand it back and I will give you a different one. Make haste and leave me be, for I will need to recite this spell in private.");
-			if ($class eq "Warrior") { quest::summonitem(69381);
-			} elsif ($class eq "Berserker") { quest::summonitem(69381);
-			} elsif ($class eq "Ranger") { quest::summonitem(69381);
-			} elsif ($class eq "Bard") { quest::summonitem(69381);
-			} elsif ($class eq "Rogue") { quest::summonitem(69381);
-			} elsif ($class eq "Paladin") { quest::summonitem(69381);
-			} elsif ($class eq "Shadowknight") { quest::summonitem(69381);
+			if (plugin::HasClassName($client, "Warrior")) { quest::summonitem(69381);
+			} elsif (plugin::HasClassName($client, "Berserker")) { quest::summonitem(69381);
+			} elsif (plugin::HasClassName($client, "Ranger")) { quest::summonitem(69381);
+			} elsif (plugin::HasClassName($client, "Bard")) { quest::summonitem(69381);
+			} elsif (plugin::HasClassName($client, "Rogue")) { quest::summonitem(69381);
+			} elsif (plugin::HasClassName($client, "Paladin")) { quest::summonitem(69381);
+			} elsif (plugin::HasClassName($client, "Shadowknight")) { quest::summonitem(69381);
 			} elsif (plugin::HasClassName($client, "Monk")) { quest::summonitem(69381);
-			} elsif ($class eq "Beastlord") { quest::summonitem(69381);
+			} elsif (plugin::HasClassName($client, "Beastlord")) { quest::summonitem(69381);
 			} else { quest::summonitem(69382);
 			}
 			quest::exp(10000);

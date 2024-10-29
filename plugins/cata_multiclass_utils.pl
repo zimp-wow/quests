@@ -88,6 +88,7 @@ sub GetClassID {
         "Paladin" => 3,
         "Ranger" => 4,
         "Shadow Knight" => 5,
+        "Shadowknight" => 5,        
         "Druid" => 6,
         "Monk" => 7,
         "Bard" => 8,

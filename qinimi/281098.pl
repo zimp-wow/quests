@@ -30,37 +30,37 @@ if(plugin::check_handin(\%itemcount, 67411 => 1)) { # Narundel's Decision
 	quest::emote("looks at the glyph and then into your eyes.");
 	quest::say("Thank you, adventurer, for bringing closure to this part of my life. Please take this as a token of my gratitude and as a memory of the great thing you have done.");	
 	
-	 if ($class eq "Warrior"){quest::summonitem(67413);} # Rarundel's Mended Memories
+	 if (plugin::HasClassName($client, "Warrior")){quest::summonitem(67413);} # Rarundel's Mended Memories
 
-      elsif ($class eq "Berserker"){quest::summonitem(67413);} # Rarundel's Mended Memories
+      elsif (plugin::HasClassName($client, "Berserker")){quest::summonitem(67413);} # Rarundel's Mended Memories
 
-      elsif ($class eq "Ranger"){quest::summonitem(67414);} # Rarundel's Forgotten Memories 
+      elsif (plugin::HasClassName($client, "Ranger")){quest::summonitem(67414);} # Rarundel's Forgotten Memories 
 
-      elsif ($class eq "Bard"){quest::summonitem(67414);} # Rarundel's Forgotten Memories 
+      elsif (plugin::HasClassName($client, "Bard")){quest::summonitem(67414);} # Rarundel's Forgotten Memories 
 
-      elsif ($class eq "Rogue"){quest::summonitem(67413);} # Rarundel's Mended Memories
+      elsif (plugin::HasClassName($client, "Rogue")){quest::summonitem(67413);} # Rarundel's Mended Memories
 
-      elsif ($class eq "Paladin"){quest::summonitem(67414);} # Rarundel's Forgotten Memories 
+      elsif (plugin::HasClassName($client, "Paladin")){quest::summonitem(67414);} # Rarundel's Forgotten Memories 
 
-      elsif ($class eq "Shadowknight"){quest::summonitem(67414);} # Rarundel's Forgotten Memories 
+      elsif (plugin::HasClassName($client, "Shadowknight")){quest::summonitem(67414);} # Rarundel's Forgotten Memories 
 
       elsif (plugin::HasClassName($client, "Monk")){quest::summonitem(67413);} # Rarundel's Mended Memories
 
-      elsif ($class eq "Beastlord"){quest::summonitem(67414);} #  Rarundel's Forgotten Memories 
+      elsif (plugin::HasClassName($client, "Beastlord")){quest::summonitem(67414);} #  Rarundel's Forgotten Memories 
 
-      elsif ($class eq "Cleric"){quest::summonitem(67412);} # Rarundel's Broken Memories
+      elsif (plugin::HasClassName($client, "Cleric")){quest::summonitem(67412);} # Rarundel's Broken Memories
 
-      elsif ($class eq "Druid"){quest::summonitem(67412);} # Rarundel's Broken Memories
+      elsif (plugin::HasClassName($client, "Druid")){quest::summonitem(67412);} # Rarundel's Broken Memories
 
-      elsif ($class eq "Shaman"){quest::summonitem(67412);} # Rarundel's Broken Memories
+      elsif (plugin::HasClassName($client, "Shaman")){quest::summonitem(67412);} # Rarundel's Broken Memories
 
-      elsif ($class eq "Enchanter"){quest::summonitem(67416);} # Rarundel's Faded Memories
+      elsif (plugin::HasClassName($client, "Enchanter")){quest::summonitem(67416);} # Rarundel's Faded Memories
 
-      elsif ($class eq "Magician"){quest::summonitem(67416);} # Rarundel's Faded Memories
+      elsif (plugin::HasClassName($client, "Magician")){quest::summonitem(67416);} # Rarundel's Faded Memories
 
-      elsif ($class eq "Necromancer"){quest::summonitem(67416);} # Rarundel's Faded Memories
+      elsif (plugin::HasClassName($client, "Necromancer")){quest::summonitem(67416);} # Rarundel's Faded Memories
 
-      elsif ($class eq "Wizard"){quest::summonitem(67416);} # Rarundel's Faded Memories
+      elsif (plugin::HasClassName($client, "Wizard")){quest::summonitem(67416);} # Rarundel's Faded Memories
 
       quest::exp(25000);
 

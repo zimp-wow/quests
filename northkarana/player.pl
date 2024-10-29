@@ -9,7 +9,7 @@ sub EVENT_LOOT {
         $client->Message(15, "With his last breath, the paladin says, 'You are too late. The last paladin has fled to Natimbi with the staff and is on his way to destroy it!'");
     }
     
-    if ($class eq "Ranger" && $looted_id == 62604) {
+    if (plugin::HasClassName($client, "Ranger") && $looted_id == 62604) {
         if (defined $qglobals{ranger_epic15_pre} && $qglobals{ranger_epic15_pre} ne "8") {
             return 1;
         } else {
