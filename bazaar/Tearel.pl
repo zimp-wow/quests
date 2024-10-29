@@ -4,7 +4,7 @@ sub EVENT_SAY {
 
   
   #  plugin::AwardBonusUnlocks($client);
-   lugin::AddDefaultAttunement($client);
+  plugin::AddDefaultAttunement($client);
   
 
   if ($text=~/hail/i) {        
