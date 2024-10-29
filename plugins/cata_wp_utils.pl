@@ -198,19 +198,22 @@ sub AddDefaultAttunement {
         AddWaypoint('cabeast');
         AddWaypoint('sharvahl');
         AddWaypoint('paineel');
-        AddWaypoint("lavastorm");
-        AddWaypoint("northkarana");
-        AddWaypoint("tox");
-        AddWaypoint("iceclad");
-        AddWaypoint("cobaltscar");
-        AddWaypoint("twilight");
-        AddWaypoint("wallofslaughter");
-        AddWaypoint("barindu");
-        AddWaypoint("potimea");
-        AddWaypoint("fieldofbone");
-        AddWaypoint("westwastes");
-        AddWaypoint("scarlet");
-        AddWaypoint("everfrost");
+
+        if (!plugin::IsTHJ()) {
+            AddWaypoint("lavastorm");
+            AddWaypoint("northkarana");
+            AddWaypoint("tox");
+            AddWaypoint("iceclad");
+            AddWaypoint("cobaltscar");
+            AddWaypoint("twilight");
+            AddWaypoint("wallofslaughter");
+            AddWaypoint("barindu");
+            AddWaypoint("potimea");
+            AddWaypoint("fieldofbone");
+            AddWaypoint("westwastes");
+            AddWaypoint("scarlet");
+            AddWaypoint("everfrost");
+        }
 
         if ($client->GetLevel() >= 46) {
             AddWaypoint("hateplaneb");

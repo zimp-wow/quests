@@ -2,10 +2,10 @@ sub EVENT_SAY {
   my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled") || "";  
   my $eom_link        = quest::varlink(46779);
 
-  if (!plugin::IsTHJ()) {
-    plugin::AwardBonusUnlocks($client);
-    plugin::AddDefaultAttunement($client);
-  }
+  
+  #  plugin::AwardBonusUnlocks($client);
+   lugin::AddDefaultAttunement($client);
+  
 
   if ($text=~/hail/i) {        
     if (!group_flg) { $group_flg = " However, that magic, like teleporting an entire group, will require [special reagents]." }
