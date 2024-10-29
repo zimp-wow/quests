@@ -61,7 +61,7 @@ sub RewardItems {
         if (($playerClassBitmask & $classBitmask) && !($rewardedClassesBitmask & $classBitmask)) { 
             # Summon the fixed items for the class if the player does not already have them
             foreach my $item (@{$classRewards{$classBitmask}->{items}}) {
-                if ($item == 2008500 || !plugin::check_hasitem($client, $item)) { # Check if the player already has the item
+                if ($item == 2008500 || !plugin::check_hasitem_exact($client, $item)) { # Check if the player already has the item
                     $client->SummonFixedItem($item);
                 }
             }
