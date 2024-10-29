@@ -5,7 +5,7 @@ sub EVENT_SAY {
                     platinum pieces, or consider donating to wager five [Echo of Memory], I'll accept those, too!");
     }
     if ($text =~ /Echo of Memory/i) {
-        if (plugin::SpendEOM($client, 5)) {
+        if (plugin::SpendEOM($client, 2)) {
             GetRandomResult();
         } else {
             quest::say("You don't have enough Echoes of Memory, dear friend. Come back when you do!");
