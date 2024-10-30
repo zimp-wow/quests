@@ -18,7 +18,7 @@ sub EVENT_ITEM {
 		quest::faction(285, -1);		#:: - Mayong Mistmoore
 	}
 	#:: Match 13709 - Lute Strings
-	if (plugin::takeItems(13709 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13709 => 1)) {
 #::		2007 Release Era Addition to Quest
 #::		my $random_lute_strings_message = int(rand(5)) + 1;
 #::		if ($random_lute_strings_message == 4) {
@@ -43,7 +43,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum}); 
 	}
 #::	#:: 2007 era quest addition Match a 13710 - Etched Silver Coin
-#::	if (plugin::takeItems(13710 => 1)) {
+#::	if (plugin::check_handin(\%itemcount, 13710 => 1)) {
 #::		quest::say("'My lucky coin! How did it get in there? Well, never mind that. You are an honest person and although honesty is its own reward, I feel obligated to return the favor. Take this to Dionna if you enjoy music. Farewell friend!");
 #::		#:: Give a 13708 - Note from Fabian
 #::		quest::summonitem(13708);

@@ -32,14 +32,14 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 13921 - Damaged Militia Helm
-	if (plugin::takeItems(13921 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 13921 => 1 )) {
 		quest::say("Bless you, my child. Marr is grateful, as are we. Here is our thanks. Let it bring you greater strength to defeat the Militia. Go and continue the crusade. Soon you will be strong enough to slay the [true organizer].");
 		#:: Ding!
 		quest::ding();
 		#:: Grant a large amount of experience
 		quest::exp(5000);
 		#:: Give a random reward: 15019 - Spell: Armor of Faith, 15013 - Spell: Complete Healing, 15045 - Spell: Pacify
-		quest::summonitem(1quest::ChooseRandom(15019, 15013, 15045));
+		quest::summonitem(quest::ChooseRandom(15019, 15013, 15045));
 		#:: Set factions
 		quest::faction(362, 3); 		#:: + Priests of Marr
 		quest::faction(336, -10); 		#:: - Coalition of Tradefolk Underground
@@ -49,10 +49,10 @@ sub EVENT_ITEM {
 		$npc->CastSpell(12,$userid);
 	}
 	#:: Turn in for 12142 - Human Head
-	if (plugin::takeItems(12142 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 12142 => 1 )) {
 		quest::say("We heard of your assault. We even attempted to slay Lucan. Alas, we failed. You have done your part and as such have earned our thanks. Beware of the Freeport Militia. They will no doubt be on the lookout for you. May Marr protect you. Perhaps you should speak with Valeron Dushire, paladin of the Knights of Truth. He seeks other to slay the fallen knight.");
 		#:: Give a random reward: 15560 - Spell: Furor, 15230 - Spell: Root, 15219 - Spell: Center, 15229 - Spell: Fear, 15222 - Spell: Invigor, 15012 - Spell: Healing
-		quest::summonitem(1quest::ChooseRandom(15560,15230,15219,15229,15222,15012));
+		quest::summonitem(quest::ChooseRandom(15560,15230,15219,15229,15222,15012));
 		#:: Ding!
 		quest::ding();
 		#:: Grant a large amount of experience

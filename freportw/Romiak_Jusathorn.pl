@@ -1,6 +1,6 @@
 sub EVENT_ITEM {
 	#:: Match a 18741 - A Tattered Note
-	if (plugin::takeItems(18741 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 18741 => 1 )) {
 		quest::say("Greetings, I am Romiak Jusathorn, Master Enchanter of the Academy. Take this.. it's our guild robe; it will help protect you in this harsh environment. Now, let's get to work!");
 		#:: Give item 13560 - Old Violet Robe
 		quest::summonitem(13560);

@@ -16,7 +16,7 @@ sub EVENT_SIGNAL {
 
 sub EVENT_ITEM {
 	#:: Turn in for 13036 -  Dwarven Ale
-	if (plugin::takeItems(13036 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13036 => 1)) {
 		quest::say("Well, well, well.. It's about time. Whatta ya got, boots fulla stones? Or maybe yer just part turtle? Bah, anyways, thanks for the ale. Maybe I'll buy you one sometime, eh? Bwahaha!");
 		#:: Ding!
 		quest::ding();

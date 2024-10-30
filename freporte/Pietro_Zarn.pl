@@ -16,7 +16,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18743 - A tattered Note
-	if (plugin::takeItems(18743 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18743 => 1)) {
 		quest::say("A new member to carry the rage of Innoruuk into the city and beyond. How wonderful. I must admit that you do not appear to carry the rage within. Hopefully you shall color the battlefields with the blood of many knights from the Hall of Truth. Here. Wear this tunic with pride. Once you are ready to begin your training please make sure that yo see Gunex Eklar, he can assist you in developing your hunting and gathering skills. Return to me when you have become more experienced in our art, I will be able to further instruct you on how to progress through your early ranks, as well as in some of the various [trades] you will have available to you.");
 		#:: Give item 13561 - Faded Crimson Tunic
 		quest::summonitem(13561);
@@ -30,7 +30,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 18961 - Translated Parchment
-	elsif (plugin::takeItems(18961 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18961 => 1)) {
 		quest::say("ou have proven yourself truly evil. Your hatred shall shine from this day forth. Innoruuk commands that I reward you with this. It is called Rage and it serves the powers of hate. Use it to smite the forces of good. Hail Innoruuk!");
 		#:: Give item 12153 - Rage War Maul
 		quest::summonitem(12153);

@@ -14,12 +14,12 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 13872 - Sack of Piranha
-	if (plugin::takeItems(13872 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 13872 => 1 )) {
 		quest::say("You have done well. The Marr Minnow shall have a greater chance of flourishing. Please take this as a reward.");
 		#:: Ding!
 		quest::ding();
 		#:: Give a random reward: 15207 - Spell: Divine Aura, 13869 - Marr's Sustenance, 14003 - Potion of Disease Warding
-		quest::summonitem(1quest::ChooseRandom(15207, 13869, 14003));
+		quest::summonitem(quest::ChooseRandom(15207, 13869, 14003));
 		#:: Set factions
 		quest::faction(281, 20); 		#:: + Knights of Truth
 		quest::faction(362, 4); 		#:: + Priests of Marr

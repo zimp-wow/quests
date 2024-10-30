@@ -58,7 +58,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12621 - Mammoth Hide Parchment and 12619 - Vial of Datura Ink
-	if (plugin::takeItems(12621 => 1, 12619 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12621 => 1, 12619 => 1)) {
 		quest::say("Here is th' bounty poster. Take it to a bank guard in Qeynos, immediately!");
 		#:: Give a 12620 - Wanted Poster
 		quest::summonitem(12620);
@@ -72,7 +72,7 @@ sub EVENT_ITEM {
 		quest::faction(244, -1); 	#:: - Ebon Mask
 	}
 	#:: Match a 12622 - List of Qeynos Most Wanted
-	elsif (plugin::takeItems(12622 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12622 => 1)) {
 		quest::say("Ye're learnin' to serve the church well, young Initiate $name. I grant ye yer holy symbol and the blessing o' the Tribunal that They may grant ye wisdom in serving Their will..");
 		#:: Give a 1376 - Initiate Symbol of the Tribunal
 		quest::summonitem(11376);

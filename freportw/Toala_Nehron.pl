@@ -13,7 +13,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18814 - Sealed Letter
-	if (plugin::takeItems(18814 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18814 => 1)) {
 		#:: Match if faction with Steel Warriors is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Why, that little trollop! What is she up to? Cain will never believe this! She must be in league with some faction of the dark elves, but why? Neither the Academy of Arcane Science nor Cain will believe this note. I will see what I can do. As for you, I command you to kill this Shintl and her dark elf courier Hollish!! Put their heads into this box and combine them. We shall cut the link. Bring me thier heads.");
@@ -37,7 +37,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 12246 - Box with Two heads
-	elsif (plugin::takeItems(12246 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12246 => 1)) {
 		#:: Match if faction with Steel Warriors is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Good work!! We will soon catch Opal. I have started to formulate a plan to stop her. When I complete it, I shall notify you. Here. Take this small reward. I am sure killing Shintl was no trouble. She was just a halfling.");

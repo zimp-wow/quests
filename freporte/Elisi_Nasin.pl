@@ -11,7 +11,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18745 - A Tattered Note
-	if (plugin::takeItems(18745 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18745 => 1)) {
 		quest::say("Welcome to the Coalition of Tradesfolk underground. We like to keep a low profile around here and not draw any unneeded attention to our operations. you following me? I hope so, for your sake, Anyways, Nestral T'Gaza is in charge with helping out our newest members. Go see her as soon as you get a chance.");
 		#:: Give item 13568 - Brown Faded Tunic
 		quest::summonitem(13568);

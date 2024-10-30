@@ -16,7 +16,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18857 - A Tattered Note
-	if (plugin::takeItems(18857 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18857 => 1)) {
 		quest::say("Hahaha... I sure hope you prove more valuable than you look, little one. Once you are ready to begin your training please let me know and I will get you started. I will be able to further instruct you on how to progress through your early ranks, as well as in some of the various [trades] you will have available to you.");
 		#:: Give a 13561 - Faded Crimson Tunic
 		quest::summonitem(13561);

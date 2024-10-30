@@ -39,7 +39,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13743 - Goblin Fire Totem, and a 10035 - Ruby
-	if (plugin::takeItems(13743 => 1,10035 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13743 => 1,10035 => 1)) {
 		quest::say("By the gods, a Fire Goblin Totem - Well done warrior! Here is your Crafted Helm. Wear it with pride, for it is a true warriors Helmet.");
 		#:: Give a 4173 - Crafted Helm
 		quest::summonitem(14173);
@@ -49,7 +49,7 @@ sub EVENT_ITEM {
 		quest::exp(25000);
 	}
 	#:: Match a 13737 - Aviak Charm, and two 10032 - Star Ruby
-	elsif (plugin::takeItems(13737 => 1, 10032 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13737 => 1, 10032 => 2)) {
 		quest::say("Ho ho! An aviak charm. These are not easy to come by. You have proven yourself a mighty warrior, and therefore deserve to wear these crafted warrior gauntlets.");
 		#:: Give a 4178 - Crafted Gauntlets
 		quest::summonitem(14178);
@@ -59,7 +59,7 @@ sub EVENT_ITEM {
 		quest::exp(25000);
 	}
 	#:: Match a 13744 - Goblin Frost Totem, and two 10034 - Sapphire
-	elsif (plugin::takeItems(13744 => 1, 10034 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13744 => 1, 10034 => 2)) {
 		quest::say("What strength you must have to return with a frost goblin totem. You have surprised me - I did not think you up to the task. Take these crafted boots - you have indeed earned them.");
 		#:: Give a 4180 - Crafted Plate Boots
 		quest::summonitem(14180);
@@ -69,7 +69,7 @@ sub EVENT_ITEM {
 		quest::exp(25000);
 	}
 	#:: Match a 13739 - Griffon Eye, and two 10033 - Fire Emerald
-	elsif (plugin::takeItems(13739 => 1, 10033 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13739 => 1, 10033 => 2)) {
 		quest::say("A griffon eye - I shall eat well tonight, and toast you in the manner of my ancestors. Take these crafted vambraces - they will serve you well.");
 		#:: Give a 4176 - Crafted Vambraces
 		quest::summonitem(14176);

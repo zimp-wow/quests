@@ -61,7 +61,7 @@ sub EVENT_TIMER {
 
 sub EVENT_ITEM {
 	#:: Match a 12134 - Last of Potion of Marr
-	if (plugin::takeItems(12134 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12134 => 1)) {
 		quest::say("Ahhhh! I am energized! Come! Let us show these undead the greatness of Erollisi Marr!");
 		#:: give a 12135 - Empty Potion of Marr
 		quest::summonitem(12135);

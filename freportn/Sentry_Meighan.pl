@@ -6,7 +6,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 12131 - Half of Potion of Marr
-	if (plugin::takeItems(12131 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 12131 => 1 )) {
 		quest::say("Very good. Nothing more than a sip and I feel much more alert. The next sentry awaits you.");
 		#:: Give item 12132 - Part of Potion of Marr
 		quest::summonitem(12132);

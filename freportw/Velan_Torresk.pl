@@ -31,7 +31,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match two 13794 - Deathfist Pawn Scalp, a 13067 - Snake Fang, and a 13073 - Bone Chips
-	if (plugin::takeItems(13794 => 2, 13067 => 1, 13073 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13794 => 2, 13067 => 1, 13073 => 1)) {
 		#:: Match if faction with Ashen Order is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Good work, $name, you've worked hard and proven yourself a valuable addition to the Ashen Order. Here's your white sash, wear it with pride.");
@@ -57,7 +57,7 @@ sub EVENT_ITEM {
 			
 	}
 	#:: Match a 10130 - White Training Sash, a 13058 - Giant Snake Rattle, a 13916 - Deathfist Slashed Belt, and a 20901 - Desert Tarantula Chitin
-	if (plugin::takeItems(10130 => 1, 13058 => 1, 13916 => 1,  20901 => 1)) {
+	if (plugin::check_handin(\%itemcount, 10130 => 1, 13058 => 1, 13916 => 1,  20901 => 1)) {
 		#:: Match if faction with Ashen Order is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Ah, well done, $name. You have proven that you are a very skillful fighter and it is a honor to have you as a member of the Ashen Order. On behalf of Master Closk, and under the watchful eyes of Quellious, I present you, $name, with this, the yellow Sash of Order. Go out and make us proud.");

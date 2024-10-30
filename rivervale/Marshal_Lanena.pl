@@ -36,7 +36,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13870 - Piranha Tooth
-	if (plugin::takeItems(13870 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13870 => 1)) {
 		#:: Match if faction is better than indifferent
 		if ($faction < 5) {
 			quest::say("What was I thinking?!! Piranha are coming downstream and eating our supply of fish! We have never had a problem like this!!  Where are these little beasts coming from?  For now we must collect more. Take this bag. Collect enough teeth to fill the bag. Don't worry, if it takes a while I shall reward you with the [Rantho Rapier].  We will need to examine the teeth.");
@@ -64,7 +64,7 @@ sub EVENT_ITEM {
 		}
 	}		
 	#:: Match a 12155 - Bag of Piranha Teeth
-	if (plugin::takeItems(12155 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12155 => 1)) {
 		#:: Match if faction is better than indifferent
 		if ($faction < 5) {
 			quest::say("Fine work. We shall continue to study these and shall determine if we need to seek the source.");

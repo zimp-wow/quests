@@ -16,7 +16,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18855 -  A Tattered note
-	if (plugin::takeItems(18855 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18855 => 1)) {
 		quest::say("Welcome, friend. I see more than a slight glimmer of hate in your eyes. Good, for we have much work to do. Once you are ready to begin your training please make sure that you see Marv Orilis, he can assist you in developing your hunting and gathering skills. Return to me when you have become more experienced in our art, I will be able to further instruct you on how to progress through your early ranks, as well as in some of the various [trades] you will have available to you.");
 		#:: Give item 13565 - Old Stained Robe*
 		quest::summonitem(13565);

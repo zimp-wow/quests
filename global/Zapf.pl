@@ -38,7 +38,7 @@ sub EVENT_ITEM {
 		quest::say("Now your faction will be adjusted by $change_amount points.");
 	}
 	#:: Match a 66615 - Gold Ticket
-	if (plugin::takeItems(66615 => 1)) {
+	if (plugin::check_handin(\%itemcount, 66615 => 1)) {
 		my @prizes = (11668, 59509);
 		foreach $prizes (@prizes) {
 			next if (plugin::check_hasitem($client, $prizes));

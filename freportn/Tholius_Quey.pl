@@ -12,7 +12,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18735 - A Tattered Note
-	if (plugin::takeItems(18735 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 18735 => 1 )) {
 		quest::say("Welcome to the Priests of Marr. Here, you will be taught how powerful passion truly is. The passion of Erollisi Marr, the Queen of Love, shall flow through you and into all those you meet. Wear this tunic in the name of Love.");
 		#:: Give a 13556 - White and Blue Tunic*
 		quest::summonitem(13556);
@@ -31,7 +31,7 @@ sub EVENT_ITEM {
 
 sub EVENT_ITEM {
 	#:: Match a 18736 - A Tattered Note
-	if (plugin::takeItems(18736 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 18736 => 1 )) {
 		quest::say("Welcome to the Priests of Marr. Here, you will be taught how powerful passion truly is. The passion of Erollisi Marr, the Queen of Love, shall flow through you and into all those you meet. Wear this tunic in the name of Love.");
 		#:: Give a 13556 - White and Blue Tunic*
 		quest::summonitem(13556);

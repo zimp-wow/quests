@@ -6,14 +6,14 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12140 - Regurgitonic
-	if (plugin::takeItems(12140 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12140 => 1)) {
 		#:: Give a 13383 - Koalindl Fish
 		quest::summonitem(13383);
 		#:: Ding!
 		quest::ding();
 	}
 	#:: Match a 12226 - Sweaty Shirt
-	elsif (plugin::takeItems(12226 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12226 => 1)) {
 		quest::emote("takes a whiff of the sweaty shirt and barks.");
 		#:: Create a timer "follow" that loops every 15 seconds
 		quest::settimer("follow", 15);

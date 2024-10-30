@@ -60,7 +60,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12213 - The Baker, a 12214 - The Butcher, a 12215 - The Captain, a 12216 - The Minstrel
-	if (plugin::takeItems(12213 => 1, 12214 => 1, 12215 => 1, 12216 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12213 => 1, 12214 => 1, 12215 => 1, 12216 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Tank you. You saved me neck. Kaglari not learn me mistake now. Me give you a [Kaglari mana doll].");

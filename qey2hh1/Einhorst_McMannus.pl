@@ -28,7 +28,7 @@ sub EVENT_SAY {
 	
 sub EVENT_ITEM {
 	#:: Match a 18831 - Tattered Note
-	if (plugin::takeItems(18831 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18831 => 1)) {
 		quest::say("Yes. We almost forgot of the shipment of Karana clovers. Here you are, my friend. Back to the north with you. I am sure the Shamans of Justice will need this.");
 		#:: Give a 13962 - Karana Clover Shipment
 		quest::summonitem(13962);

@@ -9,7 +9,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18893 - Sealed Letter
-	if (plugin::takeItems(18893 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18893 => 1)) {
 		quest::say("So you are the new warrior. Let us test your skill. Across the pond is a skeleton. See him? Engage him in combat. He awaits. Return his skull to me and I shall call you a Steel Warrior. Be quick. He will dissipate soon.");
 		#:: Ding
 		quest::ding();
@@ -23,7 +23,7 @@ sub EVENT_ITEM {
 		quest::unique_spawn(4192, 0, 0, 1055, 3858, -19);
 	}
 	#:: Match a 13397 - Skull
-	elsif (plugin::takeItems(13397 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13397 => 1)) {
 		quest::say("So you have returned. Victory is yours, young Steel Warrior. Take this letter of recommendation to Brin Stolunger at the arena in Qeynos. You have passed.");
 		#:: Give a 18895 - Letter of Recommendation
 		quest::summonitem(18895);
