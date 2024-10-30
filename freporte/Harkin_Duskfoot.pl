@@ -30,7 +30,7 @@ sub EVENT_SIGNAL {
 
 sub EVENT_ITEM {
 	#:: Match a 18016 - Note to Harkin
-	if (plugin::takeItems(18016 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18016 => 1)) {
 		quest::say("Ah, good work, $name. And quick too, I'll makes sure that Elisi hears of your loyal work. Here... take this for your efforts.. it's not much, but it's all I have on me right now.");
 		#:: Give item 1054 - Used Merchants Gloves
 		quest::summonitem(11054);

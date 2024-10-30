@@ -49,7 +49,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13860 - A Strongbox
-	if (plugin::takeItems(13860 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13860 => 1)) {
 		#:: Match if faction with Arcane Scientists is better than Indifferent	
 		if ($faction < 5) {
 			quest::say("Grand and fantastic!! You have made my day complete. Here is what little I can offer. Most of my money goes into my research. Thank you.");

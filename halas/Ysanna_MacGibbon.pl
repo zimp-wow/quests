@@ -20,7 +20,7 @@ sub EVENT_SIGNAL {
 
 sub EVENT_ITEM {
 	#:: Match a 1330 - Patched Gnoll Fur Bundle
-	if (plugin::takeItems(1330 => 1)) {
+	if (plugin::check_handin(\%itemcount, 1330 => 1)) {
 		quest::say("You have done well. Here is a small reward for your effort.");
 		#:: Give a 1349 - Fang of the Wolf
 		quest::summonitem(11349);

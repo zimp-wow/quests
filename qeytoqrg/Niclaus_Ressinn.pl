@@ -55,11 +55,11 @@ sub EVENT_WAYPOINT_ARRIVE {
 
 sub EVENT_ITEM {
 	#:: Match a 18970 - Note to Niclaus
-	if (plugin::takeItems(18970 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18970 => 1)) {
 		quest::say("Oh, things are becoming dire here in Norrath. May Rodcet protect us! I have gathered most of the evidence I will need to present to Jahnda, but I could still use your assistance with one final piece. I need to recover a rib bone from of the undead beasts that wander these hills. Be sure the rib bone comes from one of the putrid skeletons. They are the spawn of Bertoxxulous.");
 	}
 	#:: Match a 13722 - Putrid Rib Bone
-	elsif (plugin::takeItems(13722 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13722 => 1)) {
 		quest::say("Excellent! Rodcet smiles upon us this day! Here, please take this pouch of evidence to Jahnda in the Temple of Life. She will know what we must do. I will remain here to keep an eye out for the minions of Bertoxxlous. Also, accept this small reward as a token of my appreciation of your efforts to rid Norrath of the influence of the Plaguebringer.");
 		#:: Give a 13724 - Pouch of Evidence
 		quest::summonitem(13724);

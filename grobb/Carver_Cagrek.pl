@@ -28,7 +28,7 @@ sub EVENT_ITEM {
 		quest::faction(222, -1);	#:: - Broken Skull Clan
 	}
 	#:: Match four 12191 - Spore Mushroom
-	elsif (plugin::takeItems(12191 => 4)) {
+	elsif (plugin::check_handin(\%itemcount, 12191 => 4)) {
 		quest::say("Gud werk!! Me already, err, founds, dung part of meal. Here we go. One Fungus Dung Pie!! Enjoys.");
 		#:: Give a 12210 - Fungus Dung Pie
 		quest::summonitem(12210);
@@ -45,7 +45,7 @@ sub EVENT_ITEM {
 		quest::faction(222, -1);	#:: - Broken Skull Clan
 	}
 	#:: Match three 13368 - HEHE Meat and a 18940 - Tattered Recipe
-	elsif (plugin::takeItems(13368 => 3, 18940 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13368 => 3, 18940 => 1)) {
 		quest::say("Finally!! What takes yous so long? Now carver Cagrek try and makes meat and feeds to trolls. Yous getting to be deputy carver. Mes give you Grobb cleaver!! Make strong and smarts on you it will. Just like carver Cagrek.");
 		#:: Give a 5413 - Grobb Cleaver
 		quest::summonitem(15413);

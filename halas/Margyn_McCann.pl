@@ -24,7 +24,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13729 - Barbarian Head
-	if (plugin::takeItems(13729 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13729 => 1)) {
 		quest::say("We can now rest assured that justice has been served. Ye'll be a valuable asset to our court. Take and remember this spell, Spirit o' the Bear. I hope ye've attained the necessary skills to scribe it. If not, I'm sure ye soon will. Go now, and serve justice.");
 		#:: Give a 15279 - Spell: Spirit of Bear
 		quest::summonitem(15279);
@@ -44,7 +44,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 18761 - Tattered Note
-	elsif (plugin::takeItems(18761 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18761 => 1)) {
 		quest::say("Welcome t' the Church o' the Tribunal. Here, we practice the will o' the Six Hammers. This is our guild tunic - wear it with pride and represent us well.");
 		#:: Give a 13512 - Faded Blue Tunic*
 		quest::summonitem(13512);

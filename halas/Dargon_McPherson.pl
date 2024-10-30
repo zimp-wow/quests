@@ -34,12 +34,12 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13245 - Empty Bottle of Elixir
-	if (plugin::takeItems(13245 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13245 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Ye've proven yerself to be a cut above the rest and aided yer fellow warriors, no matter how worthless they were. Ye may take this. It was found in the snow by one of our foraging parties. I hope it can be of use to a warrior like yerself.");
 			#:: Give a random reward: 2012 - Leather Boots, 17001 - Wrist Pouch, 10004 - Copper Band, 10017 - Turquoise, 1038 - Tattered Cloth Sandal, 10016 - Lapis Lazuli, 13877 - Corroded Buckler, 2135 - Large Patchwork Pants, 7007 - Rusty Dagger, 8008 - Throwing Axe, 10009 - Bead Necklace, 13007 - Ration, 5014 - Rusty Axe, 13003 - Small Lantern
-			quest::summonitem(1quest::ChooseRandom(2012, 17001, 10004, 10017, 1038, 10016, 13877, 2135, 7007, 8008, 10009, 13007, 5014, 13003));
+			quest::summonitem(quest::ChooseRandom(2012, 17001, 10004, 10017, 1038, 10016, 13877, 2135, 7007, 8008, 10009, 13007, 5014, 13003));
 			#:: Ding!
 			quest::ding();
 			#:: Set factions

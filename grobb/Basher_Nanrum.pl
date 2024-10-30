@@ -14,10 +14,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match three 10307 - Fire Beetle Eye
-	if (plugin::takeItems(10307 => 3)) {
+	if (plugin::check_handin(\%itemcount, 10307 => 3)) {
 		quest::say("Heh heh. All da eyeballses! I didn't think ya could do it but ya did. Here is da shiny. If you gets more I always have more shinies.");
 		#:: Give a random reward: 10351 - Brass Earring, 10026 - Cat's Eye Agate, 10060 - Chunk of Metal Ore, 10018 - Hematite, 10006 - Silver Earring, 10017 - Turquoise
-		quest::summonitem(1quest::ChooseRandom(10351, 10026, 10060, 10018, 10006, 10017));
+		quest::summonitem(quest::ChooseRandom(10351, 10026, 10060, 10018, 10006, 10017));
 		#:: Ding!
 		quest::ding();
 		#:: Grant a small amount of experience
@@ -27,13 +27,13 @@ sub EVENT_ITEM {
 		quest::faction(222, -5);		#:: - Broken Skull Clan
 	}
 	#:: Match two 10307 - Fire Beetle Eye
-	elsif (plugin::takeItems(10307 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 10307 => 2)) {
 	 	quest::say("Well dat be some of da eyeballses I askeded for. But I you needs ta give me three for da shiny.");
 		#:: Return two 10307 - Fire Beetle Eye
 		quest::summonitem(10307,2);
 	}
 	#:: Match one 10307 - Fire Beetle Eye
-	elsif (plugin::takeItems(10307 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 10307 => 1)) {
 	 	quest::say("Well dat be some of da eyeballses I askeded for. But I you needs ta give me three for da shiny.");
 		#:: Return one 10307 - Fire Beetle Eye
 		quest::summonitem(10307,1);

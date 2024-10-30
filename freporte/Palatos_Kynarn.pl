@@ -15,7 +15,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match four 13817 - Capt. Orlin's Spiced Ale
-	if (plugin::takeItems(13817 => 4)) {
+	if (plugin::check_handin(\%itemcount, 13817 => 4)) {
 		quest::say("Ahh... I... <Hic!> Need help... <Hic!> You... take this... Go build... boat beacon. <Hic!> Ask gnomes about... <Hic!> boat beacon. They know how... Then bring back... <Hic!> Unnnhh! Prexus help me! I will never drink again.");
 		#:: Give item 12145 - Beacon Mount
 		quest::summonitem(12145);
@@ -30,7 +30,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 13818 - Boat Beacon
-	elsif (plugin::takeItems(13818 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13818 => 1)) {
 		quest::say("Thanks.. That saved me a lot of money. Now I can spend more time with the captain before I give this back to Lenka Stoutheart. Here is a little so...mething.");
 		#:: Ding!
 		quest::ding();
@@ -47,7 +47,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 12146 - Ak'Anon's Portrait
-	elsif (plugin::takeItems(12146 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12146 => 1)) {
 		quest::say("Wise decision!! Little reward for a large deed. Bye.");
 		#:: Ding!
 		quest::ding();

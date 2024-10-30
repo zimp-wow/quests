@@ -15,7 +15,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match four 13099 - Spiderling Silk
-	if (plugin::takeItems(13099 => 4)) {
+	if (plugin::check_handin(\%itemcount, 13099 => 4)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {
 			quest::say("Let's see here. One.. two.. three.. and.. four. Great!! Just enough for my needs. You are serving Xelha well. I give you Xelha's Sparkler. It is not much, but neither are you. You know what I really need is a cyclops eye. That would be worthy of a great reward.");
@@ -45,12 +45,12 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match four 10307 - Fire Beetle Eye
-	elsif (plugin::takeItems(10307 => 4)) {
+	elsif (plugin::check_handin(\%itemcount, 10307 => 4)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {
 			quest::say("This is a good sight. I needed these to complete the current mixture. Bah!! I shall reward you for this small, very small, deed!! I pass on to you the knowledge of summoning. The more you serve, the more your faith in Innoruuk grows.");
 			#:: Give a random reward: 15338 - Spell: Cavorting Bones or 15331 - Spell: Reclaim Energy
-			quest::summonitem(1quest::ChooseRandom(15338, 15331));
+			quest::summonitem(quest::ChooseRandom(15338, 15331));
 			#:: Ding!
 			quest::ding();
 			#:: Set factions
@@ -75,7 +75,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match four 13073 - Bone Chips
-	elsif (plugin::takeItems(13073 => 4)) {
+	elsif (plugin::check_handin(\%itemcount, 13073 => 4)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {
 			quest::say("Excellent work! You are quite the little helper. Here you go, then. A little something for your little work. Your service to me has caused Innoruuk to look upon you favorably. Your faith in our group has grown. Continue the work.");
@@ -103,7 +103,7 @@ sub EVENT_ITEM {
 		}	
 	}
 	#:: Match a 13927 - Cyclops Eye
-	elsif (plugin::takeItems(13927 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13927 => 1)) {
 		#:: Match if faction is Kindly or better
 		if ($faction <= 3) {
 			quest::say("A cyclops eye!! You are stronger than I believed. You will rise in the ranks of the Dismal Rage quickly with acts such as this!! I am most appreciative! Here, take this. It was lying around my shelves, just gettingg all dusty. I hope you can use it. And watch yourself in your journeys, the aura of your faith in Innoruuk surrounds you like a shroud. Our enemies will surely see you for what you are.");

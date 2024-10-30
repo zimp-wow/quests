@@ -9,7 +9,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12114 - Tumpy Tonic
-	if (plugin::takeItems(12114 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12114 => 1)) {
 		quest::say("<SLURP!!>  Ahh thhhhat'thh betterr. Take thithhh. <BURP!>");
 		#:: Give a 19006 - Icon of the Fervent
 		quest::summonitem(19006);

@@ -21,7 +21,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12366 - Never Stop Chopping
-	if (plugin::takeItems(12366 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12366 => 1)) {
 		quest::say("On second thought.. You can do a little favor for me first. An associate of mine has asked me to acquire a case of spirits for him. Take this box and seek out what is needed to fill it. Inside you will combine the spirits of Lendel's Grand Lager, Gator Gulp Ale, Blackburrow Swig, Tunare's Finest, Underfoot Triple Bock, Frozen Toe Rum, Blood Spirit, Vasty Deep Ale, Clockwork Oil Stout and the legendary..[Oblong Bottle].");
 		#:: Give a 17984 - Bottle Crate
 		quest::summonitem(17984);
@@ -39,7 +39,7 @@ sub EVENT_ITEM {
 		quest::signalwith(5055, 2, 0);
 	}
 	#:: Match a 12365 - Case of Spirits
-	elsif (plugin::takeItems(12365 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12365 => 1)) {
 		quest::say("I cannot believe you actually acquired all those drinks!! You do good work, kid. Here is the gem as I promised. And a few plat for good measure. Don't let it be said that the Axe doesn't treat his friends right.");
 		#:: Give a 12348 - Gem of Stamina
 		quest::summonitem(12348);

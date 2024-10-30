@@ -32,7 +32,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13785 - Torn Old Pouch
-	if (plugin::takeItems(13785 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13785 => 1)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {		
 			quest::say("What is this?  The pouch is empty!  Where is the Ruby?!  What do you mean you don't have it?  Oh no.  I bet [Chomper] swallowed it!  Get it back and bring it to me.");
@@ -58,7 +58,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 13786 - Large Ruby
-	if (plugin::takeItems(13786 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13786 => 1)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {		
 			quest::say("You found it!  Heh.  Good thing you brought it back bub.  This thing isn't priceless, its worthless but at least you proved you are loyal.  Poor ol' Chomper..");

@@ -6,7 +6,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18854 - A tattered note
-	if (plugin::takeItems(18854 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18854 => 1)) {
 		quest::say("Ah ha.. Fresh meat. here, put this on.. you're one of us now. Do your best to do your worst.");
 		#:: Give item 13564 - Dirty Torn Robe*
 		quest::summonitem(13564);

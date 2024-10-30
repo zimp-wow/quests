@@ -21,7 +21,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match turn in for 18726 -  tattered note
-	if (plugin::takeItems(18726 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18726 => 1)) {
 		quest::say("Welcome to the Temple of Divine Light. I am Master Bulrious. Here. we study and spread the will of Quellious. Here is your guild tunic. Go find Jras Solsier. he will get you started with your first lesson.");
 		#:: Give item 13546 - Faded silver Tunic*
 		quest::summonitem(13546);

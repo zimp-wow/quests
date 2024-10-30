@@ -21,19 +21,19 @@ sub EVENT_ITEM {
 		$npc->CastSpell(213,$userid);
 	}
 	#:: Match three 14029 - Bixie Stinger, 
-	if (plugin::takeItems(14029 => 3)) { 
+	if (plugin::check_handin(\%itemcount, 14029 => 3)) { 
 		quest::say("May the swift and silent spirit of Fizzlethorpe Bristlebane smile upon your frail soul.");
 		#:: Cast 203 - Cure Poison
 		$npc->CastSpell(203,$userid);
 	}
 	#:: Match one 13870 - Piranha Tooth
-	if (plugin::takeItems(13870 => 1)) { 
+	if (plugin::check_handin(\%itemcount, 13870 => 1)) { 
 		quest::say("May the swift and silent spirit of Fizzlethorpe Bristlebane smile upon your frail soul.");
 		#:: Cast 12 - Healing
 		$npc->CastSpell(12,$userid);
 	}
 	#:: Match 13936 - Squad Ring
-	if (plugin::takeItems(13936 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13936 => 1)) {
 		#:: Match if faction is better than indifferent
 		if ($faction < 5) {
 			quest::say("May the swift and silent spirit of Fizzlethorpe Bristlebane smile upon your frail soul.");

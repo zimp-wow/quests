@@ -12,7 +12,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18173 -  Gan's Note to Yelesom
-	if (plugin::takeItems(18173 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18173 => 1)) {
 		quest::say("Gans sent you to check on me did he? Well you can tell my dear brother that the surveying has been halted. One of those furballs has stolen my tools, making my job impossible. Kerrans, kobolds, gnolls, we're constantly under siege by these primitives. Anyway, perhaps you could [help me]?");
 		#:: Ding!
 		quest::ding();
@@ -20,7 +20,7 @@ sub EVENT_ITEM {
 		quest::exp(150);
 	}
 	#:: Match a 1768 -  Yelesom's Tools
-	elsif (plugin::takeItems(1768 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 1768 => 1)) {
 		quest::say("Thank you for recovering my tools, please take this to my brother for your reward.");
 		#:: Give a 1771 - Yelesom's Reports
 		quest::summonitem(11771);

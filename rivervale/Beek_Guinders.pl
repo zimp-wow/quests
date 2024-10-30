@@ -38,7 +38,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18731 - Tattered Note
-	if (plugin::takeItems(18731 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18731 => 1)) {
 		quest::say("Aye. Welcome, my fur-footed friend. My name is Beek Guinders, and I am guildmaster here at the Chapel of Mischief. Here is our guild tunic. Wear it with pride, as it will set you apart from the crowd. Once you are ready to begin your training please make sure that you see Thekela Meepup, she can assist you in experienced in our art, I will be able to further instruct you on how to progress through your early ranks, as well as in some of the various [trades] you will have available to you.");
 		#:: Give a 13538 - Faded Gold Felt Tunic*
 		quest::summonitem(13538);
@@ -52,10 +52,10 @@ sub EVENT_ITEM {
 		quest::faction(263, 15);	#:: + Guardians of the Vale
 	}
 	#:: Match a 13045 - Berries, two 13782 - Ruined Wolf Pelt, and a 13758 - Black Wolf Skin
-	elsif (plugin::takeItems(13045 => 1, 13782 => 2, 13758 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13045 => 1, 13782 => 2, 13758 => 1)) {
 		quest::say("Hey, great! You found the materials! We'll get to work right away. If you find any more, please come by again. Here's a little something for your troubles, friend.");
 		#:: Give a random reward: 15014 - Spell: Strike, 15201 - Spell: Flash of Light, 15207 - Spell: Divine Aura, 15208 - Spell: Lull, 16303 - Spell: Gate
-		quest::summonitem(1quest::ChooseRandom(15014,15201,15207,15208,16303));
+		quest::summonitem(quest::ChooseRandom(15014,15201,15207,15208,16303));
 		#:: Ding!
 		quest::ding();
 		#:: Grant a small amount of experience

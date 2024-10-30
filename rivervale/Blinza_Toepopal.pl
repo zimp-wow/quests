@@ -30,7 +30,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13958 - Crate of Carrots
-	if (plugin::takeItems(13958 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13958 => 1)) {
 		quest::say("Well it is about time!  The mayor gets very upset if he does not have the freshest of carrots in his stew.  Here is the money for the carrots.  Be off with you.  Now, where the heck did [Jillin] go?");
 		#:: Ding!
 		quest::ding();
@@ -48,7 +48,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 13957 - Crate of Fine Carrots
-	elsif (plugin::takeItems(13957 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13957 => 1)) {
 		quest::say("Oh excellent! These carrots are perfect! The finest Reebo has ever sent us. The mayor will be so pleased. Here is the payment for the carrots. Excuse me, but I must finish preparing the stew. Hmm. Where the heck did [Jillin] go?");
 		#:: Ding!
 		quest::ding();
@@ -66,7 +66,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 13971 - Crate of Rotten Carrots
-	elsif (plugin::takeItems(13971 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13971 => 1)) {
 		quest::say("What are these?!  I am trying to make stew for the mayor and you bring me ROTTEN CARROTS?!  Have you no sense??  Take these back to Reebo.");
 		#:: Give a 13972 - Crate of Rotten Carrots
 		quest::summonitem(13972);

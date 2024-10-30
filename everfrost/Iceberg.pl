@@ -25,7 +25,7 @@ sub EVENT_COMBAT {
 
 sub EVENT_ITEM {
 	#:: Match a 12221 - Lion Delight
-	if (plugin::takeItems(12221 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12221 => 1)) {
 		quest::emote("growls with happiness and licks your face.  Just enough time to swipe the sweaty shirt from his collar!!  Iceberg then runs off to enjoy his lion delight!!");
 		#:: Send a signal '2' to Everfrost Peaks >> Tundra_Jack (30061) with no delay
 		quest::signalwith(30061, 2, 0);

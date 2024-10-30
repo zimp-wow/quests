@@ -21,7 +21,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match two 13916 - Deathfist Slashed Belt
-	if (plugin::takeItems(13916 => 2 )) {
+	if (plugin::check_handin(\%itemcount, 13916 => 2 )) {
 		quest::say("Very fine work $name. With your help, we shall soon rid the commonlands of the orcs. Then we can move on to a [bigger problem].");
 		#:: Ding!
 		quest::ding();
@@ -39,13 +39,13 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match one 13916 - Deathfist Slashed Belt
-	elsif (plugin::takeItems(13916 => 1 )) {
+	elsif (plugin::check_handin(\%itemcount, 13916 => 1 )) {
 		quest::say("I must have two Deathfist belts.");
 		#:: Return a 13916 - Deathfist Slashed Belt
 		quest::summonitem(13916);
 	}
 	#:: Match a 18742 - A Tattered Note
-	elsif (plugin::takeItems(18742 => 1 )) {
+	elsif (plugin::check_handin(\%itemcount, 18742 => 1 )) {
 		quest::say("Welcome to the Steel Warriors, young warrior. It is time to prove your mettle. Look to the outskirts of Freeport and join the fray. Show Clan Deathfist what a warrior of the bunker can do.");
 		#:: Give item 13572 - Dirty Training Tunic
 		quest::summonitem(13572);		
@@ -61,7 +61,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 13319 - Crushbone Shoulderpads x2 and 13917 Deathfist Shoulderpads x2
-	elsif (plugin::takeItems(13319 => 2, 13917 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13319 => 2, 13917 => 2)) {
 		quest::say("Very fine work, $name. With your help, we shall soon rid the commonlands of the orcs. Then we can move on to a [bigger problem]");
 		#:: Give item 5369 - Bunker Battle Blade
 		quest::summonitem(15369);		

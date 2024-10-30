@@ -36,7 +36,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match turn in for 18728 - Tattered Note
-	if (plugin::takeItems(18728 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18728 => 1)) {
 		quest::say("Welcome. young one! I see you show interest in the circle of magic. Nowhere upon Norrath will you find a greater school than this - the Gatecallers. You shall wear this tunic as a sign that you have begun the training of this circle. Remember, the power of the Gatecaller is the power of summoning. Go find Vasile, he will help teach you the basics of summoning. Good luck, friend!");
 		#:: Give item 13548 - Old Torn Robe*
 		quest::summonitem(13548);
@@ -51,7 +51,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match turn in for 13128 - Bones
-	elsif (plugin::takeItems(13128 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13128 => 1)) {
 		quest::say("This is fine work, young one. You keep this up and you shall be knighted before long.");
 		#:: Ding!
 		quest::ding();
@@ -68,7 +68,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match turn in for 13127 - Bones
-	elsif (plugin::takeItems(13127 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13127 => 1)) {
 		quest::say("This is fine work, young one. You keep this up and you shall be knighted before long.");
 		#:: Ding!
 		quest::ding();

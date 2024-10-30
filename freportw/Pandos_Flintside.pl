@@ -62,7 +62,7 @@ sub EVENT_SIGNAL {
 
 sub EVENT_ITEM {
 	#:: Match four 13014 - Muffin
-	if (plugin::takeItems(13014 => 4)) {
+	if (plugin::check_handin(\%itemcount, 13014 => 4)) {
 		quest::say("Mmmm. This smells delicious. Oh great!! No milk!! Don't you have any sense ?! Just tell me the name of the bakery and I will run and get it myself. I am sure Lady Shae will be safe.");
 		#:: Ding!
 		quest::ding();
@@ -76,7 +76,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match three 13014 - Muffin
-	elsif (plugin::takeItems(13014 => 3)) {
+	elsif (plugin::check_handin(\%itemcount, 13014 => 3)) {
 		quest::say("Mmmm. This smells delicious. Oh great!! No milk!! Don't you have any sense ?! Just tell me the name of the bakery and I will run and get it myself. I am sure Lady Shae will be safe.");
 		#:: Ding!
 		quest::ding();
@@ -90,7 +90,7 @@ sub EVENT_ITEM {
 		quest::exp(75);
 	}
 	#:: Match two 13014 - Muffin
-	elsif (plugin::takeItems(13014 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13014 => 2)) {
 		quest::say("Mmmm. This smells delicious. Oh great!! No milk!! Don't you have any sense ?! Just tell me the name of the bakery and I will run and get it myself. I am sure Lady Shae will be safe.");
 		#:: Ding!
 		quest::ding();
@@ -104,7 +104,7 @@ sub EVENT_ITEM {
 		quest::exp(50);
 	}
 	#:: Match a 13014 - Muffin
-	elsif (plugin::takeItems(13014 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13014 => 1)) {
 		quest::say("Mmmm. This smells delicious. Oh great!! No milk!! Don't you have any sense ?! Just tell me the name of the bakery and I will run and get it myself. I am sure Lady Shae will be safe.");
 		#:: Ding!
 		quest::ding();

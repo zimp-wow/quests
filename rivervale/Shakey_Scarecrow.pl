@@ -8,10 +8,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 14321 - Sack of Writhing Hay
-	if (plugin::takeItems(14321 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 14321 => 1 )) {
 		quest::emote("shakes his head around and beams a smile at you");
 		#:: Give item 13980 - Wee Harvester or 14031 - Belt of the River
-		quest::summonitem(1quest::ChooseRandom(13980, 13980, 14031));
+		quest::summonitem(quest::ChooseRandom(13980, 13980, 14031));
 		#:: Ding!
 		quest::ding();
 		#:: Give a small amount of xp

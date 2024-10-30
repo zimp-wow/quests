@@ -11,7 +11,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 18817 - Sealed Letter
-	if (plugin::takeItems(18817 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18817 => 1)) {
 		if (plugin::HasClassName($client, "Paladin")) {
 			quest::say("This is not good news. I must leave immediately. Here. Take this to Kala.. I mean my father. I found it on the floor of Sir Lucan D'Lere's quarters. Thanks again, messenger. I got this just in time");
 			#:: Give a 18818 - A Tattered Flier

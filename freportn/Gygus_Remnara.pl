@@ -6,7 +6,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 18738 - A Tattered Note
-	if (plugin::takeItems(18738 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 18738 => 1 )) {
 		quest::say("Welcome to the Sentries of Passion. We are the protectors of the Temple of Marr. Wear our tunic with pride, young knight! Find your wisdom within these walls and in the words of our priests. And remember to aid all who follow the twin deities, Mithaniel and Erollisi Marr.");
 		#:: Give item 13556 - White and Blue Tunic*
 		quest::summonitem(13556);

@@ -15,7 +15,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13863 - A Locked Book
-	if (plugin::takeItems(13863 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13863 => 1)) {
 		quest::say("It is a shame we had to take such actions. I mourn for the sanity of Lydl. I cheer for the addition of such a fine wizard as yourself. I found this while rummaging through my vault. Take it as thanks. It is not much.");
 		#:: Ding!
 		quest::ding();

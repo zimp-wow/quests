@@ -17,7 +17,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13943 - Freeport Stout, 13036 - Dwarven Ale, 13035 - Elven Wine
-	if (plugin::takeItems(13943 => 1, 13036 => 1, 13035 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13943 => 1, 13036 => 1, 13035 => 1)) {
 		quest::say("Ah ha! So ye are Bronlor's chosen aye? Well den these fine brews can only mean one thing! Yep its dat youre a drinker like meh! Arg, if I only had me recipe.");
 		#:: Ding!
 		quest::ding();
@@ -25,7 +25,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 2440 - Keg of Brells Blessed Stout, 13474 - Rat Sandwich, 1430 - Initiate Symbol of Brell Serilis
-	elsif (plugin::takeItems(2440 => 1, 13474 => 1, 1430 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 2440 => 1, 13474 => 1, 1430 => 1)) {
 		quest::say("Ye are a true Priest of Brell Serillis! And ye make me both proud and happy to have met ye so that I could enjoy this sweet drink once again! Please take this Initiate Symbol of Brell Serillis which will I have crafted to enable you to turn water into this blessed ale for you have truly earned it!");
 		#:: Give a 1431 - Disciple Symbol of Brell Serilis
 		quest::summonitem(11431);

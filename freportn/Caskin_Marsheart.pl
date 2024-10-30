@@ -25,7 +25,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 18770 - Recruitment Summons
-	if (plugin::takeItems(18747 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 18747 => 1 )) {
 		quest::say("Welcome to the guild. here's your guild tunic. Once you are ready to begin your training please make sure that you see Sten Harnak, he can assist you in developing your hunting and gathering skills. Return to me when you have become more experienced in our art, I will be able to further instruct you on how to progress through your early ranks, as well as in some of the various [trades] you will have available to you.");
 		#:: Give item 13571 - Colorfully Patched Tunic*
 		quest::summonitem(13571);

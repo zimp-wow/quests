@@ -69,12 +69,12 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13246 - Box of Remains
-	if (plugin::takeItems(13246 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13246 => 1)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {
 			quest::say("Good work!! Kylan will never know o' me negligence. I owe ye one, young warrior. Let's call it even with this. Twas found by one of our foraging parties. It is still useful. And... I believe ye can assist with a more [dangerous matter] as well");
 			#:: Give a random reward: 17001 - Wrist Pouch, 17002 - Belt Pouch, 17003 - Small Bag, 17009 - Purse
-			quest::summonitem(1quest::ChooseRandom(17001, 17002, 17003, 17004, 17009));
+			quest::summonitem(quest::ChooseRandom(17001, 17002, 17003, 17004, 17009));
 			#:: Ding!
 			quest::ding();
 			#:: Set Factions
@@ -96,7 +96,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 12227 - Barbarian head Identifies as Basil's Head
-	if (plugin::takeItems(12227 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12227 => 1)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {
 			quest::say("Fine work! We've avenged our fellow Northmen and ye've earned yer Langseax. Wield it in the name o' Halas!");
@@ -123,7 +123,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 12225 - Barbarian head (Identifies as Paglan's Head)
-	elsif (plugin::takeItems(12225 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12225 => 1)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {
 			quest::say("Incredible! We’d heard Paglan was killed attempting to cross an ice floe! It appears his escape was for naught, Ye’ve earned something greater than a mere Langseax. Ye’ve earned the Langseax o’ the Wolves. Tis an enchanted weapon meant for a warrior’s skill only. The Tribunal will watch over ye.");

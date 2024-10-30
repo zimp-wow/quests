@@ -12,10 +12,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13968 - Shattered Caster Beads
-	if (plugin::takeItems(13968 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13968 => 1)) {
 		quest::say("Shattered! This has happened frequently! These beads are very delicate. They're useless to me now, however, I'll reward ye fer the execution of yet more goblin casters. Continue yer work. The Tribunal watches ye!");
 		#:: Give a random reward: 15270 - Spell: Drowsy, 15275 - Spell: Frost Rift, 15075 - Spell: Sicken, 15271 - Spell: Fleeting Fury, 15212 - Spell: Cure Blindness, 15079 - Spell: Spirit Sight
-		quest::summonitem(1quest::ChooseRandom(15270, 15275, 15075, 15271, 15212, 15079));
+		quest::summonitem(quest::ChooseRandom(15270, 15275, 15075, 15271, 15212, 15079));
 		#::Ding!
 		quest::ding();
 		#:: Set factions
@@ -32,7 +32,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 13969 - Caster Beads
-	elsif (plugin::takeItems(13969 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13969 => 1)) {
 		quest::say("Finally! Intact! This IS good news! I can continue me investigation now. As fer yer loyal deed, I'll offer ye this, the Gavel of Justice. May ye employ it well in the service o' justice.");
 		#:: Give a 6028 - Gavel of Justice
 		quest::summonitem(16028);

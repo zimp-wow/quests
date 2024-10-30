@@ -21,7 +21,7 @@ sub EVENT_ITEM {
 	if (plugin::takeCoin(0, 0, 30, 0)) {
 		quest::say("Good luck, my friend. May Solusek Ro guide your hand.");
 		#:: Give a random reward: 15022 - Spell: Force Snap, 15035 - Spell: Bind Affinity, 15038 - Spell: Lightning Bolt, 15039 - Spell: Quickness, 15303 - Spell: Whirl till you hurl, 15328 - Spell: Column of Fire, 15355 - Spell: Engulfing Darkness, 15364 - Spell: Banshee Aura, 15445 - Spell: Lifedraw, 16425 - Spell: Charm, 13360 - Rotted Illegible Scroll
-		quest::summonitem(1quest::ChooseRandom(15022, 15035, 15038, 15039, 15303, 15328, 15355, 15364, 15445, 16425, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360));
+		quest::summonitem(quest::ChooseRandom(15022, 15035, 15038, 15039, 15303, 15328, 15355, 15364, 15445, 16425, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360, 13360));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions

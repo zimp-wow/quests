@@ -14,10 +14,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13862 - Fish in a Jar
-	if (plugin::takeItems(13862 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13862 => 1)) {
 		quest::say("Oh! A beautiful Marr Minnow. This shall look grand in my aquarium! How lucky that you are a friend to the Academy of Arcane Science. Take your reward.");
 		#:: Give a random reward: 13005 - Iron Ration, 13006 - Water Flask
-		quest::summonitem(1quest::ChooseRandom(13005, 13006));
+		quest::summonitem(quest::ChooseRandom(13005, 13006));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions

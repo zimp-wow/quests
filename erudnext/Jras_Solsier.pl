@@ -45,7 +45,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13825 - Poacher's Head
-	if (plugin::takeItems(13825 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13825 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("You have served us well. The harmony of the forest shall be preserved. I have word that theses infidels were all working for one man. Find me evidence pertaining to this man. Surely one of these poachers has something which could aid in finding this man. We must stop him to stop the poachers. Go in peace.");
@@ -77,7 +77,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 13913 - Barbarian Head
-	elsif (plugin::takeItems(13913 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13913 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("It is done! Quellious will look favorably upon our church and we will look favorably upon you. Go in peace");

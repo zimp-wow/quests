@@ -12,7 +12,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13121 - Innoruuk's Kiss of Death
-	if (plugin::takeItems(13121 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13121 => 1)) {
 		quest::say("It's about time you figured it out, genius! Maybe you should spend more time in the library. Here, take this tonic and get out of here before they see me giving it to you and turn us both inside out.");
 		#:: Give a 13118 - Erud's Tonic
 		quest::summonitem(13118);

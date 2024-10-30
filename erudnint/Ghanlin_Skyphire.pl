@@ -12,7 +12,7 @@ sub EVENT_ENTER {
 	
 sub EVENT_ITEM {
 	#:: Match turn in for 18727 -  tattered note
-	if (plugin::takeItems(18727 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18727 => 1)) {
 		quest::say("Greetings. I am Ghanlin Skyphire, Master Wizard of the Crimson Hands. All of us here have devoted our lives to the studies of the arcane and mystical. Let's get you started. Here's your training robe.  Now, go find Raskena. She'll help train you and give you your first lesson.");
 		#:: Give item 13550 - Old Used Robe*
 		quest::summonitem(13550);

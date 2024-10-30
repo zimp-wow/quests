@@ -14,7 +14,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match 1839 - Full Muffin Crate
-	if (plugin::takeItems(1839 => 1)) {
+	if (plugin::check_handin(\%itemcount, 1839 => 1)) {
 		quest::say("Ah yes! This is exactly what I am looking for, dear. Let me put these on the shelf right away. Here is some coin for your trouble. Perhaps we can do business again sometime.");
 		#:: Ding!
 		quest::ding();
@@ -33,7 +33,7 @@ sub EVENT_ITEM {
 		quest::MerchantSetItem(10062, 13014, 20);
 	}
 	#:: Match a 1838 - Bag of Bread Loaves
-	elsif (plugin::takeItems(1838 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 1838 => 1)) {
 		quest::say("'Well now, what do we have here? You actually went out of your way to fetch bread for me? Thank ye so kindly. Please accept this payment for your service.");
 		#:: Ding!
 		quest::ding();

@@ -29,7 +29,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18795 - Letter for Prak
-	if (plugin::takeItems(18795 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18795 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("I see. We think we've found out who the mole is in Carson's guards, some guy named Stald. We need to get rid of this guy as quickly, and as quietly, as possible. Carson doesn't want to cause a stink by eliminating one of his own men, so he asked us to do it. What about you? Do you think [you could get rid of Stald] for us?");
@@ -51,7 +51,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 13793 - Stald's Badge
-	elsif (plugin::takeItems(13793 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13793 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Ah, boy! Looks like I owe Kaden two plat... I thought you'd fumble it up for sure. Well, you've impressed me friend. Here, take this back to Zan... I'll make sure to note your fine work to Carson, too, next time we speak.");

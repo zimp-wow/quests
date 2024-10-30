@@ -21,7 +21,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13984 - Crate of Potions
-	if (plugin::takeItems(13984 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13984 => 1)) {
 		quest::say("Now Kaglari won't be mad at Bregna.");
 		#:: Give a 12212 - Kaglari Mana Doll
 		quest::summonitem(12212);
@@ -35,7 +35,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 26632 - Blood Raven Tailfeather, a 26640 - Wrulon Claw,  a 29921 - Arachnae Fangs, a 26662 - Swirling Banshee Essence
-	elsif (plugin::takeItems(26632 => 1, 26640 => 1, 29921 => 1, 26662 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 26632 => 1, 26640 => 1, 29921 => 1, 26662 => 1)) {
 		#:: Match if Expansion Setting is Planes of Power (8) or greater
 		if ($ExpansionSetting > 7) {
 			quest::say("Dis am gud. I see you've been talkin' to Garuuk. Methanks you fer da help. Take dis note back ta Garuuk so he knows you helped me. Tanks again!");

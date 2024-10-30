@@ -21,7 +21,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match 18790 - Tattered Note
-	if (plugin::takeItems(18790 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18790 => 1)) {
 		quest::say("Arhh.. Ranjor mighty warrior.. Ranjor teach you warrior.. you fight for Ranjor now.");
 		#:: Give a 13528 - Mud Covered Tunic*
 		quest::summonitem(13528);
@@ -34,7 +34,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 13409 - Froglok Meat and two 13187 - Froglok Tadpole Flesh
-	elsif (plugin::takeItems(13409 => 1, 13187 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13409 => 1, 13187 => 2)) {
 		quest::say("You is berry slow. Me too hungry. Me shood eats you for being slow. Gib me dat stuff. Here, take dis and git more stuff fer us. You much kllin, come backs sees me. I teeches ya hows ta kill bedder. Now git and kill stuff. We be Da Bashers fer a reesun.");
 		#:: Give a 5025 - Rusty Two Handed Battle Axe
 		quest::summonitem(15025);

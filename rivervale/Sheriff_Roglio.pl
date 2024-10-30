@@ -33,7 +33,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18733 - Warrior Recruitment Letter
-	if (plugin::takeItems(18733 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 18733 => 1 )) {
 		quest::say("Welcome to the Guardians of the Vale. I'm Roglio Bruth, and I run this proud little outfit. You seem to be of hearty stock, let's put you to work. Here's your guild tunic - hope it fits. Start your training right away. Once you are ready to begin please make sure that you see Dalario Blistbobble, he can assist you in developing your hunting and gathering skills. Return to me when you have become more experienced in our art, I will be able to further instruct you on how to progress through your early ranks, as well as in some of the various [trades] you will have available to you.");
 		#:: Give item 13540 - *Old Tan Tunic
 		quest::summonitem(13540);
@@ -49,7 +49,7 @@ sub EVENT_ITEM {
 		quest::faction(334, -15); 	#:: - Dreadguard Outer
 	}
 	#:: Match four 13931 - Runnyeye Warbeads
-	if (plugin::takeItems(13931 => 4 )) {
+	if (plugin::check_handin(\%itemcount, 13931 => 4 )) {
 		quest::say("Good work, Deputy $name! We shall soon rid our countryside of the goblin threat. Here are your wages. Eat well tonight!");
 		#:: Give item 13023 - Bixie Berry Buns
 		quest::summonitem(13023);

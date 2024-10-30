@@ -9,7 +9,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18844 - Sealed Letter
-	if (plugin::takeItems(18844 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18844 => 1)) {
 		quest::say("I am glad to see you. We have a problem. The last runner and I attempted to carry the chest from a boat. It fell overboard! He went in after it, but the sharks made a meal of him. If you want to try and get it, it is down below in the water in the harbor. Be careful.");
 	}
 	#:: Return unused items

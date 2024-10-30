@@ -41,7 +41,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18734 - Tattered Note
-	if (plugin::takeItems(18734 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18734 => 1)) {
 		quest::say("Hello, friend! I am Hibbs Rootenpaw, leader of the Storm Reapers. Our guild works together with Will Tagglefoot and his family on their farm, to produce the food supply for all of Rivervale. With Karana's help, we have a bountiful harvest every season. We're glad you could help us out. Here's your guild tunic, it'll help keep you dry during the wet months. Go find Reebo out in the fields. He'll help get you started. Return to me when you have become more experienced in our art, I will be able to further instruct you on how to progress through your early ranks, as well as in some of the various [trades] you will have available to you.");
 		#:: Give a 13541 - Jumjum Sack Tunic*
 		quest::summonitem(13541);
@@ -56,7 +56,7 @@ sub EVENT_ITEM {
 		quest::faction(324, -15);	#:: - Unkempt Druids
 	}
 #POP	#:: Match a 19689 - Rusbek's Head
-#POP	elsif (plugin::takeItems(19689 => 1)) {
+#POP	elsif (plugin::check_handin(\%itemcount, 19689 => 1)) {
 #POP		quest::say("Excellent work young Storm Reaper. It is sad that one of our own would resort to such vile acts; his mind must have been twisted by evil desires. Such behavior is practically unheard of among the kind people of Rivervale. Take this dull scimitar and sharpen it in the forge here at the Tagglefoots Farm with a sharpening stone. It may take several attempts if you are unfamiliar with the process. Once that is done give the sharpened scimitar and a large fruit bat wing to Bodbin Gimple and he will put the finishing touches on what will be a fitting scimitar for a Druid of the Storm Reapers.");
 #POP		#:: Give a 19626 - Dull Storm Reaper Scimitar
 #POP		quest::summonitem(19626);

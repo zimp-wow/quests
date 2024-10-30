@@ -15,7 +15,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13870 - Piranha Tooth
-	if (plugin::takeItems(13870 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13870 => 1)) {
 		quest::say("Whew!! We are sure on the way to saving this village, pal! They're gonna erect a statue in our names.  Fishslayers is what we are!  Let's keep up the good work!");
 		#:: Ding!
 		quest::ding();

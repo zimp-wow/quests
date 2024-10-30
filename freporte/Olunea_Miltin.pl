@@ -9,7 +9,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13922 - Snapped Pole
-	if (plugin::takeItems(13922 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13922 => 1)) {
 		quest::say("Great! Thank you stranger. The rogues must have broken it. At least I could repair it. It would be seasons before I could afford another pole.");
 		#:: Ding!
 		quest::ding();

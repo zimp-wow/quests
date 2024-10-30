@@ -43,7 +43,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18805 - Sealed Letter
-	if (plugin::takeItems(18805 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18805 => 1)) {
 		quest::say("Good work! You shall rise quickly in our ranks of evil. Let no man stand in your way and never betray the shrine or you to will join our collection of undead. You can also assist me with a [new task].");
 		#:: Give a random reward: 17002 - Belt Pouch, 10018 - Hematite
 		quest::summonitem(quest::ChooseRandom(17002, 10018)); # Item(s): Belt Pouch (17002)
@@ -63,7 +63,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 12136 - Dwarf Head
-	elsif (plugin::takeItems(12136 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12136 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Incredible!! You have slain one of the greatest warriors in Qeynos!! He must have been full of grog. No doubt he drank most of his skill away. Now I shall cast a spell and strip the flesh from his skull and.. Presto!! Take this skull to Lord Grimrot somewhere in the Plains of Karana. He will be in the center of a field of skeletons. If he is not there, wait for his return. He must return eventually.");

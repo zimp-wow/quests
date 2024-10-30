@@ -25,7 +25,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18762 - Tattered Note
-	if (plugin::takeItems(18762 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18762 => 1)) {
 		quest::say("Ah.. ye wish to be a member o' the White Rose, then. eh? Well, let's train ye fer a bit. and see if ye've got what it takes. Once you are ready to begin adventuring make sure you see Lysbith first, she might have a few tasks for you.  Return to me for guidance anytime, I have much to teach you, from the secrets of the profession, to the various [trades] you may wish to dabble in.");
 		#:: Give a 13513 - Torn White Tunic*
 		quest::summonitem(13513);

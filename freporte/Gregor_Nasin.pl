@@ -30,7 +30,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 13118. 13382, 13952, 13340 -  Erud's Tonic - Koalindl Fish - Honey Jum - Kiola Nut
-	if (plugin::takeItems(13118 => 1, 13383 => 1, 13952 => 1, 13340 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13118 => 1, 13383 => 1, 13952 => 1, 13340 => 1)) {
 		quest::say("Now I have every ingredient mentioned in the Barkeep Compendium. Here. You take it. <..click!.> Whoops!! I just closed it. It's magically sealed, I never closed it before. It's useless to you. I have no need for it any longer. Maybe you can return it to [Clurg] for some type of reward.");
 		#:: Give item 13379 - Barkeep Compendium
 		quest::summonitem(13379);

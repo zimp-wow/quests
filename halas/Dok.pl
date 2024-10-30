@@ -29,7 +29,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12222 - Full Honeycomb Jar
-	if (plugin::takeItems(12222 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12222 => 1)) {
 		quest::say("Great work!! Now I can make more candles! Here ye are, me friend. I call this the Everburn Candle. It has a wee bit o' magic in it. I hope ye like it.");
 		#:: Give a 12220 - Everburn Candle
 		quest::summonitem(12220);
@@ -47,7 +47,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match 12275 - Foot of Candlestick, 12276 - Stem of Candlestick, 12282 - Soil of Underfoot and 13953 - Honeycomb
-	elsif (plugin::takeItems(12275 => 1, 12276 => 1, 12282 => 1, 13953 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12275 => 1, 12276 => 1, 12282 => 1, 13953 => 1)) {
 		quest::say("Here is your Candle o' Bravery.");
 		#:: Give a 12277 - Candle of Bravery
 		quest::summonitem(12277);

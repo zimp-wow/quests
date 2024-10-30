@@ -65,7 +65,7 @@ sub EVENT_ITEM {
 	#:: Let's Multi-Quest!
 	plugin::mq_process_items(\%itemcount);
 	#:: Match a 13904 - Ebon Lotus, a 13905 - Library of Erudin, a 13906 - Chrono Cyclone, and a 13907 - Diamond Vale
-	if (plugin::takeItems(13904 => 1, 13905 => 1, 13906 => 1, 13907 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13904 => 1, 13905 => 1, 13906 => 1, 13907 => 1)) {
 		quest::say("Oh great! I have all my cards back. Here is a little something for assisting a Qeynos guard. And any time you are in trouble, just call on Cheslin, master swordsman. Take it to my father, Master Chesgard of the Knights of Thunder in Qeynos. No doubt he sent you to follow me on my watch.");
 		#:: Give a 18839 - Sealed Letter
 		quest::summonitem(18839);
@@ -87,7 +87,7 @@ sub EVENT_ITEM {
 		$npc->ClearItemList();
 	}
 	#:: Match a 13904 - Ebon Lotus
-	elsif (plugin::takeItems(13904 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13904 => 1)) {
 		plugin::mq_process_items(13904 => 1);
 		if (plugin::check_mq_handin(13904 => 1, 13905 => 1, 13906 => 1, 13907 => 1)) {
 			quest::say("Oh great! I have all my cards back. Here is a little something for assisting a Qeynos guard. And any time you are in trouble, just call on Cheslin, master swordsman. Take it to my father, Master Chesgard of the Knights of Thunder in Qeynos. No doubt he sent you to follow me on my watch.");
@@ -115,7 +115,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 13905 - Library of Erudin
-	elsif (plugin::takeItems(13905 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13905 => 1)) {
 		plugin::mq_process_items(13905 => 1);
 		if (plugin::check_mq_handin(13904 => 1, 13905 => 1, 13906 => 1, 13907 => 1)) {
 			quest::say("Oh great! I have all my cards back. Here is a little something for assisting a Qeynos guard. And any time you are in trouble, just call on Cheslin, master swordsman. Take it to my father, Master Chesgard of the Knights of Thunder in Qeynos. No doubt he sent you to follow me on my watch.");
@@ -143,7 +143,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 13906 - Chrono Cyclone
-	elsif (plugin::takeItems(13906 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13906 => 1)) {
 		plugin::mq_process_items(13906 => 1);
 		if (plugin::check_mq_handin(13904 => 1, 13905 => 1, 13906 => 1, 13907 => 1)) {
 			quest::say("Oh great! I have all my cards back. Here is a little something for assisting a Qeynos guard. And any time you are in trouble, just call on Cheslin, master swordsman. Take it to my father, Master Chesgard of the Knights of Thunder in Qeynos. No doubt he sent you to follow me on my watch.");
@@ -171,7 +171,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 13907 - Diamond Vale
-	elsif (plugin::takeItems(13907 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13907 => 1)) {
 		plugin::mq_process_items(13907 => 1);
 		if (plugin::check_mq_handin(13904 => 1, 13905 => 1, 13906 => 1, 13907 => 1)) {
 			quest::say("Oh great! I have all my cards back. Here is a little something for assisting a Qeynos guard. And any time you are in trouble, just call on Cheslin, master swordsman. Take it to my father, Master Chesgard of the Knights of Thunder in Qeynos. No doubt he sent you to follow me on my watch.");

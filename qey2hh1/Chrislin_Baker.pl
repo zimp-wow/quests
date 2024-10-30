@@ -12,7 +12,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13063 - Piece of Parchment, and a 13051 - Quill
-	if (plugin::takeItems(13063 => 1, 13051 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13063 => 1, 13051 => 1)) {
 		quest::emote("gives you a hug. 'Thank you so much. I did some cleaning after you left and found this behind a barrel. It may have been left behind by the person who took my materials. You can have it.'");
 		#:: Give a 12100 - Bandit Sash
 		quest::summonitem(12100);

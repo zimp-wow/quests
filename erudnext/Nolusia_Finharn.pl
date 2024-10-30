@@ -24,7 +24,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13118 - Erud's Tonic
-	if (plugin::takeItems(13118 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13118 => 1)) {
 		quest::say("Good work! Now, hold the bottle by the label! When you hand Flynn the bottle, the label will slide off. Bring me the label as proof of the deed.");
 		#:: Give a 13122 - Erud's Tonic
 		quest::summonitem(13122);
@@ -39,10 +39,10 @@ sub EVENT_ITEM {
 		quest::exp(500);
 	}
 	#:: Match a 13123 - Label of Erud's Tonic 
-	elsif (plugin::takeItems(13123 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13123 => 1)) {
 		quest::say("Fantastic. Now I can rest assured that my brother stands a better chance of finding the right path without that manipulating little man around. Master Lanken can rest assured that the waters are safe from abuse.");
 		#:: Give a random reward:  13122 - Erud's Tonic, 5019 - Rusty Long Sword, 6017 - Splintering Club
-		quest::summonitem(1quest::ChooseRandom(13122, 5019, 6017));
+		quest::summonitem(quest::ChooseRandom(13122, 5019, 6017));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
