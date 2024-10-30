@@ -15,7 +15,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 17056 - Kobold Shaman's Pouch, and a 1766 - Diviner's Bowl
-	if (plugin::takeItems(17056 => 1, 1766 => 1)) {
+	if (plugin::check_handin(\%itemcount, 17056 => 1, 1766 => 1)) {
 		quest::say("Well done, $name. I had a feeling you would return victorious. Here is your reward, the Leggings of Midnight Sea. Wear them with pride for the Ocean Lord. If you are interested in aiding us further, you may want to ask Gans about his brother.");
 		#:: Give a 1762 - Midnight Sea Mail Leggings
 		quest::summonitem(11762);

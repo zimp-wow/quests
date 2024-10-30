@@ -15,10 +15,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 13991 -  Testament of Vanear
-	if (plugin::takeItems(13991 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13991 => 1)) {
 		quest::say("I sent you after that book ages ago! What took you so long? I have already completed my studies. Luckily I found the original manuscript under my bedroll. I forgot I had kept it there. Take this as a token of my apology. Maybe it will aid you in your next book hunt. I know how cunning those books can be.");
 		#:: Give a random reward: 15302 - Spell: Languid Pace, 6351 - Fine Steel Morning Star, 16647 - Aged Platinum Bloodstone Earring
-		quest::summonitem(1quest::ChooseRandom(15302, 6351, 16647));
+		quest::summonitem(quest::ChooseRandom(15302, 6351, 16647));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions

@@ -21,10 +21,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for the Illegible Scroll Quest, 13225 Illegible Scroll
-	if (plugin::takeItems(13225=> 1)) {
+	if (plugin::check_handin(\%itemcount, 13225=> 1)) {
 		quest::say("Very fine work. A pity you are not Koada'Vie. Here is a small reward for you. Anytime you come upon an oracle. remember to return its scroll to me. Go and find your fate on the field of battle.");
 		#:: Randomly choose Spell: Minor Healing, Spell: Invisibility, Spell: Endure Disease, Rotted Illegible Scroll, Spell: Lesser Shielding, Spell: Serpent Sight
-		quest::summonitem(1quest::ChooseRandom(15200, 15042, 15226, 13360, 15246, 15276));
+		quest::summonitem(quest::ChooseRandom(15200, 15042, 15226, 13360, 15246, 15276));
 		#:: Give a little xp
 		quest::exp(500);
 		#:: Ding!
@@ -39,7 +39,7 @@ sub EVENT_ITEM {
 		quest::faction(5001,25); 		#:: + Anti Mage
 	}
 	#:: Turn in for the Orc Runner Quest , 13226 Runner Pouch
-	if (plugin::takeItems(13226=> 1)) {
+	if (plugin::check_handin(\%itemcount, 13226=> 1)) {
 		quest::say("So, you succeeded in stopping a Crushbone runner! That is good. Now take this as reward. Keep up your fine work. The people of Felwithe are grateful.");
 		#:: Give a little xp
 		quest::exp(500);
@@ -55,7 +55,7 @@ sub EVENT_ITEM {
 		quest::faction(5001,7); 		#:: + Anti Mage
 	}
 	#:: Turn in for the Orc Runner Quest , 18840 A Sealed Letter
-	if (plugin::takeItems(18840=> 1)) {
+	if (plugin::check_handin(\%itemcount, 18840=> 1)) {
 		quest::say("So, the Teir'Dal are behind the recent advances of the orcs?!! Your news has shed light on their union. It is time to step forth and prove yourself a [faithful paladin of this court].");
 		#:: Give a little xp
 		quest::exp(500);
@@ -67,7 +67,7 @@ sub EVENT_ITEM {
 		quest::faction(5001,3); 		#:: + Anti Mage
 	}
 	#:: Turn in for the Falchion Quest , 12330 A Large Locked Crate, 12329 Blue Orc Head, 13227 Black Heart
-	if (plugin::takeItems(12330 => 1, 12329 => 1, 13227 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12330 => 1, 12329 => 1, 13227 => 1)) {
 		quest::say("A noble deed has been done and the alliance of evil has been stalled. I present you with the falchion of the Koada`Vie. You are now an honorable member of our order. Hail Felwithe, and may you defender her with honor.");
 		#:: Give item 5379 - Falchion of the KoadaVie*
 		quest::summonitem(15379);

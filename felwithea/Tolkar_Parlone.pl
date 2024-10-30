@@ -15,7 +15,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 5573 -  A Folded Note
-	if (plugin::takeItems(5573 => 1)) {
+	if (plugin::check_handin(\%itemcount, 5573 => 1)) {
 		quest::say("Oh, my, she did get herself into some trouble! I thank you for rescuing her, my friend. Here, take this old cloak. I am afraid its power has faded, but if you bring it to my wife, she might be able to do something for you. She is currently studying in Erudin.");
 		#:: Ding!
 		quest::ding();

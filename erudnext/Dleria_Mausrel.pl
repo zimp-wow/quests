@@ -47,12 +47,12 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13922 - Snapped Pole
-	if (plugin::takeItems(13922 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13922 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Good work, young priest. Soon you shall carry the word of the Ocean Lord to distant lands. For now, continue your training. As for your reward, I have this which has been sitting in our vault. I hope it can be of use to a young priest such as yourself.");
 			#:: Give a random reward: 2144 - Raw-hide Sleeves, 2146 - Raw-hide Gloves, 2147 - Raw-hide Leggings, 17005 - Backpack
-			quest::summonitem(1quest::ChooseRandom(2144, 2146, 2147, 17005));
+			quest::summonitem(quest::ChooseRandom(2144, 2146, 2147, 17005));
 			#:: Ding!
 			quest::ding();
 			#:: Set factions
@@ -80,7 +80,7 @@ sub EVENT_ITEM {
 		
 	}
 	#:: Match a 13880 - Bag of Zombie Flesh
-	elsif (plugin::takeItems(13880 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13880 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Peeuww!! That most certainly is zombie flesh!! Here is your reward. You have done a fine service in the name of Prexus. Soon you shall advance and we may tell you of greater dangers lurking in the depths.");

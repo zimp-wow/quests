@@ -22,7 +22,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 14360 - Staff of the Wheel, and a 14361 - Star of Eyes
-	if (plugin::takeItems(14360 => 1, 14361 => 1)) {
+	if (plugin::check_handin(\%itemcount, 14360 => 1, 14361 => 1)) {
 		quest::say("Wonderful, you have brought me the Wheel. Here is the reward I promised you.");
 		#:: Give 11880 - Rune of Frost
 		quest::summonitem(11880);

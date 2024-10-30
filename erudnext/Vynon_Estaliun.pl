@@ -15,7 +15,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13884 - Fishy Cat Tail
-	if (plugin::takeItems(13884 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13884 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Good work. I knew you could do it. Take this as reward.");
