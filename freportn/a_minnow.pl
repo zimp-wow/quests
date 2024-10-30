@@ -14,5 +14,5 @@ sub EVENT_ITEM {
 		quest::faction(311, -2);		#:: - Steel Warriors
 	}
 	#:: Return unused items
-    plugin::returnUnusedItems();quest::summonitem(quest::ChooseRandom($item1));
+    plugin::return_items(\%itemcount);quest::summonitem(quest::ChooseRandom($item1));
 }
