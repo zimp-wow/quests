@@ -15,7 +15,7 @@ sub EVENT_ITEM {
 	if (plugin::check_handin(\%itemcount, 6348 => 1)) {
 		quest::say("Razortooth! You catch him! Truly, you be great fisher. Please take this from me. Feren is forever owing you.");
 		#:: Give a 1062 - Kerran Fishingpole
-		quest::summonitem(11062);
+		quest::summonitem(1062);
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
