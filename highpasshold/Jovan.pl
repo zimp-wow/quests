@@ -19,5 +19,5 @@ sub EVENT_ITEM {
 		quest::depop_withtimer();
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
