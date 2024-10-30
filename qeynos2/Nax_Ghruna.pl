@@ -9,7 +9,7 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
 
 sub EVENT_DEATH_COMPLETE {
