@@ -476,9 +476,13 @@ sub is_time_locked {
     # Return 1 if locked, 0 if unlocked
     my $stage = shift;
 
-    if (plugin::MultiClassingEnabled()) {
+    if (plugin::IsTHJ()) {
         if ($stage eq 'RoK') {       
             return 0;
+        }
+
+        if ($stage eq 'SoV') {       
+            return 1;
         }
         
         return 1;

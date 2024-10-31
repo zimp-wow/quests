@@ -118,7 +118,7 @@ sub AwardBonusUnlocks {
                    quest::get_data($client->AccountID() . "-TL-Account-K") ||
                    quest::get_data($client->AccountID() . "-TL-Account-V");
 
-    if ($eligible && !$client->IsSeasonal() && !$client->IsHardcore()) {
+    if ($eligible && !$client->IsSeasonal() && !$client->IsHardcore() && !plugin::IsTHJ()) {
         AddWaypoint('qeynos2');
         AddWaypoint('qrg');
         AddWaypoint('freportw');
