@@ -119,8 +119,9 @@ sub LootEOM {
     my ($client, $amount) = @_;
     $client->AddAlternateCurrencyValue($eom_id, $amount);
     $client->Message(15, "You found $amount [".quest::varlink($eom_item_id)."] on the corpse.");
+    $client->SendMarqueeMessage(15, "You have found an Echo of Memory");
     if (!$client->GetGM()) {
-        quest::set_data($eom_log, (quest::get_data($eom_log) || 0) - $amount);
+        quest::set_data($eom_log, (quest::get_data($eom_log . "-event") || 0) - $amount);
     }
 }
 
