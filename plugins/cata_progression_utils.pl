@@ -482,7 +482,7 @@ sub is_time_locked {
         }
 
         if ($stage eq 'SoV') {       
-            return 1;
+            return 0;
         }
         
         return 1;
