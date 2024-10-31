@@ -563,6 +563,9 @@ sub is_eligible_for_class {
 }
 
 sub is_eligible_for_zone {
+    if (plugin::IsTHJ()) {
+        return 1;
+    }
     my ($client, $zone_name, $inform) = @_;    
     $inform //= 0; # Set to 0 if not defined
 
