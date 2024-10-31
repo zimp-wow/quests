@@ -151,4 +151,16 @@ sub EVENT_DAMAGE_GIVEN
 
 sub EVENT_KILLED_MERIT {
     plugin::ProcessSlayerCredit($client, $npc, $entity_list);
+
+    my $con_color = $client->GetConsiderColor($npc);
+
+    if ($con_color eq "Red" || $con_color eq "Yellow" || $con_color eq "White") {
+        my $eom_drop_chance = 100;
+        my $eom_loot_amount = int(rand(3)) + 1;
+        
+        if (int(rand($eom_drop_chance)) == 0) {
+            plugin::LootEOM($client, $eom_loot_amount);
+            $client->SendSound();
+        }
+    }
 }
