@@ -221,31 +221,6 @@ sub GetPrettyClassString {
     return $pretty_class_string;
 }
 
-sub GetClassLinkString {
-    my $client = shift || plugin::val('$client');  # Ensure $client is available
-    my %class_map = GetClassMap();  # Get the full class map
-    my $class_bits = $client->GetClassesBitmask();  # Retrieve the class bits for the client
-
-    my @client_classes;
-
-    # Iterate through class IDs to check which classes the client has
-    foreach my $class_id (sort { $a <=> $b } keys %class_map) {
-        if ($class_bits & (1 << ($class_id - 1))) {
-            push @client_classes, "[".quest::saylink("del_class_$class_id", 0, $class_map{$class_id})."]";
-        }
-    }
-
-    # Join the client's class names, using ", " and " or " appropriately
-    my $pretty_class_string;
-    if (@client_classes > 1) {
-        $pretty_class_string = join(', ', @client_classes[0..$#client_classes-1]) . ' or ' . $client_classes[-1];
-    } else {
-        $pretty_class_string = $client_classes[0];  # Only one class
-    }
-
-    return $pretty_class_string;
-}
-
 sub GetClassesCount {
     my $client = shift || plugin::val('$client');
 
