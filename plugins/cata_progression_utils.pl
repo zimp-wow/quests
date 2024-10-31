@@ -476,15 +476,7 @@ sub is_time_locked {
     # Return 1 if locked, 0 if unlocked
     my $stage = shift;
 
-    if (plugin::IsTHJ()) {
-        if ($stage eq 'RoK') {       
-            return 0;
-        }
-
-        if ($stage eq 'SoV') {       
-            return 0;
-        }
-        
+    if (plugin::IsTHJ()) {    
         return 1;
     }
 
@@ -563,9 +555,6 @@ sub is_eligible_for_class {
 }
 
 sub is_eligible_for_zone {
-    if (plugin::IsTHJ()) {
-        return 1;
-    }
     my ($client, $zone_name, $inform) = @_;    
     $inform //= 0; # Set to 0 if not defined
 
