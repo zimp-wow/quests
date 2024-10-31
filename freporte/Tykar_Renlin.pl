@@ -99,5 +99,5 @@ sub EVENT_ITEM {
 		}
 	}		
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

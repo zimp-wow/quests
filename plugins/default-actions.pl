@@ -66,7 +66,7 @@ sub defaultSay{
 
 sub defaultItem
 {
-  plugin::returnUnusedItems();
+  plugin::return_items(\%itemcount);
 }
 
 sub defaultDeath

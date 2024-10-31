@@ -313,5 +313,5 @@ sub EVENT_ITEM {
 		quest::summonitem(12199);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

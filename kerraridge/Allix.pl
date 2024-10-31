@@ -17,7 +17,7 @@ sub EVENT_ITEM {
 		#:: Ding!
 		quest::ding();
 		#:: Give a 1120 - Erudehide Tunic
-		quest::summonitem(11120);
+		quest::summonitem(1120);
 		#:: Grant a small amount of experience
 		quest::exp(25);
 	}

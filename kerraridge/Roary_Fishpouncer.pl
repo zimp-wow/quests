@@ -14,7 +14,7 @@ sub EVENT_ITEM {
                 #:: Ding!
                 quest::ding();
                 #:: Give a 7027 - Kerran Fishing Spear
-                quest::summonitem(17027);
+                quest::summonitem(7027);
                 #:: Grant a small amount of experience
                 quest::exp(500);
         }

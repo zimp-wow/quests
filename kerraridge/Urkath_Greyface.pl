@@ -15,7 +15,7 @@ sub EVENT_ITEM {
 	if (plugin::check_handin(\%itemcount, 1155 => 1)) {
 		quest::say("Excellent! I can't believe you found it.  Here is the rrrreward that I promised you.");
 		#:: Give a 2045 - Worn Leather Shoulderpads
-		quest::summonitem(12045);
+		quest::summonitem(2045);
 		#:: Ding!
 		quest::ding();
 		#:: Grant a moderate amount of experience
