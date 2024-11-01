@@ -206,7 +206,7 @@ sub WorldAnnounceItem {
     $message =~ s/\{item\}/$eqgitem_link/g;
 
     # Send the message with the game link to the EQ world
-    quest::we(335, $message);
+    quest::we(334, $message);
 
     # Replace the game link with the Discord link
     $message =~ s/\Q$eqgitem_link\E/$discord_link/g;
