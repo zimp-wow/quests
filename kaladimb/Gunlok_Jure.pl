@@ -21,11 +21,11 @@ sub EVENT_ITEM {
     quest::say("You have done well. We thank you for your deed with this humble reward. The power behind the raising of our dead shall soon be found. You will earn more respect with more bone chips. I only wish you could assist in the return of the [remains of Cromil].");
     quest::summonitem(quest::ChooseRandom(2116,2122,5013,5014,5016,5023,6011,13002,13003)); # Item(s): Small Patchwork Tunic (2116), Small Tattered Gloves (2122), Rusty Short Sword (5013), Rusty Axe (5014), Rusty Broad Sword (5016), Rusty Two Handed Sword (5023), Rusty Mace (6011), Torch (13002), Small Lantern (13003)
     quest::ding();
-    quest::givecash(7,10,0,0); # Cash
+    quest::givecash(7,1,0,0); # Cash
     quest::faction(227,10);             # Clerics of Underfoot
     quest::faction(274,10);            # Kazon Stormhammer
     quest::faction(293,7);            # Miners Guild 249
-    quest::exp(250);                  # Experience
+    quest::exp(25);                  # Experience
   }
   elsif (($faction <= 4) && (plugin::check_handin(\%itemcount, 13332 => 1))) { # Dwarf Bones
     quest::say("Many thanks, my friend. Now my brother can rest in peace. Please take this spell. May it serve you well.");
