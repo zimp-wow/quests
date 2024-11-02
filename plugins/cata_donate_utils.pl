@@ -4,22 +4,24 @@ my $eom_log = "total-eom-spend";
 my $eom_award_log = "total-eom-award";
 
 sub CheckWorldWideBuffs {
-    my $client = plugin::val('$client');
-    my $entity_list = plugin::val('$entity_list');
+    if ($zoneid != 151) {
+        my $client = plugin::val('$client');
+        my $entity_list = plugin::val('$entity_list');
 
-    if (!$client) {
-        return;
-    }
-
-    DoCheckWorldWideBuffs($client);
-
-    foreach my $npc ($entity_list->GetNPCList()) {
-        next unless $npc->GetOwner();  # Skip if there's no owner
-
-        if ($npc->GetOwner()->GetID() == $client->GetID()) {
-            DoCheckWorldWideBuffs($npc);
+        if (!$client) {
+            return;
         }
-    }    
+
+        DoCheckWorldWideBuffs($client);
+
+        foreach my $npc ($entity_list->GetNPCList()) {
+            next unless $npc->GetOwner();  # Skip if there's no owner
+
+            if ($npc->GetOwner()->GetID() == $client->GetID()) {
+                DoCheckWorldWideBuffs($npc);
+            }
+        }
+    }
 }
 
 sub DoCheckWorldWideBuffs {
