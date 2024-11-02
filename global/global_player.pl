@@ -30,6 +30,12 @@ sub EVENT_ENTERZONE {
         return;
     }
 
+    if (!$client->IsTaskCompleted(3) && !$client->IsTaskActive(3)) {
+        $client->AssignTask(3);
+    } elsif ($client->IsTaskCompleted(3) && (!$client->IsTaskCompleted(4) && !$client->IsTaskActive(4))) {
+        $client->AssignTask(4);
+    }
+
     my $entity_list = plugin::val('$entity_list');
     my @npcs = $entity_list->GetNPCList();
 
