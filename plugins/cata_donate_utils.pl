@@ -4,7 +4,7 @@ my $eom_log = "total-eom-spend";
 my $eom_award_log = "total-eom-award";
 
 sub CheckWorldWideBuffs {
-    if ($zoneid != 151) {
+    if (plugin::get_val('$zoneid') != 151) {
         my $client = plugin::val('$client');
         my $entity_list = plugin::val('$entity_list');
 
