@@ -2,7 +2,7 @@ sub EVENT_SAY {
     if ($text =~ /hail/i) {
         quest::say("Well looky there! Feeling lucky? Come win a prize! Mounts, Petamorph Wands, Illusions, Clockwork friends... 
                     delicious foods and potions to boot! If you want to try your luck at a game of chance, simply hand me 5,000 
-                    platinum pieces, or consider donating to wager five [Echo of Memory], I'll accept those, too!");
+                    platinum pieces, or consider donating to wager two [Echo of Memory], I'll accept those, too!");
     }
     if ($text =~ /Echo of Memory/i) {
         if (plugin::SpendEOM($client, 2)) {
