@@ -14,12 +14,18 @@ sub EVENT_SAY {
       RewardItems($client);
     }
   }
+  if ($text=~/note/i) {
+    $client->SummonItem(18471);
+    $client->Message(263, "You find a small note in your pocket.");
+  }
 }
 
 sub EVENT_ITEM {
     if (plugin::check_handin(\%itemcount, 18471 => 1)) {
-      RewardItems($client);
-      quest::givecash(0,6,2,0);
+      if (!$client->GetBucket('newbieRewardBits')) {
+        RewardItems($client);
+        quest::givecash(0,6,2,0);
+      }
     } else {
         quest::say("I don't need this item, $name. Perhaps you should keep it.");
     }  
