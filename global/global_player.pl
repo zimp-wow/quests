@@ -374,6 +374,9 @@ sub EVENT_SAY {
             my $arguments = $1; # Captures everything after #awardtitle
             
             my $tar_client = $client->GetTarget();
+            if ($tar_client->IsClient()) {
+                $tar_client = $tar_client->CastToClient();
+            }
             if ($tar_client && $tar_client->IsClient()) {
                 # Validate that there is exactly one argument which is a number
                 if ($arguments =~ /^\s*(\d+)\s*$/) {
