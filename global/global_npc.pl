@@ -164,7 +164,7 @@ sub EVENT_KILLED_MERIT {
                 plugin::LootEOM($client, $eom_loot_amount);
                 $client->SendSound();
 
-                quest::get_data($client->AccountID() . "-eom-event-scale", $rare_scale + 1);
+                quest::set_data($client->AccountID() . "-eom-event-scale", $rare_scale + 1);
             }
         }
     }

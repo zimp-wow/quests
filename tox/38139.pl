@@ -8,7 +8,7 @@ my $beenonjob;
 my $skelent;
 my $skelnpc;
 my $leftskelealive;
-my $eventstart;
+my $eventstart = 0;
 
 sub EVENT_SAY {
  if (plugin::HasClassName($client, "Druid")) {
