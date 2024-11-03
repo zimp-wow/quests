@@ -23,7 +23,6 @@ sub EVENT_ENTERZONE {
 		$client->MovePC(151, 185, -835, 4, 390); # Bazaar Safe Location.
 	}
 
-
     # Only THJ Stuff after this point
     if (!plugin::IsTHJ()) {
         return;
@@ -78,8 +77,7 @@ sub EVENT_CONNECT {
     if (plugin::GetSoulmark($client)) {
         plugin::DisplayWarning($client);
     }
-
-    $client->ReloadDataBuckets();    
+  
     plugin::CommonCharacterUpdate($client); 
     if (!$client->GetBucket("First-Login")) {
         $client->SetBucket("First-Login", 1);
@@ -159,7 +157,6 @@ sub EVENT_CLICKDOOR {
 }
 
 sub EVENT_ZONE {
-    $client->ReloadDataBuckets(); 
     # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
     plugin::CommonCharacterUpdate($client);
 }
