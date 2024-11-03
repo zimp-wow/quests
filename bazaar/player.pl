@@ -140,19 +140,19 @@ sub EVENT_POPUPRESPONSE {
     }
 }
 
-sub EVENT_ENTERZONE {
-    if (plugin::IsTHJ()) {
-        set_current_position();
-        quest::settimer("check_idle", get_idle_time());
-    }
-}
+#sub EVENT_ENTERZONE {
+#    if (plugin::IsTHJ()) {
+#        set_current_position();
+#        quest::settimer("check_idle", get_idle_time());
+#    }
+#}
 
-sub EVENT_CONNECT {
-    if (plugin::IsTHJ()) {
-        set_current_position();
-        quest::settimer("check_idle", get_idle_time());
-    }
-}
+#sub EVENT_CONNECT {
+#    if (plugin::IsTHJ()) {
+#        set_current_position();
+#        quest::settimer("check_idle", get_idle_time());
+#    }
+#}
 
 sub EVENT_TIMER {
     # Constants for idle times and intervals
@@ -184,7 +184,7 @@ sub EVENT_TIMER {
         my $non_idle_c  = $client->GetEntityVariable("non_idle_count") ? int($client->GetEntityVariable("non_idle_count")) : 1;
 
         $client->SetEntityVariable("idle_warning", $idle_track + get_idle_time());
-        
+
         if ($client->GetGM()) {
             quest::debug("check_idle tick - instanceid:$instanceid - idle_track: $idle_track");
         }
