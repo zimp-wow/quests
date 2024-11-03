@@ -7,10 +7,7 @@ sub CommonCharacterUpdate {
             plugin::AddTitleFlag($semaphore_title, $client);
             $client->DeleteBucket('flag-semaphore');
         }
-
-        GrantClassesAA($client);
-        GrantGeneralAA($client); # Grant the general here too
-
+        
         plugin::CheckWorldWideBuffs($client);
         plugin::UpdateCharMaxLevel($client);
         plugin::UpdateEoMAward($client);
