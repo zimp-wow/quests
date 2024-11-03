@@ -1,3 +1,5 @@
+use Time::HiRes qw(time); 
+
 my $eom_id = 6;
 my $eom_item_id = 46779;
 my $eom_log = "total-eom-spend";
@@ -34,15 +36,33 @@ sub DoCheckWorldWideBuffs {
         my @buffs_to_check = (43002..43008, 17779);
 
         for my $spell_id (@buffs_to_check) {
-            my $data = quest::get_data("eom_$spell_id");
-            my $tics_remaining = int(quest::get_data_remaining("eom_$spell_id") / 6);
+            my $dbh = plugin::LoadMysql();
+            my $query = $dbh->prepare('select expires from data_buckets where data_buckets.key = ?');
+
+            $query->execute("eom_$spell_id");
+
+            my $data = $query->fetchrow_hashref();
 
             if ($data) {
-                $target->ApplySpellBuff($spell_id, $tics_remaining);
-                #quest::debug("Applied spell buff: ID $spell_id, Tics: $tics_remaining");
+                # Calculate tics_remaining based on the expires timestamp
+                my $expires = $data->{expires};
+                my $current_time = time();
+                my $seconds_remaining = $expires - $current_time;
+                my $tics_remaining = int($seconds_remaining / 6);
+
+                # Apply the spell buff if it hasn't expired
+                if ($tics_remaining > 0) {
+                    $target->ApplySpellBuff($spell_id, $tics_remaining);
+                    # quest::debug("Applied spell buff: ID $spell_id, Tics: $tics_remaining");
+                } else {
+                    # Fade the buff if it has expired
+                    $target->BuffFadeBySpellID($spell_id);
+                    # quest::debug("Faded spell buff: ID $spell_id, Buff expired");
+                }
             } else {
+                # No data found for the spell, so fade the buff
                 $target->BuffFadeBySpellID($spell_id);
-                #quest::debug("Faded spell buff: ID $spell_id, No data found");
+                # quest::debug("Faded spell buff: ID $spell_id, No data found");
             }
         }
 
