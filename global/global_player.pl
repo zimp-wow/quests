@@ -18,8 +18,8 @@ sub EVENT_SIGNAL {
 
 sub EVENT_ENTERZONE {
     if ($zoneid != 151) {
-        GrantClassesAA($client);
-        GrantGeneralAA($client);
+        plugin::GrantClassesAA($client);
+        plugin::GrantGeneralAA($client);
     }
 
 	plugin::CommonCharacterUpdate($client);    
@@ -84,8 +84,8 @@ sub EVENT_CONNECT {
     }
 
     if ($zoneid != 151) {
-        GrantClassesAA($client);
-        GrantGeneralAA($client);
+        plugin::GrantClassesAA($client);
+        plugin::GrantGeneralAA($client);
     }
   
     plugin::CommonCharacterUpdate($client); 
