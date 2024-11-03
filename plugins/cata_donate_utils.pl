@@ -36,40 +36,33 @@ sub DoCheckWorldWideBuffs {
         my @buffs_to_check = (43002..43008, 17779);
 
         for my $spell_id (@buffs_to_check) {
-            my $dbh = plugin::LoadMysqlLocal();
-            my $query = $dbh->prepare('select expires from data_buckets where `key` like ?');
+            my $dbh = plugin::LoadMysql();
+            my $query = $dbh->prepare('select expires from data_buckets where data_buckets.key = ?');
 
-            my $key = "eom_$spell_id";  
-            $query->execute($key);       # Pass the full key as a parameter
+            $query->execute("eom_$spell_id");
 
-            #quest::debug("select * from data_buckets where `key` = eom_$spell_id");
-            #quest::debug("eom_$spell_id");
             my $data = $query->fetchrow_hashref();
 
-            quest::debug($data);
-
             if ($data) {
-                3quest::debug("Got data");
                 # Calculate tics_remaining based on the expires timestamp
                 my $expires = $data->{expires};
                 my $current_time = time();
                 my $seconds_remaining = $expires - $current_time;
                 my $tics_remaining = int($seconds_remaining / 6);
 
-
                 # Apply the spell buff if it hasn't expired
                 if ($tics_remaining > 0) {
                     $target->ApplySpellBuff($spell_id, $tics_remaining);
-                    #quest::debug("Applied spell buff: ID $spell_id, Tics: $tics_remaining");
+                    # quest::debug("Applied spell buff: ID $spell_id, Tics: $tics_remaining");
                 } else {
                     # Fade the buff if it has expired
                     $target->BuffFadeBySpellID($spell_id);
-                    #quest::debug("Faded spell buff: ID $spell_id, Buff expired");
+                    # quest::debug("Faded spell buff: ID $spell_id, Buff expired");
                 }
             } else {
                 # No data found for the spell, so fade the buff
                 $target->BuffFadeBySpellID($spell_id);
-                #quest::debug("Faded spell buff: ID $spell_id, No data found");
+                # quest::debug("Faded spell buff: ID $spell_id, No data found");
             }
         }
 
