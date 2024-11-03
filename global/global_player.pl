@@ -17,7 +17,6 @@ sub EVENT_SIGNAL {
 }
 
 sub EVENT_ENTERZONE {
-    $client->ReloadDataBuckets();
 	plugin::CommonCharacterUpdate($client);    
 	if (!plugin::is_eligible_for_zone($client, $zonesn)) {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
@@ -222,18 +221,10 @@ sub EVENT_WARP {
 sub EVENT_DISCOVER_ITEM {
     my $name = $client->GetCleanName();
     
-    # Only announce upgraded items
-    if ($itemid > 999999) {        
+    # Only announce Legendary+ items
+    if ($itemid > 1999999) {        
         plugin::WorldAnnounceItem("$name has discovered: {item}.",$itemid);  
     }  
-}
-
-sub EVENT_LOOT {
-    symp_proc_tutorial_helper($item_id, $client);
-}
-
-sub EVENT_MERCHANT_BUY {
-    symp_proc_tutorial_helper($item_id, $client);
 }
 
 sub symp_proc_tutorial_helper {
