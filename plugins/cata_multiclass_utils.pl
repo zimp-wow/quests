@@ -8,7 +8,6 @@ sub CommonCharacterUpdate {
             $client->DeleteBucket('flag-semaphore');
         }
         
-        plugin::CheckWorldWideBuffs($client);
         plugin::UpdateCharMaxLevel($client);
         plugin::UpdateEoMAward($client);
         plugin::RegisterSeasonalLogin($client);

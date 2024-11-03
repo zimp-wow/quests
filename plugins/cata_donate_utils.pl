@@ -11,6 +11,8 @@ sub CheckWorldWideBuffs {
         return;
     }
 
+    $client->ReloadDataBuckets();
+
     DoCheckWorldWideBuffs($client);
 
     foreach my $npc ($entity_list->GetNPCList()) {
