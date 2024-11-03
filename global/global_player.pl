@@ -146,8 +146,8 @@ sub EVENT_TASK_COMPLETE {
 }
 
 sub EVENT_LEVEL_UP {
-    GrantClassesAA($client);
-    GrantGeneralAA($client);
+    plugin::GrantClassesAA($client);
+    plugin::GrantGeneralAA($client);
 
     plugin::CommonCharacterUpdate($client);
     my $new_level = $client->GetLevel();
