@@ -184,10 +184,7 @@ sub EVENT_TIMER {
         my $non_idle_c  = $client->GetEntityVariable("non_idle_count") ? int($client->GetEntityVariable("non_idle_count")) : 1;
 
         $client->SetEntityVariable("idle_warning", $idle_track + get_idle_time());
-        
-        if ($client->GetGM()) {
-            quest::debug("check_idle tick - instanceid:$instanceid - idle_track: $idle_track");
-        }
+        quest::debug("check_idle tick - instanceid:$instanceid - idle_track: $idle_track");
         
         if ($instanceid == $shadow_bazaar) { # inside private instance   
             if ($idle and $idle_track % (IDLE_THRESHOLD_SECONDS) == 0) {
