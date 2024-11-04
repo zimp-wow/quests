@@ -17,7 +17,6 @@ sub EVENT_SIGNAL {
 }
 
 sub EVENT_ENTERZONE {
-    $client->ReloadDataBuckets();
 	plugin::CommonCharacterUpdate($client);    
 	if (!plugin::is_eligible_for_zone($client, $zonesn)) {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
@@ -79,8 +78,7 @@ sub EVENT_CONNECT {
     if (plugin::GetSoulmark($client)) {
         plugin::DisplayWarning($client);
     }
-
-    $client->ReloadDataBuckets();    
+    
     plugin::CommonCharacterUpdate($client); 
     if (!$client->GetBucket("First-Login")) {
         $client->SetBucket("First-Login", 1);
@@ -160,7 +158,6 @@ sub EVENT_CLICKDOOR {
 }
 
 sub EVENT_ZONE {
-    $client->ReloadDataBuckets(); 
     # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
     plugin::CommonCharacterUpdate($client);
 }

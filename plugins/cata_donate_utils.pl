@@ -179,7 +179,6 @@ sub ApplyWorldWideBuff {
 sub UpdateEoMAward {
     my $client = shift;
 
-    $client->ReloadDataBuckets();
     if ($client->GetBucket("EoM-Award")) {
         plugin::AwardEOM($client, $client->GetBucket("EoM-Award"));
         quest::ding();
