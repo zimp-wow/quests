@@ -41,11 +41,7 @@ sub OfferStandardInstance {
     if ($dz) {
       $dz->SetCompass($zonesn, $npc->GetX(), $npc->GetY(), $npc->GetZ());
       $dz->SetSafeReturn($zonesn, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
-      if (!plugin::IsTHJ() || $text eq 'Non-Respawning') {
-        $dz->AddReplayLockout($dz_duration);
-      } else {
-        $dz->AddReplayLockout(30 * 60); # 30 minutes
-      }
+      $dz->AddReplayLockout($dz_duration);      
       quest::say("Very well. When you are [" . quest::saylink("ready", 1) . "], proceed into the portal, and remember!");
     }
   }
