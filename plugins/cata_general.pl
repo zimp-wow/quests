@@ -291,16 +291,3 @@ sub get_slot_by_item {
 	}
 	return 0;
 }
-
-sub GetDataNoCache {
-    my $key = shift;
-
-    my $dbh = plugin::LoadMysqlLocal();
-    my $qry = $dbh->prepare("select * from data_buckets where `key` = ?");
-
-    $qry->execute($key);
-
-    my $data = $qry->fetchrow_hashref();
-
-    return $data;;
-}
