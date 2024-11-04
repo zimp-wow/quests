@@ -164,6 +164,10 @@ sub IsBlacklistedNPC {
       'Lord Nagafen',
       'Lady Vox',
       'Phinigel Autropos',
+      'a dracoliche'
+      'Dread',
+      'Fright',
+      'Terror',
       'Cazic Thule',
       'Innoruuk',
       'Overseer of Air',
