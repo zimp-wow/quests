@@ -15,6 +15,16 @@ sub LoadMysql {
     return $connect;
 }
 
+sub LoadMysqlLocal {
+    my $config = load_config("eqemu_config.json");
+    
+    # Attempt to connect using 'content_database'
+    my $connect = try_connect($config, "database");
+    
+    return $connect;
+}
+
+
 sub load_config {
     my $config_file = shift;
     open(my $fh, '<', $config_file) or die "cannot open file $config_file"; {

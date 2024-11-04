@@ -22,6 +22,7 @@ sub EVENT_ENTERZONE {
         plugin::GrantGeneralAA($client);
     }
 
+    plugin::CheckWorldWideBuffs($client);
 	plugin::CommonCharacterUpdate($client);    
 	if (!plugin::is_eligible_for_zone($client, $zonesn)) {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
@@ -151,6 +152,7 @@ sub EVENT_LEVEL_UP {
     plugin::GrantClassesAA($client);
     plugin::GrantGeneralAA($client);
 
+    plugin::CheckWorldWideBuffs($client);
     plugin::CommonCharacterUpdate($client);
     my $new_level = $client->GetLevel();
     if (($new_level % 10 == 0) || $new_level == 5 || $new_level == $client->GetBucket("CharMaxLevel")) {

@@ -36,12 +36,7 @@ sub DoCheckWorldWideBuffs {
         my @buffs_to_check = (43002..43008, 17779);
 
         for my $spell_id (@buffs_to_check) {
-            my $dbh = plugin::LoadMysql();
-            my $query = $dbh->prepare('select expires from data_buckets where data_buckets.key = ?');
-
-            $query->execute("eom_$spell_id");
-
-            my $data = $query->fetchrow_hashref();
+            my $data = plugin::GetDataNoCache("eom_$spell_id");
 
             if ($data) {
                 # Calculate tics_remaining based on the expires timestamp
