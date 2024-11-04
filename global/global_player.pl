@@ -87,9 +87,7 @@ sub EVENT_CONNECT {
         plugin::GrantClassesAA($client);
         plugin::GrantGeneralAA($client);
     }
-
-
-    plugin::CheckWorldWideBuffs($client);  
+  
     plugin::CommonCharacterUpdate($client); 
     if (!$client->GetBucket("First-Login")) {
         $client->SetBucket("First-Login", 1);
@@ -173,8 +171,6 @@ sub EVENT_CLICKDOOR {
 
 sub EVENT_ZONE {
     # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
-
-    plugin::CheckWorldWideBuffs($client);
     plugin::CommonCharacterUpdate($client);
 }
 
