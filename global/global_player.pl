@@ -17,11 +17,6 @@ sub EVENT_SIGNAL {
 }
 
 sub EVENT_ENTERZONE {
-    if ($zoneid != 151) {
-        GrantClassesAA($client);
-        GrantGeneralAA($client);
-    }
-
 	plugin::CommonCharacterUpdate($client);    
 	if (!plugin::is_eligible_for_zone($client, $zonesn)) {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
@@ -82,11 +77,6 @@ sub EVENT_CONNECT {
     if (plugin::GetSoulmark($client)) {
         plugin::DisplayWarning($client);
     }
-
-    if ($zoneid != 151) {
-        GrantClassesAA($client);
-        GrantGeneralAA($client);
-    }
   
     plugin::CommonCharacterUpdate($client); 
     if (!$client->GetBucket("First-Login")) {
@@ -146,9 +136,6 @@ sub EVENT_TASK_COMPLETE {
 }
 
 sub EVENT_LEVEL_UP {
-    GrantClassesAA($client);
-    GrantGeneralAA($client);
-
     plugin::CommonCharacterUpdate($client);
     my $new_level = $client->GetLevel();
     if (($new_level % 10 == 0) || $new_level == 5 || $new_level == $client->GetBucket("CharMaxLevel")) {
