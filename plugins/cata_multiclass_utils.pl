@@ -17,6 +17,16 @@ sub CommonCharacterUpdate {
         plugin::RegisterSeasonalLogin($client);
         plugin::EnableTitles($client);
 
+        plugin::GetProgressFlag($client, "RoK");
+        plugin::GetProgressFlag($client, "SoV");
+        plugin::GetProgressFlag($client, "SoL");
+        plugin::GetProgressFlag($client, "PoP");
+
+        if ($client->GetLevel() >= 50) {
+            plugin::AddWaypoint("airplane");
+            plugin::AddWaypoint("hateplaneb");
+        }
+
         if ($client->IsTaskActivityActive(3, 5) && $client->GetLevel() >= 5) {
             $client->UpdateTaskActivity(3, 5, 1);
         }
