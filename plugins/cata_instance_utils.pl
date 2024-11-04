@@ -164,7 +164,7 @@ sub IsBlacklistedNPC {
       'Lord Nagafen',
       'Lady Vox',
       'Phinigel Autropos',
-      'a dracoliche'
+      'a dracoliche',
       'Dread',
       'Fright',
       'Terror',
