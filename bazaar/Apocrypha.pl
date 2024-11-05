@@ -87,6 +87,9 @@ sub handle_buff_for_level {
 }
 
 sub EVENT_SAY {
+    if (!$client->GetGM()) {
+        return;
+    }
     my $response = "";
     my $clientName = $client->GetCleanName();
     my $buff_id = 0;
