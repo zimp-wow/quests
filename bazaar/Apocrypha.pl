@@ -87,7 +87,7 @@ sub handle_buff_for_level {
 }
 
 sub EVENT_SAY {
-    if (!$client->GetGM()) {
+    if (plugin::IsTHJ() && !$client->GetGM()) {
         return;
     }
     my $response = "";
