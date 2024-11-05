@@ -147,7 +147,7 @@ sub EVENT_SAY {
         if (plugin::SpendEOM($client, 25)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";            
             for my $value (43002 .. 43008) {
-                plugin::ApplyWorldWideBuff($buff_id);                
+                plugin::ApplyWorldWideBuff($value);                
             }
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
