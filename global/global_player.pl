@@ -225,14 +225,6 @@ sub EVENT_DISCOVER_ITEM {
     }  
 }
 
-sub EVENT_LOOT {
-    symp_proc_tutorial_helper($item_id, $client);
-}
-
-sub EVENT_MERCHANT_BUY {
-    symp_proc_tutorial_helper($item_id, $client);
-}
-
 sub symp_proc_tutorial_helper {
     my $item_id = shift;
     my $client = shift;
