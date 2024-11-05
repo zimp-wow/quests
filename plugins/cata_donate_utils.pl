@@ -92,42 +92,40 @@ sub EOMLink {
 
 sub ApplyWorldWideBuff {
     my $buff_id = shift;
-    my $cost = shift || 0;
 
     my $client = plugin::val('$client');
 
     if (!defined($buff_id)) {
-        quest::debug("ERROR: NO VALID BUFF ID IN ApplyWorldWideBuff")
-    }
-
-    if (plugin::SpendEOM($client, $cost)) {        
-        my %buff_types = (
-            43002 => "Experience Gain",
-            43003 => "Hit Points and Armor Class",
-            43004 => "Basic Statistics",
-            43005 => "Movement Speed",
-            43006 => "Mana Regeneration",
-            43007 => "Attack Speed",
-            43008 => "Health Regeneration",
-            17779 => "Loot Upgrade Rate"
-        );
-        my $buff_type = $buff_types{$buff_id} // "Unknown Buff";  # Fallback for unknown buff IDs
-
-        if ($cost == 0) { $cost = 1 };
-
-        if (quest::get_data("eom_$buff_id")) {            
-            quest::set_data("eom_$buff_id", $cost, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));
-            my ($hours, $minutes, $seconds) = plugin::convert_seconds(quest::get_data_remaining("eom_$buff_id"));
-            plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to extend your enhanced $buff_type. This buff will endure for $hours Hours and $minutes Minutes.");
-        } else {
-            quest::set_data("eom_$buff_id", $cost, H4);
-            plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to enhance your $buff_type. This buff will endure for 4 Hours.");
-        }
-        
-        return 1;
-    } else {
+        quest::debug("ERROR: NO VALID BUFF ID IN ApplyWorldWideBuff");
         return 0;
     }
+      
+    my %buff_types = (
+        43002 => "Experience Gain",
+        43003 => "Hit Points and Armor Class",
+        43004 => "Basic Statistics",
+        43005 => "Movement Speed",
+        43006 => "Mana Regeneration",
+        43007 => "Attack Speed",
+        43008 => "Health Regeneration",
+        17779 => "Loot Upgrade Rate"
+    );
+    
+    my $buff_type = $buff_types{$buff_id} // "Unknown Buff";  # Fallback for unknown buff IDs
+
+    # Add the buff globally with an expiration time (e.g., 4 hours in seconds)
+    my $expiration_time = quest::add_global_buff($buff_id, 4 * 60 * 60);
+
+    # Retrieve the remaining time for the buff in seconds
+    my $remaining_seconds = quest::get_data_remaining("eom_$buff_id");
+    
+    # Convert remaining seconds to hours, minutes, and seconds
+    my ($hours, $minutes, $seconds) = plugin::convert_seconds($remaining_seconds);
+
+    # Announce the buff extension to the world
+    plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to extend your enhanced $buff_type. This buff will endure for $hours Hours and $minutes Minutes.");
+
+    return 1;
 }
 
 sub UpdateEoMAward {

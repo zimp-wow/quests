@@ -144,7 +144,7 @@ sub EVENT_SAY {
         if (plugin::SpendEOM($client, 25)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";            
             for my $value (43002 .. 43008) {
-                quest::add_global_buff($value,4*60*60);                
+                plugin::ApplyWorldWideBuff($buff_id);                
             }
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
@@ -166,8 +166,8 @@ sub EVENT_SAY {
         handle_buff_for_level(2, 3);
     }
 
-    if ($buff_id && plugin::SpendEOM($client, $cost)) {
-        if (quest::add_global_buff($buff_id, 4*60*60)) {
+    if ($buff_id) {
+        if (plugin::SpendEOM($client, $cost) && plugin::ApplyWorldWideBuff($buff_id)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
