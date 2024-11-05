@@ -181,6 +181,11 @@ sub EVENT_SAY {
     }
 }
 
+sub EVENT_ITEM {
+	#:: Return unused items
+	plugin::returnUnusedItems();
+}
+
 sub ApplyGroupBuff {
     my $buff_id = shift;
 
