@@ -8,7 +8,7 @@ function event_death_complete(e)
 	local killer = eq.get_entity_list():GetClientByID(e.killer_id)
     if killer and killer:GetLevel() <= 60 then
         killer:CastToClient():SetBucket('flag-semaphore', '204')
-        killer:Signal(0)
+        killer:Signal(100)
     end
 end
 

@@ -1,26 +1,30 @@
 sub EVENT_SIGNAL {
+    # Signals;
+    # 666 = EoM Dead Drop
+    # 100 = Title Flags
+
     if ($signal == 666) {
-        quest::debug("Got EoM Signal");
         plugin::UpdateEoMAward($client);
-    } else {
-        # Title Semaphore from lua scripts
+        return;
+    }
+
+    if ($signal == 100) {
         my $semaphore_title = $client->GetBucket('flag-semaphore');
         if ($semaphore_title) {
             plugin::AddTitleFlag($semaphore_title, $client);
             $client->DeleteBucket('flag-semaphore');
         }
-
         plugin::EnableTitles($client);
-    }
+    } 
 }
 
 sub EVENT_ENTERZONE {
-	plugin::CommonCharacterUpdate($client);    
+	plugin::CommonCharacterUpdate($client);
+
 	if (!plugin::is_eligible_for_zone($client, $zonesn)) {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
 		$client->MovePC(151, 185, -835, 4, 390); # Bazaar Safe Location.
-	}
-
+    }
 
     # Only THJ Stuff after this point
     if (!plugin::IsTHJ()) {
@@ -35,9 +39,7 @@ sub EVENT_ENTERZONE {
 
     my $entity_list = plugin::val('$entity_list');
     my @npcs = $entity_list->GetNPCList();
-
-
-     if (plugin::IsTHJ() && $instanceid) {
+    if (plugin::IsTHJ() && $instanceid) {
         foreach my $npc (@npcs) {
             my $expedition = quest::get_expedition();
             if ($expedition) {
@@ -76,8 +78,12 @@ sub EVENT_CONNECT {
     if (plugin::GetSoulmark($client)) {
         plugin::DisplayWarning($client);
     }
+
+    plugin::GrantClassesAA($client);
+    plugin::GrantGeneralAA($client);
     
     plugin::CommonCharacterUpdate($client); 
+
     if (!$client->GetBucket("First-Login")) {
         $client->SetBucket("First-Login", 1);
 		$client->SummonItem(18471); #A Faded Writ
@@ -136,6 +142,10 @@ sub EVENT_TASK_COMPLETE {
 
 sub EVENT_LEVEL_UP {
     plugin::CommonCharacterUpdate($client);
+
+    plugin::GrantClassesAA($client);
+    plugin::GrantGeneralAA($client);
+
     my $new_level = $client->GetLevel();
     if (($new_level % 10 == 0) || $new_level == 5 || $new_level == $client->GetBucket("CharMaxLevel")) {
         my $name = $client->GetCleanName();
@@ -153,14 +163,6 @@ sub EVENT_CLICKDOOR {
     if (!plugin::is_eligible_for_zone($client, $target_zone, 1)) {		
 		return 1;
     }
-}
-
-sub EVENT_ZONE {
-    # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
-    plugin::CommonCharacterUpdate($client);
-}
-
-sub EVENT_READ_ITEM {
 }
 
 sub EVENT_WARP {
