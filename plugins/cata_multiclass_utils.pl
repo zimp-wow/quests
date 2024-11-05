@@ -11,7 +11,6 @@ sub CommonCharacterUpdate {
         GrantClassesAA($client);
         GrantGeneralAA($client); # Grant the general here too
 
-        plugin::CheckWorldWideBuffs($client);
         plugin::UpdateCharMaxLevel($client);
         plugin::UpdateEoMAward($client);
         plugin::RegisterSeasonalLogin($client);

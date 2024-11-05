@@ -3,52 +3,6 @@ my $eom_item_id = 46779;
 my $eom_log = "total-eom-spend";
 my $eom_award_log = "total-eom-award";
 
-sub CheckWorldWideBuffs {
-    my $client = plugin::val('$client');
-    my $entity_list = plugin::val('$entity_list');
-
-    if (!$client) {
-        return;
-    }
-
-    DoCheckWorldWideBuffs($client);
-
-    foreach my $npc ($entity_list->GetNPCList()) {
-        next unless $npc->GetOwner();  # Skip if there's no owner
-
-        if ($npc->GetOwner()->GetID() == $client->GetID()) {
-            DoCheckWorldWideBuffs($npc);
-        }
-    }
-    
-}
-
-sub DoCheckWorldWideBuffs {
-    my $target = shift;
-    if ($target && ($target->IsClient() || ($target->IsPet() && $target->HasOwner() && $target->GetOwner()->IsClient()))) {
-        my $hp_ratio   = $target->GetHPRatio();
-        my $mana_ratio = $target->GetManaRatio();
-
-        my @buffs_to_check = (43002..43008, 17779);
-
-        for my $spell_id (@buffs_to_check) {
-            my $data = quest::get_data("eom_$spell_id");
-            my $tics_remaining = int(quest::get_data_remaining("eom_$spell_id") / 6);
-
-            if ($data) {
-                $target->ApplySpellBuff($spell_id, $tics_remaining);
-                #quest::debug("Applied spell buff: ID $spell_id, Tics: $tics_remaining");
-            } else {
-                $target->BuffFadeBySpellID($spell_id);
-                #quest::debug("Faded spell buff: ID $spell_id, No data found");
-            }
-        }
-
-        $target->SetHP($target->GetMaxHP() * ($hp_ratio / 100));
-        $target->SetMana($target->GetMaxMana() * ($mana_ratio / 100));
-    }
-}
-
 sub FadeWorldWideBuffs {
     my $npc = shift;
 

@@ -2,8 +2,6 @@ sub EVENT_SIGNAL {
     if ($signal == 666) {
         quest::debug("Got EoM Signal");
         plugin::UpdateEoMAward($client);
-    } elsif ($signal == 100) {
-        plugin::CheckWorldWideBuffs($client);
     } else {
         # Title Semaphore from lua scripts
         my $semaphore_title = $client->GetBucket('flag-semaphore');

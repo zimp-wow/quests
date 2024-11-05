@@ -87,7 +87,6 @@ sub handle_buff_for_level {
 }
 
 sub EVENT_SAY {
-    return;
     my $response = "";
     my $clientName = $client->GetCleanName();
     my $buff_id = 0;
@@ -145,12 +144,12 @@ sub EVENT_SAY {
         if (plugin::SpendEOM($client, 25)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";            
             for my $value (43002 .. 43008) {
-                plugin::ApplyWorldWideBuff($value, 0);                
+                quest::add_global_buff($value,2400);                
             }
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
-        quest::worldwidesignalclient(100);
+        quest::reload_global_buffs();
     }
 
     elsif ($text=~/influence the tides of fate/i) {
@@ -168,12 +167,12 @@ sub EVENT_SAY {
     }
 
     if ($buff_id && plugin::SpendEOM($client, $cost)) {
-        if (plugin::ApplyWorldWideBuff($buff_id)) {
+        if (quest::add_global_buff($buff_id, 2400)) {
             $response = "Excellent! Your fellow adventurers will appreciate this!";
         } else {
             $response = "You do not have enough [Echo of Memory] to afford that.";
         }
-        quest::worldwidesignalclient(100);
+        quest::reload_global_buffs();
     }  
 
     if ($response) {
