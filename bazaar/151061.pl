@@ -5,6 +5,11 @@ my $race_change_cost = 10;
 my $sex_change_cost  = 10;
 my $name_change_cost = 10;
 
+sub EVENT_ITEM {
+	#:: Return unused items
+	plugin::return_items(\%itemcount);
+}
+
 sub EVENT_SAY {
     my $sex_word;
     if ($client->GetGender()) {
