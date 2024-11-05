@@ -110,17 +110,18 @@ sub ApplyWorldWideBuff {
         43008 => "Health Regeneration",
         17779 => "Loot Upgrade Rate"
     );
-    
+
     my $buff_type = $buff_types{$buff_id} // "Unknown Buff";  # Fallback for unknown buff IDs
 
-    # Add the buff globally with an expiration time (e.g., 4 hours in seconds)
+    # Add the buff globally and get the absolute expiration time in seconds since the epoch
     my $expiration_time = quest::add_global_buff($buff_id, 4 * 60 * 60);
-
-    # Retrieve the remaining time for the buff in seconds
-    my $remaining_seconds = quest::get_data_remaining("eom_$buff_id");
     
-    # Convert remaining seconds to hours, minutes, and seconds
-    my ($hours, $minutes, $seconds) = plugin::convert_seconds($remaining_seconds);
+    # Calculate the remaining duration in seconds
+    my $remaining_seconds = $expiration_time - time();
+
+    # Convert remaining seconds to hours and minutes
+    my $hours = int($remaining_seconds / 3600);
+    my $minutes = int(($remaining_seconds % 3600) / 60);
 
     # Announce the buff extension to the world
     plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to extend your enhanced $buff_type. This buff will endure for $hours Hours and $minutes Minutes.");
