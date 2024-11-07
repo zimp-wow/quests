@@ -2,7 +2,7 @@
 function event_combat(e)
 	if(e.joined) then
 		if(math.random(2) == 1) then
-			e.self:Say("" .. e.other:Race() .. "s like you are better left dead than alive.");
+			e.self:Say("" .. e.other:GetRace() .. "s like you are better left dead than alive.");
 		else
 			e.self:Say("You ssssshall know the horror of Cazic-Thule!");
 		end
