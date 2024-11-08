@@ -10,7 +10,7 @@ sub EVENT_SAY {
   if ($text=~/hail/i) {        
     if (!group_flg) { $group_flg = " However, that magic, like teleporting an entire group, will require [special reagents]." }
     else { $group_flg = "" };
-    plugin::NPCTell("Greetings, $name. I am Tearel, the Keeper of the Map. I can [attune the map] to any rune circles you have previously discovered. If you are 
+    plugin::NPCTell("Greetings, $name. I am Timmy, Son of Tearel, the Keeper of the Map. I can [attune the map] to any rune circles you have previously discovered. If you are 
                     part of [an expedition] I can also help you return to the heat of the battle.$group_flg");
     return;
   }
