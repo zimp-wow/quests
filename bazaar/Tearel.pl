@@ -142,3 +142,7 @@ sub get_eligible_continent_names {
 
     return @eligible_continent_names;
 }
+
+sub EVENT_ITEM {
+  plugin::return_items(\%itemcount);
+}
