@@ -148,7 +148,7 @@ sub EVENT_ITEM {
 }
 
 sub EVENT_TICK {
-    my $max_idle_seconds = 600; # Set your max idle threshold here (e.g., 60 seconds)
+    my $max_idle_seconds = 60 * 15; # Set your max idle threshold here (e.g., 60 seconds)
     my $idle_ticks = $max_idle_seconds / 6;
 
     my $warning_50_percent = int($idle_ticks * 0.5);
