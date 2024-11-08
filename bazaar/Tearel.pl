@@ -160,9 +160,10 @@ sub EVENT_TICK {
         next;
       }
 
-      my $last_x = int($client->GetEntityVariable("last_x") // 0);
-      my $last_y = int($client->GetEntityVariable("last_y") // 0);
-      my $last_h = int($client->GetEntityVariable("last_h") // 0);
+      my $last_x = int($client->GetEntityVariable("last_x") || 0);
+      my $last_y = int($client->GetEntityVariable("last_y") || 0);
+      my $last_h = int($client->GetEntityVariable("last_h") || 0);
+
 
       my $cur_x = int($client->GetX());
       my $cur_y = int($client->GetY());
