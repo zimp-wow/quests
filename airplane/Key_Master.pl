@@ -1,11 +1,11 @@
-my $counter;
+
 
 sub EVENT_SPAWN {
-	#:: Reset the count
-	$counter = 0;
+	$npc->SetEntityVariable("azarack_counter", 0);
 }
 
 sub EVENT_SIGNAL {
+	my $counter = $npc->GetEntityVariable("azarack_counter");
 	#:: Match a signal '1' from airplane/an_azarack.pl
 	if ($signal == 1) {
 		#:: Add 1 to the current count
@@ -17,6 +17,7 @@ sub EVENT_SIGNAL {
 			$counter = 0;
 		}
 	}
+	$npc->SetEntityVariable("azarack_counter", $counter);
 }
 
 sub EVENT_SAY { 
