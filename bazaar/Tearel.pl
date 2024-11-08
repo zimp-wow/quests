@@ -179,7 +179,7 @@ sub EVENT_TICK {
               my $max_idle_minutes = sprintf("%.1f", $max_idle_seconds / 60);
 
               if ($idle_counter == $warning_50_percent || $idle_counter == $warning_80_percent) {
-                  $client->Message(15, "Warning: You have been idle for $idle_minutes minutes. You will be returned to character select in ". sprintf("%.1f", ((max_idle_seconds - $idle_seconds) / 60) ));
+                  $client->Message(15, "Warning: You have been idle for $idle_minutes minutes. You will be returned to character select in ". sprintf("%.1f", (($max_idle_seconds - $idle_seconds) / 60) ) , " minutes,");
               }
 
               if ($idle_counter >= $idle_ticks) {
