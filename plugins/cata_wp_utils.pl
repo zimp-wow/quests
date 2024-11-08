@@ -15,7 +15,7 @@ my %waypoints = (
     # Antonica (0)
     'blackburrow'   => ["Blackburrow", 0, -7, 38, 3, 300],
     'commons'       => ["West Commonlands (Roadside Inn)", 0, 503, -127, -51, 128],
-    'ecommon'       => ["East Commonlands", 0, -140, -1520, 3, 0],
+    'ecommon'       => ["East Commonlands", 0, -356, -1603, 3, 0],
     'feerrott'      => ["The Feerrott", 0, -1830, 430, 18, 33],
     'freportw'      => ["West Freeport", 0, -396, -283, -23, 500],
     'grobb'         => ["Grobb", 0, -200, 223, 3.75, 414],
