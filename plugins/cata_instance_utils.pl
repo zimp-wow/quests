@@ -9,6 +9,7 @@ sub OfferStandardInstance {
   my $zonesn          = plugin::val('$zonesn');
   my $dz_version      = 0;
   my $dz_duration     = 64800; # 18 hours
+  my $dz_duration_sta = 64800; # 18 hours
   my $dz_lifetime     = 604800;
   my ($expedition_name, $min_players, $max_players, $dz_zone, $x, $y, $z, $heading) = @_;
 
@@ -26,8 +27,14 @@ sub OfferStandardInstance {
       quest::say("When you are [" . quest::saylink("ready", 1) . "], proceed into the portal.");
     }
     else {
-      quest::say("I offer you a Trial. $expedition_name lies before you, do you accept the challenge?");
-      plugin::YellowText("You can select from [". quest::saylink('Respawning', 1). "] or [".quest::saylink('Non-Respawning',1). "] versions.");
+      quest::say("I offer you a Trial. $expedition_name lies before you, do you accept the challenge?");      
+      if (plugin::IsTHJ()) {
+        plugin::YellowText("Notice: Instances will become more difficult for each player in your group beyond the second.");
+        plugin::YellowText("[". quest::saylink('Non-Respawning',1). "] will not repopulate over time, and the most powerful enemies may be found within.");
+        plugin::YellowText("[". quest::saylink('Respawning', 1). "] will repopulate over time, but some rare enemies may not be found inside.");
+      } else {
+        plugin::YellowText("You can select from [". quest::saylink('Respawning', 1). "] or [".quest::saylink('Non-Respawning',1). "] versions.");
+      }
     }
   }
 
@@ -41,7 +48,12 @@ sub OfferStandardInstance {
     if ($dz) {
       $dz->SetCompass($zonesn, $npc->GetX(), $npc->GetY(), $npc->GetZ());
       $dz->SetSafeReturn($zonesn, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
-      $dz->AddReplayLockout($dz_duration);      
+      if ($text eq 'Respawning') {
+        $dz->AddReplayLockout($dz_duration);
+      }
+      if ($text eq 'Non-Respawning') {
+        $dz->AddReplayLockout($dz_duration_sta);
+      } 
       quest::say("Very well. When you are [" . quest::saylink("ready", 1) . "], proceed into the portal, and remember!");
     }
   }
