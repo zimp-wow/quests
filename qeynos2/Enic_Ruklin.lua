@@ -46,7 +46,7 @@ function event_trade(e)
 		end
 	end	
 
-	if(qglobals["paladin_epic"] >= "3") then
+	if(qglobals["paladin_epic"] ~= nil and qglobals["paladin_epic"] >= "3") then
 		if item_lib.check_turn_in(e.trade, {item1 = 69929, item2 = 69930, item3 = 69931, item4 = 69932}) then
 			e.self:Say("So this is what happened to the Koalindl? This is sad indeed. I have heard that you have stopped a greater tragedy from occuring by treating the pestilence that was being brought to the seas. You have done a very good job, " .. e.other:GetName() ..". I present you with a seal of nobility that was given to me long ago. This seal has granted me audiences with many of the different races of Norrath, including the Ring of Scale. Perhaps it will aide you in your journeys. Thank you again, sir.");
 			eq.set_global("paladin_epic","4",5,"F");
