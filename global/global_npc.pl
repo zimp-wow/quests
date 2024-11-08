@@ -150,7 +150,7 @@ sub EVENT_DAMAGE_GIVEN
 }
 
 sub EVENT_KILLED_MERIT {
-    plugin::ProcessSlayerCredit($client, $npc, $entity_list);
+    #plugin::ProcessSlayerCredit($client, $npc, $entity_list);
 
     if (plugin::IsTHJ()) {
         my $con_color = $client->GetConsiderColor($npc);
