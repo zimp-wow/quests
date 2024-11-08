@@ -70,7 +70,7 @@ sub GetClassMap {
     );
 }
 
-sub  {
+sub GetClassID {
     my ($class_name) = @_;
     my %class_map = (
         "Warrior" => 1,
