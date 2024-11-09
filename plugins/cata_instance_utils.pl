@@ -23,7 +23,7 @@ sub OfferStandardInstance {
 
   if ($text =~ /hail/i) {
     my $dz = $client->GetExpedition();
-    if ($dz && ($dz->GetName() eq $expedition_name || $dz->GetName() eq ($expedition_name . " (Static)"))) {
+    if ($dz && ($dz->GetName() eq ($expedition_name . " (Respawning)") || $dz->GetName() eq ($expedition_name . " (Non-Respawning)"))) {
       quest::say("When you are [" . quest::saylink("ready", 1) . "], proceed into the portal.");
     }
     else {
@@ -52,10 +52,10 @@ sub OfferStandardInstance {
       $dz->SetCompass($zonesn, $npc->GetX(), $npc->GetY(), $npc->GetZ());
       $dz->SetSafeReturn($zonesn, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
       if ($text eq 'Respawning') {
-        $dz->AddReplayLockout($dz_duration);
+        $dz->AddReplayLockout($dz_duration_sta);
       }
       if ($text eq 'Non-Respawning') {
-        $dz->AddReplayLockout($dz_duration_sta);
+        $dz->AddReplayLockout($dz_duration);
       } 
       quest::say("Very well. When you are [" . quest::saylink("ready", 1) . "], proceed into the portal, and remember!");
     }
@@ -63,7 +63,7 @@ sub OfferStandardInstance {
 
   elsif ($text =~ /ready/i) {
     my $dz = $client->GetExpedition();
-    if ($dz && ($dz->GetName() eq $expedition_name || $dz->GetName() eq ($expedition_name . " (Static)"))) {
+    if ($dz && ($dz->GetName() eq ($expedition_name . " (Respawning)") || $dz->GetName() eq ($expedition_name . " (Non-Respawning)"))) {
       
       # Fallback to safe zone coordinates if x, y, z, or heading are not defined
       my $final_x = defined $x ? $x : quest::GetZoneSafeX($dz->GetZoneID());
