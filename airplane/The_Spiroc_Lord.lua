@@ -2,7 +2,7 @@ function event_spawn(e)
 	instance_id = eq.get_zone_instance_id() or 0;
 end
 function event_combat(e)
-	if(eq.get_entity_list():IsMobSpawnedByNpcTypeID(71009)) then
+	if(eq.get_entity_list():IsMobSpawnedByNpcTypeID(71013)) then
 		eq.set_timer("reset", 300000);
 		eq.signal(71007, 255); --a_spiroc_banisher
 		eq.signal(71008, 255); --a_spiroc_arbiter
