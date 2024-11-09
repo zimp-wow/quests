@@ -20,7 +20,7 @@ function event_trade(e)
 end
 
 function event_death_complete(e)
-	eq.set_data("airplane-sirran-".. instance_id, "1");
+	eq.set_data("airplane-sirran-" .. instance_id, "1", tostring(eq.seconds("24h")));
 	eq.spawn2(71058,0,0,688,1381,-645,384); -- NPC: Sirran_the_Lunatic
 end
 
