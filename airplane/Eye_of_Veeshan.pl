@@ -30,6 +30,7 @@ sub EVENT_TIMER {
 
 sub EVENT_DEATH_COMPLETE {
 	quest::delete_data("airplane-sirran-" . instance_id);
+	
 	my $killer = $entity_list->GetClientByID($killer_id);   
 
 	if ($killer && plugin::IsSeasonal($killer)) {
