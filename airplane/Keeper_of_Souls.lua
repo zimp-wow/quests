@@ -14,7 +14,7 @@ end
 
 function event_death_complete(e)
 	sirran= nil;
-	eq.set_data("airplane-sirran-".. instance_id, "4");
+	eq.set_data("airplane-sirran-" .. instance_id, "4", tostring(eq.seconds("24h")));
 	eq.spawn2(71058,0,0,-543,767,174,128); -- NPC: Sirran_the_Lunatic
 end
 

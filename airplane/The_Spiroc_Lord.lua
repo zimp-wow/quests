@@ -28,7 +28,7 @@ function event_timer(e)
 	end
 end
 function event_death_complete(e)
-		eq.set_data("airplane-sirran-".. instance_id, "5");
+		eq.set_data("airplane-sirran-" .. instance_id, "5", tostring(eq.seconds("24h")));
 		eq.spawn2(71058,0,0,955,-570,466,390); -- NPC: Sirran_the_Lunatic
 	--[[if(eq.get_entity_list():IsMobSpawnedByNpcTypeID(71013) or eq.get_entity_list():IsMobSpawnedByNpcTypeID(71009)) then
 		eq.update_spawn_timer(2630,1000); --update to respawn in 1 sec if vanquisher or guardian are still up
