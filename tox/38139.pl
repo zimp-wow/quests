@@ -35,7 +35,9 @@ sub EVENT_WAYPOINT_ARRIVE {
 			quest::say("Speed up the digging my pets!!");
 			$skelent = $entity_list->GetMobByNpcTypeID(38016);
 			$skelnpc = $skelent->CastToNPC();
-			$skelnpc->SignalNPC(9);				
+			if($skelnpc){
+			$skelnpc->SignalNPC(9);
+			}				
 		}
 		else {
 			quest::say("Who on Bertoxxulous' blistered backside are you? Where did those fools go off to?");
