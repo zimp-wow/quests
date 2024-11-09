@@ -1,3 +1,8 @@
+sub EVENT_ITEM {
+	#:: Return unused items
+	plugin::return_items(\%itemcount);
+}
+
 sub EVENT_SAY {
     if (!plugin::IsTHJ()) {
         return;
