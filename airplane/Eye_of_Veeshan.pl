@@ -1,5 +1,5 @@
 sub EVENT_SPAWN {
-	my $instance_id = quest::getInstanceID();
+	my $instance_id = quest::GetInstanceID();
 }
 
 sub EVENT_COMBAT {
