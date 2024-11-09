@@ -182,6 +182,8 @@ sub IsBlacklistedNPC {
       'Master Yael',
 
       # Kunark NPCs
+      'Venril Sathir`s Remains',
+      'Doglin Codslayer',
       'Severilous',
       'Gorenaire',
       'Venril Sathir',
