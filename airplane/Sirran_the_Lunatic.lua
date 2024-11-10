@@ -8,7 +8,7 @@ end
 
 function event_say(e)
 	local airplane_sirran_status = tonumber(eq.get_data("airplane-sirran-".. instance_id)) or 0;
-	eq.debug(airplane_sirran_status)
+	eq.debug(tostring(airplane_sirran_status))
 	if e.message:findi("hail") then
 		eq.set_timer("bye", 20 * 60 * 1000);
 		if airplane_sirran_status == 1 then		--island1
