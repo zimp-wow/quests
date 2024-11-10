@@ -5,6 +5,9 @@ my $group = undef;
 my $pc = undef;
 my $count = undef;
 
+$instanceid = quest::GetInstanceID();
+
+
 sub EVENT_SPAWN {
 	$sphere = undef;
 	quest::settimer(2,1);

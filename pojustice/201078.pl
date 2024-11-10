@@ -16,6 +16,9 @@ my $group = undef;
 my $count = undef;
 my $pc = undef;
 
+$instanceid = quest::GetInstanceID();
+
+
 sub EVENT_SPAWN {
    #Depop any existing controllers
 	quest::depopall(201425);
