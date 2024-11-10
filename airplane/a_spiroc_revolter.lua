@@ -1,5 +1,5 @@
 function event_signal(e)
-	entity_list = eq.get_entity_list();
+	local entity_list = eq.get_entity_list();
 
 	if(e.signal == 255) then
 		local mobtypeID =  entity_list:GetMobByNpcTypeID(71012);
