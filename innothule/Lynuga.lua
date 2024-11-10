@@ -13,12 +13,12 @@ function event_trade(e)
 	if(item_lib.check_turn_in(e.trade, {item1 = 10035})) then -- Handin: Ruby
 		e.self:Say("Mmm. Ruby!! Me thank's you! Here take this, me got it off dead someone who try take my collection. Me think's this valuable thing..");
 		local item_random = math.random(100);
-		if item_random < 1 then
+		if item_random < 10 then
 			e.other:SummonItem(10082, 6); -- Ivandyr's Hoop
-		elseif item_random < 5 then
-			e.other:SummonItem(10081, 5); -- Midnight Mallet
-		else
+		elseif item_random < 50 then
 			e.other:SummonItem(10080); -- Brutechopper
+		else
+			e.other:SummonItem(10081, 5); -- Midnight Mallet
 		end
 		e.other:Ding();
 		e.other:Faction(222,1,0); -- Faction: Broken Skull Clan
