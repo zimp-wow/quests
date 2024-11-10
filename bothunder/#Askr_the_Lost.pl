@@ -1,6 +1,3 @@
-$instanceid = quest::GetInstanceID();
-
-
 sub EVENT_SPAWN {
 quest::say("All to me!");
 quest::settimer(1,1800);

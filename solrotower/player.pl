@@ -1,7 +1,6 @@
 # you do not need rallos to get into solrotower so why would he be needed to click up to solro area?
 # removed rallos requirement to click up
 # rallos was required to get to sol ro, not the zone, on live, that is why he was in here. - Reno
-$instanceid = quest::GetInstanceID();
 
 sub EVENT_CLICKDOOR {
   if($doorid == 44 || $doorid == 45 || $doorid == 47 || $doorid == 48){
