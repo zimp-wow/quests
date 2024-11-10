@@ -77,7 +77,7 @@ sub OfferStandardInstance {
 }
 
 sub ScaleInstanceNPC {
-  if (!IsTHJ()) {
+  if (!plugin::IsTHJ() || plugin::val('$instanceversion') != (quest::get_rule("Custom:StaticInstanceVersion"))) {
     return;
   }
 
