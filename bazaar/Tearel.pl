@@ -153,13 +153,25 @@ sub EVENT_ITEM {
 }
 
 sub EVENT_TICK {
+    my @clientlist = $entity_list->GetClientList();
+    my $clientcount = @clientlist;
+
+    my $bazaar_data = quest::get_data("bazaar_full");
+    if ($clientcount >= 300 && !$bazaar_data) {
+      quest::set_data("bazaar_full", 1);
+    }
+
+    if ($clientcount < 300 && $bazaar_data) {
+      quest::delete_data("bazaar_full");
+    }
+
     my $max_idle_seconds = 60 * 15; # Set your max idle threshold here (e.g., 60 seconds)
     my $idle_ticks = $max_idle_seconds / 6;
 
     my $warning_50_percent = int($idle_ticks * 0.5);
     my $warning_80_percent = int($idle_ticks * 0.8);
 
-    my @clientlist = $entity_list->GetClientList();
+    
     foreach my $client (@clientlist) {
       if (!$client || $client->IsTrader() || $client->GetGM()) {        
         next;
