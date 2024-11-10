@@ -2,11 +2,11 @@ local sirran_six_cheese	= false;
 local instance_id		= 0;
 
 function event_spawn(e)
-	instance_id = eq.get_zone_instance_id() or 0;
 	eq.set_timer("bye", 20 * 60 * 1000);
 end
 
 function event_say(e)
+	local instance_id = eq.get_zone_instance_id() or 0;
 	local airplane_sirran_status = tonumber(eq.get_data("airplane-sirran-".. instance_id)) or 0;
 	eq.debug(tostring(airplane_sirran_status))
 	eq.debug(tostring(instance_id))
