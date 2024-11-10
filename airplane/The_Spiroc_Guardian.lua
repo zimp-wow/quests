@@ -7,7 +7,7 @@ function event_signal(e)
 		eq.follow(follow_mob);
 	elseif(e.signal == 254) then
 		eq.stop_follow();
-		eq.Repop();
+		
 	end
 end
 

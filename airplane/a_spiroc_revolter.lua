@@ -6,7 +6,6 @@ function event_signal(e)
 		local follow_mob = mobtypeID:GetID();
 		eq.follow(follow_mob);
 	elseif(e.signal == 254) then
-		eq.stop_follow();
-		eq.Repop();
+		eq.stop_follow();		
 	end
 end
