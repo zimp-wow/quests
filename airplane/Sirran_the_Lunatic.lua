@@ -1,5 +1,4 @@
 local sirran_six_cheese	= false;
-local instance_id		= 0;
 
 function event_spawn(e)
 	eq.set_timer("bye", 20 * 60 * 1000);
@@ -8,8 +7,6 @@ end
 function event_say(e)
 	local instance_id = eq.get_zone_instance_id() or 0;
 	local airplane_sirran_status = tonumber(eq.get_data("airplane-sirran-".. instance_id)) or 0;
-	eq.debug(tostring(airplane_sirran_status))
-	eq.debug(tostring(instance_id))
 	if e.message:findi("hail") then
 		eq.set_timer("bye", 20 * 60 * 1000);
 		if airplane_sirran_status == 1 then		--island1
@@ -39,6 +36,7 @@ function event_say(e)
 end
 
 function event_trade(e)
+	local instance_id = eq.get_zone_instance_id() or 0;
 	local airplane_sirran_status = tonumber(eq.get_data("airplane-sirran-".. instance_id)) or 0;
 	local item_lib = require("items");
 
@@ -127,6 +125,7 @@ function event_timer(e)
 end
 
 function event_death_complete(e)
+	local instance_id = eq.get_zone_instance_id() or 0;
 	eq.delete_data("airplane-sirran-".. instance_id);
 end
 

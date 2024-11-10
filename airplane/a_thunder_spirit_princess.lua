@@ -1,7 +1,5 @@
 -- Necromancer Epic NPC
-function event_spawn(e)
-	instance_id = eq.get_zone_instance_id() or 0;
-end
+
 function event_say(e)
 	if(e.message:findi("hail")) then
 		e.self:Say("Greetings, travelers, welcome to the Plane of Sky! We are thunder spirits - this first island is our home. You are welcome to stay here as long as you like. If you wish to go to other islands you may purchase keys from the Key Master.");
@@ -20,6 +18,7 @@ function event_trade(e)
 end
 
 function event_death_complete(e)
+	local instance_id = eq.get_zone_instance_id() or 0;
 	eq.set_data("airplane-sirran-" .. instance_id, "1", tostring(eq.seconds("24h")));
 	eq.spawn2(71058,0,0,688,1381,-645,384); -- NPC: Sirran_the_Lunatic
 end

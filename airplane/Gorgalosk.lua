@@ -1,6 +1,3 @@
-function event_spawn(e)
-	instance_id = eq.get_zone_instance_id() or 0;
-end
 function event_say(e)
 	if(e.message:findi("hail")) then
 		e.self:Say("Greetings, " .. e.other:GetName() .. ". This is my domain and I hope you have a peaceful stay. That is, unless the [lunatic sent you].");
@@ -15,6 +12,7 @@ function event_say(e)
 end
 
 function event_death_complete(e)
+	local instance_id = eq.get_zone_instance_id() or 0;
 	eq.set_data("airplane-sirran-" .. instance_id, "3", tostring(eq.seconds("24h")));
 	eq.spawn2(71058,0,0,320,540,-54,256); -- NPC: Sirran_the_Lunatic
 end
