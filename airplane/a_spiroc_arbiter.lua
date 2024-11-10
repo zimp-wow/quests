@@ -1,5 +1,5 @@
 function event_signal(e)
-	entity_list = eq.get_entity_list();
+	local entity_list = eq.get_entity_list();
 
 	if(e.signal == 255) then
 		local mobtypeID =  entity_list:GetMobByNpcTypeID(71012);
@@ -7,7 +7,6 @@ function event_signal(e)
 		eq.follow(follow_mob);
 	elseif(e.signal == 254) then
 		eq.stop_follow();
-		eq.Repop();
 	end
 end
 
