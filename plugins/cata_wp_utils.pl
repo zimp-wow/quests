@@ -90,6 +90,7 @@ my %waypoints = (
     'twilight'      => ["The Twilight Sea", 5, -1028, 1338, 39, 0],
     'scarlet'       => ["The Scarlet Desert", 5, -1777, -956, -99, 0],
     'paludal'       => ["Paludal Caverns", 5, 220, -1175, -236, 0],
+    'bazaar'        => ["The Bazaar", 5, 105, -175, -15, 65],
 
     # The Planes (6)
     'airplane'      => ["The Plane of Sky", 6, 700, 1560, -680, 300],
@@ -199,6 +200,7 @@ sub AddDefaultAttunement {
         AddWaypoint('sharvahl');
         AddWaypoint('paineel');
         AddWaypoint('ecommons');
+        AddWaypoint('bazaar');
 
         if (!plugin::IsTHJ()) {
             AddWaypoint("lavastorm");

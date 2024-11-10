@@ -1,10 +1,12 @@
 # Bazaar Portal
 sub EVENT_SPELL_EFFECT_CLIENT {
-    my $client = plugin::val('$client');
     use List::Util qw(shuffle);
-    
-    # Define a hash of possible locations in zone 151 (Bazaar)
-    my %locations = (
+    my $client      = plugin::val('$client');
+    my $bind_loc = $client->GetBucket("baz_and_back_bind") || 'bazaar';
+    my %locations;
+
+    # Define possible locations in zone 151 (Bazaar)
+    my %baz_locations = (
         'safe_location' => [quest::GetZoneSafeX(151), quest::GetZoneSafeY(151), quest::GetZoneSafeZ(151), quest::GetZoneSafeHeading(151)],
         'Location A'    => [-135, -550, 5, 300],
         'Location B'    => [100, -500, 5, 300],
@@ -15,8 +17,29 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         'Aporia 2'      => [-179, -151, -16, 254],
         'Aporia 3'      => [168, -149, -16, 259],
         'Aporia 4'      => [-148, -481, 3, 310],
-        # Add more locations as needed
     );
+
+    # Define possible locations in ecommons zone
+    my %ecommons_locations = (
+        'Location A'    => [-245, -1558, 4, 0],
+        'Location B'    => [-335, -1630, 4, 100],
+        'Location C'    => [-340, -1815, 4, 50],
+        'Location D'    => [-125, -1800, 4, 100],
+        'Location E'    => [-125, -1600, 4, 100],
+        'Location F'    => [-55, -1750, 4, 450],
+        'Location G'    => [-82, -1550, 4, 100],
+    );
+
+    # Assign locations based on $bind_loc
+    if ($bind_loc eq 'bazaar') {
+        %locations = %baz_locations;
+    } elsif ($bind_loc eq 'ecommons') {
+        %locations = %ecommons_locations;
+    } else {        
+        %locations = %baz_locations;
+    }
+
+    $bind_loc = quest::GetZoneID($bind_loc);
 
     # Shuffle the keys and pick a random location
     my @keys = shuffle(keys %locations);
@@ -28,7 +51,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
     my $z               = $chosen_loc->[2];
     my $heading         = rand(512);
 
-    if ($zoneid != 151) {
+    if ($zoneid != $bind_loc) {
         # Save the current location
         $client->SetBucket("Return-X", $client->GetX());
         $client->SetBucket("Return-Y", $client->GetY());
@@ -70,7 +93,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
         }
 
         # Move the player to the Bazaar at a randomized location
-        $client->MovePC(151, $randomized_x, $randomized_y, $z, $heading);
+        $client->MovePC($bind_loc, $randomized_x, $randomized_y, $z, $heading);
     } else {
         # Return player to the saved location or bind point if no saved location exists
         my $ReturnX = $client->GetBucket("Return-X");

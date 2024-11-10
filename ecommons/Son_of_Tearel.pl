@@ -2,16 +2,33 @@ sub EVENT_SAY {
   my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled") || "";  
   my $eom_link        = quest::varlink(46779);
 
-  
-  #  plugin::AwardBonusUnlocks($client);
+  my $bind_loc        = $client->GetBucket("baz_and_back_bind") || 'bazaar';
+  my $revind_text     = "";
+
   plugin::AddDefaultAttunement($client);
-  
 
   if ($text=~/hail/i) {        
-    if (!group_flg) { $group_flg = " However, that magic, like teleporting an entire group, will require [special reagents]." }
-    else { $group_flg = "" };
-    plugin::NPCTell("Greetings, $name. I am Timmy, Son of Tearel, the Keeper of the Map. I can [attune the map] to any rune circles you have previously discovered. If you are 
-                    part of [an expedition] I can also help you return to the heat of the battle.$group_flg");
+    if (!$group_flg) { 
+      $group_flg = " However, that magic, like teleporting an entire group, will require [special reagents]." 
+    } else { 
+      $group_flg = "" 
+    };
+    
+    if (!($bind_loc eq $zonesn)) {
+      $rebind_text = " I see that you are not personally attuned to this location, though! Would you like to [".quest::saylink("attune your Bazaar and Back", 1)."] ability to return you here?";
+    } else {
+      $rebind_text = "";
+    }
+
+    plugin::NPCTell("Greetings, $name. I am Timmy, Son of Tearel, the Keeper of the Other Map. I can [attune the map] to any rune circles you have previously discovered. If you are part of 
+                    [an expedition] I can also help you return to the heat of the battle.". $group_flg . $rebind_text);
+
+    return;
+  }
+
+  if ($text =~ /attune your Bazaar and Back/i) {
+    plugin::NPCTell("Excellent! You will now return to this vicinity whenever you use your Bazaar and Back ability!");
+    $client->SetBucket("baz_and_back_bind", $zonesn);
     return;
   }
 
@@ -86,7 +103,7 @@ sub EVENT_SAY {
           # Collect the long names for the waypoints with quest::saylink
           my @waypoint_links;
           foreach my $key (sort {$a cmp $b} keys %waypoints) {
-              if (plugin::is_eligible_for_zone($client, $key, 1)) {
+              if (plugin::is_eligible_for_zone($client, $key, 1) && $key ne $zonesn) {
                 my $long_name = $waypoints{$key}->[0];  # Get the long name
                 my $short_name = $key;  # The key is the short name
                 push @waypoint_links, "[".quest::saylink($short_name, 0, $long_name)."]";  # Create a clickable link
@@ -122,7 +139,7 @@ sub has_eligible_waypoints {
     my %waypoints = plugin::GetWaypoints($continent_id, $client);
 
     foreach my $key (keys %waypoints) {
-        if (plugin::is_eligible_for_zone($client, $key, 1)) {
+        if (plugin::is_eligible_for_zone($client, $key, 1) && $key ne $zonesn) {
             return 1;  # Return true if at least one eligible waypoint is found
         }
     }
