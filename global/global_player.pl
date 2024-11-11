@@ -78,10 +78,7 @@ sub EVENT_CONNECT {
     if (plugin::GetSoulmark($client)) {
         plugin::DisplayWarning($client);
     }
-
-    plugin::GrantClassesAA($client);
-    plugin::GrantGeneralAA($client);
-    
+   
     plugin::CommonCharacterUpdate($client); 
 
     if (!$client->GetBucket("First-Login")) {
@@ -143,9 +140,6 @@ sub EVENT_TASK_COMPLETE {
 
 sub EVENT_LEVEL_UP {
     plugin::CommonCharacterUpdate($client);
-
-    plugin::GrantClassesAA($client);
-    plugin::GrantGeneralAA($client);
 
     my $new_level = $client->GetLevel();
     if (($new_level % 10 == 0) || $new_level == 5 || $new_level == $client->GetBucket("CharMaxLevel")) {
