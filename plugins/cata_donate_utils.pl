@@ -131,8 +131,10 @@ sub ApplyWorldWideBuff {
 
 sub UpdateEoMAward {
     my $client = shift;
-
+    my $name = $client->GetCleanName();
+    
     $client->ReloadDataBuckets();
+    quest::debug("Got EOM Reward Signal for $name");
 
     if ($client->GetBucket("EoM-Award")) {
         plugin::AwardEOM($client, $client->GetBucket("EoM-Award"));
