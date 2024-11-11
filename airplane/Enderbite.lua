@@ -7,7 +7,7 @@ function event_say(e)
 	if(e.message:findi("hail")) then
 		e.self:Say("Great, let us waste no more time! I have three tests from which you can choose from. They are Disillusion, Memorization, and Incapacitation.");
 	elseif(e.message:findi("disillusion")) then  	--enchanter test of disillusion
-		e.self:Say("Disillusion it is. Proceed upward through the sky and return to me a Harpy Statuette, a Nebulous Sapphire, and an Adamintium Earring. This will prove your abilities to me and I will reward you with an Earring of Displacement.");
+		e.self:Say("Disillusion it is. Proceed upward through the sky and return to me a Harpy Statuette, a Black Nebulous Sapphire, and an Adamintium Earring. This will prove your abilities to me and I will reward you with an Earring of Displacement.");
 	elseif(e.message:findi("memorization")) then 	--enchanter test of memorization
 		e.self:Say("Memorization it is. Proceed upward through the sky and return to me a Carmine Spiroc Feather, a Ganoric Poison, and a Glowing Necklace. This will prove your abilities to me and I will reward you with a Necklace of Whispering Winds.");
 	elseif(e.message:findi("incapacitation")) then 	--enchanter test of incapacitation
@@ -17,7 +17,7 @@ end
 
 function event_trade(e)
 	local item_lib = require("items");
-	if(item_lib.check_turn_in(e.trade, {item1 = 20774, item2 = 20952, item3 = 20802})) then 					--enchanter test of disillusion using adamantium earring, harpy statuette, nebulous sapphire
+	if(item_lib.check_turn_in(e.trade, {item1 = 20774, item2 = 20952, item3 = 20773})) then 					--enchanter test of disillusion using adamantium earring, harpy statuette, black nebulous sapphire
 		e.other:SummonItem(14559);  --earring of displacement
 		e.other:AddEXP(100000);
 		e.self:Say("Good. Take this as your reward.");
