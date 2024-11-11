@@ -83,6 +83,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
                     $player->SetEntityVariable("bazaar_y", $chosen_loc->[1]);
                     $player->SetEntityVariable("bazaar_z", $chosen_loc->[2]);
                     $player->SetEntityVariable("bazaar_h", $chosen_loc->[3]);
+                    $player->SetEntityVariable("bazaar_zone", $$bind_loc);
                 }
             }
         }

@@ -116,15 +116,13 @@ sub EVENT_CONNECT {
 sub EVENT_POPUPRESPONSE {
     plugin::check_tutorial_popup_response($popupid, $client);    
 
-    my $bind_loc = $client->GetBucket("baz_and_back_bind") || 'bazaar';
-    $bind_loc = quest::GetZoneID($bind_loc);
-    
-    if ($popupid == 58240 && $zone != $bind_loc && $zone != 151) {
-        
+   
+    if ($popupid == 58240) {        
         my $x = $client->GetEntityVariable("bazaar_x") + int(rand(11)) - 5;
         my $y = $client->GetEntityVariable("bazaar_y") + int(rand(11)) - 5;
         my $z = $client->GetEntityVariable("bazaar_z");
         my $h = $client->GetEntityVariable("bazaar_h");
+        my $bind_loc = $client->GetEntityVariable("bazaar_zone");
 
         $client->SetBucket("Return-X", $client->GetX());
         $client->SetBucket("Return-Y", $client->GetY());
