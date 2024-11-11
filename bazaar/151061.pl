@@ -21,6 +21,7 @@ sub EVENT_SAY {
     if ($text=~/hail/i) {
         quest::say("Greetings, $name. Do you seek perfection? Are you [". quest::saylink("unhappy with your form", 1) ."]? 
                     Are you interested in embracing [". quest::saylink($sex_word, 1) ."]? 
+                    Would you like to [".quest::saylink("worship a new deity", 1)."]
                     ");
     }
 
@@ -39,6 +40,10 @@ sub EVENT_SAY {
                 }
             }
         }
+    }
+
+    elsif ($text=~/worship a new deity/i) {
+        
     }
     
 #    elsif ($text=~/new identity/i) {
