@@ -131,21 +131,36 @@ sub ApplyWorldWideBuff {
 
 sub UpdateEoMAward {
     my $client = shift;
-    my $name = $client->GetCleanName();
-    
-    $client->ReloadDataBuckets();
-    quest::debug("Got EOM Reward Signal for $name");
+    my $character_id = $client->CharacterID();
 
-    if ($client->GetBucket("EoM-Award")) {
-        plugin::AwardEOM($client, $client->GetBucket("EoM-Award"));
-        quest::ding();
-        $client->DeleteBucket("EoM-Award");
+    my $dbh = plugin::LoadMysqlServer();
+
+    # Helper subroutine to fetch bucket value from the database
+    sub fetch_bucket {
+        my ($dbh, $character_id, $key) = @_;
+        my $sth = $dbh->prepare("SELECT value FROM data_buckets WHERE character_id = ? AND `key` = ?");
+        $sth->execute($character_id, $key);
+        my ($value) = $sth->fetchrow_array();
+        return $value;
     }
 
-    # TODO - change this whole system at some point.
-    if ($client->GetBucket("EoM-Award-Auto")) {
-        plugin::AwardEOMAuto($client, $client->GetBucket("EoM-Award-Auto"));
+    # EoM-Award handling
+    my $eom_award_value = fetch_bucket($dbh, $character_id, "EoM-Award");
+    if ($eom_award_value) {
+        plugin::AwardEOM($client, $eom_award_value);
         quest::ding();
-        $client->DeleteBucket("EoM-Award-Auto");
+
+        # Remove bucket entry after processing
+        $dbh->do("DELETE FROM data_buckets WHERE character_id = ? AND `key` = ?", undef, $character_id, "EoM-Award");
+    }
+
+    # EoM-Award-Auto handling
+    my $eom_award_auto_value = fetch_bucket($dbh, $character_id, "EoM-Award-Auto");
+    if ($eom_award_auto_value) {
+        plugin::AwardEOMAuto($client, $eom_award_auto_value);
+        quest::ding();
+
+        # Remove bucket entry after processing
+        $dbh->do("DELETE FROM data_buckets WHERE character_id = ? AND `key` = ?", undef, $character_id, "EoM-Award-Auto");
     }
 }
