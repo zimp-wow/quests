@@ -72,7 +72,7 @@ sub EVENT_SPELL_EFFECT_CLIENT {
                         }
                     }
 
-                    my $tar_zone_ln = quest::GetZoneLongName($bind_loc);
+                    my $tar_zone_ln = quest::GetZoneLongNameByID($bind_loc);
 
                     my $popup_title = "Return to the Bazaar";
                     my $popup_text  = "Would you like to return to $tar_zone_ln with your groupmate?";
