@@ -114,9 +114,8 @@ sub EVENT_CONNECT {
 }
 
 sub EVENT_POPUPRESPONSE {
-    plugin::check_tutorial_popup_response($popupid, $client);    
-
-   
+    plugin::check_tutorial_popup_response($popupid, $client);  
+       
     if ($popupid == 58240) {        
         my $x = $client->GetEntityVariable("bazaar_x") + int(rand(11)) - 5;
         my $y = $client->GetEntityVariable("bazaar_y") + int(rand(11)) - 5;
