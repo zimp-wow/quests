@@ -9,7 +9,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 18818 - Tattered Flier
-	if (plugin::takeItems(18818 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18818 => 1)) {
 		quest::say("It is about time you returned! Innoruuk would be proud of the red you have spread upon the land.");
 		#:: Give item 15343 - Spell: Siphon Strengh
 		quest::summonitem(15343);
@@ -27,5 +27,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

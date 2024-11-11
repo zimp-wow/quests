@@ -26,7 +26,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 14018 - Spider Venom Sac
-	if (plugin::takeItems(14018 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 14018 => 1 )) {
 		quest::say("You have earned the token of bravery. Now you must ask yourself if you are ready to face true fear. You will have but one chance. If you feel you are powerful enough to easily slay that desert tarantula, then hand me both tokens earned and you shall face the Test of Truth.");
 		#:: Give item 12144 - Token of Bravery
 		quest::summonitem(12144);
@@ -42,7 +42,7 @@ sub EVENT_ITEM {
 		quest::faction(330,-1); 	#:: - Freeport Militia
 	}
 	#:: Turn in for 12144 - Token of Bravery & 13865 - Token of Generosity
-	if (plugin::takeItems(12144 => 1, 13865 =>1 )) {
+	if (plugin::check_handin(\%itemcount, 12144 => 1, 13865 =>1 )) {
 		quest::say("Go to the open sewer across the way. Inside you shall find your opponent. Victory shall bring your final token. Return it to me. Remember our ways and remember our foes. Send them to their judgement in the afterlife. Be swift with your thoughts. May Marr be with you.");
 		#:: Spawn 8110 - Guard Willia
 		quest::spawn2(8110,0,0,-257,132,-17,120);
@@ -58,7 +58,7 @@ sub EVENT_ITEM {
 		quest::faction(330,-1); 	#:: - Freeport Militia
 	}
 	#:: Turn in for 13866 - Token of Truth
-	if (plugin::takeItems(13866 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13866 => 1)) {
 		quest::say("You have performed well. You have shown your allegiance to truth and cast aside the Freeport Militia. The militia will surely despise you from now on. This is how they treat the Knights of Truth. Beware. The followers of Marr stand alone in this city.");
 		#:: Give item 18828 - Testimony
 		quest::summonitem(18828);
@@ -78,5 +78,5 @@ sub EVENT_ITEM {
 			quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }	

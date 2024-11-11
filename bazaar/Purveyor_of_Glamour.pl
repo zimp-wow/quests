@@ -92,7 +92,7 @@ sub EVENT_SAY {
 	elsif ($text eq "link_random_ornament") {
 		my $eom_available = $client->GetAlternateCurrencyValue(6);
 
-		if ($eom_available < 5) {
+		if ($eom_available < 2) {
 			$response = "I'm sorry, $clientName. You don't have enough Echo of Memory, please return when you have enough to pay me.";
 		} else {
 			# Deserialize the existing list of glamour IDs
@@ -104,7 +104,7 @@ sub EVENT_SAY {
 			$random_result = get_random_glamour();
 
 
-			if ($random_result && plugin::SpendEOM($client, 5)) {
+			if ($random_result && plugin::SpendEOM($client, 2)) {
 				$client->SummonItem($random_result);
 
 				# Add the new glamour ID to the list and store it back into the bucket

@@ -12,7 +12,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18927 - Temple Summons
-	if (plugin::takeItems(18927 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18927 => 1)) {
 		quest::say("I am needed!! What am I doing here? I must return to the Temple of Life to commune with the Prime Healer. Rodcet Nife will give me more strength to finish this job. Thank you, young one! Take this key as a reward. Turn it into Tyokan in the temple shop. Safe journey to you!");
 		#:: Give a 13306 - T.O.L. 2020
 		quest::summonitem(13306);
@@ -28,7 +28,7 @@ sub EVENT_ITEM {
 		quest::exp(200);
 	}
 	#:: Match a 18936 - Sealed Note
-	elsif (plugin::takeItems(18936 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18936 => 1)) {
 		quest::say("Finally!! I see that Ariska has found a noble knight to retrieve Soulfire. Per Ariska's orders I am not to give Soulfire to you until you can show me [proof of nobility]. You must honor both the Temple of Life as well as the Hall of Truth and to a high degree. Only then shall you hold Soulfire.");
 		#:: Give a 18937 - Note
 		quest::summonitem(18937);
@@ -44,7 +44,7 @@ sub EVENT_ITEM {
 		quest::exp(200);
 	}
 	#:: Match a 18937 - Note, a 13947 - Brilliant Sword of Faith, a 18828 - Testimony, and a 12197 - Glowing Sword Hilt
-	elsif (plugin::takeItems(18937 => 1, 13947 => 1, 18828 => 1, 12197 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18937 => 1, 13947 => 1, 18828 => 1, 12197 => 1)) {
 		#:: Match if faction is Kindly or better
 		if ($faction <= 2) {
 			quest::say("You have proven yourself worthy to hold Soulfire. Do not let her slip into the hands of evil. There are many who wish to free the many trapped souls of shadowknights and necromancers trapped inside the blade. The power of the blade can be called upon to heal you if need be. May Rodcet Nife and the twins of Marr hold you in their glory.");
@@ -64,5 +64,5 @@ sub EVENT_ITEM {
 		#:: Else eat the items
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

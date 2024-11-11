@@ -17,7 +17,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13544 - Old Blue Tunic*
-  	if (plugin::takeItems(13544 => 1)) {
+  	if (plugin::check_handin(\%itemcount, 13544 => 1)) {
     		quest::say("Nice material!! I feel the ways of Prexus enlightening my soul. Unngh!! Enough of this fishing. Here take my broken fishing pole and toss it to the sea. All hail Prexus!!");
 		#:: Give a 13922 - Snapped Pole
 		quest::summonitem(13922); # Item: Snapped Pole
@@ -31,5 +31,5 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

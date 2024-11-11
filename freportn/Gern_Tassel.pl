@@ -17,7 +17,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match 1839 - Full Muffin Crate
-	if (plugin::takeItems(1839 => 1)) {
+	if (plugin::check_handin(\%itemcount, 1839 => 1)) {
 		quest::say("These are quality muffins! You are obviously quite a skilled baker. Here is your payment as promised. Now I can get back to business again.");
 		#:: Ding!
 		quest::ding();
@@ -36,7 +36,7 @@ sub EVENT_ITEM {
 		quest::MerchantSetItem(8014, 13014, 20);
 	}
 	#:: Match a 1838 - Bag of Bread Loaves
-	elsif (plugin::takeItems(1838 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 1838 => 1)) {
 		quest::say("Thanks for the bread!!");
 		#:: Ding!
 		quest::ding();
@@ -53,5 +53,5 @@ sub EVENT_ITEM {
 		$client->AddLevelBasedExp(4, 14);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

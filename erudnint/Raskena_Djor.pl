@@ -15,7 +15,7 @@ sub EVENT_ITEM {
 	if (plugin::check_handin(\%itemcount, 10307 => 2, 13250 => 2)) {
 		quest::say("You have passed your first task. Nice work. Take this spell as your payment.");
 		#:: Randomly reward 15373 - Spell: Sphere of Light, 15054 - Spell: Frost Bolt, 15205 - Spell: True North, 15288 - Spell: Minor Shielding, 15372 - Spell: Blast of Cold, 15374 - Spell: Numbing Cold
-		quest::summonitem(1quest::ChooseRandom(15373, 15054, 15205, 15288, 15372, 15374));
+		quest::summonitem(quest::ChooseRandom(15373, 15054, 15205, 15288, 15372, 15374));
 		#:: Ding!
 		quest::ding();
 		#:: Grant a small amount of XP

@@ -39,17 +39,17 @@ sub EVENT_ITEM {
 		$npc->CastSpell(12,$client);
 	}		
 	#:: Match a 13074 - Zombie Skin
-	elsif (plugin::takeItems(13074 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13074 => 1)) {
 		quest::say("The malady which has overtaken your frail body shall be cast out and in its place, your hate shall grow.");
 		#:: Cast spell 213 - Cure Disease
 		$npc->CastSpell(213,$client);
 	}
 	#:: Match a 14018 - Spider Venom Sac
-	elsif (plugin::takeItems(14018 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 14018 => 1)) {
 		quest::say("Your offering has strengthened your faith in our ways. Let the spittle of Innoruuk wash the poison from your body.");
 		#:: Cast spell 203 - Cure Poison
 		$npc->CastSpell(203,$client);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

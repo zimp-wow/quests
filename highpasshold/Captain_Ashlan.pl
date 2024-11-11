@@ -24,7 +24,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match four 13791 - Orc Scalp
-	if (plugin::takeItems(13791 => 4)) {
+	if (plugin::check_handin(\%itemcount, 13791 => 4)) {
 		#:: Match if faction is Apprehensive or better
 		if ($faction <= 6) {
 			quest::say("Great work. Maybe you can help us out again sometime?");
@@ -46,7 +46,7 @@ sub EVENT_ITEM {
 		#:: Else eat the items
 	}
 	#:: Match three 13791 - Orc Scalp
-	elsif (plugin::takeItems(13791 => 3)) {
+	elsif (plugin::check_handin(\%itemcount, 13791 => 3)) {
 		#:: Match if faction is Apprehensive or better
 		if ($faction <= 6) {
 			quest::say("Great work. Maybe you can help us out again sometime?");
@@ -68,7 +68,7 @@ sub EVENT_ITEM {
 		#:: Else eat the items
 	}
 	#:: Match two 13791 - Orc Scalp
-	elsif (plugin::takeItems(13791 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13791 => 2)) {
 		#:: Match if faction is Apprehensive or better
 		if ($faction <= 6) {
 			quest::say("Great work. Maybe you can help us out again sometime?");
@@ -90,7 +90,7 @@ sub EVENT_ITEM {
 		#:: Else eat the items
 	}
 	#:: Match a 13791 - Orc Scalp
-	elsif (plugin::takeItems(13791 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13791 => 1)) {
 		#:: Match if faction is Apprehensive or better
 		if ($faction <= 6) {
 			quest::say("Great work. Maybe you can help us out again sometime?");
@@ -112,5 +112,5 @@ sub EVENT_ITEM {
 		#:: Else eat the items
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

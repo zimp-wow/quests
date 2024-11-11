@@ -86,7 +86,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13818 - Boat Beakon
-	if (plugin::takeItems(13818 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13818 => 1)) {
 		quest::say("Oh!! You must work for that Erudite named Palatos. I guess he won't have to spend anymore money drinking in Freeport. Here. Here is the portrait I kept until he could get me a new boat beacon.");
 		#:: Give item 12146 - Ak'anon's Portrait
 		quest::summonitem(12146);
@@ -101,10 +101,10 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 13814 - L.S. Pouch
-	elsif (plugin::takeItems(13814 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13814 => 1)) {
 		quest::say("You found my pouch! Thanks kid. Let me buy you A drink and this is for the good work. Hmmmm. It looks as though they took my voucher. Darn it! Hey... It looks like they were using my bag to hold items they were stealing. Here you go. You can have it. It looks like junk.");
 		#:: Give a random reward:  13922 - Snapped Pole or 13923 - Moggok's Right Eye
-		quest::summonitem(1quest::ChooseRandom(13922, 13923));
+		quest::summonitem(quest::ChooseRandom(13922, 13923));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
@@ -120,5 +120,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

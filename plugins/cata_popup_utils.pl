@@ -56,8 +56,8 @@ my %popups_text = (
                ."* $color_object Large Bags$color_end - Bags greater than size 10 are available, Find $color_enchanted Enchanted$color_end or $color_legendary Legendary$color_end from mobs!<br>"
                ."* $color_object Multi-Pet$color_end - Class combinations with more than one pet class can have more than one pet! You can have one per per class (including charm pets). Switch between them by targeting them! <br>"
                ."<br>$color_normal Next Steps!$color_end<br>"
-               ."* Visit our <a href=\"https://heroesjourneyeq.com\">Website</a> (heroesjourneyeq.com) and grab the client. You will absolutely need this client, and cannot leave $color_normal The Bazaar$color_end unless you are using it!<br>"
-               ."* Join our <a href=\"https://discord.heroesjourneyeq.com\">Discord</a> (86bm92mZaZ) to find guides, and resources.<br>",
+               ."* Visit our <a href=\"https://heroesjourneyemu.com\">Website</a> (heroesjourneyeq.com) and grab the client. You will absolutely need this client, and cannot leave $color_normal The Bazaar$color_end unless you are using it!<br>"
+               ."* Join our <a href=\"https://discord.com/invite/86bm92mZaZ\">Discord</a> (86bm92mZaZ) to find guides, and resources.<br>",
 
     6280030 => "You have cast a buff on yourself!$color_legendary The Heroes' Journey$color_end has special mechanics to improve quality-of-life around buffs! <br><br>"
                ."$color_object Self Buffs$color_end - Any buffs which you cast on yourself, or your pet,$color_normal from a memorized spell$color_end will never naturally expire. The timer will count down one tick, and then reset. "

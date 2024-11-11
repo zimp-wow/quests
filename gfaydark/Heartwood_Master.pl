@@ -31,7 +31,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18786 - Tattered Note
-	if (plugin::takeItems(18786 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18786 => 1)) {
 		quest::say("Welcome! We are the Soldiers of Tunare, the sworn protectors of Faydark. I thank you for joining our cause, we can always use the help. Once you are ready to begin your training please make sure that you see Aliafya Mistrunner, she can assist you in developing your hunting and gathering skills. Return to me when you have become more experienced in our art, I will be able to further instruct you on how to progress through your early ranks, as well as in some of the various [" . quest::saylink("trades") . "] you will have available to you.");
 		#:: Give a 13537 - Green and Tan Tunic*
 		quest::summonitem(13537); # Item: Green and Tan Tunic*
@@ -45,7 +45,7 @@ sub EVENT_ITEM {
 		quest::faction(246,15);		#:: + Faydark's Champions
 	}
 	#:: Match a 5013 - Rusty Short Sword, 5016 - Rusty Broad Sword, 5019 - Rusty Long Sword and 5022 - Rusty Bastard Sword
-	if (plugin::takeItems(5013 => 1, 5016 => 1, 5019 => 1, 5022 => 1)) {
+	if (plugin::check_handin(\%itemcount, 5013 => 1, 5016 => 1, 5019 => 1, 5022 => 1)) {
 		quest::say("You have done well, child! Take this as a blessing from Tunare for doing her will.");
 		#:: Randomly give a 5047 - Tarnished Scimitar or 6012 - Worn Great Staff
 		quest::summonitem(quest::ChooseRandom(5047,6012)); # Item(s): Tarnished Scimitar (5047), Worn Great Staff (6012)

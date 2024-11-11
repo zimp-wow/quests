@@ -15,7 +15,7 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-	if(plugin::takeItems(12321 => 1, 12320 => 1)) {
+	if(plugin::check_handin(\%itemcount, 12321 => 1, 12320 => 1)) {
 		quest::summonitem(3190); # Item: Ivy Etched Gauntlets
 		quest::say("Very good, you have brought justice to these lands.");
 		quest::faction(269,+30); # kithicor residence
@@ -34,7 +34,7 @@ sub EVENT_ITEM {
 		quest::faction(324,-60); # unkempt druids
 		quest::exp(10000);		
     }
-    elsif(plugin::takeItems(10059 => 1, 12328 => 1)) {
+    elsif(plugin::check_handin(\%itemcount, 10059 => 1, 12328 => 1)) {
 		quest::say("Here are your leggings.");
 		quest::summonitem(3191); # Item: Ivy Etched Leggings
 		quest::say("Very good, you have brought justice to these lands.");
@@ -44,7 +44,7 @@ sub EVENT_ITEM {
 		quest::faction(324,-60); # unkempt druids
 		quest::exp(10000);		
     }
-    plugin::returnUnusedItems();
+    plugin::return_items(\%itemcount);
 }
 
 

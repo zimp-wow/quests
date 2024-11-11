@@ -36,7 +36,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13990 - Bale of Hay
-	if (plugin::takeItems(13990 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13990 => 1)) {
 		quest::say("Thank you so much. Tiny gets quite tired doing this by himself. Here you go.");
 		#:: Ding!
 		quest::ding();
@@ -53,5 +53,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

@@ -97,7 +97,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12190 - Huge Mushroom Head
-	if (plugin::takeItems(12190 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12190 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("You do it! You am great knight. Me give you special froglok skin mask. Shaman make for Nightkeep. It am make you smarter like Treskar... Me tink so!");
@@ -130,7 +130,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match three 13782 - Ruined Wolf Pelt and a 10307 - Fire Beetle Eye
-	elsif (plugin::takeItems(13782 => 3, 10307 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13782 => 3, 10307 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Dats gud, here take dis armor to helps you be stronger. Come sees me when you want [another] job");
@@ -158,12 +158,12 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match two 13088 - Snake Egg
-	elsif (plugin::takeItems(13088 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13088 => 2)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Dis is good.  I go make a pie now. Here is sumting for your help. Come see me agin when you want your [next] job.");
 			#:: Give a random reward: 2145 - Raw-hide Wristbands, 2140 - Raw-hide Tunic, 2144 - Raw-hide Sleeves, 2137 - Raw-hide Skullcap, 2138 - Raw-hide Mask, 2147 - Raw-hide Leggings, 2139 - Raw-hide Gorget, 2146 - Raw-hide Gloves, 2142 - Raw-hide Cloak, 2148 - Raw-hide Boots, 2143 - Raw-hide Belt
-			quest::summonitem(1quest::ChooseRandom(2145, 2140, 2144, 2137, 2138, 2147, 2139, 2146, 2142, 2148, 2143));
+			quest::summonitem(quest::ChooseRandom(2145, 2140, 2144, 2137, 2138, 2147, 2139, 2146, 2142, 2148, 2143));
 			#:: Ding!
 			quest::ding();
 			#:: Grant a moderate amount of experience
@@ -190,12 +190,12 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match three 13916 - Deathfist Slashed Belt
-	elsif (plugin::takeItems(13916 => 3)) {
+	elsif (plugin::check_handin(\%itemcount, 13916 => 3)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Very good! We turn you into a basher yet. Here you go. Come see me when you want your [final] task.");
 			#:: Give a random reward: 6031 - Tarnished Warhammer, 5070 - Tarnished Two Handed Sword, 5071 - Tarnished Two Handed Battle Axe, 7024 - Tarnished Spear, 5042 - Tarnished Short Sword, 5047 - Tarnished Scimitar, 6033 - Tarnished Morning Star
-			quest::summonitem(1quest::ChooseRandom(6031, 5070, 5071, 7024, 5042, 5047, 6033));
+			quest::summonitem(quest::ChooseRandom(6031, 5070, 5071, 7024, 5042, 5047, 6033));
 			#:: Ding!
 			quest::ding();
 			#:: Grant a moderate amount of experience
@@ -226,12 +226,12 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match two 13403 - Wolf Meat and two 13070 - Snake Scales
-	elsif (plugin::takeItems(13403 => 2,13070 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13403 => 2,13070 => 2)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Dats what I needed. Here you go.");
 			#:: Give a random reward: 6014 - Rusty Warhammer, 5023 - Rusty Two Handed Sword, 6013 - Rusty Two Handed Hammer, 7009 - Rusty Spear, 5013 - Rusty Short Sword, 5021 - Rusty Scimitar
-			quest::summonitem(1quest::ChooseRandom(6014, 5023, 6013, 7009, 5013, 5021));
+			quest::summonitem(quest::ChooseRandom(6014, 5023, 6013, 7009, 5013, 5021));
 			#:: Ding!
 			quest::ding();
 			#:: Grant a moderate amount of experience
@@ -271,7 +271,7 @@ sub EVENT_ITEM {
 		if ($faction <= 4) {
 			quest::say("Hmm... You do good job. You surprise Treskar. Maybe you good after all. Maybe Treskar give you [secret mission]. Maybe not.");
 			#:: Give a random reward: 5071 - Tarnished Two Handed Battle Axe, 5025 - Rusty Two Handed Battle Axe, 5037 - Bronze Two Handed Battle Axe
-			quest::summonitem(1quest::ChooseRandom(5071, 5025, 5037, 5025, 5071));
+			quest::summonitem(quest::ChooseRandom(5071, 5025, 5037, 5025, 5071));
 			#:: Ding!
 			quest::ding();
 			#:: Set factions
@@ -307,11 +307,11 @@ sub EVENT_ITEM {
 		}
 	}	
 	#:: Match one 12199 - Black Shadow Tunic
-	elsif (plugin::takeItems(12199 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12199 => 1)) {
 		quest::say("Me change mind! Me want total of THREE ogre black shadow tunics. Ha Ha! And you also pay two gold for Nightkeep tax! Ha! Ha!");
 		#:: Return a 12199 - Black Shadow Tunic
 		quest::summonitem(12199);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

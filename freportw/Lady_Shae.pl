@@ -53,7 +53,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match four 13031 - White Wine
-	if (plugin::takeItems(13031 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13031 => 1)) {
 		quest::say("Thank you. Pandos has been telling me to try white wine forever. I mostly only drink red wine. Pardon me for getting off track. Anyway, it is a good thing you showed up. The lady in room 2 has been receiving mail from a Dark Elf. Tell Swin you [need the mail for room two]. The Innkeeper usually holds it for the guests.");
 		#:: Ding!
 		quest::ding();
@@ -66,7 +66,7 @@ sub EVENT_ITEM {
 		quest::exp(150);
 	}
 	#:: Match four 13030 - Red Wine
-	elsif (plugin::takeItems(13030 => 4)) {
+	elsif (plugin::check_handin(\%itemcount, 13030 => 4)) {
 		quest::say("Oh my.. You are so kind. I can not tell you the last time I had so much fine wine. Well, there was the time Antonius Bayle told me he no longer had the time for a committed relationship. Mister big ruler of the world. Make it to the top and find someone younger. I know his plan. I hate him. I will never trust another human again. After all that, he goes and asks me to hold on to this list for him. Well I am glad it was taken from me by that [Dyllin]. Antonius Bayle has no ties to me any more!! Good riddance! Oooooh! I love him.");
 		#:: Ding!
 		quest::ding();
@@ -81,7 +81,7 @@ sub EVENT_ITEM {
 		$ItemCount = 0;
 	}					
 	#:: Match three 13030 - Red Wine
-	elsif (plugin::takeItems(13030 => 3)) {
+	elsif (plugin::check_handin(\%itemcount, 13030 => 3)) {
 		if ($ItemCount == 0) {
 			quest::say("Thank you... Oh my! Another of these and I will be spilling my secrets.");
 			#:: Increment the item count variable
@@ -105,7 +105,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match two 13030 - Red Wine
-	elsif (plugin::takeItems(13030 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13030 => 2)) {
 		if ($ItemCount <= 1) {
 			quest::say("Thank you... Oh my! A few more of these and I will be spilling my secrets.");
 			#:: Increment the item count variable
@@ -128,7 +128,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match one 13030 - Red Wine
-	elsif (plugin::takeItems(13030 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13030 => 1)) {
 		if ($ItemCount <= 2) {
 			quest::say("Thank you... Oh my! A few more of these and I will be spilling my secrets.");
 			#:: Increment the item count variable
@@ -150,7 +150,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
 
 sub EVENT_DEATH_COMPLETE {

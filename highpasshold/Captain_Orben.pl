@@ -18,7 +18,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match four 13792 - Gnoll Scalp
-	if (plugin::takeItems(13792 => 4)) {
+	if (plugin::check_handin(\%itemcount, 13792 => 4)) {
 		#:: Match if faction is Dubious or better
 		if ($faction <= 7) {
 			#:: He says nothing.
@@ -38,7 +38,7 @@ sub EVENT_ITEM {
 		#:: Else eat items (cannot find text)
 	}
 	#:: Match three 13792 - Gnoll Scalp
-	elsif (plugin::takeItems(13792 => 3)) {
+	elsif (plugin::check_handin(\%itemcount, 13792 => 3)) {
 		#:: Match if faction is Dubious or better
 		if ($faction <= 7) {
 			#:: He says nothing.
@@ -57,7 +57,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match two 13792 - Gnoll Scalp
-	elsif (plugin::takeItems(13792 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13792 => 2)) {
 		#:: Match if faction is Dubious or better
 		if ($faction <= 7) {
 			#:: He says nothing.
@@ -76,7 +76,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match one 13792 - Gnoll Scalp
-	elsif (plugin::takeItems(13792 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13792 => 1)) {
 		#:: Match if faction is Dubious or better
 		if ($faction <= 7) {
 			#:: He says nothing.
@@ -95,5 +95,5 @@ sub EVENT_ITEM {
 		}
 	}	
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

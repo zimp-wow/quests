@@ -1,15 +1,39 @@
+sub EVENT_ITEM {
+	#:: Return unused items
+	plugin::return_items(\%itemcount);
+}
+
 sub EVENT_SAY {
   my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled") || "";  
   my $eom_link        = quest::varlink(46779);
 
-  plugin::AwardBonusUnlocks($client);
+  my $bind_loc        = $client->GetBucket("baz_and_back_bind") || 'bazaar';
+  my $revind_text     = "";
+
   plugin::AddDefaultAttunement($client);
 
   if ($text=~/hail/i) {        
-    if (!group_flg) { $group_flg = " However, that magic, like teleporting an entire group, will require [special reagents]." }
-    else { $group_flg = "" };
-    plugin::NPCTell("Greetings, $name. I am Tearel, the Keeper of the Map. I can [attune the map] to any rune circles you have previously discovered. If you are 
-                    part of [an expedition] I can also help you return to the heat of the battle.$group_flg");
+    if (!$group_flg) { 
+      $group_flg = " However, that magic, like teleporting an entire group, will require [special reagents]." 
+    } else { 
+      $group_flg = "" 
+    };
+    
+    if (!($bind_loc eq $zonesn)) {
+      $rebind_text = " I see that you are not personally attuned to this location, though! Would you like to [".quest::saylink("attune your Bazaar and Back", 1)."] ability to return you here?";
+    } else {
+      $rebind_text = "";
+    }
+
+    plugin::NPCTell("Greetings, $name. I am Tearel, the Keeper of the Map. I can [attune the map] to any rune circles you have previously discovered. If you are part of 
+                    [an expedition] I can also help you return to the heat of the battle.". $group_flg . $rebind_text);
+
+    return;
+  }
+
+  if ($text =~ /attune your Bazaar and Back/i) {
+    plugin::NPCTell("Excellent! You will now return to this vicinity whenever you use your Bazaar and Back ability!");
+    $client->SetBucket("baz_and_back_bind", $zonesn);
     return;
   }
 
@@ -84,7 +108,7 @@ sub EVENT_SAY {
           # Collect the long names for the waypoints with quest::saylink
           my @waypoint_links;
           foreach my $key (sort {$a cmp $b} keys %waypoints) {
-              if (plugin::is_eligible_for_zone($client, $key, 1)) {
+              if (plugin::is_eligible_for_zone($client, $key, 1) && $key ne $zonesn) {
                 my $long_name = $waypoints{$key}->[0];  # Get the long name
                 my $short_name = $key;  # The key is the short name
                 push @waypoint_links, "[".quest::saylink($short_name, 0, $long_name)."]";  # Create a clickable link
@@ -96,9 +120,7 @@ sub EVENT_SAY {
           foreach my $link (@waypoint_links) {
               plugin::PurpleText("---". $link);
           }
-      } else {
-          plugin::NPCTell("I'm not sure where that is... at least not yet.");
-      }   
+      }
   }
 
   my ($waypoint_pattern, $eligible_waypoints) = plugin::GetWaypointCapturePattern(-1, $client);
@@ -113,9 +135,7 @@ sub EVENT_SAY {
             plugin::YellowText("The Magic Map has been attuned to $waypoint_name!");
             $client->SetEntityVariable("magic_map_attune", $matched_waypoint_key);
           }
-      } else {
-          plugin::NPCTell("I'm not sure where that is... at least not yet.");
-      }
+      } 
   }
 }
 
@@ -124,7 +144,7 @@ sub has_eligible_waypoints {
     my %waypoints = plugin::GetWaypoints($continent_id, $client);
 
     foreach my $key (keys %waypoints) {
-        if (plugin::is_eligible_for_zone($client, $key, 1)) {
+        if (plugin::is_eligible_for_zone($client, $key, 1) && $key ne $zonesn) {
             return 1;  # Return true if at least one eligible waypoint is found
         }
     }
@@ -143,4 +163,64 @@ sub get_eligible_continent_names {
     }
 
     return @eligible_continent_names;
+}
+
+sub EVENT_ITEM {
+  plugin::return_items(\%itemcount);
+}
+
+sub EVENT_TICK {
+  return; # Disable this Feature
+  quest::debug("How did we get here?");
+  my @clientlist = $entity_list->GetClientList();
+  my $clientcount = @clientlist;
+
+  my $max_idle_seconds = 60 * 15; # Set your max idle threshold here (e.g., 60 seconds)
+  my $idle_ticks = $max_idle_seconds / 6;
+
+  my $warning_50_percent = int($idle_ticks * 0.5);
+  my $warning_80_percent = int($idle_ticks * 0.8);
+
+
+  foreach my $client (@clientlist) {
+    if (!$client || $client->IsTrader() || $client->GetGM()) {        
+      next;
+    }
+
+    my $last_x = int($client->GetEntityVariable("last_x") || 0);
+    my $last_y = int($client->GetEntityVariable("last_y") || 0);
+    my $last_h = int($client->GetEntityVariable("last_h") || 0);
+
+
+    my $cur_x = int($client->GetX());
+    my $cur_y = int($client->GetY());
+    my $cur_h = int($client->GetHeading());
+
+    if (defined $last_x && defined $last_y && defined $last_h) {
+        if ($last_x == $cur_x && $last_y == $cur_y && $last_h == $cur_h) {
+            my $idle_counter = $client->GetEntityVariable("idle_counter") // 0;
+            $idle_counter++;
+
+            my $idle_seconds = $idle_counter * 6;
+            my $idle_minutes = sprintf("%.1f", $idle_seconds / 60);
+            my $max_idle_minutes = sprintf("%.1f", $max_idle_seconds / 60);
+
+            if ($idle_counter == $warning_50_percent || $idle_counter == $warning_80_percent) {
+                $client->Message(15, "Warning: You have been idle for $idle_minutes minutes. You will be returned to character select in ". sprintf("%.1f", (($max_idle_seconds - $idle_seconds) / 60) ) . " minutes,");
+            }
+
+            if ($idle_counter >= $idle_ticks) {
+                $client->Kick();                  
+            }
+
+            $client->SetEntityVariable("idle_counter", $idle_counter);
+        } else {
+            $client->SetEntityVariable("idle_counter", 0);
+        }
+    }
+
+    $client->SetEntityVariable("last_x", $cur_x);
+    $client->SetEntityVariable("last_y", $cur_y);
+    $client->SetEntityVariable("last_h", $cur_h);
+  }
 }

@@ -12,10 +12,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match three 1903 - Cutthroat Insignia Ring
-	if (plugin::takeItems(1903 => 3)) {
+	if (plugin::check_handin(\%itemcount, 1903 => 3)) {
 		quest::say("You will make a fine addition to the crusade. Continue the cleansing of the desert. Let it be known that the Defenders of Ro are here to challenge the evils of the desert. I call upon the righteousness of all paladins to assist me.");
 		#:: Give a random reward:  7012 - Bronze Dagger, 5026 - Bronze Short Sword, 5015 - Rusty Scythe, or 6017 - Splintering Club
-		quest::summonitem(1quest::ChooseRandom(7012, 5026, 5015, 6017));
+		quest::summonitem(quest::ChooseRandom(7012, 5026, 5015, 6017));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
@@ -29,7 +29,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 12348 - Gem of Stamina and a 12349 - Sparkling Sapphire
-	elsif (plugin::takeItems(12348 => 1, 12349 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12348 => 1, 12349 => 1)) {
 		quest::say("You serve the Burning Prince as I do. The Redeemed has instructed me to give you this reward upon completion of your test. Practice your arts and prepare yourself. Evil approaches our realm. Long live Ro!!");
 		#:: Give a 7041 - Burning Rapier
 		quest::summonitem(17041);
@@ -46,5 +46,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

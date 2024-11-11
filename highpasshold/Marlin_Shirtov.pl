@@ -12,7 +12,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 13352 -  Silk Evening Tunic
-	if (plugin::takeItems(13352 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13352 => 1)) {
 		quest::say("Ahh!! The silk evening tunic. Mistress Anna will look stunning in this. Here is the key to Princess Lenya's cell. Good luck, hero!");
 		#:: Give item 20008 - Brass Key
 		quest::summonitem(20008);
@@ -26,5 +26,5 @@ sub EVENT_ITEM {
 		quest::exp(500);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

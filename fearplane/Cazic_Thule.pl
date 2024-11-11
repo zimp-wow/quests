@@ -15,7 +15,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 8226 - Satchel of Cazic-Thule, a 18898 - Flayed Skin Tome, and a 18899 - Flayed Skin Tome
-	if (plugin::takeItems(8226 => 1, 18898 => 1, 18899 => 1)){
+	if (plugin::check_handin(\%itemcount, 8226 => 1, 18898 => 1, 18899 => 1)){
 		quest::emote("seems pleased with the amount of pain that you have been able to inflict. Cazic Thule then grabs your hands and begins to infuse them with his power. Your hands burn like they were placed in lava for a moment, then feel cool as ice. You can feel the sheer power flowing through your new weapons of pain.");
 		#:: Give a 7836 - Whistling Fists
 		quest::summonitem(17836);
@@ -25,7 +25,7 @@ sub EVENT_ITEM {
 		quest::exp(100000);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
 
 sub EVENT_TIMER {

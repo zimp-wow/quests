@@ -6,7 +6,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18800 - Tattered Note
-	if (plugin::takeItems(18800 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18800 => 1)) {
 		quest::say("Ah. Good for you! Here you are. Take this to McNeal, but next time there will be no stout if there are no weapons.");
 		#:: Give a 13131 - Case of Blackburrow Stout
 		quest::summonitem(13131);
@@ -22,5 +22,5 @@ sub EVENT_ITEM {
 		quest::exp(200);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

@@ -32,12 +32,12 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13881 -  Nicked Coin
-	if (plugin::takeItems(13881 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13881 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Good work. You have shown these rogues who are the better swimmers. Now we have proof of their involvement. You are a fine addition to the temple. Take this small reward. Go, and serve Prexus.");
 			#:: Give a random reward: 13003 - Small Lantern, 10004 - Copper Band
-			quest::summonitem(1quest::ChooseRandom(13003, 10004));
+			quest::summonitem(quest::ChooseRandom(13003, 10004));
 			#:: Ding!
 			quest::ding();
 			#:: Set factions
@@ -63,5 +63,5 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

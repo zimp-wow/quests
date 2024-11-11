@@ -18,7 +18,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18136 - Delius Thyme's Diary Pg. 74, 18137 - Delius Thyme's Diary Pg. 75, 18138 - Delius Thyme's Diary Pg. 76
-	if (plugin::takeItems(18136 => 1, 18137 => 1, 18138 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18136 => 1, 18137 => 1, 18138 => 1)) {
 		quest::say("Thank you, thank you. Let me read them. Oh! How could I want these brewing recipes after they made my brother insane? Where are they? I think this is all of them. Take them away from me! Delius can smile upon me now.");
 		#:: Give a 18139 - Garsen's Brewing List
 		quest::summonitem(18139);
@@ -28,5 +28,5 @@ sub EVENT_ITEM {
 		quest::exp(200);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

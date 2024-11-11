@@ -16,7 +16,7 @@ sub EVENT_SIGNAL {
 
 sub EVENT_ITEM {
 	#:: Match a 12147 - Hog Key #2
-	if (plugin::takeItems(12147 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 12147 => 1 )) {
 		quest::say("Here you go then.");
 		#:: Give a 18814 - Sealed Letter
 		quest::summonitem(18814); 
@@ -31,5 +31,5 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

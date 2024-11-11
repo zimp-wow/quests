@@ -15,7 +15,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13961 - Lion Meat Shipment
-	if (plugin::takeItems(13961 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13961 => 1)) {
 		quest::say("Ye've returned!! How wonderful! The people o' Halas thank ye! It isn't often we get to indulge ourselves in the delicacies o' warmer climates. Here ye go, me friend. Ye've completed the delivery in good time. I hope ye deliver more often. Here, try some of me new creation.. Lion Delight.");
 		#:: Give a 12221 - Lion Delight
 		quest::summonitem(12221);
@@ -33,5 +33,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

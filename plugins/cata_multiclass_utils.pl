@@ -7,26 +7,16 @@ sub CommonCharacterUpdate {
             plugin::AddTitleFlag($semaphore_title, $client);
             $client->DeleteBucket('flag-semaphore');
         }
-
-        GrantClassesAA($client);
-        GrantGeneralAA($client); # Grant the general here too
-
-        plugin::CheckWorldWideBuffs($client);
+        plugin::EnableTitles($client);
         plugin::UpdateCharMaxLevel($client);
         plugin::UpdateEoMAward($client);
         plugin::RegisterSeasonalLogin($client);
-        plugin::EnableTitles($client);
-
-        plugin::GetProgressFlag($client, "RoK");
-        plugin::GetProgressFlag($client, "SoV");
-        plugin::GetProgressFlag($client, "SoL");
-        plugin::GetProgressFlag($client, "PoP");
 
         if ($client->IsTaskActivityActive(3, 5) && $client->GetLevel() >= 5) {
             $client->UpdateTaskActivity(3, 5, 1);
         }
 
-        if ($client->IsTaskActivityActive(4, 3) && $client->GetLevel() >= 51) {
+        if ($client->IsTaskActivityActive(4, 3) && $client->GetLevel() >= 50) {
             $client->UpdateTaskActivity(4, 3, 1);
         }
 
@@ -88,6 +78,7 @@ sub GetClassID {
         "Paladin" => 3,
         "Ranger" => 4,
         "Shadow Knight" => 5,
+        "Shadowknight" => 5,        
         "Druid" => 6,
         "Monk" => 7,
         "Bard" => 8,
@@ -211,31 +202,6 @@ sub GetPrettyClassString {
 
     # Join the client's class names with slashes
     my $pretty_class_string = join('/', @client_classes);
-
-    return $pretty_class_string;
-}
-
-sub GetClassLinkString {
-    my $client = shift || plugin::val('$client');  # Ensure $client is available
-    my %class_map = GetClassMap();  # Get the full class map
-    my $class_bits = $client->GetClassesBitmask();  # Retrieve the class bits for the client
-
-    my @client_classes;
-
-    # Iterate through class IDs to check which classes the client has
-    foreach my $class_id (sort { $a <=> $b } keys %class_map) {
-        if ($class_bits & (1 << ($class_id - 1))) {
-            push @client_classes, "[".quest::saylink("del_class_$class_id", 0, $class_map{$class_id})."]";
-        }
-    }
-
-    # Join the client's class names, using ", " and " or " appropriately
-    my $pretty_class_string;
-    if (@client_classes > 1) {
-        $pretty_class_string = join(', ', @client_classes[0..$#client_classes-1]) . ' or ' . $client_classes[-1];
-    } else {
-        $pretty_class_string = $client_classes[0];  # Only one class
-    }
 
     return $pretty_class_string;
 }
@@ -369,7 +335,7 @@ sub GrantClassAA {
             '109' => 1, # Rampage
         },
         2 => { # Cleric
-            '1405' => 1, # Twincast
+            '41' => 1, # Purify Soul
             '169' => 1,   # Divine Arbitration
             '254' => 1,   # Divine Avatar
         },
@@ -394,8 +360,7 @@ sub GrantClassAA {
         },
         6 => { # Druid
             '185' => 1,   # Spirit of the Wood
-            '403' => 1, # Paralytic Spores
-            '259' => 1,   # Critical Affliction
+            '219' => 1, # Entrap
             '3815' => 1,  # Destructive Cascade
             '125' => 1,   # Pet Discipline
             '1215' => 1,  # Summon Companion
@@ -425,9 +390,9 @@ sub GrantClassAA {
             '1215' => 1,  # Summon Companion
             '125' => 1,   # Pet Discipline
             '250' => 1,    # Pet Affinity
+            '3815' => 1,   # Destructive Cascade
         },
         11 => { # Necromancer
-            '259' => 1,    # Critical Affliction
             '3815' => 1,   # Destructive Cascade
             '250' => 1,    # Pet Affinity
             '431' => 1,  # Pestilent Paralysis
@@ -454,6 +419,7 @@ sub GrantClassAA {
             '250' => 1,  # Pet Affinity
             '1215' => 1, # Summon Companion
             '125' => 1,  # Pet Discipline
+            '3815' => 1,   # Destructive Cascade
         },
         15 => { # Beastlord
             '11080' => 1, # Chameleon Strike
@@ -634,7 +600,7 @@ sub GrantClassAA {
         }    
     }
 
-    if ($client->GetLevel() >= 51 && ($client->IsSeasonal() || plugin::MultiClassingEnabled() )) {
+    if ($client->GetLevel() >= 50 && ($client->IsSeasonal() || plugin::MultiClassingEnabled() )) {
         my %class_aa = (
             1 => {
                 '2011' => 1, # Imperator's Command

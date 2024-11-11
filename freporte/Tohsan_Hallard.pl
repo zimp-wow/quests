@@ -9,10 +9,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match four 13885 - Orc Pawn Pick
-	if (plugin::takeItems(13885 => 4)) {
+	if (plugin::check_handin(\%itemcount, 13885 => 4)) {
 		quest::say("As I promised, some silver and of course, the Highpass lottery ticket. Oh yes, I forgot to mention the ticket was for last season's lottery. Ha Ha!! You now own a losing Highpass lottery ticket, lucky you! Ha!!");
 		#:: Give a random reward: 12264 - Lottery Ticket # 14350, 12265 - Lottery Ticket # 14001, 12261 - Lottery Ticket # 15600, 12262 - Lottery Ticket # 15601, 12263 - Lottery Ticket # 15602, 12266 - Lottery Ticket # 16568
-		quest::summonitem(1quest::ChooseRandom(12264, 12265, 12261, 12262, 12263, 12266));
+		quest::summonitem(quest::ChooseRandom(12264, 12265, 12261, 12262, 12263, 12266));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
@@ -28,5 +28,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

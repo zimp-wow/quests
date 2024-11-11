@@ -23,7 +23,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13244 - One Quarter of Elixir
-	if (plugin::takeItems(13244 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13244 => 1)) {
 		quest::say("Oh thank you. Sorry, but the bottle is empty now. I hope you did't need any. Take the empty bottle back to Dargon. He may refill it for you.");
 		#:: Give a 13245 - Empty Bottle of Elixir
 		quest::summonitem(13245);
@@ -38,5 +38,5 @@ sub EVENT_ITEM {
 		quest::exp(150);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

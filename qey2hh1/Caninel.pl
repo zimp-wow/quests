@@ -23,7 +23,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 10019 - Bloodstone, a 10070 - Moonstone, and a 10021 - Star Rose Quartz
-	if (plugin::takeItems(10019 => 1, 10070 => 1, 10021 => 1)) {
+	if (plugin::check_handin(\%itemcount, 10019 => 1, 10070 => 1, 10021 => 1)) {
 		quest::say("Yes. Good. You have done well. Let's see, the Paw of Opolla was it? Yes.. Opolla was once a great shaman to the Gnolls of Blackburrow. It is said she wore four enchanted rings of power. She offered her hand in peace to the first hordes of humans pouring down from the Everfrost Peaks, only to have it lopped off at the wrist by a warror named Gynok Moltor. If you seek the Paw, seek out the [decendent of Gynok].");
 		#:: Key a data bucket
 		$key = $npc->GetNPCTypeID() . "-turned-in";
@@ -31,5 +31,5 @@ sub EVENT_ITEM {
 		quest::set_data($key, 1, 300);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

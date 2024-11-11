@@ -6,7 +6,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18856 - A tattered Note
-	if (plugin::takeItems(18856 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18856 => 1)) {
 		quest::say("Hey, Nex, we got another sucker.. er.. volunteer, that is, to help us out around here. Here ya go friend, put this on and let's whip you into shape.");
 		#:: Give item 13566 - Blood Spotted Robe*
 		quest::summonitem(13566);
@@ -20,5 +20,5 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

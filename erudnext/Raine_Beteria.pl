@@ -46,7 +46,7 @@ sub EVENT_ITEM {
 			quest::summonitem(16339);
 		}
 	}
-  	elsif (plugin::takeItems(10792 => 1)) {
+  	elsif (plugin::check_handin(\%itemcount, 10792 => 1)) {
 		quest::say("Thank you very much. I have always wanted one of these! Hehehe? just kidding. I see that you have enchanted this coin. I have placed the final enchantment on it - take it back to Romar.");
 		#:: Give a 10793 - Radiant Coin of Tash
 		quest::summonitem(10793);
@@ -56,5 +56,5 @@ sub EVENT_ITEM {
 		quest::exp(1000);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

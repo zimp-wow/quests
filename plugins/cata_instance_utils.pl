@@ -7,8 +7,9 @@ sub OfferStandardInstance {
   my $npc             = plugin::val('$npc');
   my $text            = plugin::val('$text');
   my $zonesn          = plugin::val('$zonesn');
-  my $dz_version      = 0;
-  my $dz_duration     = 64800; # 18 hours
+  my $dz_version      = 254;
+  my $dz_duration     = 14 * 60 * 60; # 18 hours
+  my $dz_duration_sta = 2 * 60 * 60; # 18 hours
   my $dz_lifetime     = 604800;
   my ($expedition_name, $min_players, $max_players, $dz_zone, $x, $y, $z, $heading) = @_;
 
@@ -22,37 +23,47 @@ sub OfferStandardInstance {
 
   if ($text =~ /hail/i) {
     my $dz = $client->GetExpedition();
-    if ($dz && ($dz->GetName() eq $expedition_name || $dz->GetName() eq ($expedition_name . " (Static)"))) {
+    if ($dz && ($dz->GetName() eq ($expedition_name . " (Respawning)") || $dz->GetName() eq ($expedition_name . " (Non-Respawning)"))) {
       quest::say("When you are [" . quest::saylink("ready", 1) . "], proceed into the portal.");
     }
     else {
-      quest::say("I offer you a Trial. $expedition_name lies before you, do you accept the challenge?");
-      plugin::YellowText("You can select from [". quest::saylink('Respawning', 1). "] or [".quest::saylink('Non-Respawning',1). "] versions.");
+      quest::say("I offer you a Trial. $expedition_name lies before you, do you accept the challenge?");      
+      if (plugin::IsTHJ()) {
+        plugin::YellowText("Notice: Instances will become more difficult for each player in your group beyond the second.");
+        plugin::YellowText("[". quest::saylink('Non-Respawning',1). "] will not repopulate over time, and the most powerful enemies may be found within.");
+        plugin::YellowText("[". quest::saylink('Respawning', 1). "] will repopulate over time, but many rare enemies may not be found inside.");
+      } else {
+        plugin::YellowText("You can select from [". quest::saylink('Respawning', 1). "] or [".quest::saylink('Non-Respawning',1). "] versions.");
+      }
     }
   }
 
   elsif ($text eq 'Respawning' || $text eq 'Non-Respawning') {
     if ($text eq 'Non-Respawning') {
       $dz_version = quest::get_rule("Custom:StaticInstanceVersion") || 100;
-      $expedition_name = $expedition_name . " (Static)";
+      $expedition_name = $expedition_name . " (Non-Respawning)";
+    } else {
+      $dz_version = quest::get_rule("Custom:FarmingInstanceVersion") || 100;
+      $expedition_name = $expedition_name . " (Respawning)";
     }
     
     my $dz = $client->CreateExpedition($dz_zone, $dz_version, $dz_lifetime, $expedition_name, $min_players, $max_players);
     if ($dz) {
       $dz->SetCompass($zonesn, $npc->GetX(), $npc->GetY(), $npc->GetZ());
       $dz->SetSafeReturn($zonesn, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
-      if (!plugin::IsTHJ() || $text eq 'Non-Respawning') {
-        $dz->AddReplayLockout($dz_duration);
-      } else {
-        $dz->AddReplayLockout(30 * 60); # 30 minutes
+      if ($text eq 'Respawning') {
+        $dz->AddReplayLockout($dz_duration_sta);
       }
+      if ($text eq 'Non-Respawning') {
+        $dz->AddReplayLockout($dz_duration);
+      } 
       quest::say("Very well. When you are [" . quest::saylink("ready", 1) . "], proceed into the portal, and remember!");
     }
   }
 
   elsif ($text =~ /ready/i) {
     my $dz = $client->GetExpedition();
-    if ($dz && ($dz->GetName() eq $expedition_name || $dz->GetName() eq ($expedition_name . " (Static)"))) {
+    if ($dz && ($dz->GetName() eq ($expedition_name . " (Respawning)") || $dz->GetName() eq ($expedition_name . " (Non-Respawning)"))) {
       
       # Fallback to safe zone coordinates if x, y, z, or heading are not defined
       my $final_x = defined $x ? $x : quest::GetZoneSafeX($dz->GetZoneID());
@@ -66,19 +77,12 @@ sub OfferStandardInstance {
 }
 
 sub ScaleInstanceNPC {
-  if (!IsTHJ()) {
+  if (!plugin::IsTHJ() || plugin::val('$instanceversion') != (quest::get_rule("Custom:StaticInstanceVersion"))) {
     return;
   }
 
   my $npc = shift;
   my $player_count = shift;
-
-  if (plugin::val('$instanceversion') != (quest::get_rule("Custom:StaticInstanceVersion") || 100)) {
-    if (plugin::IsBlacklistedNPC($npc)) {
-        $npc->Depop(0);
-    }
-    return;
-  }
 
   if (!$npc || !$player_count || $player_count <= 2) {
     return;
@@ -155,267 +159,4 @@ sub ScaleInstanceNPC {
   # These just use absolute values
   $npc->ModifyNPCStat("spellscale", $scale_factor * 100);
   $npc->ModifyNPCStat("healscale", $scale_factor * 100);
-}
-
-sub IsBlacklistedNPC {
-  my $npc = shift;
-  my @blacklist = (
-      # Classic NPCs
-      'Lord Nagafen',
-      'Lady Vox',
-      'Phinigel Autropos',
-      'Cazic Thule',
-      'Innoruuk',
-      'Overseer of Air',
-      'Master Yael',
-
-      # Kunark NPCs
-      'Severilous',
-      'Gorenaire',
-      'Venril Sathir',
-      'Talendor',
-      'Trakanon',
-      'Queen Velazul Di`zok',
-      'Prince Selrach Di`zok',
-      'Overking Bathezid',
-      'Hoshkar',
-      'Druushk',
-      'Xygoz',
-      'Silverwing',
-      'Nexona',
-      'Phara Dar',
-      'Faydedar',
-
-      # Velious NPCs
-      'Sontalak',
-      'Zlandicar',
-      'Klandicar',
-      'Wuoshi',
-      'Lord Yelinak',
-      'Dain Frostreaver IV',
-      'Velketor the Sorcerer',
-      'Tunare',
-      'Bristlebane',
-      'The Mischievous Jester',
-      'Master of the Guard',
-      'The Progenitor',
-      'Milas An`Rev',
-      'The Final Arbiter',
-      'Zeixshi`kar the Ancient',
-      'Kildrukaun the Ancient',
-      'Vyskudra the Ancient',
-      'Tjudawos the Ancient',
-      'Hraashna the Warder',
-      'Nanzata the Warder',
-      'Tukaarak the Warder',
-      'Ventani the Warder',
-      'Kerafyrm',
-      'Derakor the Vindicator',
-      'King Tormax',
-      'The Statue of Rallos Zek',
-      'The Idol of Rallos Zek',
-      'Avatar of War',
-      'Gozzrem',
-      'Telkorenar',
-      'Lediniara the Keeper',
-      'Dozekar the Cursed',
-      'Ikatiar the Venom',
-      'Eashen of the Sky',
-      'Aaryonar',
-      'Lord Feshlak',
-      'Dagarn the Destroyer',
-      'Lord Kreizenn',
-      'Lady Mirenilla',
-      'Lord Koi`Doken',
-      'Lord Vyemm',
-      'Lady Nevederia',
-      'Jorlleag',
-      'Cekenar',
-      'Sevalak',
-      'Zlexak',
-      'Vulak`Aerr',
-      'VulakTrigger',
-
-      # Luclin NPCs
-      'an evolved burrower',
-      'Khati Sha the Twisted',
-      'Warder of Life',
-      'Warder of Death',
-      'The Va`Dyn',
-      'The Itraer Vius',
-      'The Insanity Crawler',
-      'Shei Vinitras',
-      'Servitor of Luclin',
-      'Grieg Veneficus',
-      'Lcea Katta',
-      'Nathyn Illuminious',
-      'Lord Inquisitor Seru',
-      'Praesertum Rhugol',
-      'Praesertum Vantorus',
-      'Praesertum Matpa',
-      'Praesertum Bikun',
-      'Rhag`Zhezum',
-      'Rhag`Mozdezh',
-      'Arch Lich Rhag`Zadune',
-      'High Priest Sssraeshza',
-      'Xerkizh The Creator',
-      'Rhozth Ssrakezh',
-      'Rhozth Ssravizh',
-      'a glyph covered serpent',
-      'Vyzh`dra the Exiled',
-      'Vyzh`dra the Cursed',
-      'The Burrower Beast',
-      'Though Horror Overfiend',
-      'Doomshade',
-      'Rumblecrush',
-      'Zelnithak',
-      'Akhevan Warder',
-      'Va Dyn Khar',
-      'Thall Va Xakra',
-      'Kaas Thox Xi Ans Dyek',
-      'Diabo Xi Va',
-      'Diabo Xi Xin',
-      'Diabo Xi Xin Thall',
-      'Thall Va Kelun',
-      'Diabo Xi Va Temariel',
-      'Thall Xundraux Diabo',
-      'Va Xi Aten Ha Ra',
-      'Kaas Thox Xi Aten Ha Ra',
-      'Kaas Thox Xi Aten Ha Ra',
-      'Aten Ha Ra',
-
-      # Planes of Power NPCs
-      'Gryme the Crypt Guardian',
-      'Aramin the Spider Guardian',
-      'Grummus',
-      'Xanamech Nezmirthafen',
-      'Manaetic Behemoth',
-      'Construct of Nightmare',
-      'Terris Thule',
-      'Aerin`Dar',
-      'Carprin Deatharn',
-      'Tarkil Adan',
-      'Spectre of Corruption',
-      'Darwol Adan',
-      'Feig Adan',
-      'Xhut Adan',
-      'Kavilis Adan',
-      'Raddi Adan',
-      'Wavadozzik Adan',
-      'Zandal Adan',
-      'Meedo Adan',
-      'Akkapan Adan',
-      'Qezzin Adan',
-      'Pzo Adan',
-      'Bhaly Adan',
-      'Bertoxxulous',
-      'Salczek the Fleshgrinder',
-      'The Acolyte of Affliction',
-      'Ta`Grusch the Abomination',
-      'The Keeper of Sorrows',
-      'Maareq the Prophet',
-      'Tylis Newleaf',
-      'Saryrn',
-      'Sorrowsong',
-      'Auliffe Chaoswind',
-      'Brynju Thunderclap',
-      'Eindride Icestorm',
-      'Kuanbyr Hailstorm',
-      'Evynd Firestorm',
-      'Emmerik Skyfury',
-      'Agnarr the Storm Lord',
-      'Karana',
-      'Trydan Faye',
-      'Rydda`Dar',
-      'Rhaliq Trell',
-      'Alekson Garn',
-      'Halon of Marr',
-      'Edium, Guardian of Marr',
-      'Ralthazor, Champion of Marr',
-      'Lord Mithaniel Marr',
-      'Decorin Berik',
-      'Decorin Grunhork',
-      'Tallon Zek',
-      'Vallon Zek',
-      'Rallos Zek',
-      'Rallos Zek the Warlord',
-      'Xuzl',
-      'Arlyxir',
-      'Jiva',
-      'Rizlona',
-      'The Protector of Dresolik',
-      'Solusek Ro',
-      'Baltador the Cursed',
-      'Pherlondien Clawpike',
-      'Avatar of Wind',
-      'The Elemental Masterpiece',
-      'Avatar of Smoke',
-      'Melernil Faal`Armanna',
-      'Avatar of Mist',
-      'Sigismond Windwalker',
-      'Avatar of Dust',
-      'High Councilman of the Queen',
-      'Muzlakh the Chosen',
-      'Rindaler Egulrtan',
-      'Huridaf Vorgaasna',
-      'an elemental arbitor',
-      'Wesreh Galleantan',
-      'Nuquernal Belegrodian',
-      'Weruis Herfadban',
-      'Xegony the Queen of Air',
-      'Tantisala Jaggedtooth',
-      'A Perfected warder of Earth',
-      'A Monstrous Mudwalker',
-      'Peregrin Rockskull',
-      'Derugoak Bloodwalker',
-      'A Mystical Arbitor of Earth',
-      'War Chieftan Awisano',
-      'War Chieftan Birak',
-      'War Chieftan Galronar',
-      'Warlord Gintolaken',
-      'A Rathe Councilman',
-      'Avatar of Earth',
-      'General Druav Flamesinger',
-      'Jaxoliz Dawneyes',
-      'Criare Sunmane',
-      'Quavonis Firetail',
-      'Magmaton',
-      'Babnoxis the Spider Queen',
-      'Pyronis',
-      'Blazzax the Omnifiend',
-      'General Reparm',
-      'Arch Mage Yozanni',
-      'Guardian of Doomfire',
-      'Hydrotha',
-      'Fishlord Craiyk',
-      'Fishlord Lezom',
-      'Guardian of Coirnav',
-      'Coirnav the Avatar of Water',
-
-      #LoY NPCS
-      'Overlord Ngrub',
-      'Captain Varns',
-      'Captain Krasnok',
-      'Innoruuk',
-      'The Luggald Broodmother',
-      'Spiritseeker Nadox',
-  );
-
-
-    my $npc_name = normalize_name($npc->GetCleanName());  # Normalize NPC name
-
-    # Check if the normalized NPC name is in the blacklist (also normalized)
-    return grep { normalize_name($_) eq $npc_name } @blacklist;
-}
-
-sub normalize_name {
-    my ($name) = @_;
-    
-    # Convert to lowercase, remove punctuation, numbers, symbols, and extra spaces
-    $name = lc($name);                          # Normalize case
-    $name =~ s/[^a-z\s]//g;                     # Remove all non-letter characters
-    $name =~ s/\s+/ /g;                         # Replace multiple spaces with a single space
-    $name =~ s/^\s+|\s+$//g;                    # Trim leading and trailing spaces
-
-    return $name;
 }

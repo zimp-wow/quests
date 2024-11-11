@@ -31,10 +31,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 13068 -  Bat Wings
-	if (plugin::takeItems(13068 => 4)) {
+	if (plugin::check_handin(\%itemcount, 13068 => 4)) {
 		quest::say("Ah yes.  These are exactly what I need.  Thank you very much.");
 		#:: Give random item 15310 or 15332 - Spell: Flare or Spell: Shield of Fire
-		quest::summonitem(1quest::ChooseRandom(15310,15332));
+		quest::summonitem(quest::ChooseRandom(15310,15332));
 		#:: Ding!
 		quest::ding();
 		#:: Set faction
@@ -46,7 +46,7 @@ sub EVENT_ITEM {
 		quest::exp(40);
 	}
 	#:: Turn in for 18777 -  Enrollment Letter
-	elsif (plugin::takeItems(18777 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18777 => 1)) {
 		quest::say("Welcome. I am Niola Impholder. Master Magician of the Keepers of the Art. Here is our guild tunic. Once you are ready to begin your training please make sure that you see Yuin Starchaser, he can assist you in developing your hunting and gathering skills. Return to me when you have become more experienced in our art, I will be able to further instruct you on how to progress through your early ranks, as well as in some of the various [trades] you will have available to you.");
 		#:: Give item 13592 - Faded Training Robe*
 		quest::summonitem(13592);
@@ -61,7 +61,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Turn in for 18902 -  Torn Drawing
-	elsif (plugin::takeItems(18902 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18902 => 1)) {
 		quest::say("What? Not as supposed? What can he... Well, that's all well and good. You, I assume, wish a reward for your 'valiant work'? Well, here you go, adventurer.");
 		#:: Give item 1307 - Gossamer Robe
 		quest::summonitem(11307);
@@ -71,5 +71,5 @@ sub EVENT_ITEM {
 		quest::exp(30000);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

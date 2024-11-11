@@ -8,10 +8,10 @@ my $beenonjob;
 my $skelent;
 my $skelnpc;
 my $leftskelealive;
-my $eventstart;
+my $eventstart = 0;
 
 sub EVENT_SAY {
- if ($class eq "Druid") {
+ if (plugin::HasClassName($client, "Druid")) {
   if ($text=~/I am on the job/i && $askresponse==1 && $beenonjob) {
 	if ($client->GetItemIDAt(quest::getinventoryslotid("primary")) % 1000000 == 62829) {
 		quest::say("Well I'll be, a druid that wants to be a miner! Alright then, you keep at it. Don't break a nail or strain your delicate sensibilities!");
@@ -34,8 +34,10 @@ sub EVENT_WAYPOINT_ARRIVE {
 		if ($eventstart==0) {
 			quest::say("Speed up the digging my pets!!");
 			$skelent = $entity_list->GetMobByNpcTypeID(38016);
-			$skelnpc = $skelent->CastToNPC();
-			$skelnpc->SignalNPC(9);				
+			if($skelent){
+				$skelnpc = $skelent->CastToNPC();
+				$skelnpc->SignalNPC(9);
+			}				
 		}
 		else {
 			quest::say("Who on Bertoxxulous' blistered backside are you? Where did those fools go off to?");

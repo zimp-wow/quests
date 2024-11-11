@@ -9,7 +9,6 @@ sub EVENT_TIMER {
 
 sub EVENT_SAY {
   if ($text=~/hail/i) {
-    quest::say("Greetings, $name! Thank you for being here! If you are enjoying your time, please consider joining us in Discord! More information about the server can be found at RetributionEQ.com!");
-    quest::say("You can also call me Mom, because I hate fun and don't let Cata do anything interesting anymore!");
+    quest::say("Greetings, $name! Thank you for being here! If you are enjoying your time, please consider joining us in Discord!");
   }  
 }

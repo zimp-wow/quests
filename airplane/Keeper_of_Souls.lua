@@ -12,8 +12,8 @@ function event_timer(e)
 end
 
 function event_death_complete(e)
-	sirran= nil;
-	eq.set_global("sirran","4",3,"M20");
+	local instance_id = eq.get_zone_instance_id() or 0;
+	eq.set_data("airplane-sirran-" .. instance_id, "4", tostring(eq.seconds("24h")));
 	eq.spawn2(71058,0,0,-543,767,174,128); -- NPC: Sirran_the_Lunatic
 end
 

@@ -34,7 +34,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Turn in for 13983 - Inert Potion 
-	elsif (plugin::takeItems(13983 => 1 )) {
+	elsif (plugin::check_handin(\%itemcount, 13983 => 1 )) {
 		quest::say("I see Tonmerk has found a use for my shark powder. We agreed to this trade when last we met. Unfortunately, I am out of it. If you desire the shark powder you will have to get me three shark bones. I wish you luck. Oh. I also require a payment of ten gold pieces. The taxes in Freeport are fierce.");
 		#:: Ding!
 		quest::ding();
@@ -46,7 +46,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Turn in for 12135- Empty Potion of Marr
-	elsif (plugin::takeItems(12135 => 1 )) {
+	elsif (plugin::check_handin(\%itemcount, 12135 => 1 )) {
 		quest::say("The Sentries of Passion informed me of your journey to the Ocean of Tears and the demise of Sentry Xyrin. You performed beyond the call of duty. This is what makes an exceptional person. Take this for your great deed. The twin deities would wish it so.");
 		#:: Give item 15207 - Spell: Divine Aura
 		quest::summonitem(15207);
@@ -60,5 +60,5 @@ sub EVENT_ITEM {
 		quest::exp(1000);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

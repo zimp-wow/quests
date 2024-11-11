@@ -23,7 +23,7 @@ sub EVENT_SAY   {
       }
 # Opens task window with the proper task for the proper class.
       if($text=~/look/i) {
-         if(($class eq "Necromancer") || ($class eq "Wizard") || ($class eq "Magician") || ($class eq "Enchanter")) {
+         if((plugin::HasClassName($client, "Necromancer")) || (plugin::HasClassName($client, "Wizard")) || (plugin::HasClassName($client, "Magician")) || (plugin::HasClassName($client, "Enchanter"))) {
             push (@task_list, 260);#level 20 caster
             push (@task_list, 261);#level 25 caster
             push (@task_list, 262);#level 30 caster
@@ -34,7 +34,7 @@ sub EVENT_SAY   {
             push (@task_list, 267);#level 55 caster
             push (@task_list, 268);#level 60 caster
       }
-         if(($class eq "Warrior") || (plugin::HasClassName($client, "Monk")) || ($class eq "Rogue") || ($class eq "Berserker")) {
+         if((plugin::HasClassName($client, "Warrior")) || (plugin::HasClassName($client, "Monk")) || (plugin::HasClassName($client, "Rogue")) || (plugin::HasClassName($client, "Berserker"))) {
             push (@task_list, 269);#level 20 melee
             push (@task_list, 270);#level 25 melee
             push (@task_list, 234);#level 30 melee
@@ -45,7 +45,7 @@ sub EVENT_SAY   {
             push (@task_list, 239);#level 55 melee
             push (@task_list, 240);#level 60 melee
       }
-         if(($class eq "Cleric") || ($class eq "Druid") || ($class eq "Shaman")) {
+         if((plugin::HasClassName($client, "Cleric")) || (plugin::HasClassName($client, "Druid")) || (plugin::HasClassName($client, "Shaman"))) {
             push (@task_list, 241);#level 20 healer
             push (@task_list, 242);#level 25 healer
             push (@task_list, 243);#level 30 healer
@@ -56,7 +56,7 @@ sub EVENT_SAY   {
             push (@task_list, 248);#level 55 healer
             push (@task_list, 249);#level 60 healer
       }
-         if(($class eq "Paladin") || ($class eq "Ranger") || ($class eq "Shadowknight") || ($class eq "Bard") || ($class eq "Beastlord")) {
+         if((plugin::HasClassName($client, "Paladin")) || (plugin::HasClassName($client, "Ranger")) || (plugin::HasClassName($client, "Shadowknight")) || (plugin::HasClassName($client, "Bard")) || (plugin::HasClassName($client, "Beastlord"))) {
             push (@task_list, 250);#level 20 hybrid
             push (@task_list, 251);#level 25 hybrid
             push (@task_list, 252);#level 30 hybrid

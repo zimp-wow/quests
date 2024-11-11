@@ -21,6 +21,8 @@ my %atlas = (
     'emeraldjungle'  => 'RoK',
 #    'fieldofbone'    => 'RoK',
     'firiona'        => 'RoK',
+    'overthere'      => 'RoK',
+    'frontiermtns'   => 'RoK',
 #    'lakeofillomen'  => 'RoK',
 #    'swampofnohope'  => 'RoK',
     'timorous'       => 'RoK',
@@ -476,11 +478,7 @@ sub is_time_locked {
     # Return 1 if locked, 0 if unlocked
     my $stage = shift;
 
-    if (plugin::MultiClassingEnabled()) {
-        if ($stage eq 'RoK') {       
-            return 0;
-        }
-        
+    if (plugin::IsTHJ()) {    
         return 1;
     }
 

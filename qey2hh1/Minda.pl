@@ -15,7 +15,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12103 - Full Chalice
-	if (plugin::takeItems(12103 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12103 => 1)) {
 		quest::say("May the Rainkeeper keep you safe. I thank you. Here is the empty chalice. By the way, inform your superior that the operations of the [Karana bandits] are getting closer to Qeynos.");
 		#:: Give a 12104 - Empty Chalice
 		quest::summonitem(12104);
@@ -30,5 +30,5 @@ sub EVENT_ITEM {
 		quest::exp(500);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

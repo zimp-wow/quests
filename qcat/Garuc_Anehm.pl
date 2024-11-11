@@ -25,7 +25,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13287 - Order of Thunder
-	if (plugin::takeItems(13287 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13287 => 1)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {
 			quest::say("Ha! You must have slain a member of the Knights of Thunder. These pitiful knights have been a thorn in our side for far too long. Take this reward and continue the work of Bertoxxulous.");
@@ -49,7 +49,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 13296 - Prayer Beads
-	elsif (plugin::takeItems(13296 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13296 => 1)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {
 			quest::say("Fine work! One less threat to our shrine. Take this. It shall help you become a great asset to our shrine. Go forth and spread the disease."); 
@@ -73,7 +73,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 13908 - Busted Prayer Beads
-	elsif (plugin::takeItems(13908 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13908 => 1)) {
 		quest::say("You fool! Brother Trintle was our mole within the Priests of Life. Now you have killed him. For this you shall die!");
 		#:: Set factions
 		quest::faction(221, -50);			#:: - Bloodsabers
@@ -85,7 +85,7 @@ sub EVENT_ITEM {
 		quest::attack($name);
 	}
 	#:: Match a 13134 - Hurrieta's Bloody Dress
-	elsif (plugin::takeItems(13134 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13134 => 1)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {
 			quest::say("Hahaha.. I see you actually killed a respected, well-known citizen of Qeynos. No loss for them, but you are certainly a gain for our shrine. Maybe this shall do you some good. If not now, then surely later. You may need it when the Qeynos Guards hunt you down.");
@@ -109,5 +109,5 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

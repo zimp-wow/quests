@@ -21,7 +21,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 1736 - Algae Covered Flesh, a 1737 - Swollen Flesh, and a 1735 - Waterlogged Flesh
-	if (plugin::takeItems(1736 => 1, 1737 => 1, 1735 => 1)) {
+	if (plugin::check_handin(\%itemcount, 1736 => 1, 1737 => 1, 1735 => 1)) {
 		quest::emote("cheers as you hand him the samples of zombie flesh. He says, 'You have them! Excellent! Thank you very much, $name! Now I have much work to do so shoo before you break something else. Oh and here is your reward. It's an anklet that all our acolytes wear. Not only is it functional, but we can show off our beautiful foot hairs at the same time. Us halflings are pretty smart really.");
 		#:: Give a 1731 - Acolyte's Anklet
 		quest::summonitem(11731);
@@ -39,5 +39,5 @@ sub EVENT_ITEM {
 		quest::faction(263,20);		#:: + Guardians of the Vale
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

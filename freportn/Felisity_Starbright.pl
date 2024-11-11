@@ -6,7 +6,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18158 - A Bardic Letter (Freeport)
-	if (plugin::takeItems(18158 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18158 => 1)) {
 		quest::say("Mail from the front - thank you very much! Please take this gold for your troubles. If you are interested in more work, just ask Ton Twostring");
 		#:: Ding!
 		quest::ding();
@@ -24,7 +24,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 18157 - A Bardic Letter (Freeport)
-	elsif (plugin::takeItems(18157 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18157 => 1)) {
 		quest::say("Incoming mail - very good!  Please take this gold for your troubles.");
 		#:: Ding!
 		quest::ding();
@@ -42,7 +42,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 18159 - A Bardic Letter (Freeport)
-	elsif (plugin::takeItems(18159 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18159 => 1)) {
 		quest::say("'Mail from the front - thank you very much! Please take this gold for your troubles. If you are interested in more work, just ask Ton Twostring.'");
 		#:: Ding!
 		quest::ding();
@@ -60,7 +60,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 18155 - A Bardic Letter (Freeport)
-	elsif (plugin::takeItems(18155 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18155 => 1)) {
 		quest::say("Incoming mail - very good!  Please take this gold for your troubles.");
 		#:: Ding!
 		quest::ding();
@@ -78,7 +78,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 18166 - Pouch of Mail (Freeport)
-	elsif (plugin::takeItems(18166 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18166 => 1)) {
 		quest::say("'Mail from the front - thank you very much! Please take this gold for your troubles. If you are interested in more work, just ask Ton Twostring");
 		#:: Ding!
 		quest::ding();
@@ -96,5 +96,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

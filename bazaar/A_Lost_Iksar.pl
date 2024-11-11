@@ -40,7 +40,7 @@ sub EVENT_SAY {
             my $item3_link = quest::varlink($item3);
             my $item4_link = quest::varlink($item4);
 
-            my $response_string = "In that case, you will need to do is bring me the one each of following: [$item1_link], [$item2_link], [$item3_link], and [$item4_link].";
+            my $response_string = "In that case, all you need to do is bring me one of each of the following: [$item1_link], [$item2_link], [$item3_link], and [$item4_link].";
             if (!plugin::MultiClassingEnabled()) {
                 $response_string = $response_string . " Not only will I grant you access to the $stage_desc, but I will give you two tokens so that your companions can present them to me in order to also gain access.";
             }

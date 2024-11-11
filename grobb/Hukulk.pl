@@ -30,7 +30,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18792 - Tattered Note
-	if (plugin::takeItems(18792 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18792 => 1)) {
 		quest::say("Haaah!! Bow to Hukulk!! Hukulk make you feared.. make you powered! Dark power flow through you! Hate and Fear in your blood!");
 		#:: Give a 13530 - Black and Green Tunic*
 		quest::summonitem(13530);
@@ -45,7 +45,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match four 13073 - Bone Chips
-	elsif (plugin::takeItems(13073 => 4)) {
+	elsif (plugin::check_handin(\%itemcount, 13073 => 4)) {
 		quest::say("You good. Take dis. Make much pain and hurt. Make tings bleeds. Kill, hurt all. Innoruuk and me say do, now go. You do much, come bak. Teach you how more hurt and pain make. Go.");
 		#:: Give a 5023 - Rusty Two Handed Sword
 		quest::summonitem(15023);
@@ -58,7 +58,7 @@ sub EVENT_ITEM {
 		quest::faction(235, 10);		#:: - Da Bashers
 	}
 	#:: Match a 12201 - Troll Head and 12202 - Happy Love Bracers
-	elsif (plugin::takeItems(12201 => 1, 12202 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12201 => 1, 12202 => 1)) {
 		quest::say("Ha!! Ha!! Who have last laugh now!! You do good werk.  Now me give you extra helm of Hukulk. Now go away!!");
 		#:: Give a 3316 - Helm of Hukulk
 		quest::summonitem(13316);
@@ -77,5 +77,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

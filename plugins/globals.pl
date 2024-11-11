@@ -222,7 +222,7 @@ sub takeItemsCoin
   
   if (plugin::givenCoin($c, $s, $g, $p))
   {
-    if (plugin::takeItems(@_))
+    if (plugin::check_handin(\%itemcount, @_))
     {
       plugin::takeCoin($c, $s, $g, $p);
       

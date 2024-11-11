@@ -23,7 +23,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 12241 - Raw Short Sword 1, 12242 - Raw Short Sword 2, 12243 - Raw Short Sword 3, 12244 - Raw Short Sword 4
-	if (plugin::takeItems(12241 => 1, 12242 => 1, 12243 => 1, 12244 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12241 => 1, 12242 => 1, 12243 => 1, 12244 => 1)) {
 		quest::say("Good work, $name. The bunker shall be well stocked. Here you are, my friend. Take this raw blade. You can take it to Groflah - he will sharpen and polish it for you. It should be a formidable weapon.");
 		#:: Give a 13919 - Reward Raw Short Sword
 		quest::summonitem(13919);
@@ -43,6 +43,6 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 #:: 	quest::say("This is only one sword. I requested four altogether. You shall not get your payment until I get my fourth sword");
 }

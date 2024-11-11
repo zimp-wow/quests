@@ -93,7 +93,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 7100 - Shadowed Rapier
-	elsif (plugin::takeItems(7100 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 7100 => 1)) {
 		#:: Match a 7100 - Shadowed Rapier and 12268 - Ring of the Ancients
 		if (plugin::check_mq_handin(12268 => 1, 7100 => 1)) {
 			quest::say("The time to trade has come!! I am now rich and you are now fast. Take the Journeyman Boots and run like the wind.");
@@ -113,7 +113,7 @@ sub EVENT_ITEM {
 
 	}
 	#:: Match a 12268 - Ring of the Ancients
-	elsif (plugin::takeItems(12268 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12268 => 1)) {
 		#:: Match a 7100 - Shadowed Rapier and 12268 - Ring of the Ancients
 		if (plugin::check_mq_handin(12268 => 1, 7100 => 1)) {
 			quest::say("The time to trade has come!! I am now rich and you are now fast. Take the Journeyman Boots and run like the wind.");
@@ -132,5 +132,5 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

@@ -37,7 +37,7 @@ sub EVENT_SAY {
 				
 sub EVENT_ITEM {
 	#:: Match a 13898 - Bag of Ice Necklaces
-	if (plugin::takeItems(13898 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13898 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Well done, my young apprentice. I call you apprentice for you are nothing but a spark to my fire. This is the final component for my greatest creation. AHA!! I call it - iced tea!! Never again shall I boil under the hot sun. As for you, take this. It should serve you well. Now go away. There is no iced tea for you");
@@ -70,7 +70,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 12207 - Half of a Spell
-	elsif (plugin::takeItems(12207 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12207 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Go now and use his research to aid yourself. Seems that I lack the will to use Ilanic's knowledge for my better good.");

@@ -1,9 +1,9 @@
 sub EVENT_ITEM {
 	#:: Turn in for 13861 - A jar of liquid
-	if (plugin::takeItems(13861 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 13861 => 1 )) {
 		quest::emote("darts into the jar, or just darted past it!! The Knights of Truth do not tolerate people attempting to catch these fish!!");
 		#:: Give a random reward: 13861 - A Jar of Liquid, or 13862 - Fish in a Jar
-		quest::summonitem(1quest::ChooseRandom(13861,13862));
+		quest::summonitem(quest::ChooseRandom(13861,13862));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
@@ -14,5 +14,5 @@ sub EVENT_ITEM {
 		quest::faction(311, -2);		#:: - Steel Warriors
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+    plugin::return_items(\%itemcount);quest::summonitem(quest::ChooseRandom($item1));
 }

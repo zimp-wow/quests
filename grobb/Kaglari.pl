@@ -24,7 +24,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match two 13073 - Bone Chips and two 13187 - Froglok Tadpole Flesh
-	if (plugin::takeItems(13073 => 2, 13187 => 2)) {
+	if (plugin::check_handin(\%itemcount, 13073 => 2, 13187 => 2)) {
 		quest::say("Good. Innoruuk get special gift. Not you, dis time. Here. Learning majik wid dis. You more want to [help Innoruuk]?");
 		#:: Give a 15093 - Spell: Burst of Flame
 		quest::summonitem(15093);
@@ -38,7 +38,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 13916 - Deathfist Slashed Belt
-	elsif (plugin::takeItems(13916 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13916 => 1)) {
 		quest::say("Good job. Dat help lerns um. Takes dis ta help ya lerns how ta do more hateful tings. Ya gots a good starts fer Him ta be prouds a ya.");
 		#:: Give a 15272 - Spell: Spirit Pouch
 		quest::summonitem(15272);
@@ -52,7 +52,7 @@ sub EVENT_ITEM {
 		quest::exp(150);
 	}							
 	#:: Match a 18791 - Tattered Note
-	elsif (plugin::takeItems(18791 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18791 => 1)) {
 		quest::say("Good.. Kaglari need you help.. Kaglari teach you majik now.  When you ready for task you tell Kaglari!!  Yooz reeturn to mez when yooz ar strongur, mez teech yooz bout da mor advanced tings.");
 		#:: Give a 13529 - Muck Stained Tunic*
 		quest::summonitem(13529);
@@ -66,5 +66,5 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

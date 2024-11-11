@@ -28,7 +28,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18432 - Halfling Ranger Note
-	if (plugin::takeItems(18432 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18432 => 1)) {
 		quest::say("Welcome to the Storm Reapers $name! Here is a tunic to keep you warm in your travels. Rivervale, our lovely home is facing dangerous times. From both the east and west forces devoted to the evil Gods Bertoxxulous adn Innoruuk are corrupting and destroying the wilds of Norrath. Also, the Orcs of Clan Deathfist are waging war on this entire region and gathering lumber and stone for some unknown purpose. We must do our best to preserve the lands and way of life of all Karanas people. Once you are ready to begin defending the vale against the evil forces, please return to me. I also posses knowledge of various [trades], seek me out when you wish to learn about them.");
 		#:: Give a 13541 - Jumjum Sack Tunic*
 		quest::summonitem(13541);
@@ -43,5 +43,5 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

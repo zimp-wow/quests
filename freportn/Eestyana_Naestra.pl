@@ -9,7 +9,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18735 - Tattered Note
-	if (plugin::takeItems(18735 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18735 => 1)) {
 		quest::say("The Truthbringer welcomes you into his life. Here is the tunic of Marr. Wear it with pride and be sure to conduct yourself with valor. Once you are ready to begin your training please make sure that you see Salinsa Delfdosan, she can assist you in developing your hunting and gathering skills. Return to me when you have become more experienced in our art, I will be able to further instruct you on how to progress through your early ranks.");
 		#:: Give a 13554 - Faded Purple Tunic*
 		quest::summonitem(13554);
@@ -25,7 +25,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 18822 - A Note
-	elsif (plugin::takeItems(18822 => 1 )) {
+	elsif (plugin::check_handin(\%itemcount, 18822 => 1 )) {
 		quest::say("You must be the young member of the Hall of Truth who was sent by Theron. I am glad to see you avoided any interference. Please take this as a reward for your service.");
 		#:: Give item 9985 - Spell: Courage*
 		quest::summonitem(19985);
@@ -45,10 +45,10 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 18816 - A Note
-	elsif (plugin::takeItems(18816 => 1 )) {
+	elsif (plugin::check_handin(\%itemcount, 18816 => 1 )) {
 		quest::say("Thank you, defender of Karana! We have heard rumors of the followers of Bertoxxulous gaining knowledge of our knight who infiltrated the ranks of the [Militia]. They would have tried to sell the information to the Militia. We will inform our knight immediately. As for you, here is a donation to your journey's expenses. Stay clear of the Freeport Militia. There is no doubt they have learned of your alliance with us.");
 		#:: Give random reward: 6016 - Rusty Morning Star or 13296 - Prayer Beads
-		quest::summonitem(1quest::ChooseRandom(6016, 13296));
+		quest::summonitem(quest::ChooseRandom(6016, 13296));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
@@ -65,5 +65,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

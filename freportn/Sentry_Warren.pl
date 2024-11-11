@@ -9,7 +9,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 12133 - Part of Potion of Marr
-	if (plugin::takeItems(12133 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 12133 => 1 )) {
 		quest::say("Thank you. I believe you need to seek out Sentry Xyrin. She is not at the temple. I believe she left to speak with [Sisterhood of Erollisi]. She was to speak with Styria.");
 		#:: Give item 12134 - Last of Potion of Marr
 		quest::summonitem(12134);
@@ -23,5 +23,5 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

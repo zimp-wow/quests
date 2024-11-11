@@ -16,7 +16,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12102 - Temple Blankets
-	if (plugin::takeItems(12102 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12102 => 1)) {
 		quest::say("Thank you, protector of Karana. This will be handy when the cold rushes into the valley. Allow me to offer you some provisions for your journey. And, might I add, the [Karana bandits] have begun to operate much closer to Qeynos.");
 		#:: Ding
 		quest::ding();
@@ -33,5 +33,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

@@ -6,7 +6,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18823 - Note to Neclo
-	if (plugin::takeItems(18823 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18823 => 1)) {
 		#:: Match if faction is Indifferent or better
 		if ($faction <= 5) {
 			quest::say("Ah.. Hello friend.. So, I see Daenor sent you.. Uh huh, ok.. Here's something that will be very useful for you. Practice this well, friend.. It will help protect you in this harsh world.");
@@ -29,5 +29,5 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

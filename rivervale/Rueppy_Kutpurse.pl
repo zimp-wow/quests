@@ -18,7 +18,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 13032 - Short Beer
-	if (plugin::takeItems(13032 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 13032 => 1 )) {
 		quest::say("Mmm. It's good, but not as good as [Blackburrow Stout].");
 		#:: Ding!
 		quest::ding();
@@ -30,7 +30,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Turn in for 13131 - Case of Blackburrow Stout
-	elsif (plugin::takeItems(13131 => 1 )) {
+	elsif (plugin::check_handin(\%itemcount, 13131 => 1 )) {
 		quest::say("Heh heh! You did it! I thought the deputies would get you for sure! I mean... You did it! Heh! Here buy yourself a drink on me.");
 		#:: Ding!
 		quest::ding();
@@ -48,5 +48,5 @@ sub EVENT_ITEM {
 		quest::faction(329, 1);		#:: + Carson McCabe	
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

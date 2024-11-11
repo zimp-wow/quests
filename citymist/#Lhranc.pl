@@ -8,4 +8,9 @@ sub EVENT_DEATH_COMPLETE {
   quest::spawn2(90189, 0, 0, 28.1, 1.4, 7, 385); ##Marl Kastane
 }
 
+sub EVENT_ITEM {
+  # Return unused items from second lhranc
+  plugin::return_items(\%itemcount);
+}
+
 # Quest by mystic414

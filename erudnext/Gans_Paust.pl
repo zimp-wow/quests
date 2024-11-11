@@ -36,7 +36,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18724 - Tattered Note
-	if (plugin::takeItems(18724 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18724 => 1)) {
 		quest::say("Yes. welcome friend! Here is your guild tunic. You'll make a fine addition to the Deepwater Knights.  Go see Lumi Stergnon, he will get you started in your studies. Return to me when you have become more experienced in our art, I will be able to further instruct you on how to progress through your early ranks, as well as in some of the various [trades] you will have available to you.");
 		#:: Give a 13544 - Old Blue Tunic*
 		quest::summonitem(13544);
@@ -50,7 +50,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 1771 - Yelesom's Reports
-	elsif (plugin::takeItems(1771 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 1771 => 1)) {
 		quest::say("Excellent! Thank you for checking on my brother, I am glad to hear that he is well.  Here is something that shall help you on your way.");
 		#:: Give a 1763 - Midnight Sea Mail Sleeves
 		quest::summonitem(11763);
@@ -64,5 +64,5 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

@@ -30,7 +30,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13854 - Human Heart
-	if (plugin::takeItems(13854 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13854 => 1)) {
 		quest::say("Good work, my friend! I thank you and the Unkempt Druids thank you. Unfortunately I have sold the other song sheet to a traveling bard of the plains. I believe her name was Cordelia. Now be on your way. Unless you plan to [join the Unkempt Druids]..?");
 		#:: Give a 13116 - Winds of Karana sheet 1
 		quest::summonitem(13116);
@@ -45,7 +45,7 @@ sub EVENT_ITEM {
 		quest::exp(1000);
 	}
 	#:: Match a 13913 - Barbarian Head
-	elsif (plugin::takeItems(13913 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13913 => 1)) {
 		quest::say("What fine work you do! In the name of all Norrath's beasts and of the Unkempt Druids, I thank you. No longer will there be senseless slaughter. Here is the flute.");
 		#:: Give a 13310 - Cracked Flute
 		quest::summonitem(13310);
@@ -60,5 +60,5 @@ sub EVENT_ITEM {
 		quest::exp(1000);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

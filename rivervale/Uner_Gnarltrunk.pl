@@ -11,10 +11,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13240 - Deputy Tagil's Payment
-	if (plugin::takeItems(13240 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13240 => 1)) {
 		quest::say("I knew that Deputy Tagil had simply forgotten. He really is a good young halfling. Here, take this as a small payment for your time.");
 		#:: Give a random reward: 13977 - Carrot, 13100 - Fishing Pole, 14014 - Potion of Wisdom, 13083 - Pine Needles
-		quest::summonitem(1quest::ChooseRandom(13977,13100,14014,13083));
+		quest::summonitem(quest::ChooseRandom(13977,13100,14014,13083));
 		#:: Ding!
 		quest::ding();
 		#:: Grant a small amount of experience
@@ -30,5 +30,5 @@ sub EVENT_ITEM {
 		quest::faction(324, -1);	#:: - Unkempt Druids
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

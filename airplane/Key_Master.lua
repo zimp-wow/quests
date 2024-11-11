@@ -1,4 +1,4 @@
-local counter;
+local counter = 0;
 
 function event_spawn(e)
 	counter = 0;
@@ -17,7 +17,7 @@ function event_signal(e)
 		-- eq.set_timer("13",300000); what is this referred to?
 		--eq.set_global("keeper","1",3,"H2");
 		-- supposed to be 60-85 minute timer
-		eq.set_timer("87",math.random(300000) + 600000); -- 10 to 15 minutes instead
+		eq.set_timer("87",120000); -- Lets just do 120s
 	end
 end
 

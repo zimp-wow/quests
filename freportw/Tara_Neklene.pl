@@ -25,10 +25,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13845 - Illegible Cantrip
-	if (plugin::takeItems(13845 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13845 => 1)) {
 		quest::say("Very fine work, my young apprentice. This shall be very useful in understanding their ways. I have heard rumors of a scribe who can decipher these scrolls. He is said to frequent the local taverns. Bah!! If I cannot decipher them, no one can!! Continue with your work. Soon you shall advance enough to [test the might of the orc oracles].");
 		#:: Give a random reward: 13005 - Iron Ration, 13002 - Torch, or 13006 - Water Flask
-		quest::summonitem(1quest::ChooseRandom(13005, 13002, 13006));
+		quest::summonitem(quest::ChooseRandom(13005, 13002, 13006));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
@@ -44,12 +44,12 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 13225 - Illegible Scroll
-	elsif (plugin::takeItems(13225 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13225 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("Wonderful! You have survived the might of an oracle. With this we can now continue our experiments. Now you may continue your teaching and study the power to summon those of earth, air, water and fire.");
 			#:: Give a random reward: 15317 - Spell: Elementalkin: Air, 15058 - Spell: Elementalkin: Earth, 15316 - Spell: Elementalkin: Fire, 15315 - Spell: Elementalkin: Water, 23516 - Spell: Summon Brass Choker
-			quest::summonitem(1quest::ChooseRandom(15317, 15058, 15316, 15315, 23516));
+			quest::summonitem(quest::ChooseRandom(15317, 15058, 15316, 15315, 23516));
 			#:: Ding!
 			quest::ding();
 			#:: Set factions
@@ -77,5 +77,5 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

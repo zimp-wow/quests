@@ -12,7 +12,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13182 - Kevlin's Debt
-	if (plugin::takeItems(13182 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13182 => 1)) {
 		quest::say("Heh heh! You got a career ahead of ya kid! Good work. Here is your cut.");
 		#:: Ding!
 		quest::ding();
@@ -24,5 +24,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

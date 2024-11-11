@@ -29,7 +29,7 @@ sub EVENT_SIGNAL {
 
 sub EVENT_ITEM {
 	#:: Match four 13829 - Drom's Champagne
-	if (plugin::takeItems(13829 => 4)) {
+	if (plugin::check_handin(\%itemcount, 13829 => 4)) {
 		quest::say("Ahh!! That was good. Now where were we?. Oh yes. My friend Zimel is a fellow beggar. He was locked up in the arena. They were going to let him go when the Freeport Militia came for him. Ha!! He is crazy as a troll now. I took this blanket from his cell before I was released. I no longer need it and my guilt has reached its peak. I do not want crazy old Zimel to freeze. Perhaps you can return it to him.");
 		#:: Give item 12196 - Bunker Cell #1 (Zimel's Blanket)
 		quest::summonitem(12196);
@@ -39,7 +39,7 @@ sub EVENT_ITEM {
 		quest::exp(10);
 	}
 	#:: Match three 13829 - Drom's Champagne
-	elsif (plugin::takeItems(13829 => 3)) {
+	elsif (plugin::check_handin(\%itemcount, 13829 => 3)) {
 		if ($ItemCount < 1) {
 			quest::say("Oooh!! That is the taste. My lips are almost loose. Maybe another will do the trick.");
 			#:: Increment the item count variable
@@ -60,7 +60,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match two 13829 - Drom's Champagne
-	elsif (plugin::takeItems(13829 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13829 => 2)) {
 		if ($ItemCount < 2) {
 			quest::say("Oooh!! That is the taste. My lips are almost loose. Maybe another will do the trick.");
 			#:: Increment the item count variable
@@ -80,7 +80,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match one 13829 - Drom's Champagne
-	elsif (plugin::takeItems(13829 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13829 => 1)) {
 		if ($ItemCount < 3) {
 			quest::say("Oooh!! That is the taste. My lips are almost loose. Maybe another will do the trick.");
 			#:: Increment the item count variable
@@ -99,5 +99,5 @@ sub EVENT_ITEM {
 		}
 	}		
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

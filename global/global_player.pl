@@ -1,40 +1,44 @@
 sub EVENT_SIGNAL {
+    # Signals;
+    # 666 = EoM Dead Drop
+    # 100 = Title Flags
+
     if ($signal == 666) {
-        quest::debug("Got EoM Signal");
         plugin::UpdateEoMAward($client);
-    } elsif ($signal == 100) {
-        plugin::CheckWorldWideBuffs($client);
-    } else {
-        # Title Semaphore from lua scripts
+        return;
+    }
+
+    if ($signal == 100) {
         my $semaphore_title = $client->GetBucket('flag-semaphore');
         if ($semaphore_title) {
             plugin::AddTitleFlag($semaphore_title, $client);
             $client->DeleteBucket('flag-semaphore');
         }
-
         plugin::EnableTitles($client);
-    }
+    } 
 }
 
 sub EVENT_ENTERZONE {
-    $client->ReloadDataBuckets();
-	plugin::CommonCharacterUpdate($client);
+  plugin::CommonCharacterUpdate($client);
 	if (!plugin::is_eligible_for_zone($client, $zonesn)) {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
 		$client->MovePC(151, 185, -835, 4, 390); # Bazaar Safe Location.
-	}
-
+    }
 
     # Only THJ Stuff after this point
     if (!plugin::IsTHJ()) {
         return;
     }
 
+    if (!$client->IsTaskCompleted(3) && !$client->IsTaskActive(3)) {
+        $client->AssignTask(3);
+    } elsif ($client->IsTaskCompleted(3) && (!$client->IsTaskCompleted(4) && !$client->IsTaskActive(4))) {
+        $client->AssignTask(4);
+    }
+
     my $entity_list = plugin::val('$entity_list');
     my @npcs = $entity_list->GetNPCList();
-
-
-     if (plugin::IsTHJ() && $instanceid) {
+    if (plugin::IsTHJ() && $instanceid) {
         foreach my $npc (@npcs) {
             my $expedition = quest::get_expedition();
             if ($expedition) {
@@ -74,8 +78,11 @@ sub EVENT_CONNECT {
         plugin::DisplayWarning($client);
     }
 
-    $client->ReloadDataBuckets();
-    plugin::CommonCharacterUpdate($client);
+    plugin::GrantClassesAA($client);
+    plugin::GrantGeneralAA($client);
+    
+    plugin::CommonCharacterUpdate($client); 
+    
     if (!$client->GetBucket("First-Login")) {
         $client->SetBucket("First-Login", 1);
 		$client->SummonItem(18471); #A Faded Writ
@@ -112,7 +119,7 @@ sub EVENT_FEIGN_DEATH {
 sub EVENT_POPUPRESPONSE {
     plugin::check_tutorial_popup_response($popupid, $client);
 
-    if ($popupid == 58240 && $zone != 151) {
+    if ($popupid == 58240) {
         if ($client->GetAggroCount() > 0) {
             $client->Message(13, "You cannot return to the Bazaar while in combat.");
             return;
@@ -132,6 +139,7 @@ sub EVENT_POPUPRESPONSE {
         my $y = $client->GetEntityVariable("bazaar_y") + int(rand(11)) - 5;
         my $z = $client->GetEntityVariable("bazaar_z");
         my $h = $client->GetEntityVariable("bazaar_h");
+        my $bind_loc = $client->GetEntityVariable("bazaar_zone");
 
         $client->SetBucket("Return-X", $client->GetX());
         $client->SetBucket("Return-Y", $client->GetY());
@@ -141,7 +149,7 @@ sub EVENT_POPUPRESPONSE {
         $client->SetBucket("Return-Instance", $instanceid);
 
         $client->SpellEffect(218,1);
-        $client->MovePC(151, $x, $y, $z, rand(512));
+        $client->MovePC($bind_loc, $x, $y, $z, rand(512));
     }
 }
 
@@ -153,12 +161,16 @@ sub EVENT_TASK_COMPLETE {
 
 sub EVENT_LEVEL_UP {
     plugin::CommonCharacterUpdate($client);
+
+    plugin::GrantClassesAA($client);
+    plugin::GrantGeneralAA($client);
+
     my $new_level = $client->GetLevel();
     if (($new_level % 10 == 0) || $new_level == 5 || $new_level == $client->GetBucket("CharMaxLevel")) {
         my $name = $client->GetCleanName();
         my $full_class_name = plugin::GetPrettyClassString($client);
 
-        my $capped = ($new_level == $client->GetBucket("CharMaxLevel") || 0) ? " (Level Cap)" : "";
+        my $capped = ($new_level == ($client->GetBucket("CharMaxLevel") || 0) ? " (Level Cap)" : "");
 
         plugin::WorldAnnounce("$name ($full_class_name) has reached Level $new_level$capped.");
     }
@@ -170,15 +182,6 @@ sub EVENT_CLICKDOOR {
     if (!plugin::is_eligible_for_zone($client, $target_zone, 1)) {
 		return 1;
     }
-}
-
-sub EVENT_ZONE {
-    $client->ReloadDataBuckets();
-    # TO-DO: Use magic to determine where we zoned from, then find the reverse zone connection landing point and send us there.
-    plugin::CommonCharacterUpdate($client);
-}
-
-sub EVENT_READ_ITEM {
 }
 
 sub EVENT_WARP {
@@ -241,39 +244,33 @@ sub EVENT_DISCOVER_ITEM {
     }
 }
 
-sub EVENT_LOOT {
-    symp_proc_tutorial_helper($item_id, $client);
-}
-
-sub EVENT_MERCHANT_BUY {
-    symp_proc_tutorial_helper($item_id, $client);
-}
-
 sub symp_proc_tutorial_helper {
     my $item_id = shift;
     my $client = shift;
 
-    #pre-computed list of symp proc item ID bases
-    my @sym_clicks = (
-        6307, 6309, 6313, 7305, 900012, 900014, 1113, 1117, 1156, 1173,
-        1904, 2404, 5203, 5214, 5730, 5764, 6017, 6020, 6024, 6036,
-        6310, 6315, 6323, 6324, 6332, 6335, 6343, 6350, 6359, 6382,
-        6383, 6402, 6404, 6408, 6616, 6626, 7036, 7318, 7372, 7405,
-        10333, 10383, 10404, 10994, 11028, 11906, 11973, 12375, 13168,
-        13380, 13400, 13500, 13743, 13744, 13815, 13987, 13988, 13991,
-        14338, 14746, 14762, 20627, 21798, 21863, 21885, 21886, 21892,
-        22819, 22890, 23498, 24745, 24779, 24789, 24793, 25566, 25577,
-        25980, 25998, 26000, 26001, 26009, 26553, 27280, 27717, 28812,
-        28813, 28814, 28815, 28817, 28908, 29248, 29430, 29442, 30511,
-        31210, 31212, 31373, 62269, 68444, 68744, 68775, 68837, 69044,
-        69047, 69049, 69051, 69054, 69055, 69095, 69112, 69113, 69116,
-        69155
-    );
+    if ($item_id) {
+        #pre-computed list of symp proc item ID bases
+        my @sym_clicks = (
+            6307, 6309, 6313, 7305, 900012, 900014, 1113, 1117, 1156, 1173, 
+            1904, 2404, 5203, 5214, 5730, 5764, 6017, 6020, 6024, 6036, 
+            6310, 6315, 6323, 6324, 6332, 6335, 6343, 6350, 6359, 6382, 
+            6383, 6402, 6404, 6408, 6616, 6626, 7036, 7318, 7372, 7405, 
+            10333, 10383, 10404, 10994, 11028, 11906, 11973, 12375, 13168, 
+            13380, 13400, 13500, 13743, 13744, 13815, 13987, 13988, 13991, 
+            14338, 14746, 14762, 20627, 21798, 21863, 21885, 21886, 21892, 
+            22819, 22890, 23498, 24745, 24779, 24789, 24793, 25566, 25577, 
+            25980, 25998, 26000, 26001, 26009, 26553, 27280, 27717, 28812, 
+            28813, 28814, 28815, 28817, 28908, 29248, 29430, 29442, 30511, 
+            31210, 31212, 31373, 62269, 68444, 68744, 68775, 68837, 69044, 
+            69047, 69049, 69051, 69054, 69055, 69095, 69112, 69113, 69116, 
+            69155
+        );
 
-    my $item_root = ($item_id % 1000000);
+        my $item_root = ($item_id % 1000000);
 
-    if (grep { $_ == $item_root } @sym_clicks) {
-        plugin::dispatch_popup("symp_tutorial", $client);
+        if (grep { $_ == $item_root } @sym_clicks) {
+            plugin::dispatch_popup("symp_tutorial", $client);
+        }
     }
 }
 
@@ -385,6 +382,9 @@ sub EVENT_SAY {
             my $arguments = $1; # Captures everything after #awardtitle
 
             my $tar_client = $client->GetTarget();
+            if ($tar_client->IsClient()) {
+                $tar_client = $tar_client->CastToClient();
+            }
             if ($tar_client && $tar_client->IsClient()) {
                 # Validate that there is exactly one argument which is a number
                 if ($arguments =~ /^\s*(\d+)\s*$/) {
@@ -394,6 +394,7 @@ sub EVENT_SAY {
                     $client->Message(13, "Awarding TitleSet $number to " . $tar_client->GetName());
                     plugin::AddTitleFlag($number, $tar_client->CastToClient());
                     plugin::CommonCharacterUpdate($tar_client->CastToClient());
+                    $tar_client->Signal(1);
                 } else {
                     $client->Message(13, "Invalid input. Please provide a single numeric argument.");
                 }

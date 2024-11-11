@@ -9,7 +9,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 1797 - Reagent Pouch x3
-	if (plugin::takeItems(1797 => 3)) {
+	if (plugin::check_handin(\%itemcount, 1797 => 3)) {
 		quest::say("Ahh wonderful work $name Here is the substance....don't spill it HAHAHAaahhahehehe...yes......you don't want to spill that heheh..");
 		#:: Give a small amount of xp
 		quest::exp(200);
@@ -25,5 +25,5 @@ sub EVENT_ITEM {
 		quest::faction(341, -1); 		#:: - Priests of Life
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }	

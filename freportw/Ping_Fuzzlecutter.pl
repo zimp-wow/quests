@@ -26,13 +26,13 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 6710 - Full Gem Bag
-	if (plugin::takeItems(6710 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 6710 => 1 )) {
 		quest::emote("smiles broadly as he rifles through the bag, then looks up at you and says, 'Bout time! Here is the coffin as promised.'");
 		#:: Give item 17080 - Gem Encrusted Casket
 		quest::summonitem(17080);
 	}
 	#:: Turn in for Clumps of Hair ID- 12335 - Lock of Hair ID- 12338 - Tattered Toupee ID- 12337
-	if (plugin::takeItems(12335 => 2, 12338 =>1, 12337 =>1)) {
+	if (plugin::check_handin(\%itemcount, 12335 => 2, 12338 =>1, 12337 =>1)) {
 		quest::say("You are a good helper. Here you go. One genuine, charismatic, lady magnet, zero to hero making Mane Attraction!! Guaranteed to lower prices world wide. Guaranteed to last forever.. Err.. Well,.. It has a 1000 year warranty at least.");
 		#:: Give item 12254 - Mane Attraction
 		quest::summonitem(12254);
@@ -47,5 +47,5 @@ sub EVENT_ITEM {
 		quest::faction(336,3); 	#:: + Coalition of Tradefolk Underground
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

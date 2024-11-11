@@ -62,7 +62,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18723 - Tattered Note
-	if (plugin::takeItems(18723 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18723 => 1)) {
 		quest::say("Greetings. and welcome to the Temple of Divine Light! Here is your guild tunic. Serve Quellious well. Please see Lumi Stergnon - he has a task for you.");
 		#:: Give item 135546 - Faded Silver Tunic
 		quest::summonitem(13546);
@@ -89,12 +89,12 @@ sub EVENT_ITEM {
 		#quest::givecash(8,2,0,0);	#:: Give a small amount of cash copper - plat
 	#}
 	#:: Match three 13883 - Odd Kobold Paw
-	elsif (plugin::takeItems(13883 => 3)) {
+	elsif (plugin::check_handin(\%itemcount, 13883 => 3)) {
 		#:: Match if faction is Amiable or better 
 		if ($faction <= 4) {
 			quest::say("Fine work. They shall never lay hands upon another kobold again. I mean paws. Here is a small reward for a fine job. Unfortunatly we have recently learned that the shamen in the forest are merely underlings to more [powerful kobold shaman] that reside in the kobold warrens. Continue the work of Quellious.");
 			#:: Give a random reward: 15011 - Spell: Holy Armor, 15213 - Spell: Cure Disease, 15216 - Spell: Stun, 15212 - Spell: Cure Blindness
-			quest::summonitem(1quest::ChooseRandom(15011, 15213, 15216, 15212));
+			quest::summonitem(quest::ChooseRandom(15011, 15213, 15216, 15212));
 			#:: Ding!
 			quest::ding();
 			#:: Set factions
@@ -121,7 +121,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match two 13883 - Odd Kobold Paw
-	elsif (plugin::takeItems(13883 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13883 => 2)) {
 		#:: Match if faction is Amiable or better 
 		if ($faction <= 4) {
 			quest::say("I instructed you to return THREE paws.");
@@ -141,7 +141,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match one 13883 - Odd Kobold Paw
-	elsif (plugin::takeItems(13883 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13883 => 1)) {
 		#:: Match if faction is Amiable or better 
 		if ($faction <= 4) {
 			quest::say("I instructed you to return THREE paws.");
@@ -200,5 +200,5 @@ sub EVENT_ITEM {
 		#quest::faction(265,-20); 	#:: - Heretics
 	#}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

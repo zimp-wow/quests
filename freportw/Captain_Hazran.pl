@@ -9,7 +9,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match four 13916 - Deathfist Slashed Belt
-	if (plugin::takeItems(13916 => 4)) {
+	if (plugin::check_handin(\%itemcount, 13916 => 4)) {
 		quest::say("Good work, warrior. You are good militia material. Beware though, there are some who dare to call us foe. You have performed so well!");
 		#:: Ding!
 		quest::ding();
@@ -26,7 +26,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match three 13916 - Deathfist Slashed Belt
-	elsif (plugin::takeItems(13916 => 3)) {
+	elsif (plugin::check_handin(\%itemcount, 13916 => 3)) {
 		quest::say("Good work, warrior. You are good militia material. Beware though, there are some who dare to call us foe. You have performed so well!");
 		#:: Ding!
 		quest::ding();
@@ -43,7 +43,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match two 13916 - Deathfist Slashed Belt
-	elsif (plugin::takeItems(13916 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 13916 => 2)) {
 		quest::say("Good work, warrior. You are good militia material. Beware though, there are some who dare to call us foe. You have performed so well!");
 		#:: Ding!
 		quest::ding();
@@ -60,7 +60,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 13916 - Deathfist Slashed Belt
-	elsif (plugin::takeItems(13916 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13916 => 1)) {
 		quest::say("Good work, warrior. You are good militia material. Beware though, there are some who dare to call us foe. You have performed so well!");
 		#:: Ding!
 		quest::ding();
@@ -77,7 +77,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }	
 
 sub EVENT_DEATH_COMPLETE {

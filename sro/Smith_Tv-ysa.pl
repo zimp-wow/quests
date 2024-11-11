@@ -30,12 +30,12 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 10300 - Lightstone
-	if (plugin::takeItems(10300 => 1)) {
+	if (plugin::check_handin(\%itemcount, 10300 => 1)) {
 		#:: Match if faction is indifferent or better
 		if ($faction <= 5) {
 			quest::say("A lightstone? Thank you very much. Here is a copy of 'Runes and Research' for you.");
 			#:: Give a random reward: 18175 - Runes and Research Volume I, or 18176 - Runes and Research Volume II
-			quest::summonitem(1quest::ChooseRandom(18175, 18176));
+			quest::summonitem(quest::ChooseRandom(18175, 18176));
 			#:: Ding!
 			quest::ding();
 			#:: Set factions
@@ -52,7 +52,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 10400 - Greater Lightstone
-	elsif (plugin::takeItems(10400 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 10400 => 1)) {
 		#:: Match if faction is indifferent or better
 		if ($faction <= 5) {
 			quest::say("A greater lightstone? Thank you very much. Here is a 'Concordance of Research' for you.");
@@ -74,5 +74,5 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

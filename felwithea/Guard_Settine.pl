@@ -1,6 +1,6 @@
 sub EVENT_ITEM {
 	#:: Match item 18901 - Ragged Cloth Note
-	if (plugin::takeItems(18901 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18901 => 1)) {
 		quest::say("I.. but.. she.. You can take this. I guess I don't need it any more.");
 		#:: Ding!
 		quest::ding();
@@ -10,5 +10,5 @@ sub EVENT_ITEM {
 		quest::summonitem(14640);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

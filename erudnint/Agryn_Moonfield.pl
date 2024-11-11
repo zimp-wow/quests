@@ -12,7 +12,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match 13989 - Peacekeeper Token
-	if (plugin::takeItems(13989 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13989 => 1)) {
 		quest::say("Ah!! A Peacekeeper. I have some Vasty Deep water sitting out already. Here you are. Do not let it fall into the wrong hands.");
 		#:: Give a 13939 - Clear Water
 		quest::summonitem(13939);

@@ -11,9 +11,9 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-	if ($class eq "Rogue") {
+	if (plugin::HasClassName($client, "Rogue")) {
 		#:: Match a 12353 - A Sparkling Sapphire
-		if (plugin::takeItems(12353 => 1)) {
+		if (plugin::check_handin(\%itemcount, 12353 => 1)) {
 			quest::say("The gem!! I would notice it's sparkle anywhere!! I cannot believe you are handing it back to me!! What a fool. Here you are fool. You can have this worthless key now.");
 			#:: Give a 12351 - A Tiny Key
 			quest::summonitem(12351);
@@ -39,15 +39,15 @@ sub EVENT_ITEM {
 			quest::summonitem(14017);
 		}
 		#:: Match two 14017 - Snake Venom Sac
-		elsif (plugin::takeItems(14017 => 2)) {
+		elsif (plugin::check_handin(\%itemcount, 14017 => 2)) {
 			quest::say("I require two snake venom sacs and my fee of 20 gold coins before I shall create the snake venom");
 			#:: Return two 14017 - Snake Venom Sac
 			quest::summonitem(14017);
 			quest::summonitem(14017);
 		}
 		#:: Return unused items
-		plugin::returnUnusedItems();
+		plugin::return_items(\%itemcount);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

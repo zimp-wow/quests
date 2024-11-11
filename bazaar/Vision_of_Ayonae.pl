@@ -1,11 +1,16 @@
-
-my $remove_class_cost = 0;
-my $remove_class_lockout = 1;
+sub EVENT_ITEM {
+	#:: Return unused items
+	plugin::return_items(\%itemcount);
+}
 
 sub EVENT_SAY {
-    if (!plugin::MultiClassingEnabled()) {
+    if (!plugin::IsTHJ()) {
         return;
     }
+   
+    my $remove_class_cost = 10;
+    my $remove_class_lockout_scale = ($client->GetBucket("remove_class_lockout_scale") || 1);
+    my $remove_class_lockout = 7 * $remove_class_lockout_scale;
 
     if ($text=~/hail/i) {
         if (plugin::GetClassesCount($client) <= 1) {
@@ -53,7 +58,7 @@ sub EVENT_SAY {
 
     if ($text=~/reforge your path/i) {
         if (plugin::GetClassesCount > 1) {
-            my $classes_string = plugin::GetClassLinkString();
+            my $classes_string = GetClassLinkString();
 
             plugin::NPCTell("Which class would you have me strip from you; $classes_string?");
         }
@@ -70,8 +75,9 @@ sub EVENT_SAY {
         if (plugin::HasClass($client, $class_id)) {
             if (plugin::GetEOM($client) >= $remove_class_cost) {
                  plugin::YellowText("It will cost $remove_class_cost Echo of Memory in order to remove a class. Additionally, 
-                                    there is a $remove_class_lockout-day cooldown after removing a class before you can remove another. Would you
-                                    like to ".quest::saylink("proceed_$class_id", 0, "Proceed")."?");
+                                    there is a $remove_class_lockout-day cooldown after removing a class before you can remove another.
+                                    Each time you do this, your cooldown for this avatar will permanently increase. Would you like to "
+                                    .quest::saylink("proceed_$class_id", 1, "Proceed")."?");
             
             } else {
                  plugin::YellowText("It costs $remove_class_cost Echo of Memory in order to remove a class. You can obtain
@@ -85,17 +91,7 @@ sub EVENT_SAY {
         if (plugin::SpendEOM($client, $remove_class_cost) && plugin::HasClass($client, $class_id)) {
             plugin::RemoveClass($class_id, $client);
             $client->AddExpeditionLockout("Class Removal Lockout", "", $remove_class_lockout * 24 * 60 * 60);
-
-            # This could be done better.
-            #foreach my $entity ($entity_list->GetNPCList()) {
-            #    if (!$entity->GetOwner()) {
-            #        next;
-            #    }
-            #
-            #    if ($entity->GetOwner()->GetID() == $client->GetID()) {
-            #        $entity->Kill();
-            #    }
-            #}
+            $client->SetBucket("remove_class_lockout_scale", $remove_class_lockout_scale + 1);
         }
     }   
 
@@ -104,4 +100,29 @@ sub EVENT_SAY {
             $client->UnmemSpell($i, 1);
         }
     }
+}
+
+sub GetClassLinkString {
+    my $client = shift || plugin::val('$client');  # Ensure $client is available
+    my %class_map = plugin::GetClassMap();  # Get the full class map
+    my $class_bits = $client->GetClassesBitmask();  # Retrieve the class bits for the client
+
+    my @client_classes;
+
+    # Iterate through class IDs to check which classes the client has
+    foreach my $class_id (sort { $a <=> $b } keys %class_map) {
+        if ($class_bits & (1 << ($class_id - 1))) {
+            push @client_classes, "[".quest::saylink("del_class_$class_id", 1, $class_map{$class_id})."]";
+        }
+    }
+
+    # Join the client's class names, using ", " and " or " appropriately
+    my $pretty_class_string;
+    if (@client_classes > 1) {
+        $pretty_class_string = join(', ', @client_classes[0..$#client_classes-1]) . ' or ' . $client_classes[-1];
+    } else {
+        $pretty_class_string = $client_classes[0];  # Only one class
+    }
+
+    return $pretty_class_string;
 }

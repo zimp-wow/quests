@@ -34,7 +34,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13243 - One Half of Elixir
-	if (plugin::takeItems(13243 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13243 => 1)) {
 		quest::say("Mmmm.. Thank you stranger. I feel a lot warmer now. You should now go and find [Megan] O'Reilly.");
 		#:: Give a 13244 - One Quarter of Elixir
 		quest::summonitem(13244);

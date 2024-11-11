@@ -78,6 +78,6 @@ function event_death_complete(e)
 
     if killer and killer:GetBucket("SeasonalCharacter") == '1' then
         killer:CastToClient():SetBucket('flag-semaphore', '204')
-        killer:Signal(0)
+        killer:Signal(100)
     end
 end

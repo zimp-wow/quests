@@ -152,11 +152,11 @@ function event_death_complete(e)
 
     if killer and killer:GetBucket("SeasonalCharacter") == '1' then
         killer:CastToClient():SetBucket('flag-semaphore', '204')
-        killer:Signal(0)
+        killer:Signal(100)
     end
 end
 
 function event_killed_merit(e)
 	e.other:CastToClient():SetBucket('flag-semaphore', '104')
-	e.other:Signal(0)
+	e.other:Signal(100)
 end

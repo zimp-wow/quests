@@ -12,7 +12,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18822 - A Note
-	if (plugin::takeItems(18822 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18822 => 1)) {
 		quest::say("So the great Antonius Bayle wishes to ally himself with the mighty Knights of Truth. How pathetic. It would appear that the alliance has spawned infiltrators of sorts. Of course, we of the Dismal Rage are already aware of this, but I am sure Sir Lucan D'Lere knows nothing as usual. I have a [mission] for any evil shadowknight of Innoruuk.");
 		#:: Ding!
 		quest::ding();
@@ -28,7 +28,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 18810 - Bayle List III
-	elsif (plugin::takeItems(18810 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18810 => 1)) {
 		#:: Data bucket to make sure this reward is only granted once
 		$key = $client->CharacterID() . "-bayle-list-iii";
 		#:: Match if the key exists
@@ -51,5 +51,5 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

@@ -3,51 +3,6 @@ my $eom_item_id = 46779;
 my $eom_log = "total-eom-spend";
 my $eom_award_log = "total-eom-award";
 
-sub CheckWorldWideBuffs {
-    my $client = plugin::val('$client');
-    my $entity_list = plugin::val('$entity_list');
-
-    if (!$client) {
-        return;
-    }
-
-    DoCheckWorldWideBuffs($client);
-
-    foreach my $npc ($entity_list->GetNPCList()) {
-        next unless $npc->GetOwner();  # Skip if there's no owner
-
-        if ($npc->GetOwner()->GetID() == $client->GetID()) {
-            DoCheckWorldWideBuffs($npc);
-        }
-    }    
-}
-
-sub DoCheckWorldWideBuffs {
-    my $target = shift;
-    if ($target && ($target->IsClient() || ($target->IsPet() && $target->HasOwner() && $target->GetOwner()->IsClient()))) {
-        my $hp_ratio   = $target->GetHPRatio();
-        my $mana_ratio = $target->GetManaRatio();
-
-        my @buffs_to_check = (43002..43008, 17779);
-
-        for my $spell_id (@buffs_to_check) {
-            my $data = quest::get_data("eom_$spell_id");
-            my $tics_remaining = int(quest::get_data_remaining("eom_$spell_id") / 6);
-
-            if ($data) {
-                $target->ApplySpellBuff($spell_id, $tics_remaining);
-                #quest::debug("Applied spell buff: ID $spell_id, Tics: $tics_remaining");
-            } else {
-                $target->BuffFadeBySpellID($spell_id);
-                #quest::debug("Faded spell buff: ID $spell_id, No data found");
-            }
-        }
-
-        $target->SetHP($target->GetMaxHP() * ($hp_ratio / 100));
-        $target->SetMana($target->GetMaxMana() * ($mana_ratio / 100));
-    }
-}
-
 sub FadeWorldWideBuffs {
     my $npc = shift;
 
@@ -115,6 +70,16 @@ sub RefundEOM {
     }
 }
 
+sub LootEOM {
+    my ($client, $amount) = @_;
+    $client->AddAlternateCurrencyValue($eom_id, $amount);
+    $client->Message(15, "You found $amount [".quest::varlink($eom_item_id)."] on the corpse.");
+    $client->SendMarqueeMessage(15, "You have found an Echo of Memory");
+    if (!$client->GetGM()) {
+        quest::set_data($eom_log, (quest::get_data($eom_award_log . "-event") || 0) - $amount);
+    }
+}
+
 sub GetEOM {
     my ($client) = @_;
 
@@ -127,58 +92,75 @@ sub EOMLink {
 
 sub ApplyWorldWideBuff {
     my $buff_id = shift;
-    my $cost = shift || 0;
 
     my $client = plugin::val('$client');
 
     if (!defined($buff_id)) {
-        quest::debug("ERROR: NO VALID BUFF ID IN ApplyWorldWideBuff")
-    }
-
-    if (plugin::SpendEOM($client, $cost)) {        
-        my %buff_types = (
-            43002 => "Experience Gain",
-            43003 => "Hit Points and Armor Class",
-            43004 => "Basic Statistics",
-            43005 => "Movement Speed",
-            43006 => "Mana Regeneration",
-            43007 => "Attack Speed",
-            43008 => "Health Regeneration",
-            17779 => "Loot Upgrade Rate"
-        );
-        my $buff_type = $buff_types{$buff_id} // "Unknown Buff";  # Fallback for unknown buff IDs
-
-        if ($cost == 0) { $cost = 1 };
-
-        if (quest::get_data("eom_$buff_id")) {            
-            quest::set_data("eom_$buff_id", $cost, quest::get_data_remaining("eom_$buff_id") + (4 * 60 * 60));
-            my ($hours, $minutes, $seconds) = plugin::convert_seconds(quest::get_data_remaining("eom_$buff_id"));
-            plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to extend your enhanced $buff_type. This buff will endure for $hours Hours and $minutes Minutes.");
-        } else {
-            quest::set_data("eom_$buff_id", $cost, H4);
-            plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to enhance your $buff_type. This buff will endure for 4 Hours.");
-        }
-        
-        return 1;
-    } else {
+        quest::debug("ERROR: NO VALID BUFF ID IN ApplyWorldWideBuff");
         return 0;
     }
+      
+    my %buff_types = (
+        43002 => "Experience Gain",
+        43003 => "Hit Points and Armor Class",
+        43004 => "Basic Statistics",
+        43005 => "Movement Speed",
+        43006 => "Mana Regeneration",
+        43007 => "Attack Speed",
+        43008 => "Health Regeneration",
+        17779 => "Loot Upgrade Rate"
+    );
+
+    my $buff_type = $buff_types{$buff_id} // "Unknown Buff";  # Fallback for unknown buff IDs
+
+    # Add the buff globally and get the absolute expiration time in seconds since the epoch
+    my $expiration_time = quest::add_global_buff($buff_id, 4 * 60 * 60);
+    
+    # Calculate the remaining duration in seconds
+    my $remaining_seconds = $expiration_time - time();
+
+    # Convert remaining seconds to hours and minutes
+    my $hours = int($remaining_seconds / 3600);
+    my $minutes = int(($remaining_seconds % 3600) / 60);
+
+    # Announce the buff extension to the world
+    plugin::WorldAnnounce($client->GetCleanName() . " has used their Echo of Memory to extend your enhanced $buff_type. This buff will endure for $hours Hours and $minutes Minutes.");
+
+    return 1;
 }
 
 sub UpdateEoMAward {
     my $client = shift;
+    my $character_id = $client->CharacterID();
 
-    $client->ReloadDataBuckets();
-    if ($client->GetBucket("EoM-Award")) {
-        plugin::AwardEOM($client, $client->GetBucket("EoM-Award"));
-        quest::ding();
-        $client->DeleteBucket("EoM-Award");
+    my $dbh = plugin::LoadMysqlServer();
+
+    # Helper subroutine to fetch bucket value from the database
+    sub fetch_bucket {
+        my ($dbh, $character_id, $key) = @_;
+        my $sth = $dbh->prepare("SELECT value FROM data_buckets WHERE character_id = ? AND `key` = ?");
+        $sth->execute($character_id, $key);
+        my ($value) = $sth->fetchrow_array();
+        return $value;
     }
 
-    # TODO - change this whole system at some point.
-    if ($client->GetBucket("EoM-Award-Auto")) {
-        plugin::AwardEOMAuto($client, $client->GetBucket("EoM-Award-Auto"));
+    # EoM-Award handling
+    my $eom_award_value = fetch_bucket($dbh, $character_id, "EoM-Award");
+    if ($eom_award_value) {
+        plugin::AwardEOM($client, $eom_award_value);
         quest::ding();
-        $client->DeleteBucket("EoM-Award-Auto");
+
+        # Remove bucket entry after processing
+        $dbh->do("DELETE FROM data_buckets WHERE character_id = ? AND `key` = ?", undef, $character_id, "EoM-Award");
+    }
+
+    # EoM-Award-Auto handling
+    my $eom_award_auto_value = fetch_bucket($dbh, $character_id, "EoM-Award-Auto");
+    if ($eom_award_auto_value) {
+        plugin::AwardEOMAuto($client, $eom_award_auto_value);
+        quest::ding();
+
+        # Remove bucket entry after processing
+        $dbh->do("DELETE FROM data_buckets WHERE character_id = ? AND `key` = ?", undef, $character_id, "EoM-Award-Auto");
     }
 }

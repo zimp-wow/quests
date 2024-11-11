@@ -1,5 +1,5 @@
 sub EVENT_ITEM {
-	if (plugin::takeItems(14319 => 1)) {
+	if (plugin::check_handin(\%itemcount, 14319 => 1)) {
 		quest::say("Error! Malfunction! Destroy!");
 		quest::say("A $class like you always brings out the worst in me.");
 		#:: Spawn a The Plane of Fear >> an_enraged_golem (72106) at the current location

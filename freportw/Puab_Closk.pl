@@ -32,7 +32,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18746 - A Tattered Note
-	if (plugin::takeItems(18746 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 18746 => 1 )) {
 		quest::say("Oh my! Opal? She is providing these agents of Neriak with information regarding the Acedemy's secrets. I can not tell Cain about this. He will be furious. Show this to Toala. She will know what to do.");
 		#:: Give a 13507 - Torn Cloth Tunic
 		quest::summonitem(13507);
@@ -46,7 +46,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 28055 - Tattered Parchment
-	if (plugin::takeItems(28055 => 1 )) {
+	if (plugin::check_handin(\%itemcount, 28055 => 1 )) {
 		quest::say("You have performed a great service to one who is your brother. Your loyalty shines brightly, as does your skill. Take the treant fists. They are yours now.");
 		#:: Give a 12344 - Treant Fists
 		quest::summonitem(12344);
@@ -60,5 +60,5 @@ sub EVENT_ITEM {
 		quest::exp(1000);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

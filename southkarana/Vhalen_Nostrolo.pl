@@ -18,7 +18,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13114 - Lisera Lute
-	if (plugin::takeItems(13114 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13114 => 1)) {
 		quest::say("Oh, dear! I forgot to repair Cassius' lute. I shall fix and return it to him myself. Thank you for bringing this to me. Here, please return this note to Cassius. He shall be most happy. Thank you again, good citizen!");
 		#:: Give a 18803 - Note To Cassius
 		quest::summonitem(18803);
@@ -34,10 +34,10 @@ sub EVENT_ITEM {
 		quest::exp(5000);
 	}
 	#:: Match a 13116 - Winds of Karana sheet 1 and a 13119 - Winds of Karana sheet 2
-	elsif (plugin::takeItems(13116 =>1, 13119 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13116 =>1, 13119 => 1)) {
 		quest::say("Thank you, my friend. I have just completed the composition. It is a work of art. Here. Have a copy. I hope you have the musical talent to play it. If not... Practice, practice, practice!");
 		#:: Give a random reward:  15722 - Song: Jaxan's Jig o' Vigor, 15717 - Song: Selo's Accelerando, or 15703 - Song: Chords of Dissonance
-		quest::summonitem(1quest::ChooseRandom(15722, 15717, 15703));
+		quest::summonitem(quest::ChooseRandom(15722, 15717, 15703));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
@@ -54,5 +54,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

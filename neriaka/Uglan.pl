@@ -12,7 +12,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13357 - Cracked Stein
-	if (plugin::takeItems(13357 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13357 => 1)) {
 		#:: Match if the player is an Ogre
 		if ($race eq "Ogre") {
 			quest::say("You from Oggok. Me waiting for you. Me know dark elves have dark plan for ogres. We must stop plan. You must go to Nektulos Forest. Wait for blue orc. He deliver message for dark elf king. Not good. You kill blue orc runners. If message on them then you take to Lork in Oggok. Ogres must know plan.");
@@ -42,5 +42,5 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

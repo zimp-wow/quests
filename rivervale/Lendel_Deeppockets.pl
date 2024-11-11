@@ -36,7 +36,7 @@ sub EVENT_SIGNAL {
 
 sub EVENT_ITEM {
 	#:: Turn in for 18732 - Tattered Note
-	if (plugin::takeItems(18732 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18732 => 1)) {
 		quest::say("HA! I asked that fool Denry to send me a professional, and this is what I get?!? Oh diddlepicks! That crotchety old coot never liked me anyway. And after all I've done for him! Hrrmf! Ah well, let's get you started and see what ya got, huh, kid? Here, wear this. Maybe I'll have Toelia break you in, huh? Yeah, that'll work! Go find her, and she'll put you to work. Just remember, we all earn our keep around here, or else it's back to hay farm for you! Oh yeah, tell her you're the new dishwasher so she knows you are on the level. Return to me when you have become more experienced in our art, I will be able to further instruct you on how to progress through your early ranks, as well as in some of the various [trades] you will have available to you.");
 		#:: Give item 13539 - Old Brown Vest*
 		quest::summonitem(13539);
@@ -52,5 +52,5 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

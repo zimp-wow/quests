@@ -18,7 +18,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18818 - Tattered Flier
-	if (plugin::takeItems(18818 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18818 => 1)) {
 		quest::say("This used to be hanging in Zimel's Blades. It is the price list. It is badly faded though. There was a fire in Zimel's Blades and I was on the scene just afterward. I did not see this hanging. I wonder who took it . . . Hmmmm.. oh, yes.. the markings on the list! It is a code! Here. I will fill it in. Read it. You probably do not even know who [Ariska] is.");
 		#:: Give item 18819 - Tattered Flier
 		quest::summonitem(18819);
@@ -33,7 +33,7 @@ sub EVENT_ITEM {
 		quest::exp(15);
 	}
 	#:: Match four 12114 - Trumpy Tonic
-	elsif (plugin::takeItems(12114 => 4)) {
+	elsif (plugin::check_handin(\%itemcount, 12114 => 4)) {
 		quest::say("Ahh! I missed those. I was just telling myself the other... Uh oh! I have to use the little dwarf's facilities. Excuse me.' ");
 		#:: Ding!
 		quest::ding();
@@ -50,7 +50,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match three 12114 - Trumpy Tonic
-	elsif (plugin::takeItems(12114 => 3)) {
+	elsif (plugin::check_handin(\%itemcount, 12114 => 3)) {
 		quest::say("Ahh! I missed those. I was just telling myself the other... Uh oh! I have to use the little dwarf's facilities. Excuse me.");
 		#:: Ding!
 		quest::ding();
@@ -67,7 +67,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});	
 	}	
 	#:: Match two 12114 - Trumpy Tonic
-	elsif (plugin::takeItems(12114 => 2)) {
+	elsif (plugin::check_handin(\%itemcount, 12114 => 2)) {
 		quest::say("Ahh! I missed those. I was just telling myself the other... Uh oh! I have to use the little dwarf's facilities. Excuse me. ");
 		#:: Ding!
 		quest::ding();
@@ -84,7 +84,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});	
 	}	
 	#:: Match a 12114 - Trumpy Tonic
-	elsif (plugin::takeItems(12114 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12114 => 1)) {
 		quest::say("Ahh! I missed those. I was just telling myself the other... Uh oh! I have to use the little dwarf's facilities. Excuse me.");
 		#:: Ding!
 		quest::ding();
@@ -101,7 +101,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
 
 sub EVENT_DEATH_COMPLETE {

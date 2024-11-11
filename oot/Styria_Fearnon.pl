@@ -17,10 +17,10 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13337 - Bracers of Erollisi
-	if (plugin::takeItems(13337 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13337 => 1)) {
 		quest::say("Oh!! Thank you!! We are so grateful to you. I offer you this as reward. It is one of the dwarven smith's finest works.");
 		#:: Give a 5007 - Axe, 5008 - Broad Sword
-		quest::summonitem(1quest::ChooseRandom(5007,5008));
+		quest::summonitem(quest::ChooseRandom(5007,5008));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
@@ -37,10 +37,10 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match a 13336 - Pirate's Earring
-	elsif (plugin::takeItems(13336 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13336 => 1)) {
 		quest::say("Good work. That is one less pirate to worry about. We do not have much, but take this as payment");
 		#:: Give a 13339 - Aviak Feather, 13342 - Conch Shell, 7017 - Fishing Spear, 13340 - Kiola Nut, 13075 - Shark Skin
-		quest::summonitem(1quest::ChooseRandom(13339, 13342, 7017, 13340, 13075));
+		quest::summonitem(quest::ChooseRandom(13339, 13342, 7017, 13340, 13075));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
@@ -57,5 +57,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

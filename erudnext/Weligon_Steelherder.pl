@@ -113,7 +113,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 18725 - Tattered Note
-	if (plugin::takeItems(18725 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18725 => 1)) {
 		quest::say("Greetings and welcome to the Deepwater Knights. Here is your guild tunic. Wear it with pride, and Prexus will keep a watchful eye on you. Go find sister Laoni, she will help you get started with your studies.");
 		#:: Give a 13544 - Old Blue Tunic*
 		quest::summonitem(13544);
@@ -127,7 +127,7 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match a 13876 - Bag of Shark remains
-	elsif (plugin::takeItems(13876 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13876 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4 ) {
 			quest::say("Very good, my dear young follower of Prexus. You will learn that swimming is a strong skill among the Deepwater Knights. Keep this up and you may wield a Deepwater harpoon soon enough. For now, you shall wear this barnacle breastplate. It is strong enough to aid a young knight in his quest for perfection.");
@@ -155,12 +155,12 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 13879 - Full bag of pearls
-	elsif (plugin::takeItems(13879 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13879 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4 ) {
 			quest::say("Fine work, Deepwater Knight. You have proven yourself an excellent addition to our ranks. These shall be used to create more Peacekeeper staffs. Oh yes, I almost forgot your reward. Here you are. Now, go, and serve Prexus.");
 			#:: Give a random reward: 2104 - Patchwork Tunic, 2106 - Patchwork Cloak, 2108 - Patchwork Sleeves, 2111 - Patchwork Pants, 2112 - Patchwork Boots
-			quest::summonitem(1quest::ChooseRandom(2104, 2106, 2108, 2111, 2112));
+			quest::summonitem(quest::ChooseRandom(2104, 2106, 2108, 2111, 2112));
 			#:: Ding!
 			quest::ding();
 			#:: Set factions
@@ -183,7 +183,7 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 18835 - Sealed List, a 13838 - Human Decapitated Head, a 13839 - Dwarf Decapitated Head, and a 13840 - Gnome Decapitated Head
-	elsif (plugin::takeItems(18835 => 1, 13838 => 1, 13839 => 1, 13840 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 18835 => 1, 13838 => 1, 13839 => 1, 13840 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4 ) {
 			quest::say("It is done!! I pray to Prexus that the knowledge of the bridge's design has departed from this world with the passing of these intelligent men. A pity they had to die. As for you, the other states may not tolerate your presence any longer, but you have proven that allegiance to Erudin is paramount among all Erudites. I am afraid the [Deepwater harpoon] is no more!! I bestow upon you Deep Six, my personal cutlass!! May you wield it in the name of Erudin.");

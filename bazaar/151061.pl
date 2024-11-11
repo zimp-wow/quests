@@ -5,6 +5,11 @@ my $race_change_cost = 10;
 my $sex_change_cost  = 10;
 my $name_change_cost = 10;
 
+sub EVENT_ITEM {
+	#:: Return unused items
+	plugin::return_items(\%itemcount);
+}
+
 sub EVENT_SAY {
     my $sex_word;
     if ($client->GetGender()) {
@@ -16,6 +21,7 @@ sub EVENT_SAY {
     if ($text=~/hail/i) {
         quest::say("Greetings, $name. Do you seek perfection? Are you [". quest::saylink("unhappy with your form", 1) ."]? 
                     Are you interested in embracing [". quest::saylink($sex_word, 1) ."]? 
+                    Would you like to [".quest::saylink("worship a new deity", 1)."]
                     ");
     }
 
@@ -34,6 +40,10 @@ sub EVENT_SAY {
                 }
             }
         }
+    }
+
+    elsif ($text=~/worship a new deity/i) {
+        
     }
     
 #    elsif ($text=~/new identity/i) {

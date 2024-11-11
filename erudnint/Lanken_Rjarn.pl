@@ -22,7 +22,7 @@ sub EVENT_SAY {
 	
 sub EVENT_ITEM {
 	#:: Match a 18729 - Tattered Note
-	if (plugin::takeItems(18729 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18729 => 1)) {
 		quest::say("Welcome to the Craft Keepers! You have much to learn. and I'm sure you are anxious to get started. Here's your training robe. Go see Nolusia. she'll give you your first lesson.");
 		#:: Give a 13549 - Old Patched Robe*
 		quest::summonitem(13549);

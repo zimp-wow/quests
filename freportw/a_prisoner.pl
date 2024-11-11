@@ -31,7 +31,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12196 - Bunker Cell #1, a 16581 - Bog Juice, and a 13498 - Edible Goo
-	if (plugin::takeItems(12196 => 1, 16581 => 1, 13498 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12196 => 1, 16581 => 1, 13498 => 1)) {
 		quest::say("Hide, hide, safe, cee.. lerk has the clue.. Must travel.. Travel.. Travel.. Tunaria's corridor.");
 		#:: Give a 12143 - H.K. 102
 		quest::summonitem(12143);
@@ -45,5 +45,5 @@ sub EVENT_ITEM {
 	}
 	quest::say("Bog n Goo.. Blanket too!!");
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

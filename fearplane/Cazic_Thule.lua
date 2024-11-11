@@ -4,7 +4,7 @@
 function event_spawn(e)
 	eq.set_timer("Shout",600000);
 	-- use a timer for the zone repop so that the entire zone is not popping twice immediately on zone bootup.
-	eq.set_timer("RepopZone",5000);
+	--eq.set_timer("RepopZone",5000);
 end
 
 function event_say(e)
@@ -26,7 +26,7 @@ function event_death_complete(e)
     local killer = eq.get_entity_list():GetClientByID(e.killer_id)
     if killer and killer:GetLevel() <= 60 then
         killer:CastToClient():SetBucket('flag-semaphore', '204')
-        killer:Signal(0)
+        killer:Signal(100)
     end
 end
 
@@ -61,10 +61,11 @@ function event_timer(e)
 		-- most mobs have an answer to my shout
 		-- leave out broken golem, The Tempest Reaver, and Irak_Altil
 		send_signal_to_all_npc_in_zone(1, {72078,72074,72012});
-	elseif(e.timer == "RepopZone") then
+	--[[elseif(e.timer == "RepopZone") then
 		eq.spawn_condition("fearplane",0,1,0);
 		eq.spawn_condition("fearplane",0,1,1);
 		eq.stop_timer("RepopZone");
+		]]--
 	end
 end
 

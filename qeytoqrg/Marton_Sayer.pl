@@ -24,7 +24,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12204 - Baby Joseph Sayer
-	if (plugin::takeItems(12204 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12204 => 1)) {
 		quest::say("Baby Joseph!! Look, Momma!! Baby Joseph has been rescued by this good adventurer!! That evil Lord Elgnub made good on his word and snatched my son from under our noses. You saved the day!! For this you shall wield 'Gnoll Slayer'!! Be aware of its [true potential].");
 		#:: Give a 5416 - Gnoll Slayer
 		quest::summonitem(15416);
@@ -40,7 +40,7 @@ sub EVENT_ITEM {
 		quest::exp(500);
 	}
 	#:: Match a 8357 - Gnoll's Eye, a 8356 - Journal of Greater Enchantment, and a 5416 - Gnoll Slayer
-	elsif (plugin::takeItems(8357 => 1, 8356 => 1, 5416 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 8357 => 1, 8356 => 1, 5416 => 1)) {
 		quest::say("The eye and the journal! What a great day! The Gnoll Slayer shall be returned to full strength because of you. Your service to Qeynos will not soon be forgotten.");
 		#:: Give a 5417 - Gnoll Slayer
 		quest::summonitem(15417);
@@ -56,5 +56,5 @@ sub EVENT_ITEM {
 		quest::exp(500);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

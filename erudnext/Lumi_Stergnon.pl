@@ -68,12 +68,12 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13882 - Box of Bones
-	if (plugin::takeItems(13882 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13882 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("This is fabulous work, my friend! You have served your people well. Take this as a gift. I hope it can be of use to you. We need proof of these skeletons' origins. Continue the eradication of the undead and find out who creates them. Once you know, bring their head to me.");
 			#:: Give a random reward:  17005 - Backpack, 17002 - Belt Pouch, 10018 - Hematite, 2144 - Raw-hide Sleeves, 2145 - Raw-hide Wristbands, 2146 - Raw-hide Gloves, 6011 - Rusty Mace, 6016 - Rusty Morning Star, 15203 - Spell: Cure Poison, 15207 - Spell: Divine Aura, 15201 - Spell: Flash of Light, 15209 - Spell: Spook the Dead, 15014 - Spell: Strike, 15205 - Spell: True North, 15210 - Spell: Yaulp, 6012 - Worn Great Staff
-			quest::summonitem(1quest::ChooseRandom(17005, 17002, 10018, 2144, 2145, 2146, 6011, 6016, 15203, 15207, 15201,15208, 15209, 15014, 15205, 15210, 6012));
+			quest::summonitem(quest::ChooseRandom(17005, 17002, 10018, 2144, 2145, 2146, 6011, 6016, 15203, 15207, 15201,15208, 15209, 15014, 15205, 15210, 6012));
 			#:: Ding!
 			quest::ding();
 			#:: Set factions
@@ -100,12 +100,12 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Match a 13816 - Peacekeeper staff
-	elsif (plugin::takeItems(13816 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13816 => 1)) {
 		#:: Match if faction is Amiable or better
 		if ($faction <= 4) {
 			quest::say("You have done well, neophyte. Let me add the touch of harmony to finish the job.. Here, then. Take these supplies. I am sure you'll need them. Soon you may be able to assist us in [important missions]");
 			#:: Give a random reward:  17005 - Backpack, 17002 - Belt Pouch, 10018 - Hematite, 2144 - Raw-hide Sleeves, 2145 - Raw-hide Wristbands, 2146 - Raw-hide Gloves, 6011 - Rusty Mace, 6016 - Rusty Morning Star, 6012 - Worn Great Staff
-			quest::summonitem(1quest::ChooseRandom(17005, 17002, 10018, 2144, 2145, 2146, 6011, 6016, 6012));
+			quest::summonitem(quest::ChooseRandom(17005, 17002, 10018, 2144, 2145, 2146, 6011, 6016, 6012));
 			#:: Ding!
 			quest::ding();
 			#:: Set factions
@@ -132,5 +132,5 @@ sub EVENT_ITEM {
 		}
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

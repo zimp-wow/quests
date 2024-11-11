@@ -84,6 +84,5 @@ local race = e.other:Race();
 			item_lib.return_items(e.self, e.other, e.trade);
 		end
 	else -- if($race eq "Halfling")
-		item_lib.return_items(e.self, e.other, e.trade);
 	end
 end -- sub EVENT_ITEM

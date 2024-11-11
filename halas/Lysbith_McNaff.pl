@@ -26,10 +26,10 @@ sub EVENT_SAY {
 	
 sub EVENT_ITEM {
 	#:: Match three 13915 - Gnoll Fang
-	if (plugin::takeItems(13915 => 3)) {
+	if (plugin::check_handin(\%itemcount, 13915 => 3)) {
 		quest::say("Fine work, fine work!  The gnoll threat must be extinguished before it can ever fully grow.  Ye've done yer part to aid our cause.  Please allow me to repay ye with a few provisions and a wee bit o' coin.  Then, continue with yer good deeds. Halas is surrounded by barren arctic tundra. We've many foes. Among them are the [orc troopers], [ice goblins] and the ever-present polar bears.");
 		#:: Choose a random reward from 13005 - Iron Ration, 13007 - Ration, 13002 - Torch, 13006 - Water Flask
-		quest::summonitem(1quest::ChooseRandom(13005, 13007, 13002, 13006));
+		quest::summonitem(quest::ChooseRandom(13005, 13007, 13002, 13006));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
@@ -45,7 +45,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}
 	#:: Match four 12223 - Wrath Orc Wristbands
-	elsif (plugin::takeItems(12223 => 4)) {
+	elsif (plugin::check_handin(\%itemcount, 12223 => 4)) {
 		quest::say("Ye're becoming a fine champion o' Halas. Take th' Seax. May ye always defend Halas!");
 		#:: Give a 7322 - Seax
 		quest::summonitem(17322);
@@ -60,10 +60,10 @@ sub EVENT_ITEM {
 		quest::exp(800);
 	}
 	#:: Match a 13898 - Bag of Ice Necklaces
-	elsif (plugin::takeItems(13898 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13898 => 1)) {
 		quest::say("Ye've done well, me young $class.  We've gathered these to add to yer provisions.  While in the Everfrost Peaks, be on the watch fer any gnolls ye may find.  I declare there to be a [gnoll bounty].");
 		#:: Choose a random reward from 13005 - Iron Ration, 13007 - Ration, 13002 - Torch, 13006 - Water Flask, 13003 - Small Lantern
-		quest::summonitem(1quest::ChooseRandom(13005, 13007, 13002, 13006, 13003));
+		quest::summonitem(quest::ChooseRandom(13005, 13007, 13002, 13006, 13003));
 		#:: Ding!
 		quest::ding();
 		#:: Set factions
@@ -79,5 +79,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}	
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

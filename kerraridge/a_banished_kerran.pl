@@ -12,13 +12,13 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 12369 - Puab's Token
-	if (plugin::takeItems(12369 => 1)) {
+	if (plugin::check_handin(\%itemcount, 12369 => 1)) {
 		quest::say("Ashen Order!!  Prrr.. My order.  I have been expecting one of us.  Prrr.. Help me rejoin my native land.  Take this box.  Combine all the [remains of Thipt] within the box and return it to me.  This shall aid me in my redemption.");
 		#:: Give a 17985 - Box With Pawprints
 		quest::summonitem(17985);
 	}
 	#:: Match a 12371 - Box of Cat Bones
-	elsif (plugin::takeItems(12371 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 12371 => 1)) {
 		quest::say("Prrr.. Thank you brother of Ashen. I can now spend my time upon this island in peace, until my penance is serrrved. He dabs his paw into the mud and places it upon a tattered parchment. Take this message to Puab. Farrrwell.");
 		#:: Give a 28055 - Tattered Parchment
 		quest::summonitem(28055);
@@ -28,5 +28,5 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

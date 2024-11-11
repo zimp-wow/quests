@@ -1,27 +1,3 @@
-#Used for Bic
-sub ClassType {
-    my $client = plugin::val('$client');
-    my $class  = $client->GetClass();
-
-    my %melee_classes = map { $_ => 1 } (1, 7, 9, 16);
-    my %caster_classes = map { $_ => 1 } (11, 12, 13, 14);
-    my %priest_classes = map { $_ => 1 } (2, 6, 10);
-
-    if (exists $melee_classes{$class}) {
-        return "melee";
-    }
-
-    if (exists $caster_classes{$class}) {
-        return "caster";
-    }
-
-    if (exists $priest_classes{$class}) {
-        return "priest";
-    }
-
-    return "hybrid";
-}
-
 #Usage: plugin::CheckCashPayment(target_val_in_copper, $copper, $silver, $gold, $platinum)
 # Returns false if insufficient payment
 # Returns true if sufficient payment
@@ -206,7 +182,7 @@ sub WorldAnnounceItem {
     $message =~ s/\{item\}/$eqgitem_link/g;
 
     # Send the message with the game link to the EQ world
-    quest::we(335, $message);
+    quest::we(334, $message);
 
     # Replace the game link with the Discord link
     $message =~ s/\Q$eqgitem_link\E/$discord_link/g;

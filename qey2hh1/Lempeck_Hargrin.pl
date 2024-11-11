@@ -26,7 +26,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13954 - Prime Healer Potion
-	if (plugin::takeItems(13954 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13954 => 1)) {
 		quest::say("Thank you!! I felt the madness nearing my brain, but now I feel much better. Please take this as thanks - it is all I have to donate to Astaed Wemor. Be sure he gets it. I shall thank Rodcet Nife every day for sending help.");
 		#:: Give a 13970 - Rusty Scythe
 		quest::summonitem(13970);
@@ -42,7 +42,7 @@ sub EVENT_ITEM {
 		quest::exp(1000);
 	}
 	#:: Match a 13955 - Prime Healer Potion
-	elsif (plugin::takeItems(13955 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13955 => 1)) {
 		quest::say("Please let this help.. nnnnghhh!!!.. I fear it is too late.. Aaaarrrgh!!!!.. I.. I will.. KILL YOU!!!!!");
 		#:: Ding!
 		quest::ding();
@@ -56,7 +56,7 @@ sub EVENT_ITEM {
 		quest::exp(1000);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
 
 sub EVENT_DEATH_COMPLETE {

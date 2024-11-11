@@ -19,7 +19,7 @@ sub EVENT_WAYPOINT_ARRIVE {
 
 sub EVENT_ITEM {
 	#:: Match a 18921 - Message to Konem
-	if (plugin::takeItems(18921 => 1)) {
+	if (plugin::check_handin(\%itemcount, 18921 => 1)) {
 		quest::say("Oh I see.. Phin's always after me about something. I mean, it's not my fault the order hasn't come in yet. Hey, since I'm so busy right now, why don't you be a friend and take this back to Phin for me, huh?");
 		#:: Give a 18922 - Grathin's Invoice
 		quest::summonitem(18922);
@@ -33,7 +33,7 @@ sub EVENT_ITEM {
 		quest::exp(200);
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
 
 sub EVENT_DEATH_COMPLETE {

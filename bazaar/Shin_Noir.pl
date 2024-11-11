@@ -8,6 +8,10 @@ sub EVENT_TIMER {
 }
 
 sub EVENT_SAY {
+    if (plugin::IsTHJ()) {
+        return;
+    }
+
     if($text=~/hail/i) {
         quest::say("Hello, $name. If you give me a rose colored or apocryphal dark elf illusion mask, I can change you permanently into a Dark Elf.");
     }
@@ -15,6 +19,11 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM 
 {    
+    if (plugin::IsTHJ()) {
+        return;
+    }
+
+
     if (plugin::check_handin_fixed(\%itemcount, 1002469 => 1)  || # Rose Colored Guise of the Deceiver
         plugin::check_handin_fixed(\%itemcount, 2002469 => 1) || # Apocryphal Guise of the Deceiver
         plugin::check_handin_fixed(\%itemcount, 1002472 => 1) || # Rose Colored Mask of Deception

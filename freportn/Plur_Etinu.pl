@@ -15,7 +15,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Turn in for 13074 - 2x Zombie Skin
-	if (plugin::takeItems(13074 => 2 )) {
+	if (plugin::check_handin(\%itemcount, 13074 => 2 )) {
 		quest::say("May the Power of Passion purge you of disease!");
 		#:: Cast spell 203 - Cure Poison
 		$npc->CastSpell(203,$userid);
@@ -23,7 +23,7 @@ sub EVENT_ITEM {
 		quest::ding();
 	}	
 	#:: Turn in for 14029 - 3x Bixie Stinger
-	elsif (plugin::takeItems(14029 => 3 )) {
+	elsif (plugin::check_handin(\%itemcount, 14029 => 3 )) {
 		quest::say("May the Power of Passion forced you free of poison!");
 		#:: Cast spell 203 - Cure Poison
 		$npc->CastSpell(203,$userid);
@@ -39,5 +39,5 @@ sub EVENT_ITEM {
 		quest::ding();
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }	

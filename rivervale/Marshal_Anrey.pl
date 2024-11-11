@@ -24,7 +24,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 13749 - Alligator Skin, a 13761 - Polar Bear Skin, a 13075 - Shark Skin, and a 13756 - Thick Grizzly Bear Skin
-	if (plugin::takeItems(13749 => 1, 13761 => 1, 13075 => 1, 13756 => 1)) {
+	if (plugin::check_handin(\%itemcount, 13749 => 1, 13761 => 1, 13075 => 1, 13756 => 1)) {
 		quest::say("Good work, $name. You passed the first test. If you think you are one of us, return this cap to me along with a dagger from a Dark Elf for your true reward.");
 		#:: Give a 13941 - Leatherfoot Skullcap
 		quest::summonitem(13941);
@@ -38,7 +38,7 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}		
 	#:: Match a 13942 - Dragoon Dirk and 13941 = Leatherfoot Skullcap
-	elsif (plugin::takeItems(13942 => 1, 13941 => 1)) {
+	elsif (plugin::check_handin(\%itemcount, 13942 => 1, 13941 => 1)) {
 		quest::say("Wonderful, $name. You have proven yourself to the Leatherfoot Squad. Take this and wear it with honor.");
 		#:: Give item 12259 - Leatherfoot Raider Skullcap
 		quest::summonitem(12259);
@@ -52,5 +52,5 @@ sub EVENT_ITEM {
 		quest::givecash($cash{copper},$cash{silver},$cash{gold},$cash{platinum});
 	}		
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }

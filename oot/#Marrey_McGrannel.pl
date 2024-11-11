@@ -56,7 +56,7 @@ sub EVENT_SAY {
 
 sub EVENT_ITEM {
 	#:: Match a 57008 - Letter from Muada
-	if (plugin::takeItems(57008 => 1)) {
+	if (plugin::check_handin(\%itemcount, 57008 => 1)) {
 		#:: Set by /sharvahl/#Elder_Animist_Muada.pl
 		if ($client->GetGlobal("beast_epic") == 1) {
 			quest::say("It is indeed authentic. I suppose I can tell ye that I've been studyin' the ways o' the sirens. We as beastlords use the strength of our warders, as well as bestow magic upon them. These sirens use mind tricks! I'm workin' on a [" . quest::saylink("way") . "] to use the magic these fair ocean maidens do to help our kin.");
@@ -66,7 +66,7 @@ sub EVENT_ITEM {
 		#:: Test handin with no epic in progress--eat item?
 	}
 	#:: Match three 13039 - Ale
-	if (plugin::takeItems(13039 =>3 )) {
+	if (plugin::check_handin(\%itemcount, 13039 =>3 )) {
 		#:: Set by /....someone!
 		if ($client->GetGlobal("beast_epic") == 9) {
 			quest::say("Thanks to ye. Ah! Now, let's get on with it. 'Tis a long story, so how about we have a wee chat. Take a seat if ye like, hm? Are ye [" . quest::saylink("ready") . "] to listen? Ye are going to need to pay attention -- even as I ramble on a bit.");
@@ -76,5 +76,5 @@ sub EVENT_ITEM {
 		#:: Test handin with no epic in progress--eat item?
 	}
 	#:: Return unused items
-	plugin::returnUnusedItems();
+	plugin::return_items(\%itemcount);
 }
