@@ -34,9 +34,9 @@ sub EVENT_WAYPOINT_ARRIVE {
 		if ($eventstart==0) {
 			quest::say("Speed up the digging my pets!!");
 			$skelent = $entity_list->GetMobByNpcTypeID(38016);
-			$skelnpc = $skelent->CastToNPC();
-			if($skelnpc){
-			$skelnpc->SignalNPC(9);
+			if($skelent){
+				$skelnpc = $skelent->CastToNPC();
+				$skelnpc->SignalNPC(9);
 			}				
 		}
 		else {
