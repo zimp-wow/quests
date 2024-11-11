@@ -163,6 +163,10 @@ sub EVENT_KILLED_MERIT {
                 $client->SendSound();
 
                 quest::set_data($client->AccountID() . "-eom-event-scale", $rare_scale + 1);
+            } else {
+                if ($client->GetGM()) {
+                    quest::debug("Failed to roll out of $eom_drop_chance");
+                }
             }
         }
     }
