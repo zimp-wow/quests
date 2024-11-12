@@ -58,6 +58,8 @@ sub OfferStandardInstance {
         $dz->AddReplayLockout($dz_duration);
       } 
       quest::say("Very well. When you are [" . quest::saylink("ready", 1) . "], proceed into the portal, and remember!");
+    } else {
+      quest::say("I'm sorry, but I was not able to create this instance for you, motal.");
     }
   }
 
