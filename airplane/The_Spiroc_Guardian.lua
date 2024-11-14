@@ -1,31 +1,26 @@
-function event_signal(e)
-	local entity_list = eq.get_entity_list();
+function event_death_complete(e)
+	eq.signal(71014, 1); -- a_spiroc_walker
+	eq.signal(71007, 1); -- a_spiroc_banisher
+	eq.signal(71010, 1); -- a_spiroc_revolter
+end
 
-	if(e.signal == 255) then
-		local mobtypeID =  entity_list:GetMobByNpcTypeID(71012);
-		local follow_mob = mobtypeID:GetID();
-		eq.follow(follow_mob);
-	elseif(e.signal == 254) then
-		eq.stop_follow();
-		
+function event_spawn(e)
+	eq.set_timer("lord", 1000);
+end
+
+function event_signal(e)
+	if e.signal == 1 then
+		eq.set_timer("lord", 1000);
 	end
 end
 
+function event_timer(e)
+	if e.self:IsEngaged() or e.self:Charmed() or e.self:GetX() ~= e.self:GetSpawnPointX() or e.self:GetY() ~= e.self:GetSpawnPointY() then
+		return;
+	end
 
-function event_death_complete(e)
-	
-	--[[if(eq.get_entity_list():IsMobSpawnedByNpcTypeID(71009)
-		or eq.get_entity_list():IsMobSpawnedByNpcTypeID(71008)
-		or eq.get_entity_list():IsMobSpawnedByNpcTypeID(71007)
-		or eq.get_entity_list():IsMobSpawnedByNpcTypeID(71015)
-		or eq.get_entity_list():IsMobSpawnedByNpcTypeID(71011)
-		or eq.get_entity_list():IsMobSpawnedByNpcTypeID(71010)
-		or eq.get_entity_list():IsMobSpawnedByNpcTypeID(71014)) then
-		eq.update_spawn_timer(2631,1000); --update to respawn in 1 sec if any spiroc except for lord are still up
-	end]]--
+	if not eq.get_entity_list():IsMobSpawnedByNpcTypeID(71012) then -- The_Spiroc_Lord
+		eq.update_spawn_timer(2630, 1000);
+	end
+	eq.stop_timer(e.timer);
 end
-
--------------------------------------------------------------------------------------------------
--- Converted to .lua using MATLAB converter written by Stryd
--- Find/replace data for .pl --> .lua conversions provided by Speedz, Stryd, Sorvani and Robregen
--------------------------------------------------------------------------------------------------
