@@ -29,10 +29,10 @@ sub EVENT_ITEM {
   quest::summonitem('5422'); #Short Sword of Morin (5422)
  }
  #Handin: 1x Sealed Ghoul Boss' Log Book (20638)
-#elsif(plugin::check_handin(\%itemcount, 20638 => 1)){
-# quest::say("We meet again, $name. This log reveals much of the machinations of our dark oppressors, but not enough. Deliver these orders to Bryn in Lesser Faydark, and he will provide you with another weapon to aid in our defense of Kithicor.");
-# quest::summonitem('0000'); #Sealed Orders (0000)
-#}
+ elsif(plugin::check_handin(\%itemcount, 20638 => 1)){
+  quest::say("We meet again, $name. This log reveals much of the machinations of our dark oppressors, but not enough. Deliver these orders to Bryn in Lesser Faydark, and he will provide you with another weapon to aid in our defense of Kithicor.");
+  quest::summonitem('1378'); #Sealed Orders (1378)
+ }
   #do all other handins first with plugin, then let it do disciplines
   plugin::try_tome_handins(\%itemcount, $class, 'Ranger');
   plugin::return_items(\%itemcount);
