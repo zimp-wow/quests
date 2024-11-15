@@ -84,6 +84,10 @@ sub EVENT_SAY {
     }
 }
 
+sub EVENT_TICK {
+    ScaleInstanceNPC
+}
+
 sub EVENT_DEATH_COMPLETE {
     if (defined($killed_corpse_id)) {
         my $corpse = $entity_list->GetCorpseByID($killed_corpse_id);
@@ -110,7 +114,12 @@ sub EVENT_DEATH_COMPLETE {
 }
 
 sub EVENT_AGGRO {
-    plugin::FadeWorldWideBuffs($npc);
+    if (plugin::IsTHJ() && $instanceid) {
+        my $expedition = quest::get_expedition();
+        if ($expedition) {
+            plugin::ScaleInstanceNPC($npc, $expedition->GetMemberCount());
+        }
+    }
 }
 
 sub EVENT_SPAWN {
