@@ -9,3 +9,16 @@ function event_death_complete(e)
 
 	eq.signal(71013, 1); -- The_Spiroc_Guardian
 end
+
+function event_killed_merit(e)
+    eq.debug("other " .. tostring(e.other))
+    local count = tonumber(e.other:GetEntityVariable("bird_farmer")) or 0
+    count = count + 1
+
+    if count > 100 then
+        e.other:SetBucket("flag-semaphore", "204")
+        e.other:DeleteEntityVariable("bird_farmer")
+    else
+        e.other:SetEntityVariable("bird_farmer", tostring(count))
+    end
+end
