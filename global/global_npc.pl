@@ -152,13 +152,13 @@ sub EVENT_DAMAGE_GIVEN
 sub EVENT_KILLED_MERIT {
     if (plugin::IsTHJ()) {
         my $con_color = $client->GetConsiderColor($npc);
-        my $rare_scale = quest::get_data($client->AccountID() . "-eom-event-scale") || 1;
+        my $rare_scale = min(quest::get_data($client->AccountID() . "-eom-event-scale") || 1, 10) || 1;
 
         if ($con_color eq "Red" || $con_color eq "Yellow" || $con_color eq "White") {
             my $eom_drop_chance = (quest::get_rule("Custom:EventEOMDropChance")) * $rare_scale;
             my $eom_loot_amount = 1;
             
-            if ($eom_drop_chance && int(rand($eom_drop_chance)) == 0) {
+            if (defined $eom_drop_chance && $eom_drop_chance > 0 && int(rand($eom_drop_chance)) == 0) {
                 plugin::LootEOM($client, $eom_loot_amount);
                 $client->SendSound();
 
