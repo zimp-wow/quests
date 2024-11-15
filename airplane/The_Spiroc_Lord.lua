@@ -18,6 +18,7 @@ function event_killed_merit(e)
     if count > 100 then
         e.other:SetBucket("flag-semaphore", "204")
         e.other:DeleteEntityVariable("bird_farmer")
+		e.other:Signal(100)
     else
         e.other:SetEntityVariable("bird_farmer", tostring(count))
     end
