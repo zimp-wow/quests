@@ -80,6 +80,7 @@ sub OfferStandardInstance {
 
 sub ScaleInstanceNPC {
   if (!plugin::IsTHJ() || (plugin::val('$instanceversion') != (quest::get_rule("Custom:StaticInstanceVersion")) && plugin::val('$instanceversion') != (quest::get_rule("Custom:FarmingInstanceVersion")))) {
+    quest::debug("Did not scale this mob");
     return;
   }
 
@@ -117,7 +118,7 @@ sub ScaleInstanceNPC {
   my $minor_scale_factor = 1 + ($player_scale_factor * 0.5);
 
   # Scale max_hp, max_hit, min_hit, and hp_regen by 1 + $scale_factor
-  my $new_max_hp = ceil($npc->GetEntityVariable("original_max_hp") * $scale_factor);
+  my $new_max_hp = ceil($npc->GetEntityVariable("original_max_hp") * $scale_factor * $player_count);
   $npc->ModifyNPCStat("max_hp", $new_max_hp);
 
   my $new_max_hit = ceil($npc->GetEntityVariable("original_max_hit") * $scale_factor);
