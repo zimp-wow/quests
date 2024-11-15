@@ -12,18 +12,24 @@ end
 
 function event_killed_merit(e)
     if not e.other then
-        eq.debug("Error: `e.other` is nil.")
         return
     end
     
     local count = tonumber(e.other:GetEntityVariable("bird_farmer")) or 0
     count = count + 1
 
-    if count > 100 then
-        e.other:SetBucket("flag-semaphore", "204")
-        e.other:DeleteEntityVariable("bird_farmer")
-        e.other:Signal(100) -- Uncomment if Signal is available
-    else
-        e.other:SetEntityVariable("bird_farmer", tostring(count or "0"))
+    if count >= 100 then
+        local awarded = e.other:GetBucket("bird_farmer"); -- string value, empty string, or nil
+
+        if awarded ~= nil and awarded ~= "" then
+            eq.discord_send("ooc", "All hail " .. e.other:GetCleanName() .. ", the Sweaty Bird Farmer!")
+            eq.world_emote(335, "All hail " .. e.other:GetCleanName() .. ", the Sweaty Bird Farmer!")
+
+            e.other:SetBucket("bird_farmer", "birds aren't real")
+
+            e.other:SetBucket("flag-semaphore", "207")
+            e.other:Signal(100)
+        end
     end
+    e.other:SetEntityVariable("bird_farmer", tostring(count or "0"))
 end
