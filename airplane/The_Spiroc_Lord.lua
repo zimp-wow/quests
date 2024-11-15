@@ -11,14 +11,19 @@ function event_death_complete(e)
 end
 
 function event_killed_merit(e)
+    if not e.other then
+        eq.debug("Error: `e.other` is nil.")
+        return
+    end
+    
     local count = tonumber(e.other:GetEntityVariable("bird_farmer")) or 0
     count = count + 1
 
     if count > 100 then
         e.other:SetBucket("flag-semaphore", "204")
         e.other:DeleteEntityVariable("bird_farmer")
-		e.other:Signal(100)
+        e.other:Signal(100) -- Uncomment if Signal is available
     else
-        e.other:SetEntityVariable("bird_farmer", tostring(count))
+        e.other:SetEntityVariable("bird_farmer", tostring(count or "0"))
     end
 end
