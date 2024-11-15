@@ -19,9 +19,10 @@ function event_killed_merit(e)
     count = count + 1
 
     if count >= 100 then
-        local awarded = e.other:GetBucket("bird_farmer"); -- string value, empty string, or nil
-
-        if awarded ~= nil and awarded ~= "" then
+        local awarded = e.other:GetBucket("bird_farmer")
+        if awarded == nil or awarded == "" then
+            eq.debug("check 3: " .. tostring(awarded));
+            
             eq.discord_send("ooc", "All hail " .. e.other:GetCleanName() .. ", the Sweaty Bird Farmer!")
             eq.world_emote(335, "All hail " .. e.other:GetCleanName() .. ", the Sweaty Bird Farmer!")
 
@@ -29,6 +30,9 @@ function event_killed_merit(e)
 
             e.other:SetBucket("flag-semaphore", "207")
             e.other:Signal(100)
+
+            e.other:DeleteEntityVariable("bird_farmer")
+            return
         end
     end
     e.other:SetEntityVariable("bird_farmer", tostring(count or "0"))
