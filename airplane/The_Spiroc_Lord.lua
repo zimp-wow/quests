@@ -11,7 +11,6 @@ function event_death_complete(e)
 end
 
 function event_killed_merit(e)
-    eq.debug("other " .. tostring(e.other))
     local count = tonumber(e.other:GetEntityVariable("bird_farmer")) or 0
     count = count + 1
 
