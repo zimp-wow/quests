@@ -87,7 +87,7 @@ sub ScaleInstanceNPC {
   my $npc = shift;
   my $player_count = shift;
 
-  if (!$npc || !$player_count || $player_count <= 2) {
+  if (!$npc || !$player_count || $player_count <= 2 || ($npc->GetOwner() && $npc->GetOwner()->IsClient())) {
     return;
   }
 
