@@ -1,3 +1,4 @@
+use List::Util 'min';
 sub EVENT_SAY {
     if (plugin::MultiClassingEnabled() && $npc->GetClass() >= 20 && $npc->GetClass() <= 35) {
         my $classes = $client->GetClassesBitmask();
