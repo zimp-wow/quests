@@ -104,6 +104,8 @@ sub ScaleInstanceNPC {
     $npc->SetEntityVariable("original_accuracy", $npc->GetNPCStat("accuracy"));
     $npc->SetEntityVariable("original_hp_regen", $npc->GetNPCStat("hp_regen"));
     $npc->SetEntityVariable("original_ac", $npc->GetNPCStat("ac"));
+
+    $npc->SetEntityVariable("original_level", $npc->GetLevel());
     
     # Resistances
     $npc->SetEntityVariable("original_mr", $npc->GetNPCStat("mr"));
@@ -119,7 +121,10 @@ sub ScaleInstanceNPC {
 
   # Scale max_hp, max_hit, min_hit, and hp_regen by 1 + $scale_factor
   my $new_max_hp = ceil($npc->GetEntityVariable("original_max_hp") * $scale_factor);
+  my $hp_ratio   = $npc->GetHPRatio();
   $npc->ModifyNPCStat("max_hp", $new_max_hp);
+
+  $npc->SetHP($npc->GetMaxHP() * $hp_ratio);
 
   my $new_max_hit = ceil($npc->GetEntityVariable("original_max_hit") * $scale_factor);
   $npc->ModifyNPCStat("max_hit", $new_max_hit);
@@ -158,6 +163,9 @@ sub ScaleInstanceNPC {
 
   my $new_pr = ceil($npc->GetEntityVariable("original_pr") * $minor_scale_factor);
   $npc->ModifyNPCStat("pr", $new_pr);
+
+  my $new_level = ceil($npc->GetEntityVariable("original_level") + $player_count);
+  $npc->SetLevel($new_level);
 
   # These just use absolute values
   $npc->ModifyNPCStat("spellscale", $scale_factor * 100);
