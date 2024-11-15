@@ -126,7 +126,7 @@ sub EVENT_SPAWN {
     plugin::CheckSpawnWaypoints();
     
     if ($instanceversion > 0) {        
-        if ($npc->GetName() =~ /TPTriggerN/) {
+        if ($npc->GetName() =~ /Echo_of_the_Past/) {
             $npc->Depop(0);
         }
     }
