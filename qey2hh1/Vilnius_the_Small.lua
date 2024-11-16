@@ -26,13 +26,13 @@ function event_trade(e)
 		e.other:AddEXP(1500);
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 5411,item2 = 5410,item3 = 5401,item4 = 5308})) then -- Fleshripper, Painbringer, Mithril Two-Handed Sword, Gigantic Zweihander
 		e.self:Say("Very good, though how you managed to lug around all these oversized blades amazes me. I feel we can do business now, and Malka still has not shown up. Take this dagger. I had an old client who didn't, um.. pay.. so this was extracted from him. Right after it was inserted in him. For your next job, I need a collection of robes. The Robe of the Ishva, some Shining Metallic robes, an Oracle robe, and a Robe of the Kedge. I am not even sure where all these come from, but they are on my list here, and Rokyl is one of my best clients, so I figure that is your job.");
-		e.other:SummonFixedItem(7506); -- Jagged Diamond Dagger
+		e.other:SummonItem(7506); -- Jagged Diamond Dagger
 		e.other:Ding();
 		e.other:AddEXP(3000);
 		e.other:GiveCash(0,0,100,20);
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 1357,item2 = 1253,item3 = 1354,item4 = 1360})) then -- Robe of the Ishva, Robe of the Kedge, Robe of the Oracle, Shining Mettalic Robes
 		e.self:Say(string.format("You do good work, %s. Here is another trinket for your trouble, you should be able to make use of it. Malka still hasn't made it back yet, and I have one more order to fill, if you're willing. This one should be easy. My sword collector has decided he wants rapiers now, of all things. He has asked for an Eyerazzia, a Martune Rapier, a Burning Rapier, and a well balanced rapier.",e.other:Race()));
-		e.other:SummonFixedItem(7505); -- Cazic Quill
+		e.other:SummonItem(7505); -- Cazic Quill
 		e.other:Ding();
 		e.other:AddEXP(3000);
 		e.other:GiveCash(0,0,200,15);
