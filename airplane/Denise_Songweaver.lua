@@ -11,7 +11,7 @@ function event_say(e)
 	elseif(e.message:findi("voice")) then 	--bard test of voice
 		e.self:Say("The sweet sound rising forth from our throats are what makes us truly great.  Go forth and give voice to your songs, and return to me a platinum disc, a music box, and a light woolen mantle. If you do this I shall give you the Songweaver's Mantle. Good luck!");
 	elseif(e.message:findi("tone")) then 	--bard test of tone
-		e.self:Say("Tone is important to all singers. Prove to me that you can keep your tone even and pure by bringing me an Ochre Tessera, a songbird statuette, and a light woolen cloak. If you do this I will give you the Mask of the Songbird.");
+		e.self:Say("Tone is important to all singers. Prove to me that you can keep your tone even and pure by bringing me an Ochre Tessera, a songbird statuette, and a light woolen mask. If you do this I will give you the Mask of the Songbird.");
 	end
 end
 
@@ -27,7 +27,7 @@ function event_trade(e)
 		e.other:AddEXP(100000);
 		e.self:Say("Excellent! Take this as your reward.");
 		eq.depop();
-	elseif(item_lib.check_turn_in(e.trade, {item1 = 20933, item2 = 20823, item3 = 20820})) then --bard test of tone using ochre tessera, songbird statuette, light wooden cloak
+	elseif(item_lib.check_turn_in(e.trade, {item1 = 20933, item2 = 20821, item3 = 20820})) then --bard test of tone using ochre tessera, songbird statuette, light woolen mask
 		e.other:SummonItem(27720); --mask of song
 		e.other:AddEXP(100000);
 		e.self:Say("Excellent! Take this as your reward.");
