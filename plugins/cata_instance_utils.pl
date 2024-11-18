@@ -79,8 +79,13 @@ sub OfferStandardInstance {
 }
 
 sub ScaleInstanceNPC {
-  if (!plugin::IsTHJ() || (plugin::val('$instanceversion') != (quest::get_rule("Custom:StaticInstanceVersion")) && plugin::val('$instanceversion') != (quest::get_rule("Custom:FarmingInstanceVersion")))) {
-    quest::debug("Did not scale this mob");
+  if (!plugin::IsTHJ()) {
+    return;
+  }
+
+  my $instanceversion = plugin::val('$instanceversion');
+
+  if ($instanceversion != quest::get_rule("Custom:StaticInstanceVersion")) {
     return;
   }
 
