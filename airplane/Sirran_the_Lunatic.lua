@@ -36,74 +36,32 @@ function event_say(e)
 end
 
 function event_trade(e)
-	local instance_id = eq.get_zone_instance_id() or 0;
-	local airplane_sirran_status = tonumber(eq.get_data("airplane-sirran-".. instance_id)) or 0;
 	local item_lib = require("items");
 
 	if item_lib.check_turn_in(e.trade, {item1 = 20920}) then 		-- Item: A Miniature Sword
-		if airplane_sirran_status == 1 then
-			e.self:Say("These are the keys! Use them well! Hold them in your hand and touch them to the runed platforms! Guide you thy will! Hah! The last to go, must tell me so, or be in for a [hassle]! If there's a hassle, I will go!");
-			e.other:QuestReward(e.self,{itemid = 20911}); -- Item: Key of Swords
-		else
-			e.self:Say("I have no need for this item " .. e.other:GetCleanName() .. ", you can have it back.")
-			e.other:QuestReward(e.self,{itemid = 20920}); -- Item: Miniature Sword
-		end
+		e.self:Say("These are the keys! Use them well! Hold them in your hand and touch them to the runed platforms! Guide you thy will! Hah! The last to go, must tell me so, or be in for a [hassle]! If there's a hassle, I will go!");
+		e.other:QuestReward(e.self,{itemid = 20911}); -- Item: Key of Swords
 	elseif item_lib.check_turn_in(e.trade, {item1 = 20921}) then 	-- Item: Lost Rabbit's Foot
-		if airplane_sirran_status == 1 then
-			e.self:Say("These are the keys! Use them well! Hold them in your hand and touch them to the runed platforms! Guide you thy will! Hah! The last to go, must tell me so, or be in for a [hassle]! If there's a hassle, I will go!");
-			e.other:QuestReward(e.self,{itemid = 20912}); -- Item: Key of the Misplaced
-		else
-			e.self:Say("I have no need for this item " .. e.other:GetCleanName() .. ", you can have it back.")
-			e.other:QuestReward(e.self,{itemid = 20921}); -- Item: Lost rabbits foot
-		end
+		e.self:Say("These are the keys! Use them well! Hold them in your hand and touch them to the runed platforms! Guide you thy will! Hah! The last to go, must tell me so, or be in for a [hassle]! If there's a hassle, I will go!");
+		e.other:QuestReward(e.self,{itemid = 20912}); -- Item: Key of the Misplaced
 	elseif item_lib.check_turn_in(e.trade, {item1 = 20922}) then 	-- Item: Broken Mirror
-		if airplane_sirran_status == 2 then
-			e.self:Say("You move fast, you crazy kids! Keep going! Prod you I will! Stuck here I have been! Oh! Let me know when you are [done] or this will be no fun! Haha");
-			e.other:QuestReward(e.self,{itemid = 20913}); -- Item: Key of Misfortune
-		else
-			e.self:Say("I have no need for this item " .. e.other:GetCleanName() .. ", you can have it back.")
-			e.other:QuestReward(e.self,{itemid = 20922}); -- Item: Broken Mirror
-		end
+		e.self:Say("You move fast, you crazy kids! Keep going! Prod you I will! Stuck here I have been! Oh! Let me know when you are [done] or this will be no fun! Haha");
+		e.other:QuestReward(e.self,{itemid = 20913}); -- Item: Key of Misfortune
 	elseif item_lib.check_turn_in(e.trade, {item1 = 20923}) then 	-- Item: Animal Figurine
-		if airplane_sirran_status == 3 then
-			e.self:Say("Always want something for nothing? Oh yes, you gave me something! Here you go! Take this! Used one you have. [Teleport] away you will! Let me know, or no kill! Haha!");
-			e.other:QuestReward(e.self,{itemid = 20914}); -- Item: Key of Beasts
-		else
-			e.self:Say("I have no need for this item " .. e.other:GetCleanName() .. ", you can have it back.")
-			e.other:QuestReward(e.self,{itemid = 20923}); -- Item: Animal Figurine
-		end
+		e.self:Say("Always want something for nothing? Oh yes, you gave me something! Here you go! Take this! Used one you have. [Teleport] away you will! Let me know, or no kill! Haha!");
+		e.other:QuestReward(e.self,{itemid = 20914}); -- Item: Key of Beasts
 	elseif item_lib.check_turn_in(e.trade, {item1 = 20924}) then 	-- Item: Bird Whistle
-		if airplane_sirran_status == 4 then
-			e.self:Say("What is this? Bah! Take that! And this! What was I thinking? I was thinking you had best let me know when you use those teleporters. Just say, [Icky Bicky Barket]. Aye, that is what I was thinking.");
-			e.other:QuestReward(e.self,{itemid = 20915}); -- Item: Avian Key
-		else
-			e.self:Say("I have no need for this item " .. e.other:GetCleanName() .. ", you can have it back.")
-			e.other:QuestReward(e.self,{itemid = 20924}); -- Item: Bird Whistle
-		end
+		e.self:Say("What is this? Bah! Take that! And this! What was I thinking? I was thinking you had best let me know when you use those teleporters. Just say, [Icky Bicky Barket]. Aye, that is what I was thinking.");
+		e.other:QuestReward(e.self,{itemid = 20915}); -- Item: Avian Key
 	elseif item_lib.check_turn_in(e.trade, {item1 = 20925}) then 	-- Item: Noise Maker
-		if airplane_sirran_status == 5 then
-			e.self:Say("Phew! These are heavy. Well, not really. I'm sure I don't have to remind you to remind me when you are [leaving].");
-			e.other:QuestReward(e.self,{itemid = 20916}); -- Item: Key of the Swarm
-		else
-			e.self:Say("I have no need for this item " .. e.other:GetCleanName() .. ", you can have it back.")
-			e.other:QuestReward(e.self,{itemid = 20925}); -- Item: Noise Maker
-		end
+		e.self:Say("Phew! These are heavy. Well, not really. I'm sure I don't have to remind you to remind me when you are [leaving].");
+		e.other:QuestReward(e.self,{itemid = 20916}); -- Item: Key of the Swarm
 	elseif item_lib.check_turn_in(e.trade, {item1 = 20926}) then 	-- Item: Dull Dragon Scale
-		if airplane_sirran_status == 6 then
-			e.self:Say("Dnib a ni era uoy ro esarhp eht yas dna yrruh!! Sruoy era syek eht dna romra em evig. Erom on gnits seixib eht ahahahahah!");
-			e.other:QuestReward(e.self,{itemid = 20917}); -- Item: Key of Scale
-		else
-			e.self:Say("I have no need for this item " .. e.other:GetCleanName() .. ", you can have it back.")
-			e.other:QuestReward(e.self,{itemid = 20926}); -- Item: Dull Dragon Scale
-		end
+		e.self:Say("Dnib a ni era uoy ro esarhp eht yas dna yrruh!! Sruoy era syek eht dna romra em evig. Erom on gnits seixib eht ahahahahah!");
+		e.other:QuestReward(e.self,{itemid = 20917}); -- Item: Key of Scale
 	elseif item_lib.check_turn_in(e.trade, {item1 = 20927}) then 	-- Item: Replica of the Wyrm Queen
-		if airplane_sirran_status == 7 then
-			e.self:Say("Not too much farther. I spit on thee knave! Ehem. Take these. Go on! Make your fortunes. No one cares about Narris. I mean Sirran. Hah! See if I care what you think! Oh, when did you say you were [leaving]?");
-			e.other:QuestReward(e.self,{itemid = 20918}); -- Item: Veeshan's Key (not the one purchased on island --1 which is 20919)
-		else
-			e.self:Say("I have no need for this item " .. e.other:GetCleanName() .. ", you can have it back.")
-			e.other:QuestReward(e.self,{itemid = 20927}); -- Item: Replica of the Wyrm Queen
-		end
+		e.self:Say("Not too much farther. I spit on thee knave! Ehem. Take these. Go on! Make your fortunes. No one cares about Narris. I mean Sirran. Hah! See if I care what you think! Oh, when did you say you were [leaving]?");
+		e.other:QuestReward(e.self,{itemid = 20918}); -- Item: Veeshan's Key (not the one purchased on island --1 which is 20919)
 	end
 	item_lib.return_items(e.self, e.other, e.trade)
 end
