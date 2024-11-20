@@ -96,8 +96,8 @@ sub EVENT_SAY {
 			$response = "I'm sorry, $clientName. You don't have enough Echo of Memory, please return when you have enough to pay me.";
 		} else {
 			# Deserialize the existing list of glamour IDs
-			my @glamour_list = DeserializeList($client->GetBucket("random_glamours"));
-			my %glamour_hash = map { $_ => 1 } @glamour_list;  # Convert list to hash for quick lookup
+			# my @glamour_list = DeserializeList($client->GetBucket("random_glamours"));
+			# my %glamour_hash = map { $_ => 1 } @glamour_list;  # Convert list to hash for quick lookup
 			my $random_result;
 
 			
@@ -108,8 +108,8 @@ sub EVENT_SAY {
 				$client->SummonItem($random_result);
 
 				# Add the new glamour ID to the list and store it back into the bucket
-				push(@glamour_list, $random_result);
-				$client->SetBucket("random_glamours", SerializeList(@glamour_list));
+				# push(@glamour_list, $random_result);
+				# $client->SetBucket("random_glamours", SerializeList(@glamour_list));
 			}
 		}
 	}
