@@ -11,7 +11,7 @@ sub EVENT_TIMER {
 
 sub EVENT_SAY {
     if($text=~/hail/i) {
-        quest::say("Hello, $name. If you give me a rose colored or apocryphal iksar hide mask, I can change you permanently into an Iksar.");
+        quest::say("Hello, $name. If you give me any upgraded iksar hide mask, I can change you permanently into an Iksar!");
     }
 }
 
