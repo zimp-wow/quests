@@ -38,6 +38,7 @@ sub EVENT_SAY {
             plugin::YellowText("All of your AA have been refunded.");
             $client->SetBucket("free_aa_reset_used", 1);
             $client->ResetAA();
+            $client->Save(1);
             plugin::CommonCharacterUpdate($client);
         }
     }
