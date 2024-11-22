@@ -12,13 +12,34 @@ sub EVENT_SAY {
     my $remove_class_lockout_scale = ($client->GetBucket("remove_class_lockout_scale") || 1);
     my $remove_class_lockout = 7 * $remove_class_lockout_scale;
 
-    if ($text=~/hail/i) {
+    if ($text=~/hail/i) {   
         if (plugin::GetClassesCount($client) <= 1) {
             plugin::NPCTell("Mortal. Do you wish to throw yourself upon the [whims of blind fate]?");
         } else {
             plugin::NPCTell("Mortal. You are unsuitable, your fate has already been tainted by your pathetic free will. Begone, unless you would have me [reforge your path]");
         }
+
+        my $free_class_remove = ($client->GetBucket("free_remove_class_used") || 0);
+        if (!$free_class_remove) {
+            plugin::YellowText("You have a free class removal available. You will be given the option to use it by proceeding with the menu.");
+        }
+
+        my $free_aa_reset_used = ($client->GetBucket("free_aa_reset_used") || 0);
+        if (!$free_aa_reset_used) {
+            plugin::YellowText("You have a free AA Reset available. Would you like to [".quest::saylink("reset_aa", 1, "use it")."]?");
+        }
+
         return;
+    }
+
+    if ($text=~/reset_aa/i) {
+        my $free_aa_reset_used = ($client->GetBucket("free_aa_reset_used") || 0);
+        if (!$free_aa_reset_used) {
+            plugin::YellowText("All of your AA have been refunded.");
+            $client->SetBucket("free_aa_reset_used", 1);
+            $client->ResetAA();
+            plugin::CommonCharacterUpdate($client);
+        }
     }
 
     if ($text=~/blind fate/i) {
@@ -65,19 +86,24 @@ sub EVENT_SAY {
     }
 
     if ($text =~ /^del_class_(\d+)$/i) {
-        my $class_id = $1; 
+        my $class_id = $1;
 
-        if ($client->HasExpeditionLockout("Class Removal Lockout", "")) {
-            plugin::YellowText("You cannot remove a class at this time, you still are under cooldown from a previous class removal.");
-            return 0;
+        my $free_class_remove = ($client->GetBucket("free_remove_class_used") || 0);
+        if (!$free_class_remove) {
+            plugin::YellowText("You have a free class removal available. Would you like to [".quest::saylink("free_$class_id", 1, "use it")."]? This will bypass any lockouts or costs.");
+        } else {
+            if ($client->HasExpeditionLockout("Class Removal Lockout", "")) {
+                plugin::YellowText("You cannot remove a class at this time, you still are under cooldown from a previous class removal.");
+                return 0;
+            }
         }
 
         if (plugin::HasClass($client, $class_id)) {
             if (plugin::GetEOM($client) >= $remove_class_cost) {
                  plugin::YellowText("It will cost $remove_class_cost Echo of Memory in order to remove a class. Additionally, 
                                     there is a $remove_class_lockout-day cooldown after removing a class before you can remove another.
-                                    Each time you do this, your cooldown for this avatar will permanently increase. Would you like to "
-                                    .quest::saylink("proceed_$class_id", 1, "Proceed")."?");
+                                    Each time you do this, your cooldown for this avatar will permanently increase. Would you like to ["
+                                    .quest::saylink("proceed_$class_id", 1, "Proceed")."]?");
             
             } else {
                  plugin::YellowText("It costs $remove_class_cost Echo of Memory in order to remove a class. You can obtain
@@ -88,10 +114,25 @@ sub EVENT_SAY {
 
     if ($text =~ /^proceed_(\d+)$/i) {
         my $class_id = $1; 
+
+        if ($client->HasExpeditionLockout("Class Removal Lockout", "")) {
+            plugin::YellowText("You cannot remove a class at this time, you still are under cooldown from a previous class removal.");
+            return 0;
+        }
+
         if (plugin::SpendEOM($client, $remove_class_cost) && plugin::HasClass($client, $class_id)) {
             plugin::RemoveClass($class_id, $client);
             $client->AddExpeditionLockout("Class Removal Lockout", "", $remove_class_lockout * 24 * 60 * 60);
             $client->SetBucket("remove_class_lockout_scale", $remove_class_lockout_scale + 1);
+        }
+    }
+
+    if ($text =~ /^free_(\d+)$/i) {
+        my $class_id = $1; 
+        my $free_class_remove = ($client->GetBucket("free_remove_class_used") || 0);
+        if (!$free_class_remove && plugin::HasClass($client, $class_id)) {
+            $client->SetBucket("free_remove_class_used", 1);
+            plugin::RemoveClass($class_id, $client);
         }
     }   
 
