@@ -24,10 +24,10 @@ sub EVENT_SAY {
             plugin::YellowText("You have a free class removal available. You will be given the option to use it by proceeding with the menu.");
         }
 
-        my $free_aa_reset_used = ($client->GetBucket("free_aa_reset_used") || 0);
-        if (!$free_aa_reset_used) {
-            plugin::YellowText("You have a free AA Reset available. Would you like to [".quest::saylink("reset_aa", 1, "use it")."]?");
-        }
+        #my $free_aa_reset_used = ($client->GetBucket("free_aa_reset_used") || 0);
+        #if (!$free_aa_reset_used) {
+        #    plugin::YellowText("You have a free AA Reset available. Would you like to [".quest::saylink("reset_aa", 1, "use it")."]?");
+        #}
 
         return;
     }
