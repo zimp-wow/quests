@@ -32,16 +32,16 @@ sub EVENT_SAY {
         return;
     }
 
-    if ($text=~/reset_aa/i) {
-        my $free_aa_reset_used = ($client->GetBucket("free_aa_reset_used") || 0);
-        if (!$free_aa_reset_used) {
-            plugin::YellowText("All of your AA have been refunded.");
-            $client->SetBucket("free_aa_reset_used", 1);
-            $client->ResetAA();
-            $client->Save(1);
-            plugin::CommonCharacterUpdate($client);
-        }
-    }
+#    if ($text=~/reset_aa/i) {
+#        my $free_aa_reset_used = ($client->GetBucket("free_aa_reset_used") || 0);
+#        if (!$free_aa_reset_used) {
+#            plugin::YellowText("All of your AA have been refunded.");
+#            $client->SetBucket("free_aa_reset_used", 1);
+#            $client->ResetAA();
+#            $client->Save(1);
+#            plugin::CommonCharacterUpdate($client);
+#        }
+#    }
 
     if ($text=~/blind fate/i) {
         if (plugin::GetClassesCount($client) == 1) {
