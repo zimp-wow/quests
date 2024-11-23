@@ -1,6 +1,6 @@
 function event_say(e)
     if(e.message:findi("Hail")) then
-        e.self:Say("Greetings, " .. e.other:Race() .. ". You are welcome in [" .. eq.say_link("Kejek") .. "] so long as you do not offend the [spirits] of these lands.");
+        e.self:Say("Greetings, " .. e.other:GetRaceName() .. ". You are welcome in [" .. eq.say_link("Kejek") .. "] so long as you do not offend the [spirits] of these lands.");
     elseif(e.message:findi("kejek")) then
         e.self:Say("This is Kejek, our village on the peak of Mt. Klaw. It is here that we continue to cherish the customs and beliefs of our ancestors, the Vah'Shir. Our location here in the Stonebrunt Mountains and the protection of the [" .. eq.say_link("spirits") .. "] allows us to escape the persecution and war that is waged between our yellow furred cousins and the Erudites.");
     elseif(e.message:findi("spirits")) then

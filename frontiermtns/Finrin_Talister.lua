@@ -1,6 +1,6 @@
 function event_say(e)
 	if(e.message:findi("hail")) then
-		e.self:Say("Well met, " .. e.other:Race() .. ". What brings you to this [" .. eq.say_link("legendary site") .. "]? I hope that you're here to do something about all these pesky [" .. eq.say_link("goblins") .. "].");
+		e.self:Say("Well met, " .. e.other:GetRaceName() .. ". What brings you to this [" .. eq.say_link("legendary site") .. "]? I hope that you're here to do something about all these pesky [" .. eq.say_link("goblins") .. "].");
 	elseif(e.message:findi("legendary site")) then
 		e.self:Say("As the legend goes, the ruins you see around us was no ordinary building. On this site was once a temple to one of the lesser gods, of which one or if even the god still exists is unknown. What is known is that this place still contains powerful enchantments allowing souls to bind here.");
 	elseif(e.message:findi("goblins")) then

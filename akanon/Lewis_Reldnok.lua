@@ -17,7 +17,7 @@ function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);
 	if(qglobals["paladin_epic"] == "9") then
 		if(e.message:findi("hail")) then
-			e.self:Say("Greetings " .. e.other:Race() .. " What can a brave and noble Paladin like I help you with? Are you possibly looking for a [" .. eq.say_link("blessed gem") .. "]?");
+			e.self:Say("Greetings " .. e.other:GetRaceName() .. " What can a brave and noble Paladin like I help you with? Are you possibly looking for a [" .. eq.say_link("blessed gem") .. "]?");
 		elseif(e.message:findi("blessed gem")) then
 			e.self:Say("So you're the one that we been hearing about. Excellent work so far " .. e.other:GetName() .. ". Helping Kemik out like you are brings pride to every Paladin on Norrath. Sit before me sir and you shall receive the holy gem of Ak`Anon.");
 			client_to_check=eq.get_entity_list():GetClientByID(e.other:GetID());
