@@ -32,7 +32,7 @@ function event_trade(e)
             e.self:Say("I am sorry, but at the moment our great wheel of prizes is not spinning! Could you try again in a few moments while I try to fix the jam? Thanks!");
             e.other:SummonItem(66615); -- Item: Gold Ticket
         else
-            e.self:Shout("Ladies and Gentlemen gather around, as our brave " .. e.other:GetName() .. " is turning in their Golden Ticket for a chance at the big time! With a spin of the wheel let us determine the prize. Ladies and gentlemen, the " .. e.other:Race() .. " wins a prize! Everyone please congratulate " .. e.other:GetName() .. " on this excellent luck!");
+            e.self:Shout("Ladies and Gentlemen gather around, as our brave " .. e.other:GetName() .. " is turning in their Golden Ticket for a chance at the big time! With a spin of the wheel let us determine the prize. Ladies and gentlemen, the " .. e.other:GetRaceName() .. " wins a prize! Everyone please congratulate " .. e.other:GetName() .. " on this excellent luck!");
             local which = math.random(1, table.getn(valid_prizes));
             e.other:SummonItem(valid_prizes[which]);
         end
