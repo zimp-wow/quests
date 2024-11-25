@@ -1,8 +1,3 @@
-sub EVENT_ITEM {
-	#:: Return unused items
-	plugin::return_items(\%itemcount);
-}
-
 sub EVENT_SAY {
   my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled") || "";  
   my $eom_link        = quest::varlink(46779);
