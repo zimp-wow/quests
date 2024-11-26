@@ -43,7 +43,7 @@ sub EVENT_ITEM {
 			quest::faction(370, 1);		#:: + Dreadguard Outer
 			quest::faction(334, 1);		#:: + Dreadguard Inner
 			#:: Grant a large amount of experience
-			$client->AddLevelBasedExp(5, 15);
+			quest::exp(10000);
 		}
 		else {
 			quest::say("After all the things you've done... the things you believe in... leave my shop!");
@@ -65,7 +65,7 @@ sub EVENT_ITEM {
 			quest::faction(370, 1);		#:: + Dreadguard Outer
 			quest::faction(334, 1);		#:: + Dreadguard Inner
 			#:: Grant a large amount of experience
-			$client->AddLevelBasedExp(10, 15);
+			quest::exp(20000);
 		}
 		else {
 			quest::say("After all the things you've done... the things you believe in... leave my shop!");

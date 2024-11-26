@@ -30,7 +30,7 @@ function event_trade(e)
     e.self:Say("What is this? A note from my brother? Thank you for the gift as well.' Kargek reads the note and hands you the huge sword hilt. Your mind is filled with the sound of battle and a voice. 'Place the ancient sword blade, ancient blade, finely crafted dragon head hilt and the jeweled dragon head hilt into the scabbard to receive your rewards. If you think you are worthy, place your rewards into the scabbard and see what havoc you can unleash on the world. Kargek addresses you as you turn to leave. 'One more thing. Gartrog over there has told me of a great discovery. Seems there are all sorts of stones being found in the recently discovered lost dungeons scattered around Antonica. The Wayfarer's Brotherhood has found a way to make items even more powerful by using the stones with existing items.");
     e.other:SummonItem(17859); -- Red Scabbard
     e.other:Ding();
-    e.other:AddEXP(1000000);
+    e.other:AddEXP(10000);
   elseif(item_lib.check_turn_in(e.trade, {item1 = 20674})) then -- Tiny Lute
     e.self:Say("Thank you for delivering the note to my associate. Take this book - it will tell you a little of the history of the old scabbard. If you would like to own the scabbard, seek out my younger brother Tenal and give him the book.");
     e.other:SummonItem(18083); -- Redblade's Legacy

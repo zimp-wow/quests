@@ -36,7 +36,7 @@ function event_trade(e)
 		e.other:Faction(230,-11,0); -- Corrupt Qeynos Guards
 		e.other:Faction(330,-11,0); -- Freeport Militia
 		e.other:Faction(281,15,0); -- Knights of Truth
-		e.other:AddEXP(640800);
+		e.other:AddEXP(6400);
 		e.other:GiveCash(0,0,0,2);
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 13398})) then
 		e.self:Say("I salute you. You have done well and crossed into the brotherhood of the Steel Warriors. Welcome. Take this. It is the mark of a Steel Warrior. Live the way of the warrior.");
