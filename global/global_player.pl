@@ -18,6 +18,8 @@ sub EVENT_SIGNAL {
     } 
 }
 
+#test commit please ignore
+
 sub EVENT_ENTERZONE {
 	plugin::CommonCharacterUpdate($client);
 
