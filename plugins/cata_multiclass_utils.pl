@@ -25,6 +25,10 @@ sub CommonCharacterUpdate {
 
         my @skip_ids = (69, 68, 65, 64, 63, 61, 60, 59, 58, 57, 56, 55);
         for my $i (grep { !($_ ~~ @skip_ids) } 0..77) {
+            if ($i == 53) { # Tracking
+                $client->SetSkill($i, $client->MaxSkill($i));
+            }
+
             if ($client->GetLevel() == 1) {
                 if ($client->GetSkill($i) < 50 && $client->MaxSkill($i) > 0 && $client->GetSkill($i) < $client->MaxSkill($i)) {
                     $client->SetSkill($i, $client->MaxSkill($i));
