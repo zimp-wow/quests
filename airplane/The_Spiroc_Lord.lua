@@ -4,7 +4,7 @@ function event_death_complete(e)
 
 	if not (eq.get_entity_list():IsMobSpawnedByNpcTypeID(71013)) then -- Don't spawn Sirran if Guardian is still up
 		eq.set_data("airplane-sirran-" .. instance_id, "5", tostring(eq.seconds("24h")));
-		eq.unique_spawn(71058,0,0,955,-570,466,390); -- NPC: Sirran_the_Lunatic
+		eq.spawn2(71058,0,0,955,-570,466,390); -- NPC: Sirran_the_Lunatic
 	end
 
 	eq.signal(71013, 1); -- The_Spiroc_Guardian
