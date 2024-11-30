@@ -6,7 +6,7 @@ function event_enter_zone(e)
 end
 
 function event_loot(e)
-  if ( e.self::HasClass(Class.RANGER) and e.item:GetID() == 62653 and e.corpse:GetNPCTypeID() == 39168 ) then 
+  if ( e.self:HasClass(Class.RANGER) and e.item:GetID() == 62653 and e.corpse:GetNPCTypeID() == 39168 ) then 
     local qglobals = eq.get_qglobals(e.self);
     if ( qglobals["ranger_epic15_pre"] == "3" ) then
       eq.set_global("ranger_epic15_pre","4",5,"F");
