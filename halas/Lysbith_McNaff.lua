@@ -30,7 +30,7 @@ function event_trade(e)
 		e.other:Faction(328,5);			-- Merchants of Halas
 		e.other:Faction(311,5);			-- Steel Warriors
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 13898})) then
-		e.self:Say("Ye've done well, me young " .. e.other:Class() .. " .  We've gathered these to add to yer provisions.  While in the Everfrost Peaks, be on the watch fer any gnolls ye may find.  I declare there to be a [gnoll bounty].");
+		e.self:Say("Ye've done well, me young " .. e.other:GetClassName() .. " .  We've gathered these to add to yer provisions.  While in the Everfrost Peaks, be on the watch fer any gnolls ye may find.  I declare there to be a [gnoll bounty].");
 		e.other:AddEXP(3800);
 		e.other:GiveCash(0,0,4,0);
 		e.other:Ding();

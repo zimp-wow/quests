@@ -1,7 +1,6 @@
 -- items: 28014
 function event_say(e)
 	local fac = e.other:GetFaction(e.self);
-	local class = e.other:Class();
 	local level = e.other:GetLevel();
 	
 	if(fac <= 5) then

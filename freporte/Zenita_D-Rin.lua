@@ -24,7 +24,7 @@ function event_trade(e)
 		e.self:Say("Let see what card you pulled.");
 		e.other:SummonItem(eq.ChooseRandom(22293,22294,22295,22296,22297,22298,22299)); -- Item(s): Castle Card (22293), Beggar Card (22294), Joker Card (22295), Wild Card (22296), Queen Card (22297), King Card (22298), Knight Card (22299)
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 22299} or {item1 = 22297} or {item1 = 22296} or {item1 = 22294} or {item1 = 22293})) then
-		e.self:Say(string.format("Bad luck must be one of your strong suits. You should have been a beggar because you sure aren't a very good %s. You lose!",e.other:Class()));
+		e.self:Say(string.format("Bad luck must be one of your strong suits. You should have been a beggar because you sure aren't a very good %s. You lose!",e.other:GetClassName()));
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 22295})) then
 		e.self:Say(string.format("I see you have drawn the card that best represents a %s such as yourself. You lose!",e.other:GetRaceName()));
 	end

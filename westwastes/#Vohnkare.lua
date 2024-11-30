@@ -1,7 +1,7 @@
 -- items: 52965, 52952, 119184, 52956
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);	
-	if(e.message:findi("hail") and e.other:Class()=="Enchanter") then 
+	if(e.message:findi("hail") and e.other:HasClass(Class.ENCHANTER)) then 
 		e.self:Say("What do you seek mortal?");
 	elseif(e.message:findi("crystal")) then	
 		e.self:Say("Such great power for such a small being. I see that you are strong despite your size, however I fear for our world as I see such potent tools coming together. I fear a great battle is upon us. Enough of my rambling, I do have such a crystal. Bring me some volatile vampyre blood from the Tenebrous Mountains and I will part with it. It has been too long since I have had servants to fetch me such things.");

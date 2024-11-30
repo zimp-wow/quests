@@ -5,7 +5,7 @@ function event_say(e)
 	elseif(e.message:findi("follower of Karana")) then
 		e.self:Say("Yes. I am a follower of Karana, the Rainkeeper. It is He who keeps the plains fertile.");
 	elseif(e.message:findi("blanket")) then
-		e.self:Say(string.format("With the frequent rains, I find my only need is a blanket to keep me warm during the long cold nights. Thank Karana the temple has begun to send young %s to deliver extra blankets.",e.other:Class()));
+		e.self:Say(string.format("With the frequent rains, I find my only need is a blanket to keep me warm during the long cold nights. Thank Karana the temple has begun to send young %s to deliver extra blankets.",e.other:GetClassName());
 	elseif(e.message:findi("karana bandits")) then
 		e.self:Say("The Karana bandits are rogues who operate in the plains. I have heard there are bounties for the bandits. Within the Temple of Thunder in Qeynos, Cleric Gehna offers one for bandit spectacles and Paladin Chesgard offers one for bandit sashes.");
 	end

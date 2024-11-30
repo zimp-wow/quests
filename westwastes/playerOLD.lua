@@ -9,7 +9,7 @@ function event_enter_zone(e)
 end
 
 function event_loot(e)
-	if(e.self:Class() == "Shadow Knight" and e.item:GetID() == 55901 ) then
+	if(e.self:HasClass(Class.SHADOWKNIGHT) and e.item:GetID() == 55901 ) then
 		local qglobals = eq.get_qglobals(e.self);
 		if(qglobals["shadowknight_epic"] == "8")  then
 			if(qglobals["sk_westwastes"] == nil) then

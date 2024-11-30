@@ -35,7 +35,7 @@ function event_enter_zone(e)
 end
 
 function event_loot(e)
-	if(e.self:Class() == "Druid" and e.item:GetID() == 62862) then
+	if(e.self:HasClass(Class.DRUID) and e.item:GetID() == 62862) then
 		local qglobals = eq.get_qglobals(e.self);
 		if(qglobals["druid_epic"] == "7") then
 			if(qglobals["druid_chest_kith"] == nil ) then

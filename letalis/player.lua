@@ -8,7 +8,7 @@ function event_enter_zone(e)
 end
 
 function event_loot(e)
-	if(e.self:Class() == "Magician" and e.item:GetID() == 19087 ) then
+	if(e.self:HasClass(Class.MAGICIAN) and e.item:GetID() == 19087 ) then
 		local qglobals = eq.get_qglobals(e.self);
 		if(qglobals["mage_epic_earth1"] == "1" and qglobals["mage_epic_letalis"] == nil ) then
 			eq.spawn2(283157,0,0,e.self:GetX(),e.self:GetY(),e.self:GetZ(),e.self:GetHeading()); -- #a chest (Epic 1.5)

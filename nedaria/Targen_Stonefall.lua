@@ -1,7 +1,7 @@
 -- items: 62639, 62640, 62603, 62601, 62602, 62641
 function event_say(e)
   local qglobals = eq.get_qglobals(e.other);
-  if (e.other:Class() ~= "Ranger") then
+  if (e.other:HasClass(Class.RANGER)) then
     e.self:Say("I have nothing to say to you, be on about your business.");
   else
     -- If a Ranger hasn't started the 1.5 Pre Epic Quests

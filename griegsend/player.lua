@@ -1,5 +1,5 @@
 function event_loot(e)
-	if(e.self:Class() == "Berserker" and e.item:GetID() == 17137 and e.corpse:GetNPCTypeID() == 163052) then
+	if(e.self:HasClass(Class.BERSERKER) and e.item:GetID() == 17137 and e.corpse:GetNPCTypeID() == 163052) then
 		local qglobals = eq.get_qglobals(e.self);
 		if(qglobals["berserk_epic"] == "9") then
 			if(qglobals["ber_epic_ge"] == nil ) then

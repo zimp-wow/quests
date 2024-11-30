@@ -1,7 +1,7 @@
 -- items: 54239, 52952, 119184, 52949, 52955
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);	
-	if(e.message:findi("hail") and e.other:Class()=="Enchanter") then 
+	if(e.message:findi("hail") and e.other:HasClass(Class.ENCHANTER)) then 
 		e.self:Say("Hello, coercer. Why have you disturbed me?");
 	elseif(e.message:findi("crystal")) then	
 		e.self:Say("My crystal, you say? Now that is something I hold very dear. It is my most beautiful trinket. I must say, I've never had occasion to use it however . . . Actually, I believe I can make you a deal.");	

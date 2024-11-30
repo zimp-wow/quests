@@ -1,6 +1,6 @@
 -- items: 17124, 19633, 19634, 19632, 19631, 19636, 19635, 19637, 20288, 20289, 20295, 20299, 20271, 20274, 20329
 function event_say(e)
-	if(e.other:Class()== "Paladin" and (e.other:Race() == "High Elf" or e.other:Race() == "Half Elf")) then
+	if(e.other:HasClass(Class.PALADIN) and (e.other:Race() == "High Elf" or e.other:Race() == "Half Elf")) then
 		if(e.message:findi("hail")) then
 			e.self:Say("Hail friend. I am Seria Woodwind of the Royal Order of the Koada'Vie, the defenders of Felwithe. I assist young Koada'Dal that are called into Tunare's service as a paladin in learning the ways of the Koada'Vie so that one day they too may bear that noble title. Do you [wish to become a member] of the Koada'Vie?");
 		elseif(e.message:findi("become a member")) then

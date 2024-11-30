@@ -1,7 +1,7 @@
 -- items: 52944, 52948, 52940, 57921, 52952, 119184, 52946, 52957
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);	
-	if(e.message:findi("hail") and e.other:Class()=="Enchanter") then 
+	if(e.message:findi("hail") and e.other:HasClass(Class.ENCHANTER)) then 
 		e.self:Say("Long time have your kind needed us, but never have we been close. Wouldn't you agree? I'm afraid I cannot help you without some token of faith");
 	elseif(e.message:findi("faith")) then	
 		e.self:Say("So long have we retained our distance, we have nearly been forgotten. Despite the fact that this allows us our peace, there are times I wish I could provide my people with the niceties of society. If you could obtain a few items for me I could help you with the knowledge you seek.");

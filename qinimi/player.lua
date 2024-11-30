@@ -1,5 +1,5 @@
 function event_loot(e)
-	if(e.self:Class() == "Druid" and e.item:GetID() == 62870) then
+	if(e.self:HasClass(Class.DRUID) and e.item:GetID() == 62870) then
 		local qglobals = eq.get_qglobals(e.self);
 		if(qglobals["druid_epic"] == "10") then
 			if(qglobals["druid_epic_qin"] == nil ) then

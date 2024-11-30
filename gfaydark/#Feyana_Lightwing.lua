@@ -1,7 +1,7 @@
 -- items: 57917, 52952, 119184, 52958
 function event_say(e)
 	local qglobals = eq.get_qglobals(e.other);	
-	if(e.message:findi("hail") and e.other:Class()=="Enchanter") then 
+	if(e.message:findi("hail") and e.other:HasClass(Class.ENCHANTER)) then 
 		e.self:Say("Greetings. It is not often that your kind has reason to speak to us. You must be seeking something.");
 	elseif(e.message:findi("crystal")) then	
 		e.self:Say("To even be aware of the crystal's existence you must be of some power. I can only assume that if you are repairing it that you have good reason. It is yours if you can do me one small favor.");

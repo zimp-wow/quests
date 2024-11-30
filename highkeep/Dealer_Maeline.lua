@@ -19,7 +19,7 @@ local qglobals = eq.get_qglobals(e.other)
     e.other:AddEXP(10000); --made up live value
     prize_money = 1500;
     urn = 1;
-  elseif (e.other:Class() ~= "Rogue") and item_lib.check_turn_in(e.trade, {item1 = 9446}) then -- Gold-Leafed Urn
+  elseif (~e.other:HasClass(Class.ROGUE)) and item_lib.check_turn_in(e.trade, {item1 = 9446}) then -- Gold-Leafed Urn
     e.self:Emote("refuses to accept the urn. 'This is obviously stolen. Why don't you leave the thieving up to the rogues, since you're not very good at it, and get out of here before you land in real trouble?");
   elseif(e.other:HasClass(Class.ROGUE)) and qglobals["roguepre"] ~= nil and item_lib.check_turn_in(e.trade, {item1 = 9446}) then -- Gold-Leafed Urn
     e.self:Say("Oh, it's you. I'm not falling for that again.");
