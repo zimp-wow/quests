@@ -41,7 +41,7 @@ my $race_change_cost = 10;
 my $sex_change_cost  = 10;
 my $name_change_cost = 10;
 my $gods_change_cost = 10;
-my $pet_name_reset_cost = 5;
+my $pet_name_reset_cost = 2;
 
 sub EVENT_SAY {
     my $sex_word;
