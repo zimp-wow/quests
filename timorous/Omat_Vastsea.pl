@@ -28,6 +28,12 @@ sub EVENT_SAY {
     quest::say("They are in hiding, the few alcoves that I managed to find were shrouded and hidden. Take this signet and find the keeper for each alcove. Show it to him and he will drop the veil. Strike fast and exterminate the camp before he is able to cloak the camp again. Return the talisman to me with proof of the deaths of the three remaining high priests. Once you have done this, I will send you to my brother with my blessings.");
 	quest::summonitem(56010); # Item: Talisman of the Plasmatic Priests
   }
+  if($text=~/I wish to see Natasha/i) {
+    quest::say("So, you are a friend of Natasha's? That is good to see. She is a very wise and gifted woman. I will let her know that you are here to see her.");
+
+    # You should make Natasha immune to damage so people can't exploit this or troll other players, she is only intended as a quest NPC.
+    quest::unique_spawn(96080,0,0,-2198,-11601,76); #Natasha Whitewater
+  }
 }
 
 sub EVENT_ITEM {
