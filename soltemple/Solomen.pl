@@ -9,7 +9,7 @@ quest::say("I have worked to chronicle everything from the beginnings of magic t
 if($text=~/what wizards/i){
 quest::say("Unfortunately, I don't have time to speak of such things right now.  But I could use your help since you are here.  I have here an envelope that I need delivered to one Camin.  You can find him near the wizard tower in the city of Erudin.  He is a sage like myself whose knowledge rivals my own.  Do you [agree] to undertake my task?");
 }
-if($text=~/i agree/i){
+if($text=~/agree/i){
 quest::say("Here you are, then.  Good luck on your journey.");
 quest::summonitem("18088");
 }
