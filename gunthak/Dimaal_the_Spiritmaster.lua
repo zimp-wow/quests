@@ -2,7 +2,7 @@
 
 -- Variables
 
-local event_started = 0;
+local event_started = false;
 local wave = 0;
 local difficulty = 0;
 
@@ -47,18 +47,18 @@ local event_mobs  = {
 
 function event_spawn(e)
     wave = 0;
-    event_started = 0;
+    event_started = false;
 end
 
 -- Say Block
 function event_say(e)
-    if(e.message:findi("Hail")) then
+    if e.message:findi("Hail") then
         e.self:Say("Ahh a visitor, I see? Welcome to the Cave of the Damned. I am the keeper of these caves, and I have been charged with holding the spiritual [" .. eq.say_link("What manifestations?", false, "manifestations") .. "] at bay. Many bloody battles have been fought on the shores of Gunthak, many more battles will be fought here.");
-    elseif(e.message:findi("manifestations")) then
+    elseif e.message:findi("manifestations") then
         e.self:Say("Most of the spirits that perish on the beach move on to the next world, though a few remain bound to their ships or comrades and remain on the shore. Every once in a great while, however, a spirit breaks its bond to the beach and is drawn to this cave. There is magic in this cave, dark magic. The spirits that find their way here draw power from the magic in the caves. I assure that the spirits that find their way here remain contained in the cave, along with their [" .. eq.say_link("What treasures?", false, "treasures") .. "].");
-    elseif(e.message:findi("treasures")) then
+    elseif e.message:findi("treasures") then
         e.self:Say("I figured that would pique your interest. A few of the spirits here managed to retain a portion of their material possessions. If you wish, I can channel the spirits into a form where you may request their treasures. Of course, there is a [" .. eq.say_link("What is the price?", false, "price") .. "].");
-    elseif(e.message:findi("price")) then
+    elseif e.message:findi("price") then
         e.self:Say("Finger bones. There is strong magic in the bones of our fingers, and I use such bones to summon the spirits, as well as keep them bound to this cave. Bring me four identical finger bones, the better condition the bones are in, the stronger the spirits I call will be.");
     end
 end
@@ -67,22 +67,22 @@ end
 function event_trade(e)
     local item_lib = require("items");
 
-    if (event_started == 0) then
-        if (item_lib.check_turn_in(e.trade, {item1 = 56001,item2 = 56001,item3 = 56001,item4 = 56001})) then -- Cracked Finger Bone x4 (Easy)
+    if not event_started then
+        if item_lib.check_turn_in(e.trade, {item1 = 56001,item2 = 56001,item3 = 56001,item4 = 56001}) then -- Cracked Finger Bone x4 (Easy)
             e.self:Say("'The spirits shall come. Ready yourselves.'");
-            event_started = 1;
+            event_started = true;
             wave = 1;
             difficulty = 1;
             eq.set_timer('Event', 6 * 1000); -- 6s
-        elseif (item_lib.check_turn_in(e.trade, {item1 = 56002,item2 = 56002,item3 = 56002,item4 = 56002})) then -- Broken Finger Bone x4 (Medium)
+        elseif item_lib.check_turn_in(e.trade, {item1 = 56002,item2 = 56002,item3 = 56002,item4 = 56002}) then -- Broken Finger Bone x4 (Medium)
             e.self:Say("'The spirits shall come. Ready yourselves.'");
-            event_started = 1;
+            event_started = true;
             wave = 1;
             difficulty = 2;
             eq.set_timer('Event', 6 * 1000); -- 6s
-        elseif (item_lib.check_turn_in(e.trade, {item1 = 56003,item2 = 56003,item3 = 56003,item4 = 56003})) then -- Pristine Finger Bone x4 (Hard)
+        elseif item_lib.check_turn_in(e.trade, {item1 = 56003,item2 = 56003,item3 = 56003,item4 = 56003}) then -- Pristine Finger Bone x4 (Hard)
             e.self:Say("'The spirits shall come. Ready yourselves.'");
-            event_started = 1;
+            event_started = true;
             wave = 1;
             difficulty = 3;
             eq.set_timer('Event', 6 * 1000); --6s
@@ -95,18 +95,18 @@ end
 
 -- Timers (in ms)
 function event_timer(e)
-    if (e.timer == "Event") then
+    if e.timer == "Event" then
         for difficulty_level, mobs in pairs(event_mobs) do
-            if(difficulty == difficulty_level) then
+            if difficulty == difficulty_level then
                 for n = 1, 9 do
-                    if(wave == 4) then -- Wave = 4 Spawn 8 trash and one named
+                    if wave == 4 then -- Wave = 4 Spawn 8 trash and one named
                         spawn_mob(mobs[n],n);
-                    elseif(wave <= 3 and n <= 8)  then -- Wave <=3 only spawn first 8 mobs (No Name)
+                    elseif wave <= 3 and n <= 8  then -- Wave <=3 only spawn first 8 mobs (No Name)
                         spawn_mob(mobs[n],n);
                     end
                 end
 
-                if(wave <= 3) then
+                if wave <= 3 then
                     eq.set_timer('Event', 10 * 60 * 1000) -- 10 minutes between waves
                     wave = wave + 1;
                 else
@@ -124,12 +124,11 @@ end
 
 -- Receive signal from another NPC
 function event_signal(e)
-    if(e.signal == 1) then
+    if e.signal == 1 then
         e.self:Say("You seem to have this situation under control. I will depart now. Best of luck.");
         eq.depop_with_timer();
-    elseif(e.signal == 2) then
+    elseif e.signal == 2 then
         e.self:Say("It seems one of the spirits has fled, I am afraid I must leave to meditate so the spirit does not make its way through my defenses.");
-        eq.stop_timer(e.timer)
         eq.depop_with_timer();
     end
 end
