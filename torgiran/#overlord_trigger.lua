@@ -8,24 +8,22 @@ function event_spawn(e)
 end
 
 function event_timer(e)
-	if e.timer == 'event' then
-		eq.stop_timer('event');
+	eq.stop_timer(e.timer);
+	if e.timer == "event" then
 		eq.unique_spawn(226072,0,0,-1276,1085,-141.62,0);	-- NPC: #Taskmaster_Luga
 		eq.unique_spawn(226071,0,0,-1316,1073,-144.1,0);	-- NPC: #Overlord_Ngrub
-	elseif e.timer == 'resetcounter' then
-		eq.stop_timer('resetcounter');
+	elseif e.timer == "resetcounter" then
 		wave_counter = 0;
 	end
 end
 
 function event_signal(e)
-	-- eq.debug("#overlord_trigger, signal id: ["..e.signal.."]");
 	if e.signal == 1 then
 		wave_counter = wave_counter + 1;
 		if wave_counter == 21 and not eq.get_entity_list():IsMobSpawnedByNpcTypeID(226207) and not eq.get_entity_list():IsMobSpawnedByNpcTypeID(226206) then
     		eq.unique_spawn(226207,0,0,-1276,1085,-141.62,0);	-- NPC: Taskmaster_Lugald_Brokenskull
       		eq.depop(226072);									-- NPC: #Taskmaster_Luga
-			eq.set_timer('resetcounter', 3 * 1000);
+			eq.set_timer("resetcounter", 3 * 1000);
    		end
 	end
 end
