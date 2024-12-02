@@ -440,41 +440,34 @@ sub ProcessSlayerCredit {
         },
     );
 
-    my @tiers = (500, 1000, 5000, 10000, 100000);
-
-    my $race = $npc->GetRace();
-    my $race_key = $client->AccountID() . "-" . $race . "-kill-count";
-    my $race_data = (quest::get_data($race_key) || 0) + 1;
-
-    quest::set_data($race_key, $race_data);
-
-    my %category_data;
+    my @tiers = (100, 1000, 10000, 100000, 1000000);
+    my $this_race = $npc->GetBaseRace(); # Get the race ID of the current NPC
 
     foreach my $category (keys %creature_data) {
-        next unless grep { $_ == $race } @{$creature_data{$category}->{race_ids}};
+        my $data = $creature_data{$category};
 
-        my $total = 0;
-        
-        foreach my $race_id (@{$creature_data{$category}->{race_ids}}) {
-            my $race_key = $client->AccountID() . "-" . $race_id . "-kill-count";
-            $total += quest::get_data($race_key) || 0;
-        }
-        
-        $category_data{$category} = $total;
+        # Check if $this_race is in the race_ids for this category
+        if (grep { $_ == $this_race } @{$data->{race_ids}}) {
+            # Sum all the kill counts for the races in this category
+            my $sum = 0;
+            foreach my $race_id (@{$data->{race_ids}}) {
+                $sum += $client->GetKillCount($race_id);
+            }
 
-        next if $total == 0;
+            # Perform actions for each tier that $sum is greater than or equal to
+            for my $tier_index (0 .. $#tiers) {
+                my $tier = $tiers[$tier_index];
 
-        my $eligible_tier = -1;
-        for (my $i = 0; $i < @tiers; $i++) {
-            $eligible_tier = $i if $total >= $tiers[$i];
-        }
-        
-        if ($eligible_tier >= 0) {
-            for (my $title_offset = $eligible_tier; $title_offset >= 0; $title_offset--) {
-                my $title_flag = ($creature_data{$category}->{title_flags} * 10) + $title_offset + 1;
-                plugin::AddTitleFlag($title_flag, $client);
+                if ($sum >= $tier) {
+                    my $title_set = (($data->{title_flags} * 10) + ($tier_index + 1));
+
+                    # Replace this with the actual action you want to perform
+
+                    if (!$client->CheckTitle($title_set)) {
+                        plugin::AddTitleFlag($title_set, $client);
+                    }
+                }
             }
         }
     }
-
 }

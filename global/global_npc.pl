@@ -189,5 +189,6 @@ sub EVENT_KILLED_MERIT {
                 }
             }
         }
+        plugin::ProcessSlayerCredit($client, $npc, $entity_list);
     }
 }
