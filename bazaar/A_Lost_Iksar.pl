@@ -12,6 +12,16 @@ my @target_list = ('Lord Nagafen',
                    'Lady Vox');
 
 sub EVENT_SAY {
+    my $item1_flag = $client->GetBucket("$item1-flag") || 0;
+    my $item2_flag = $client->GetBucket("$item2-flag") || 0;
+    my $item3_flag = $client->GetBucket("$item3-flag") || 0;
+    my $item4_flag = $client->GetBucket("$item4-flag") || 0;
+    
+    foreach my $target (@target_list) {
+        quest::debug("Explorer: $target");
+        plugin::SetSubflag($client, $stage_key, $target, 1);
+    }
+
     if ($text=~/hail/i) {
         plugin::ConvertFlags($client);
         if (plugin::is_stage_complete($client, $stage_key)) {
@@ -30,11 +40,6 @@ sub EVENT_SAY {
             plugin::list_stage_prereq($client, $stage_key);            
         }
         if (($text =~/explorer/i)){
-            my $item1_flag = $client->GetBucket("$item1-flag") || 0;
-            my $item2_flag = $client->GetBucket("$item2-flag") || 0;
-            my $item3_flag = $client->GetBucket("$item3-flag") || 0;
-            my $item4_flag = $client->GetBucket("$item4-flag") || 0;
-
             my $item1_link = quest::varlink($item1);
             my $item2_link = quest::varlink($item2);
             my $item3_link = quest::varlink($item3);
@@ -122,6 +127,7 @@ sub EVENT_ITEM {
 
         if ($item1_flag && $item2_flag && $item3_flag && $item4_flag) {            
             foreach my $target (@target_list) {
+                quest::debug("Explorer: $target");
                 plugin::SetSubflag($client, $stage_key, $target, 1);
             }
 
