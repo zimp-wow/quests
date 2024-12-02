@@ -1,8 +1,8 @@
 -- mobs in Gunthak that potentially spawn Erudite Spirits for Cleric and Paladin quests
 
 -- set spawn and NPC types for quest spirits
-cleric_spawn, cleric_mob = 1046892, 224338;
-paladin_spawn, paladin_mob = 1047209, 224008;
+cleric_spawn, cleric_mob = 46892, 224338;
+paladin_spawn, paladin_mob = 47209, 224008;
 
 function event_death_complete(e)
     local result = math.random(100);

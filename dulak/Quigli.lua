@@ -1,29 +1,34 @@
 -- Monk Epic 1.5
+local disabled = true; -- Disabling for omens (epics) cannot reference perl expansion vars from lua.
 
 function event_say(e)
-	if e.other:HasClass(Class.MONK) then
-		local data_bucket = ("Epic-Monk-"..e.other:CharacterID());
-		if eq.get_data(data_bucket) ~= "" then -- Has Started
-			local temp = eq.get_data(data_bucket);
-			s = eq.split(temp, ',');
+	if disabled then
+		if e.other:HasClass(Class.MONK) then
+			local data_bucket = ("Epic-Monk-"..e.other:CharacterID());
+			if eq.get_data(data_bucket) ~= "" then -- Has Started
+				local temp = eq.get_data(data_bucket);
+				s = eq.split(temp, ',');
 
-			local epic_pre_onefive	= tonumber(s[1]);
-			local epic_onefive		= tonumber(s[2]);		
-			local epic_two			= tonumber(s[3]);
-			local epic_twofive		= tonumber(s[4]);
+				local epic_pre_onefive	= tonumber(s[1]);
+				local epic_onefive		= tonumber(s[2]);		
+				local epic_two			= tonumber(s[3]);
+				local epic_twofive		= tonumber(s[4]);
 
-			if epic_onefive == 10 and e.message:findi("hail") then
-				e.other:Message(MT.NPCQuestSay, "Quigli says 'I have nothing for you unless say you have the [right price]. . .'");
-			elseif epic_onefive == 10 and e.message:findi("right") then
-				e.other:Message(MT.NPCQuestSay, "Quigli says 'I have just placed my 'ands on this 'ere book and I'd be willin to part with it for a mighty price else you could try and [defeat me crew].'");
-			elseif epic_onefive == 10 and e.message:findi("defeat") then
-				e.other:Message(MT.NPCQuestSay, "Quigli says 'Good. . .good. I 'aven't 'ad much change to stretch me arms in a while.'");
-				make_attackable(e.self, true);
-				eq.set_timer("adds", 5 * 1000); -- 5 Sec
-				eq.set_timer("depop",15 * 60 *1000); -- 15 Minutes
-				e.self:AddToHateList(e.other,1);
+				if epic_onefive == 10 and e.message:findi("hail") then
+					e.other:Message(MT.NPCQuestSay, "Quigli says 'I have nothing for you unless say you have the [right price]. . .'");
+				elseif epic_onefive == 10 and e.message:findi("right") then
+					e.other:Message(MT.NPCQuestSay, "Quigli says 'I have just placed my 'ands on this 'ere book and I'd be willin to part with it for a mighty price else you could try and [defeat me crew].'");
+				elseif epic_onefive == 10 and e.message:findi("defeat") then
+					e.other:Message(MT.NPCQuestSay, "Quigli says 'Good. . .good. I 'aven't 'ad much change to stretch me arms in a while.'");
+					make_attackable(e.self, true);
+					eq.set_timer("adds", 5 * 1000); -- 5 Sec
+					eq.set_timer("depop",15 * 60 *1000); -- 15 Minutes
+					e.self:AddToHateList(e.other,1);
+				end
 			end
 		end
+	else
+		e.self:Say("Go Away, I am busy!");
 	end
 end
 
