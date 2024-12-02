@@ -202,11 +202,26 @@ function eq.ExpHelper(level, percent, range)
 
 end
 
+-- os.getenv fixes the http luarocks proxy check by returning nil
+function os.getenv(o)
+    return nil
+end
+
 -- https://stackoverflow.com/questions/656199/search-for-an-item-in-a-lua-list
 function eq.Set (list)
 	local set = {}
 	for _, l in ipairs(list) do set[l] = true end
 	return set
+end
+
+function eq.split(s, delimiter)
+
+    result = {};
+    
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
 end
 
 function eq.seconds(duration_str)
@@ -216,4 +231,26 @@ function eq.seconds(duration_str)
 	local m = duration_str:match("(%d+)m") or 0
 	local s = duration_str:match("(%d+)s") or 0
 	return s + (m * 60) + (h * 3600) + (d * 86400) + (w * 604800)
+end
+
+function eq.SecondsToClockHours(seconds)
+	local days = math.floor(seconds / 86400)
+	seconds = seconds - days * 86400
+	local hours = math.floor(seconds / 3600 )
+	seconds = seconds - hours * 3600
+	local minutes = math.floor(seconds / 60)
+	seconds = seconds - minutes * 60
+
+	return string.format("%d hours, %d minutes, %d seconds.",hours,minutes,seconds)
+end
+
+function eq.SecondsToClockDays(seconds)
+	local days = math.floor(seconds / 86400)
+	seconds = seconds - days * 86400
+	local hours = math.floor(seconds / 3600 )
+	seconds = seconds - hours * 3600
+	local minutes = math.floor(seconds / 60)
+	seconds = seconds - minutes * 60
+
+	return string.format("%d days, %d hours, %d minutes, %d seconds.",days,hours,minutes,seconds)
 end
