@@ -112,6 +112,11 @@ sub EVENT_CONNECT {
 	}
 }
 
+sub EVENT_DISCONNECT {
+    # Removes invulnerability effects when disconnecting from the server.
+    $client->BuffFadeByEffect(40);
+}
+
 sub EVENT_POPUPRESPONSE {
     plugin::check_tutorial_popup_response($popupid, $client);  
        
