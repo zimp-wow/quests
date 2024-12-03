@@ -13,7 +13,7 @@ function event_say(e)
         elseif qglobals["grisk"] ~= nil and qglobals["grisk"] == "2" and grisk_2 == "" then
             e.self:Say("You're late! Never mind. Prepare yourself. I do not trust these magics T`soma has constructed.");
             e.other:SetBucket("grisk_2", "1","H1");
-            eq.unique_spawn(38174,0,0,1630,2137,-54,270);  -- #Fleshless_Servant (Luggald Rumors Version)
+            eq.unique_spawn(38173,0,0,1630,2137,-54,270);  -- #Fleshless_Servant (Luggald Rumors Version)
         else
             e.self:Emote("Can't you see I'm busy right now!?");
         end
