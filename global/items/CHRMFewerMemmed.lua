@@ -14,7 +14,7 @@ local memmed_table = {  [1] = {0,1},
 }
 
 function event_scale_calc(e)
-    if not enable_melee_bypass and (e.owner:HasClass() == Class.WARRIOR or e.owner:HasClass() == Class.MONK or e.owner:HasClass() == Class.ROGUE or e.owner:HasClass() == Class.BERSERKER) then -- Notes show it doesn't work for pure melee classes
+    if not enable_melee_bypass and (e.owner:HasClass(Class.WARRIOR) or e.owner:HasClass(Class.MONK) or e.owner:HasClass(Class.ROGUE) or e.owner:HasClass(Class.BERSERKER)) then -- Notes show it doesn't work for pure melee classes
         e.self:SetScale(0);
     else
         for id, v in pairs(memmed_table) do
