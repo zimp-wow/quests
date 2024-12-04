@@ -29,9 +29,13 @@ function event_trade(e)
 	elseif qglobals["tsoma"] ~= nil and qglobals["tsoma"] == "3" and item_lib.check_turn_in(e.trade, {item1 = 63015}) then -- Item: Fleshless Heart and flag
 		e.self:Say("Apparently our ignorance exceeded our luck. Ah well, I'm sure the Prince of Hate will find some other punishment for our folly. Well, since you too chance his anger I suppose you deserve a reward. Here, take this...though I'm not sure how much use it will be against a god.");
 		if e.other:HasClass() == Class.WARRIOR or e.other:HasClass() == Class.PALADIN or e.other:HasClass() == Class.RANGER or e.other:HasClass() == Class.SHADOWKNIGHT or e.other:HasClass() == Class.BARD or e.other:HasClass() == Class.ROGUE then
-			e.other:QuestReward(e.self,0,0,0,0,63052,5000); -- Item: Heartspike
+			e.other:SummonItem(63052); -- Item: Heartspike
+			e.other:Ding();
+			e.other:AddEXP(5000);
 		else
-			e.other:QuestReward(e.self,0,0,0,0,63053,5000); -- Item: Fleshweaver's Mark
+			e.other:SummonItem(63053); -- Item: Heartspike
+			e.other:Ding();
+			e.other:AddEXP(5000);
 		end
 		eq.delete_global("tsoma"); -- clean up qglobal at quest completion
 	end
