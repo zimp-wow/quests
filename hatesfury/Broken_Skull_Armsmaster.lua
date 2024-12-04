@@ -1,6 +1,6 @@
 -- Berserker Pre Epic 1.5
 
-local epic_disabled = true;
+local epic_disabled = true; -- Disabling for omens (epics) cannot reference perl expansion vars from lua.
 
 local weakened = false;
 local client = nil;
