@@ -21,8 +21,12 @@ sub EVENT_SAY {
     } elsif (($faction < 3) && ($ulevel < 50)) { # Warmly and lvl<50
       quest::say("What to do, what to do.. You've served the Di'zok well, young one but you are not yet experienced enough to wear the Signet of the Di'zok. Come back when you've seen a bit more of the world, and the ring shall be yours.");
     } elsif (($faction < 3) && ($ulevel>=50)) { # Warmly and lvl>50
-      quest::say("Indeed you do my friend, indeed you do! Walk among us in safety, wear this ring as a symbol of your service to our cause. Continue your efforts in our war on the goblins, and your rewards shall increase. Return to me your ring, along with the head of the Drogan Warlord Skargus, and I'll give you an even greater badge of honor. Good day to you, servant of the Sarnak.");
-      quest::summonitem(5728); # Di'zok Signet of Service 
+      if (plugin::check_hasitem($client, 5728)) { # they already have the ring.
+        quest::say("Stop wasting time and get me the head of Skargus!");
+      } else {
+        quest::say("Indeed you do my friend, indeed you do! Walk among us in safety, wear this ring as a symbol of your service to our cause. Continue your efforts in our war on the goblins, and your rewards shall increase. Return to me your ring, along with the head of the Drogan Warlord Skargus, and I'll give you an even greater badge of honor. Good day to you, servant of the Sarnak.");
+        quest::summonitem(5728); # Di'zok Signet of Service 
+      }
     }
   }
 }
