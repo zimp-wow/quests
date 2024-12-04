@@ -1,8 +1,8 @@
 -- Monk Epic 1.5
-local disabled = true; -- Disabling for omens (epics) cannot reference perl expansion vars from lua.
+local epic_disabled = true; -- Disabling for omens (epics) cannot reference perl expansion vars from lua.
 
 function event_say(e)
-	if disabled then
+	if not epic_disabled then
 		if e.other:HasClass(Class.MONK) then
 			local data_bucket = ("Epic-Monk-"..e.other:CharacterID());
 			if eq.get_data(data_bucket) ~= "" then -- Has Started
@@ -10,7 +10,7 @@ function event_say(e)
 				s = eq.split(temp, ',');
 
 				local epic_pre_onefive	= tonumber(s[1]);
-				local epic_onefive		= tonumber(s[2]);		
+				local epic_onefive		= tonumber(s[2]);
 				local epic_two			= tonumber(s[3]);
 				local epic_twofive		= tonumber(s[4]);
 
