@@ -101,8 +101,7 @@ while (my $row = $select_query->fetchrow_hashref()) {
     $base_data->{augrestrict}   = 1;    
     $base_data->{slots}         = $row->{slots} & $allowed_slots_mask;
     $base_data->{itemtype}      = 54;
-
-    # wip here
+    $base_data->{herosforgemodel} = 0;
 
     # Construct dynamic SQL for insertion
     my $columns = join(", ", map { "`$_`" } keys %$base_data);  # Add backticks around column names
