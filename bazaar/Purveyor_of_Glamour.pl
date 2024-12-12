@@ -21,7 +21,7 @@ sub EVENT_ITEM {
 		 $sth->execute("'" . $item_name . "' Glamour-Stone");
 		 if (my $row = $sth->fetchrow_hashref()) {                
 			   if ($total_money >= (5000 * 1000)) {
-				  $total_money -= (5000 * 1000);
+				  $total_money -= (5000 * 1000);a
 				  plugin::Whisper("Perfect! Here, I had a Glamour-Stone almost ready. I'll just need to attune it to your $item_name! Enjoy!");
 				  $client->SummonItem($row->{id});
 				  
@@ -66,14 +66,18 @@ sub EVENT_SAY {
 
    if($text=~/hail/i) {
       if (!$client->GetBucket("Tawnos")) {
-         $response = "Hail, $clientName. You may refer to me as the Purveyor of Glamour, master artificer and enchanter! I am still setting up my facilities here in the Bazaar, but I can already offer some $link_services to eager customers.";
+         $response = "Hail, $clientName. You may refer to me as the Purveyor of Glamour, master artificer and enchanter! 
+		 			  I am still setting up my facilities here in the Bazaar, but I can already offer some $link_services to eager customers.";
       } else {
          $response = "Welcome back, $clientName. What can I $link_services_2 today? ";
       }    
    }
 
    elsif ($text eq "link_services") {
-      $response = "Primarily, I can enchant a $link_glamour_stone for you. A speciality of my own invention, these augments can change the appearance of your equipment to mimic another item that you posess. I do charge a nominal fee, a mere 5000 platinum coins, for this service AND more importantly, the item you want to glamour WILL be sacrificed. I aim to offer $link_custom_work for my most discerning customers soon, too.";
+      $response = "Primarily, I can enchant a $link_glamour_stone for you. A speciality of my own invention, these augments can change the 
+	  			   appearance of your equipment to mimic another item that you posess. I do charge a nominal fee, a mere 5000 platinum coins, 
+				   for this service AND more importantly, the item you want to glamour WILL be sacrificed. 
+				   I aim to offer $link_custom_work for my most discerning customers soon, too.";
       $client->SetBucket("Tawnos", 1);
    }
 
@@ -82,7 +86,9 @@ sub EVENT_SAY {
    }
 
    elsif ($text eq "link_custom_work") {
-      $response = "I can produce a Glamour-Stone of a remarkable and unique nature, based upon whatever item my muse conjures. There is no predicting what illusion may be produced! I will only embark upon this artistic work in exchange for $link_echo_of_memory, however. Would you like me to produce a $link_random_ornament for you?";
+      $response = "I can produce a Glamour-Stone of a remarkable and unique nature, based upon whatever item my muse conjures. 
+	  			   There is no predicting what illusion may be produced! I will only embark upon this artistic work in exchange 
+				   for two $link_echo_of_memory, however. Would you like me to produce a $link_random_ornament for you?";
    }
 
    elsif ($text eq "link_echo_of_memory") {
@@ -95,21 +101,10 @@ sub EVENT_SAY {
 		if ($eom_available < 2) {
 			$response = "I'm sorry, $clientName. You don't have enough Echo of Memory, please return when you have enough to pay me.";
 		} else {
-			# Deserialize the existing list of glamour IDs
-			# my @glamour_list = DeserializeList($client->GetBucket("random_glamours"));
-			# my %glamour_hash = map { $_ => 1 } @glamour_list;  # Convert list to hash for quick lookup
-			my $random_result;
-
-			
-			$random_result = get_random_glamour();
-
+			my $random_result = get_random_glamour();
 
 			if ($random_result && plugin::SpendEOM($client, 2)) {
 				$client->SummonItem($random_result);
-
-				# Add the new glamour ID to the list and store it back into the bucket
-				# push(@glamour_list, $random_result);
-				# $client->SetBucket("random_glamours", SerializeList(@glamour_list));
 			}
 		}
 	}
