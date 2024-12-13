@@ -15,9 +15,9 @@ sub RL_GetTaskList {
 sub RL_GetZoneNPCs {
 	my $injured_typeid = 2000914;
 
-	return ("crushbone", (
-		($injured_typeid, 145, -572, 3, 197)
-	));
+	return {"crushbone", [
+		[$injured_typeid, 145, -572, 3, 197]
+	]};
 }
 
 sub RL_GetDZName {
@@ -57,9 +57,6 @@ sub RL_StartTask {
 
 	my $dz = $client->CreateExpedition($task_zone, $dz_version, 604800, $dz_name, 0, 1);
 	if(defined $dz) {
-		my $bucket_key = $client->CharacterID()."-roguelike-needs-populating";
-		quest::set_data($bucket_key, 1);
-
 		$dz->AddReplayLockout(2 * 60 * 60);
 		$dz->SetSafeReturn($zonesn, $client->GetX(), $client->GetY(), $client->GetZ(), $client->GetHeading());
 		$client->MovePCInstance($dz->GetZoneID(), $dz->GetInstanceID(), quest::GetZoneSafeX($dz->GetZoneID()), quest::GetZoneSafeY($dz->GetZoneID()), quest::GetZoneSafeZ($dz->GetZoneID), quest::GetZoneSafeHeading($dz->GetZoneID));
@@ -77,32 +74,25 @@ sub RL_PrepareZone {
 	}
 
 	my $zone_name = $dz->GetZoneName();
-	my %zone_npcs = RL_GetZoneNPCs();
-	#my (@npclist) = $zone_npcs{$zone_name};
-	#if(! defined $npclist) {
-	#	quest::debug("Nothing to prepare for ".$zone_name);
-	#	return;
-	#}
-	#
-	my @npclist = (($injured_typeid, 145, -572, 3, 197));
-
-	##TODO This may not be durable enough if something causes the zone to depop
-	my $bucket_key = $client->CharacterID()."-roguelike-needs-populating";
-	my $bucket_value = quest::get_data($bucket_key);
-	if(! defined $bucket_value || $bucket_value != 1) {
-		quest::debug("Already prepared");
+	my $zone_npcs = RL_GetZoneNPCs();
+	my $npclist = $zone_npcs->{$zone_name};
+	if(! defined $npclist) {
+		quest::debug("Nothing to prepare for ".$zone_name);
+		return;
+	}
+	
+	my @idlist = ($npclist->[0]->[0]);
+	my $spawned = quest::isnpcspawned(@idlist);
+	if($spawned) {
+		quest::debug("Detected npcs are already spawned");
 		return;
 	}
 
 	quest::debug("Spawning npcs");
-
-	foreach my $npc(@npclist) {
+	foreach my $npc(@{$npclist}) {
 		my ($type_id, $x, $y, $z, $heading) = @{$npc};
-		quest::debug($type_id);
 		quest::spawn2($type_id, $0, 0, $x, $y, $z, $heading);
 	}
-
-	#quest::delete_data($bucket_key);
 }
 
 sub RL_GetActiveTask {
