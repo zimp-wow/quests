@@ -49,6 +49,8 @@ sub EVENT_ENTERZONE {
             }
         }
     }
+
+    plugin::RL_PrepareZone($client, $instanceid);
 }
 
 sub EVENT_EQUIP_ITEM_CLIENT {
