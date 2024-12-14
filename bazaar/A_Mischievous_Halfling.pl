@@ -7,6 +7,30 @@ sub EVENT_SAY {
     if ($text =~ /Echo of Memory/i) {
         if (plugin::SpendEOM($client, 2)) {
             GetRandomResult();
+            my $gamble_total = ($client->GetBucket("gambler_count") || 0) + 1;
+            $client->SetBucket("gambler_count", $gamble_total);
+
+            if ($gamble_total > 10) {
+                plugin::AddTitleFlag(666);
+            }
+            if ($gamble_total > 100) {
+                plugin::AddTitleFlag(667);
+            }
+            if ($gamble_total > 1000) {
+                plugin::AddTitleFlag(668);
+            }
+            if ($gamble_total > 2500) {
+                plugin::AddTitleFlag(669);
+            }
+            if ($gamble_total > 5000) {
+                plugin::AddTitleFlag(670);
+            }
+            if ($gamble_total > 7500) {
+                plugin::AddTitleFlag(671);
+            }
+            if ($gamble_total > 10000) {
+                plugin::AddTitleFlag(674);
+            }            
         } else {
             quest::say("You don't have enough Echoes of Memory, dear friend. Come back when you do!");
         }
@@ -19,8 +43,32 @@ sub EVENT_ITEM {
         #quest::debug("Key: $key, Value: $value");
     }
 
-    if (plugin::CheckCashPayment(5000000, $copper, $silver, $gold, $platinum)) { # 5000 Platinum
-        GetRandomResult();    
+    if (plugin::CheckCashPayment(5000000, $copper, $silver, $gold, $platinum)) {
+        GetRandomResult();
+        my $gamble_total = ($client->GetBucket("gambler_count") || 0) + 1;
+        $client->SetBucket("gambler_count", $gamble_total);
+
+        if ($gamble_total > 10) {
+            plugin::AddTitleFlag(666);
+        }
+        if ($gamble_total > 100) {
+            plugin::AddTitleFlag(667);
+        }
+        if ($gamble_total > 1000) {
+            plugin::AddTitleFlag(668);
+        }
+        if ($gamble_total > 2500) {
+            plugin::AddTitleFlag(669);
+        }
+        if ($gamble_total > 5000) {
+            plugin::AddTitleFlag(670);
+        }
+        if ($gamble_total > 7500) {
+            plugin::AddTitleFlag(671);
+        }
+        if ($gamble_total > 10000) {
+            plugin::AddTitleFlag(674);
+        }
     } else {
         quest::say("You'll need to give me enough money for the casino ticket!");
     }
