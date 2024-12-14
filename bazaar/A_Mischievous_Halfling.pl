@@ -69,6 +69,10 @@ sub EVENT_ITEM {
         if ($gamble_total > 10000) {
             plugin::AddTitleFlag(674);
         }
+
+        if (int(rand(10000)) == 0) {
+            plugin::AddTitleFlag(677);
+        }
     } else {
         quest::say("You'll need to give me enough money for the casino ticket!");
     }
