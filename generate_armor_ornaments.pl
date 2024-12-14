@@ -45,7 +45,7 @@ unless ($dbh) {
     die "Failed to connect to database.";
 }
 
-# Fetch all data from row with id 66953
+# Fetch all data from row with id 700000 (if needed)
 my $base_data_query = $dbh->prepare("SELECT * FROM items WHERE id = 700000");
 $base_data_query->execute();
 my $base_data = $base_data_query->fetchrow_hashref();
@@ -71,7 +71,8 @@ SQL
 
 $select_query->execute();
 
-my $id_offset = 910000;
+my $id_offset = 910000;  # Starting ID for new items
+my $current_id = $id_offset;
 
 my $allowed_slots_mask = 4 | 128 | 512 | 4096 | 131072 | 262144 | 524288;
 
@@ -89,11 +90,11 @@ while (my $row = $select_query->fetchrow_hashref()) {
         $formatted_name = "'" . $row->{Name} . "'";
     }
 
-    $new_name = $formatted_name . $suffix;
+    my $new_name = $formatted_name . $suffix;
 
     print "Creating item with Name: $new_name\n";
 
-    $base_data->{id}            = $row->{id} + $id_offset;
+    $base_data->{id}            = $current_id;  # Use incremented ID
     $base_data->{Name}          = $new_name;    
     $base_data->{icon}          = $row->{icon};
     $base_data->{color}         = $row->{color};
@@ -108,7 +109,7 @@ while (my $row = $select_query->fetchrow_hashref()) {
     my $placeholders = join(", ", map { "?" } keys %$base_data);
     my $values = [values %$base_data];
 
-    my $insert_sql = "REPLACE INTO items ($columns) VALUES ($placeholders)";
+    my $insert_sql = "INSERT INTO items ($columns) VALUES ($placeholders)";
 
     # Prepare the dynamic SQL statement and execute
     my $insert = $dbh->prepare($insert_sql);
@@ -119,6 +120,8 @@ while (my $row = $select_query->fetchrow_hashref()) {
         print "Failed to insert Name: $new_name\n";  # <-- Add this line to output the problematic name
     }
     $insert->finish();
+
+    $current_id++;  # Increment the ID for the next item
 }
 
 $select_query->finish();
