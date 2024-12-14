@@ -21,7 +21,7 @@ sub EVENT_ITEM {
 		 $sth->execute("'" . $item_name . "' Glamour-Stone");
 		 if (my $row = $sth->fetchrow_hashref()) {                
 			   if ($total_money >= (5000 * 1000)) {
-				  $total_money -= (5000 * 1000);a
+				  $total_money -= (5000 * 1000);
 				  plugin::Whisper("Perfect! Here, I had a Glamour-Stone almost ready. I'll just need to attune it to your $item_name! Enjoy!");
 				  $client->SummonItem($row->{id});
 				  
