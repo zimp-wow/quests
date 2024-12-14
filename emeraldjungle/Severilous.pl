@@ -3,7 +3,7 @@ sub EVENT_DEATH_COMPLETE {
 
     my $killer = $entity_list->GetClientByID($killer_id);   
 
-    if ($killer && plugin::IsSeasonal($killer)) {
+    if ($killer && int(rand(100)) == 0) {
         plugin::AddTitleFlag(200);
     }
 }

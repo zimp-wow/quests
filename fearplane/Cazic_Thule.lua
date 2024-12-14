@@ -24,7 +24,7 @@ function event_death_complete(e)
 	-- spawn fading ally
 
     local killer = eq.get_entity_list():GetClientByID(e.killer_id)
-    if killer and killer:GetLevel() <= 60 then
+    if killer and math.random(1, 100) == 1 then
         killer:CastToClient():SetBucket('flag-semaphore', '204')
         killer:Signal(100)
     end
