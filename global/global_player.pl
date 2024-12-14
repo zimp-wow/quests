@@ -226,7 +226,7 @@ sub EVENT_DISCOVER_ITEM {
     my $name = $client->GetCleanName();
     
     # Only announce upgraded items
-    if ($itemid > 999999) {        
+    if ($itemid >= 700000) {        
         plugin::WorldAnnounceItem("$name has discovered: {item}.",$itemid);  
     }  
 }
