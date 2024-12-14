@@ -34,9 +34,9 @@ sub GetRandomResult {
     # $items => potential items to be rewarded for this option, $message => flavor text for winning
     my @rewards = (
         # { chance => 25, items => [56064], message => "Happy Thanksgiving!" }, #Thanksgiving
-        { chance => 25, items => [36995, 57825, 64489, 57819, 57818, 37538, 32557], message => "Better luck next time! Here, have some food. A loss is better on a full stomach!" },
+        { chance => 25, items => [36995, 57825, 64489, 57819, 57818, 37538], message => "Better luck next time! Here, have some food. A loss is better on a full stomach!" },
         # { chance => 25, items => [36013], message => "Cheers!" }, #Thanksgiving
-        { chance => 25, items => [56942, 56940, 56938, 56934, 56935, 56944, 56937, 32557], message => "Better luck next time! Here, drink this down, it should cheer you up!" },
+        { chance => 25, items => [56942, 56940, 56938, 56934, 56935, 56944, 56937], message => "Better luck next time! Here, drink this down, it should cheer you up!" },
         { chance => 20, items => [41961, 48083], message => "Let the experience flow!" },
         { chance => 10, items => [67923, 56052, 61036, 62774, 66783, 64711, 66431, 66449, 67953, 67883, 
                                   52193, 66598, 61979, 67145, 66564, 907290, 907291, 907292, 907293, 907294,
