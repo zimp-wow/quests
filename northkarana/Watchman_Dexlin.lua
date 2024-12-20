@@ -5,7 +5,7 @@ function event_say(e)
 		e.self:Say("It is about time I met up with someone who I can tolerate.  Most of the residents within these plains shun gnomes.  I will happy to leave if I could just find those [pesky skeletons].");
 	elseif(e.message:findi("pesky skeletons")) then
 		e.self:Say("I was sent here by the Gemchoppers to seek out a pocketful of skeletons.  They are a creation of a one of Ak'Anon's exiled citizens.  He practiced the dark circle of magic and came to find the necromancers of Antonica.  He created and imported undead brownies to this realm.  We must find them to study them.  I can't seem to find them!!  If only I could find a [brave fighter] to assist me.");
-	elseif(e.message:findi("brave fighter") and ~e.other:GetBucket("drexlin_skeletons")) then
+	elseif(e.message:findi("brave fighter") and not e.other:GetBucket("drexlin_skeletons")) then
 		e.self:Say("Very good. Take this tin box.  Fill each slot with the remains of the tiny undead, should you find them here.  I know not how many there exists, but I am sure that if I return this full tin box shall suffice.  Be quick, I have other matters to to tend to.  I shall depart when next my sun dial points to eight.");
 		e.other:SummonItem(17986); -- Item: Empty Tin Box
 		eq.set_timer("spawns",10000);
