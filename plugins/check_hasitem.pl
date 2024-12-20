@@ -1,5 +1,4 @@
-#checks to see if player has item
-#useage plugin::check_hasitem($client, itemid);
+#plugin::check_hasitem($client, $item_id);
 sub check_hasitem {
 	my $client = shift;
 	my $item_id = shift;
