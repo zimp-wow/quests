@@ -1,33 +1,46 @@
 sub EVENT_SPELL_EFFECT_CLIENT {
-	# Spell-EVENT_SPELL_EFFECT_CLIENT
-	# Exported event variables
-	quest::debug("spell_id " . $spell_id);
-	quest::debug("caster_id " . $caster_id);
-	quest::debug("tics_remaining " . $tics_remaining);
-	quest::debug("caster_level " . $caster_level);
-	quest::debug("buff_slot " . $buff_slot);
-	quest::debug("spell " . $spell);
+    my $reward = GetRandomReward();
 
-
+    if ($reward) {
+        quest::summonfixeditem($reward);
+    }
 }
 
-    # define a hash of itemid -> weights
-    # 700010 -> 100
-    # 700011 -> 100
-    # 700012 -> 100
-    # 700013 -> 100
-    # 700015 -> 100
-    # 700016 -> 1
-    # 700017 -> 100
-    # 700018 -> 100
-    # 2001800 -> 1
-    # 11010 -> 100
-    # 2828 -> 25
-    # 2829 -> 25
-    # 2830 -> 25
-    # 2854 -> 25
-    # 2855 -> 25
-    # 2856 -> 25
-    # 2857 -> 25
+sub GetRandomReward() {
+    my %my_rewards = (
+        700010 => 3, # Red Elf Hat
+        700011 => 3, # Green Elf Hat
+        700012 => 3, # Glowing Nose
+        700013 => 3, # Reindeer Antlers
+        700015 => 3, # Top Hat
+        700017 => 3, # Helper's Hat
+        700018 => 3, # Striped Helper's Hat
+        11010  => 60, # Elvish Hot Chocolate
+        2828   => 2,  # Rimefrost Kopesh
+        2829   => 2,  # Rimefrost Hammer
+        2830   => 2,  # Rimefrost Naginata
+        2854   => 2,  # Rimefrost Staff
+        2855   => 2,  # Rimefrost Bow
+        2856   => 2,  # Rimefrost Cestus
+        2857   => 2,  # Rimefrost Shield
+        4038   => 2,  # Rimefrost Dagger
+        700016 => 1,  # Primitive Snow Golem Head
+        2001800 => 1, # Decanter of Endless Hot Chocolate
+    );
 
-    define a subroutine which selects one of these items at random given the weights and returns it.
+    my $total_weight = 0;
+    foreach my $weight (values %my_rewards) {
+        $total_weight += $weight;
+    }
+
+    my $rand = int(rand($total_weight));
+
+    my $sum = 0;
+    foreach my $key (keys %my_rewards) {
+        $sum += $my_rewards{$key};
+        if ($rand < $sum) {
+            return $key;
+        }
+    }
+    return 0;
+}

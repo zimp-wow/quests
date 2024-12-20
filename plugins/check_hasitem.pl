@@ -2,40 +2,82 @@
 #useage plugin::check_hasitem($client, itemid);
 sub check_hasitem {
 	my $client = shift;
-	my $itemid = shift;
-
-	my @slots = (0..32, 251..340, 2000..2023, 6010..6209, 4010..6009, 6210..11009, 11010..11409, 9999);
-	foreach $slot (@slots) {
-		if ($client->GetItemIDAt($slot) % 1000000 == $itemid % 1000000) {
-			return 1;
-		}
-
-		for ($i = 0; $i < 5; $i++) {
-			if ($client->GetAugmentIDAt($slot, $i) % 1000000 == $itemid % 1000000) {
+	my $item_id = shift;
+	#my $body_count = $client->GetCorpseCount();
+	my @augment_slots = (
+		quest::getinventoryslotid("augsocket.begin")..quest::getinventoryslotid("augsocket.end")
+	);
+	#my @corpse_slots = (
+	#	quest::getinventoryslotid("possessions.begin")..quest::getinventoryslotid("possessions.end"),
+	#	quest::getinventoryslotid("generalbags.begin")..quest::getinventoryslotid("generalbags.end"),
+	#);
+	my @inventory_slots = (
+		quest::getinventoryslotid("possessions.begin")..quest::getinventoryslotid("possessions.end"),
+		quest::getinventoryslotid("generalbags.begin")..quest::getinventoryslotid("generalbags.end"),
+		quest::getinventoryslotid("bank.begin")..quest::getinventoryslotid("bank.end"),
+		quest::getinventoryslotid("bankbags.begin")..quest::getinventoryslotid("bankbags.end"),
+		quest::getinventoryslotid("sharedbank.begin")..quest::getinventoryslotid("sharedbank.end"),
+		quest::getinventoryslotid("sharedbankbags.begin")..quest::getinventoryslotid("sharedbankbags.end"),
+	);
+	foreach $slot_id (@inventory_slots) {
+		if ($client->GetItemAt($slot_id)) {
+			if ($client->GetItemIDAt($slot_id) % 1000000 == $item_id % 1000000) {
 				return 1;
+			}
+
+			foreach $augment_slot (@augment_slots) {
+				if ($client->GetAugmentAt($slot_id, $augment_slot) && $client->GetAugmentIDAt($slot_id, $augment_slot) % 1000000 == $item_id % 1000000) {
+					return 1;
+				}
 			}
 		}
 	}
-	return 0;
+
+	if ($client->HasItemOnCorpse($item_id)) {
+		return 1;
+	}
+
+  	return 0;
 }
 
 sub check_hasitem_exact {
 	my $client = shift;
-	my $itemid = shift;
-
-	my @slots = (0..32, 251..340, 2000..2023, 6010..6209, 4010..6009, 6210..11009, 11010..11409, 9999);
-	foreach $slot (@slots) {
-		if ($client->GetItemIDAt($slot) == $itemid) {
-			return 1;
-		}
-
-		for ($i = 0; $i < 5; $i++) {
-			if ($client->GetAugmentIDAt($slot, $i) == $itemid) {
+	my $item_id = shift;
+	#my $body_count = $client->GetCorpseCount();
+	my @augment_slots = (
+		quest::getinventoryslotid("augsocket.begin")..quest::getinventoryslotid("augsocket.end")
+	);
+	#my @corpse_slots = (
+	#	quest::getinventoryslotid("possessions.begin")..quest::getinventoryslotid("possessions.end"),
+	#	quest::getinventoryslotid("generalbags.begin")..quest::getinventoryslotid("generalbags.end"),
+	#);
+	my @inventory_slots = (
+		quest::getinventoryslotid("possessions.begin")..quest::getinventoryslotid("possessions.end"),
+		quest::getinventoryslotid("generalbags.begin")..quest::getinventoryslotid("generalbags.end"),
+		quest::getinventoryslotid("bank.begin")..quest::getinventoryslotid("bank.end"),
+		quest::getinventoryslotid("bankbags.begin")..quest::getinventoryslotid("bankbags.end"),
+		quest::getinventoryslotid("sharedbank.begin")..quest::getinventoryslotid("sharedbank.end"),
+		quest::getinventoryslotid("sharedbankbags.begin")..quest::getinventoryslotid("sharedbankbags.end"),
+	);
+	foreach $slot_id (@inventory_slots) {
+		if ($client->GetItemAt($slot_id)) {
+			if ($client->GetItemIDAt($slot_id) == $item_id) {
 				return 1;
+			}
+
+			foreach $augment_slot (@augment_slots) {
+				if ($client->GetAugmentAt($slot_id, $augment_slot) && $client->GetAugmentIDAt($slot_id, $augment_slot) == $item_id) {
+					return 1;
+				}
 			}
 		}
 	}
-	return 0;
+
+	if ($client->HasItemOnCorpse($item_id)) {
+		return 1;
+	}
+
+  	return 0;
 }
 
-1;
+return 1;
