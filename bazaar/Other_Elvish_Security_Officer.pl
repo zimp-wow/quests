@@ -1,11 +1,11 @@
 sub EVENT_SAY {
     if ($text=~/hail/i) {
-        quest::say("Greetings, $name. I am an envoy from the ESS - Elvish Security Services. We are here to collect a number of [items] which were lost as a result of the recent dimensional breach.");
+        quest::say("Greetings, $name. I am an envoy from the OESS - Other Elvish Security Services. We are here to collect [items] which were stolen from cities across Norrath!");
     } 
 
     if ($text=~/items/i) {
-        quest::say("Indeed. A number of gifts destined for the children of our world were lost in the breach. We are here to collect them and return them to their rightful place. 
-                    These gift boxes have been seized by numerous creatures in your world, and I've heard rumors that the shady looking halfling in the corner of the Bazaar may have also
+        quest::say("Indeed. A number of gifts destined for the children of Norrath were stolen by roving bands of monsters. We are here to collect them and return them to their rightful place. 
+                    These gift boxes have been seized by numerous creatures, and I've heard rumors that the shady looking halfling in the corner of the Bazaar may have also
                     claimed a number of them. We are offering a reward for the return of these items, and the individuals who bring us the largest quantity of them before we depart may
                     recieve an additional reward!");
     }
