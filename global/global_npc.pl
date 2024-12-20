@@ -99,7 +99,7 @@ sub EVENT_DEATH_COMPLETE {
                     'max_level'   => 99, # Maximum level to drop from
                 },
                 2827 => { # Christmas Event
-                    'drop_chance' => .01,
+                    'drop_chance' => .005,
                     'min_level'   => 1, # Minimum level to drop from
                     'max_level'   => 99, # Maximum level to drop from
                 },
