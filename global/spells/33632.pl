@@ -4,6 +4,9 @@ sub EVENT_SPELL_EFFECT_CLIENT {
     if ($reward) {
         quest::summonfixeditem($reward);
     }
+
+    my $account_key 	= $client->AccountID() . "-ess-items-opened";
+    quest::set_data($account_key, (quest::get_data($account_key) || 0) + 1);
 }
 
 sub GetRandomReward() {
