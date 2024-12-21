@@ -7,7 +7,7 @@ sub EVENT_SAY {
         quest::say("Indeed. A number of gifts destined for the children of Norrath were stolen by roving bands of monsters. We are here to collect them and return them to their rightful place. 
                     These gift boxes have been seized by numerous creatures, and I've heard rumors that the shady looking halfling in the corner of the Bazaar may have also
                     claimed a number of them. We are offering a reward for the return of these items, and the individuals who bring us the largest quantity of them before we depart may
-                    recieve an additional reward!");
+                    receive an additional reward!");
     }
 }
 
