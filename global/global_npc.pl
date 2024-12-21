@@ -84,10 +84,6 @@ sub EVENT_SAY {
     }
 }
 
-sub EVENT_TICK {
-    ScaleInstanceNPC
-}
-
 sub EVENT_DEATH_COMPLETE {
     if (defined($killed_corpse_id)) {
         my $corpse = $entity_list->GetCorpseByID($killed_corpse_id);
@@ -99,7 +95,7 @@ sub EVENT_DEATH_COMPLETE {
                     'max_level'   => 99, # Maximum level to drop from
                 },
                 2827 => { # Christmas Event
-                    'drop_chance' => .005,
+                    'drop_chance' => 1,
                     'min_level'   => 1, # Minimum level to drop from
                     'max_level'   => 99, # Maximum level to drop from
                 },
@@ -121,6 +117,7 @@ sub EVENT_DEATH_COMPLETE {
                     $npc->GetLevel() <= $item_drops{$item_id}{'max_level'}) {                    
                     if (rand() < $item_drops{$item_id}{'drop_chance'}) {
                         $corpse->AddItem($item_id, 1);
+                        $corpse->SetDecayTimer(1500000);
                         quest::ding();
                     }
                 }
