@@ -12,8 +12,8 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-    if (plugin::check_handin(\%itemcount, 2827 => 1)) {
-        quest::say("Thank you for returning this item, $name. We will be sure to return it to its rightful place. Please accept this reward for your efforts.");
+    while (plugin::check_handin(\%itemcount, 2827 => 1)) {
+        quest::say("Thank you Hero! Your kindness will bring a little more joy to Norrath!");
         my $reward = GetRandomReward();
         if ($reward) {
             quest::summonfixeditem($reward);
@@ -22,6 +22,8 @@ sub EVENT_ITEM {
         my $account_key 	= $client->AccountID() . "-ess-items-returned";
         quest::set_data($account_key, (quest::get_data($account_key) || 0) + 1);
     }
+
+    plugin::return_items(\%itemcount);
 }
 
 sub GetRandomReward {

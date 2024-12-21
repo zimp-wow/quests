@@ -8,59 +8,55 @@ sub get_base_id {
 # autoreturns extra unused items on success
 sub check_handin {
     use Scalar::Util qw(looks_like_number);
-    my $client     = plugin::val('client');
-    my $hashref    = shift;
+    my $client  = plugin::val('client');
+    my $hashref = shift;
 
-	# These are the empty IDs
-	if ($hashref->{0}) {
-		delete $hashref->{0};
-	}
+    # Remove empty IDs
+    if ($hashref->{0}) {
+        delete $hashref->{0};
+    }
 
-	if (!$client->EntityVariableExists("HANDIN_ITEMS")) {
-		$client->SetEntityVariable("HANDIN_ITEMS", plugin::GetHandinItemsSerialized("Handin", %$hashref));
-	}
+    if (!$client->EntityVariableExists("HANDIN_ITEMS")) {
+        $client->SetEntityVariable("HANDIN_ITEMS", plugin::GetHandinItemsSerialized("Handin", %$hashref));
+    }
 
-	# Make a copy of the original hashref
+    # Make a copy of the original hashref
     my $original_hashref = { %$hashref };
 
-    # Iterate over the hashref and replace each key with its get_base_id(key) version
+    # Normalize item IDs
     foreach my $item (keys %$hashref) {
         my $base_id = get_base_id($item);
-		#quest::debug("base_id is: " . $base_id);
         if ($base_id && $base_id ne $item) {
             $hashref->{$base_id} += $hashref->{$item} if exists $hashref->{$base_id};
             $hashref->{$base_id} = $hashref->{$item} unless exists $hashref->{$base_id};
-            delete $hashref->{$item};  # Remove the original entry
+            delete $hashref->{$item};
         }
     }
 
-	# -----------------------------
-	# handin formatting examples
-	# -----------------------------
-	# item_id    => required_count eg (1001 => 1)
-	# -----------------------------
-	my %required = @_;
-	my $retval = 1;
-	foreach my $req (keys %required) {
-		if (!defined $hashref->{$req} || $hashref->{$req} != $required{$req}) {
-			$retval = 0;
-		}
-	}
+    # Validate the hand-in
+    my %required = @_;
+    my $retval = 1;
+    foreach my $req (keys %required) {
+        if (!defined $hashref->{$req} || $hashref->{$req} < $required{$req}) {
+            $retval = 0;
+        }
+    }
 
-	foreach my $req (keys %required) {
-		if ($hashref->{$req} && $required{$req} < $hashref->{$req}) {
-			$hashref->{$req} -= $required{$req};
-		} else {
-			delete $hashref->{$req};
-		}
-	}
-	    
+    # Adjust the counts in $hashref
+    foreach my $req (keys %required) {
+        if ($hashref->{$req} && $hashref->{$req} >= $required{$req}) {
+            $hashref->{$req} -= $required{$req};
+        } else {
+            delete $hashref->{$req};
+        }
+    }
+
     if (!$retval) {
         %$hashref = %$original_hashref;
         return 0;
     }
 
-	return $retval;
+    return $retval;
 }
 
 sub check_handin_fixed {
