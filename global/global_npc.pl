@@ -185,7 +185,7 @@ sub EVENT_KILLED_MERIT {
                 plugin::LootEOM($client, $eom_loot_amount);
                 $client->SendSound();
 
-                $client->SetBucket("eom-event-scale", $client->GetBucket("eom-event-scale") + 1);
+                $client->SetBucket("eom-event-scale", ($client->GetBucket("eom-event-scale") || 0) + 1);
             } else {
                 if ($client->GetGM()) {
                     quest::debug("Failed to roll out of $eom_drop_chance");
