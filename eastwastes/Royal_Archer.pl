@@ -1,34 +1,30 @@
-sub EVENT_SPAWN {
-  quest::pause(2);
-  $archer = undef;
+sub EVENT_SIGNAL {
+  quest::debug("Royal Archer Received signal - " . $signal);
+  $npc->ResumeWandering();
+  if ($signal == 1){
+    # Fall into formation
+    quest::modifynpcstat("runspeed", 2.25);
+  } elsif ($signal == 2){
+    # Begin march to fort
+    quest::modifynpcstat("runspeed", 1.25);
+  } elsif ($signal == 3){
+    # Charge into battle
+    quest::modifynpcstat("runspeed", 2.25);
+  }
 }
 
-sub EVENT_WAYPOINT_DEPART {
-  if($archer < 8){
-    quest::pause(273);
-    $archer=$archer+1;
-  }
-  elsif($archer == 8) {
-    $archer=$archer+1;
-  }
-  elsif($archer > 8 && $archer < 16) {
-    $archer=$archer+1;
-  }
-  elsif($archer == 16) {
-    $archer=$archer+1;
-    quest::pause(155);
-    quest::modifynpcstat("runspeed",2.5);
-  }
-  elsif($archer > 16 && $archer < 24) {
-    $archer=$archer+1;
-    quest::pause(155);
-    quest::modifynpcstat("runspeed",2.5);
-    quest::settimer(9,755);
+sub EVENT_WAYPOINT_ARRIVE {
+  # Pause our wandering at each of the waypoints
+  $npc->PauseWandering(0);
+  
+  if($wp == 3){
+    quest::settimer(9,300); # depop after 5 minutes
   }
 }
 
 sub EVENT_TIMER {
   if($timer == 9) {
+    quest::stoptimer(9);
     quest::depopall(116555);
   }
 }

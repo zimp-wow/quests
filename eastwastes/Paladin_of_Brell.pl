@@ -1,34 +1,30 @@
-sub EVENT_SPAWN {
-  quest::pause(2);
-  $paladin = undef;
+sub EVENT_SIGNAL {
+  quest::debug("Paladin of Brell Received signal - " . $signal);
+  $npc->ResumeWandering();
+  if ($signal == 1){
+    # Fall into formation
+    quest::modifynpcstat("runspeed", 2.25);
+  } elsif($signal == 2){
+    # Begin march to fort
+    quest::modifynpcstat("runspeed", 1.25);
+  } elsif($signal == 3){
+    # Charge into battle
+    quest::modifynpcstat("runspeed", 2.25);
+  }
 }
 
-sub EVENT_WAYPOINT_DEPART {
-  if($paladin < 8){
-    $paladin=$paladin+1;
-    quest::pause(273);
-  }
-  elsif($paladin == 8) {
-    $paladin=$paladin+1;
-  }
-  elsif($paladin > 8 && $paladin < 16) {
-    $paladin=$paladin+1;
-  }
-  elsif($paladin == 16) {
-    $paladin=$paladin+1;
-    quest::pause(155);
-    quest::modifynpcstat("runspeed",2.5);
-  }
-  elsif($paladin > 16 && $paladin < 23) {
-    $paladin=$paladin+1;
-    quest::pause(155);
-    quest::modifynpcstat("runspeed",2.5);
-    quest::settimer(7,755);
+sub EVENT_WAYPOINT_ARRIVE {
+  # Pause our wandering at each of the waypoints
+  $npc->PauseWandering(0);
+  
+  if ($wp == 3){
+    quest::settimer(9,300); # depop after 5 minutes
   }
 }
 
 sub EVENT_TIMER {
-  if($timer == 7) {
+  if($timer == 9) {
+    quest::stoptimer(9);
     quest::depopall(116549);
   }
 }
