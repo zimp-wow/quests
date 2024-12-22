@@ -76,6 +76,20 @@ sub EVENT_EQUIP_ITEM_CLIENT {
     symp_proc_tutorial_helper($item_id, $client);
 }
 
+sub EVENT_DESTROY_ITEM_CLIENT {
+	# Player-EVENT_DESTROY_ITEM_CLIENT
+	# Exported event variables
+	quest::debug("item_id " . $item_id);
+	quest::debug("item_name " . $item_name);
+	quest::debug("quantity " . $quantity);
+	quest::debug("item " . $item);
+
+    if ($item_id == 2827) {
+        my $account_key 	= $client->AccountID() . "-ess-items-destroyed";
+        quest::set_data($account_key, (quest::get_data($account_key) || 0) + 1);
+    }
+}
+
 sub EVENT_CONNECT {
     if (plugin::GetSoulmark($client)) {
         plugin::DisplayWarning($client);
