@@ -95,7 +95,7 @@ sub EVENT_DEATH_COMPLETE {
                     'max_level'   => 99, # Maximum level to drop from
                 },
                 2827 => { # Christmas Event
-                    'drop_chance' => 0.005,
+                    'drop_chance' => 0.01,
                     'min_level'   => 1, # Minimum level to drop from
                     'max_level'   => 99, # Maximum level to drop from
                 },
@@ -175,7 +175,7 @@ sub EVENT_DAMAGE_GIVEN
 sub EVENT_KILLED_MERIT {
     if (plugin::IsTHJ()) {
         my $con_color = $client->GetConsiderColor($npc);
-        my $rare_scale = min(quest::get_data($client->AccountID() . "-eom-event-scale") || 1, 10);
+        my $rare_scale = min($client->GetBucket("eom-event-scale") || 1, 5);
 
         if ($con_color eq "Red" || $con_color eq "Yellow" || $con_color eq "White") {
             my $eom_drop_chance = (quest::get_rule("Custom:EventEOMDropChance")) * $rare_scale;
