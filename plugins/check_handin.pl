@@ -37,7 +37,7 @@ sub check_handin {
     my %required = @_;
     my $retval = 1;
     foreach my $req (keys %required) {
-        if (!defined $hashref->{$req} || $hashref->{$req} < $required{$req}) {
+        if (!defined $hashref->{$req} || $hashref->{$req} != $required{$req}) {
             $retval = 0;
         }
     }
