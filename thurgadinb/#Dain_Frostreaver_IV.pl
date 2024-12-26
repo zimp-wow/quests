@@ -1,11 +1,14 @@
 # items: 1567, 1500, 30164, 30369, 1465, 30516, 30502, 1199, 8895, 8896, 8886, 8898, 8897
+
+my $ring_9_bucket_key = "-dain-ring-9-box-status"; # we will set this back to 0 once the player hands in the box of traitor heads
+
 sub EVENT_SIGNAL {
 	if($signal==1) {
 		quest::moveto(6,777,66,256,1);
 		
 	}
 	if($signal==2) {
-		quest::moveto(4,690,69,256,1);
+		quest::moveto(5,692,69,256,1);
 		
 	}
 }
@@ -41,9 +44,10 @@ sub EVENT_SAY {
     quest::say("I fear that spies lurk in every corner. You may need to help the General reach the gnomish camp if the Kromrif have gotten word of our efforts. You should call on any allies that you have to assist in case they ambush you. Brell bless you $name, good luck.");
   }
   if ($text=~/count/i && plugin::check_hasitem($client, 1465)) {
-    if ($faction <= 5 || $faction >= 8) {
-      quest::say("Several of our greatest officers, including a few veterans from the war of Yesterwinter are assembling just outside our city. Gather your army at once and give this parchment and the ninth ring to Sentry Badian. I will remain inside the city with a few of my troops to defend it against any who might penetrate your defense. May Brell be with you, $name.");
-	  quest::summonitem(1567); #Declaration of War
+    if ($faction <= 5 || $faction >= 8) { # ring 10 war has not been tested.  Blocking this functionality until it can be fully tested.
+	    #      quest::say("Several of our greatest officers, including a few veterans from the war of Yesterwinter are assembling just outside our city. Gather your army at once and give this parchment and the ninth ring to Sentry Badian. I will remain inside the city with a few of my troops to defend it against any who might penetrate your defense. May Brell be with you, $name.");
+	    #quest::summonitem(1567); #Declaration of War
+	    quest::say("We have much work to do before we can declare war upon the giants.  Come back later once we are prepared".);
     }
   }
 }
@@ -60,6 +64,7 @@ sub EVENT_ITEM {
     quest::faction(419,-50); #Kromrif
     quest::faction(448,-50); #Kromzek
     quest::exp(4000000);
+    quest::set_data($client->CharacterID() . $ring_9_bucket_key, "0"); # the player will no longer be able to get a box from Seneschal unless they show the 8th ring to him again.
   }
   #Tormax's head
   elsif($faction <= 4 && plugin::check_handin(\%itemcount, 30516 => 1)) {
@@ -72,7 +77,7 @@ sub EVENT_ITEM {
   }
 #Dirk handin for the 10th ring
   elsif($faction == 1 && plugin::check_handin(\%itemcount, 1465 => 1)) {
-    quest::say("My good $name, you have served me well. You have flushed out all who sought to oppose me and my people. I am afraid I need to call upon you and your friends one final time. The dissention and treason ran deeper than I had anticipated. Our population has been cleansed, but we lost a full third of our army to the poisonous words of those rebels. In retaliation for your deeds, the Kromrif have made plans to attack us in this, our weakest hour. Can I count on your help outlander?");
+    quest::say("My good $name, you have served me well. You have flushed out all who sought to oppose me and my people. I am afraid I need to call upon you and your friends one final time. The dissention and treason ran deeper than I had anticipated. Our population has been cleansed, but we lost a full third of our army to the poisonous words of those rebels. In retaliation for your deeds, the Kromrif have made plans to attack us in this, our weakest hour. Can I [count] on your help outlander?");
     quest::summonitem(1465); # Item: Dirk of the Dain
   }
   # Runed Coldain Prayer Shawl (7th shawl)
