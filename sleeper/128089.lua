@@ -46,24 +46,24 @@ end
 function event_timer(e)
 	if(e.timer == "TankAEDMG") then
 		eq.stop_timer(e.timer);
-		eq.set_timer("TankAEDMG",10000);
-		--Fire beam, 6k -250 FR resist. 300 resist diff is about 40% partial resist and 60% full
+		eq.set_timer("TankAEDMG",30000);
+		--Prismatic beam, 1.5k to 2.5k -100 Prismatic resist. 75% resist max
 		--AOE dmg around the tank
 		e.self:CastSpell(42231,e.self:GetTarget():GetID());
 	
 	elseif (e.timer == "AE") then
 		eq.stop_timer(e.timer);
 		--big bada boom time, once every 60 sec
-		eq.zone_emote(MT.Emote, "The dragon thrashes about!");
+		eq.zone_emote(MT.Emote, "The dragon unleashes a wave of prismatic energy!");
 		e.self:CameraEffect(1000,5);
 		e.self:CastSpell(23150,e.self:GetID())
 		--lets not overlap our tank buster AE with the 60 sec AE
 		eq.stop_timer("TankAEDMG");
-		eq.set_timer("TankAEDMG",6000);
+		eq.set_timer("TankAEDMG",30000);
 		--lets go again in 30 sec!
 		if(phase == 7 ) then
-			--if under 25% change to every 15 seconds
-			eq.set_timer("AE", 15000);
+			--if under 25% change to every 20 seconds
+			eq.set_timer("AE", 20000);
 		else
 			--if above 25% every 30 sec
 			eq.set_timer("AE", 30000);
@@ -135,7 +135,7 @@ function event_hp(e)
 		e.self:Shout("'I THOUGHT YOU WEREN'T AFRAID OF ME ANYMORE!");
 		--terrifying roar, -1k resist poison, 300 range
 		e.self:CastSpell(6790,e.self:GetID());
-		--get get a target randomly
+		--get a target randomly
 		current_target = e.self:GetHateDamageTop(e.self);
 		--wipe the hate list
 		ignore_reengage=true;
@@ -155,14 +155,13 @@ function event_hp(e)
 		--wipe the hate list
 		ignore_reengage=true;
 		ignore_disengage=true;
-		e.self:WipeHateList();
+		-- e.self:WipeHateList();
 		--add 3k new threat to the random target
 		--e.self:AddToHateList(current_target,3000);
 		eq.set_next_hp_event(80);
 	elseif (e.hp_event <=80 and phase == 3) then
 		phase = 4;
 		e.self:Shout("'I THOUGHT YOU WEREN'T AFRAID OF ME ANYMORE!");
-		-- remove red head
 		--terrifying roar, -1k resist poison, 300 range
 		e.self:CastSpell(6790,e.self:GetID());
 		--get get a target randomly
