@@ -48,7 +48,7 @@ sub EVENT_SAY {
 #############################################################
 
 sub EVENT_ITEM {
-if (plugin::check_handin("platinum" => 2000)) {
+if (plugin::check_handin(\%itemcount,"platinum" => 2000)) {
      quest::say("Very well, $name. Take this gem to a master jeweler and return it to me with the other three items.");
      quest::summonitem(10191); # Item: Uncut Hyacinth
    }
