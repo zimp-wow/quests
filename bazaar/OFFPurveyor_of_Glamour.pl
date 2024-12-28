@@ -27,7 +27,7 @@ sub EVENT_ITEM {
 				  
 				  # Remove the $item_id from the hash %itemcount
 				  # delete $itemcount{$item_id};
-				  plugin::check_handin(\%itemcount, $item_id => 1);                  
+				  plugin::check_handin(\%itemcount, $item_id => 1, "platinum" => 5000);                  
 			   } else {
 				  plugin::Whisper("I must insist upon my fee $clientName for the $item_name. Please ensure you have enough for all your items.");
 			   }
