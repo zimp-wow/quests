@@ -190,7 +190,7 @@ function event_hp(e)
 		e.self:Shout("GUARDS! Assist me!");
 		e.self:CameraEffect(2000,5);
 		eq.zone_emote(MT.Emote,"Flapping of strong wings can be heard in the distance.");
-		eq.set_timer("SpawnAdds",120000);
+		eq.set_timer("SpawnAdds",60000);
 	end
 end
 
