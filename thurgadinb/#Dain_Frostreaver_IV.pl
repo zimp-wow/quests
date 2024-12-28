@@ -47,7 +47,7 @@ sub EVENT_SAY {
     if ($faction <= 5 || $faction >= 8) { # ring 10 war has not been tested.  Blocking this functionality until it can be fully tested.
 	    #      quest::say("Several of our greatest officers, including a few veterans from the war of Yesterwinter are assembling just outside our city. Gather your army at once and give this parchment and the ninth ring to Sentry Badian. I will remain inside the city with a few of my troops to defend it against any who might penetrate your defense. May Brell be with you, $name.");
 	    #quest::summonitem(1567); #Declaration of War
-	    quest::say("We have much work to do before we can declare war upon the giants.  Come back later once we are prepared".);
+	    quest::say("We have much work to do before we can declare war upon the giants.  Come back later once we are prepared.");
     }
   }
 }
