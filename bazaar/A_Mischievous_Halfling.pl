@@ -43,7 +43,7 @@ sub EVENT_ITEM {
         #quest::debug("Key: $key, Value: $value");
     }
 
-    if (plugin::CheckCashPayment(5000000, $copper, $silver, $gold, $platinum)) {
+    if (plugin::check_handin(\%itemcount, "platinum" => 5000)) {
         GetRandomResult();
         my $gamble_total = ($client->GetBucket("gambler_count") || 0) + 1;
         $client->SetBucket("gambler_count", $gamble_total);
