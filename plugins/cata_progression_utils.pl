@@ -486,7 +486,12 @@ sub is_time_locked {
     if (plugin::IsTHJ()) {  
         if ($stage eq 'RoK') {       
             return 0;
-        }  
+        }
+
+        if ($stage eq 'SoV') {       
+            return 0;
+        }
+
         return 1;
     }
 
