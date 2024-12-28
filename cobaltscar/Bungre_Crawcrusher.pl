@@ -20,7 +20,7 @@ sub EVENT_ITEM {
   my $cash = $copper + $silver * 10 + $gold * 100 + $platinum * 1000;
 
   #if (($cash >= 1000000) && plugin::check_handin(\%itemcount, 22815=> 1)) { #Check for 10000 gold
-  if plugin::check_handin(%itemcount, 22815=> 1, platinum => amount) {
+  if plugin::check_handin(\%itemcount, 22815=> 1, platinum => 1000) {
     quest::emote("skillfully crafts the section of Lodizal's shell into the shape of a shield. He then attaches sturdy cured walrus hide leather straps to the inner side of the shield and inscribes intricate glowing runes on the shield's face. When he is finished, he hands you the shield and claps loudly.");
     quest::summonitem(22816); # Item: Lodizal Shell Shield
     quest::exp(150000);
