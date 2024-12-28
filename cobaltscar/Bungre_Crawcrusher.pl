@@ -17,7 +17,7 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  if (plugin::check_handin(%itemcount, 22815=> 1, gold => 10000)) {
+  if (plugin::check_handin(\%itemcount, 22815=> 1, "gold" => 10000)) {
     quest::emote("skillfully crafts the section of Lodizal's shell into the shape of a shield. He then attaches sturdy cured walrus hide leather straps to the inner side of the shield and inscribes intricate glowing runes on the shield's face. When he is finished, he hands you the shield and claps loudly.");
     quest::summonitem(22816); # Item: Lodizal Shell Shield
     quest::exp(150000);
