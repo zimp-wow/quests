@@ -1,57 +1,28 @@
 sub EVENT_ITEM { 
-	my $copper = plugin::val('copper');
-	my $silver = plugin::val('silver');
-	my $gold = plugin::val('gold');
-	my $platinum = plugin::val('platinum');
 	my $clientName = $client->GetCleanName();
-
-	my $total_money = ($platinum * 1000) + ($gold * 100) + ($silver * 10) + $copper;
 	my $dbh = plugin::LoadMysql();
 
 	foreach my $item_id (keys %itemcount) {
-	  if ($item_id != 0) {
-		 quest::debug("I was handed: $item_id with a count of $itemcount{$item_id}");
+		quest::debug("Item ID: $item_id");
+	  	if ($item_id != 0) {
+		 	my $item_name = quest::getitemname($item_id % 1000000);
 
-		 my $item_name = quest::getitemname($item_id % 1000000);
-
-		 quest::debug("looking for: '" . $item_name . "' Glamour-Stone");
-
-		 # Use a prepared statement to prevent SQL injection
-		 my $sth = $dbh->prepare('SELECT id FROM items WHERE name LIKE ?');
-		 $sth->execute("'" . $item_name . "' Glamour-Stone");
-		 if (my $row = $sth->fetchrow_hashref()) {                
-			   if ($total_money >= (5000 * 1000)) {
-				  $total_money -= (5000 * 1000);
-				  plugin::Whisper("Perfect! Here, I had a Glamour-Stone almost ready. I'll just need to attune it to your $item_name! Enjoy!");
-				  $client->SummonItem($row->{id});
-				  
-				  # Remove the $item_id from the hash %itemcount
-				  # delete $itemcount{$item_id};
-				  plugin::check_handin(\%itemcount, $item_id => 1, "platinum" => 5000);                  
-			   } else {
-				  plugin::Whisper("I must insist upon my fee $clientName for the $item_name. Please ensure you have enough for all your items.");
-			   }
-		 } else {
-			   plugin::Whisper("I don't think that I can create a Glamour-Stone for that item, $clientName. It must be something that you hold in your hand, such as a weapon or shield.");
-		 }
-	  }
+		 	my $sth = $dbh->prepare('SELECT id FROM items WHERE name LIKE ?');
+		 	$sth->execute("'" . $item_name . "' Glamour-Stone");
+		 	if (my $row = $sth->fetchrow_hashref()) {
+			   	if (plugin::check_handin(\%itemcount, $item_id => 1, "platinum" => 5000)) {
+				 	plugin::Whisper("Perfect! Here, I had a Glamour-Stone almost ready. I'll just need to attune it to your $item_name! Enjoy!");
+				  	$client->SummonFixedItem($row->{id});				          
+			   	} else {
+				  	plugin::Whisper("I must insist upon my fee $clientName for the $item_name. Please ensure you handed me exactly 5000 platinum coins alongside your item.");
+			   	}
+		 	} else {
+			   	plugin::Whisper("I don't think that I can create a Glamour-Stone for that item, $clientName. It must be something that you hold in your hand, such as a weapon or shield.");
+		 	}
+	  	}
 	}  
    
-	# After processing all items, return any remaining money
-	my $platinum_remainder = int($total_money / 1000);
-	$total_money %= 1000;
-
-	my $gold_remainder = int($total_money / 100);
-	$total_money %= 100;
-
-	my $silver_remainder = int($total_money / 10);
-	$total_money %= 10;
-
-	my $copper_remainder = $total_money;
-
-	$client->AddMoneyToPP($copper_remainder, $silver_remainder, $gold_remainder, $platinum_remainder, 1);
-	plugin::return_items(\%itemcount); 
-
+	plugin::return_items(\%itemcount);
 }
 
 sub EVENT_SAY {

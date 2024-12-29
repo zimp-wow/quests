@@ -24,8 +24,7 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-    #:: Match 50 gold pieces using CheckCashPayment
-    if (plugin::CheckCashPayment(5000, $copper, $silver, $gold, $platinum)) {
+    if (plugin::check_handin(\%itemcount, "gold" => 50)) {
         quest::say("Once you combine the coins within the pouch, you must take the Coin of Tash to Tarn Vislin in the HighKeep library to get it enchanted.  Give him the coin and he will enchant it for you.");
         quest::summonitem(18032); # Tome of Tesh
         quest::ding();
