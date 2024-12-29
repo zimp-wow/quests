@@ -74,8 +74,7 @@ sub EVENT_ITEM {
             plugin::AddTitleFlag(677);
         }
     } else {
-        quest::say("You'll need to give me enough money for the casino ticket!");
-    }
+        quest::say("You'll need to give me exactly 5000 platinum pieces to play, dear friend. Come back when you have them!");
     plugin::return_items(\%itemcount);
 }
 

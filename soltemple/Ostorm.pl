@@ -35,13 +35,6 @@ sub EVENT_ITEM {
         quest::exp(1000);
     }
 
-    # Check for 50 gold payment
-    if (plugin::CheckCashPayment(5000, $copper, $silver, $gold, $platinum)) {
-        quest::say("Thank you.");
-        quest::faction(415, 1);
-        quest::faction(416, -1);
-    }
-
     # Check for Lambent Fire Opal components
     if (plugin::check_handin(\%itemcount, 10031 => 2, 10000 => 1)) {
         quest::say("Ahh, Genni must have sent you to me. Very well, here is your Lambent Fire Opal.");
@@ -58,7 +51,3 @@ sub EVENT_ITEM {
 
     plugin::return_items(\%itemcount);
 }
-
-
-# Quest by mystic414
-
