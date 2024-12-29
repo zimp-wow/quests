@@ -7,7 +7,7 @@ sub EVENT_COMBAT {
 	if($combat_state == 0) {
 		$npc->SetHP(685000);
   		quest::setnexthpevent(90);
-		quest::modifynpcstat("attack_delay", "12");
+		quest::modifynpcstat("attack_delay", "30");
   		quest::modifynpcstat("max_hit", "1904");
 		quest::modifynpcstat("min_hit", "680");	
 
@@ -90,7 +90,7 @@ sub EVENT_HP {  # adds does not aggro unless within aggro range
 		quest::setnexthpevent(20);
 		quest::emote("shakes with laughter and says, 'You are much stronger than I thought. Looks like I'm gonna have to use all the tricks of the trade!' He then shouts a string of mystical words and is suddenly surrounded by a magical glowing aura and his attacks become a blur as he launches into a quickened attack routine.");
 		quest::modifynpcstat("ac", "1087");
-		quest::modifynpcstat("attack_delay", "8");
+		quest::modifynpcstat("attack_delay", "20");
 		quest::modifynpcstat("mr", "500");
 		quest::modifynpcstat("pr", "500");
 		quest::modifynpcstat("pr", "500");
@@ -105,7 +105,7 @@ sub EVENT_HP {  # adds does not aggro unless within aggro range
 		quest::spawn2(126377,0,0,-110,840,178,0); # a_dazed_guardian_jester
 		quest::spawn2(126375,0,0,-127,840,178,0); # a_devious_guardian_jokester
 		quest::emote("shakes with laughter and says, 'You are much stronger than I thought. Looks like I'm gonna have to use all the tricks of the trade!' He then shouts a string of mystical words and is suddenly surrounded by a magical glowing aura and his muscles bulge with incomprehensible strength. ");
-		quest::modifynpcstat("attack_delay", "12");
+		quest::modifynpcstat("attack_delay", "30");
 		quest::modifynpcstat("max_hit", "1950");
 		quest::modifynpcstat("min_hit", "715");	
 	}
