@@ -9,20 +9,14 @@ sub EVENT_SAY {
     }
    
     my $remove_class_cost = 10;
-    my $remove_class_lockout_scale = 1;
-    my $remove_class_lockout = 7 * $remove_class_lockout_scale;
-    my $reset_aa_lockout_scale = 1;
-    my $reset_aa_lockout = 7 * $reset_aa_lockout_scale;
-
-    if ($client->GetGM() && $text=~/resetaa/i) {
-        $client->ResetAA();
-    }
+    my $remove_class_lockout = 7;
+    my $reset_aa_lockout = 7;
 
     if ($text=~/hail/i) {   
         if (plugin::GetClassesCount($client) <= 1) {
-            plugin::NPCTell("Mortal. Do you wish to throw yourself upon the [whims of blind fate]?");
+            plugin::NPCTell("Ah, a blank slate arrives. Your singular existence beckons for direction. Do you wish to submit yourself to the [whims of blind fate]?");
         } else {
-            plugin::NPCTell("Mortal. You are unsuitable, your fate has already been tainted by your pathetic free will. Begone, unless you would have me [reforge your path]");
+            plugin::NPCTell("You dare stand before me, tainted by the stench of your choices? Your free will has marred the purity of your destiny. I may yet [reforge your path], if you have the resolve.");
         }
 
         my $free_class_remove = ($client->GetBucket("free_remove_class_used") || 0);
@@ -88,8 +82,111 @@ sub EVENT_SAY {
         if (plugin::GetClassesCount > 1) {
             my $classes_string = GetClassLinkString();
 
-            plugin::NPCTell("Which class would you have me strip from you; $classes_string? Be aware, you will lose all alternate advancement you have made down this path, permanently.
-                            I can also allow you [".quest::saylink("reset_aa", 1, "reselect your alternate advancement abilities")."], should you desire.");
+            plugin::NPCTell(
+                "Ah, another mortal seeks the refinement of my divine craftsmanship. I am The Composer of Fate, "
+            . "the weaver of destinies, the architect of paths untold. Your fragile existence is but a thread in the grand tapestry I design.\n\n"
+            . "I could sever one of your threads of fate, $classes_string, granting you the rare privilege of choosing another.\n\n"
+            . "Or perhaps you would prefer me to ["
+            . quest::saylink("reset_aa", 1, "restore and reallocate your alternate advancement abilities")
+            . "], allowing you to reclaim and reshape their power?\n\n"
+            . "Should you desire, I may even grant you the opportunity to ["
+            . quest::saylink("adjust_level", 1, "adjust your level")
+            . "]. This will allow you to ascend or descend to a level of your choice, for a cost of 500 platinum pieces per level adjusted."
+            );
+        }
+    }
+
+    if ($text=~/adjust_level/i) {
+        my $stored_level = $client->GetBucket("MaxLevelAchieved") || 0;
+
+        # Update stored level if the current level exceeds it
+        if ($client->GetLevel() > $stored_level) {
+            $stored_level = $client->GetLevel();
+            $client->SetBucket("MaxLevelAchieved", $stored_level);
+        }
+
+        my $current_level = $client->GetLevel();
+        my @level_options;
+
+        # Generate level options excluding the player's current level
+        for (my $level = 5; $level <= $stored_level; $level += 5) {
+            next if $level == $current_level;
+            push @level_options, "[" . quest::saylink("set_level_$level", 1, "Level $level") . "]";
+        }
+
+        my $options_string = join(", ", @level_options);
+        plugin::NPCTell(
+            "To alter your standing within the tapestry of fate will cost you 500 platinum pieces per level changed. "
+        . "Behold, the paths I may open to you: $options_string. "
+        . "Choose with care, for destiny is not to be tampered with lightly."
+        );
+    }
+
+    if ($text=~/set_level_(\d+)/i) {
+        my $desired_level = $1;
+        my $stored_level = $client->GetBucket("MaxLevelAchieved") || 0;
+
+        if ($desired_level > 0 && $desired_level <= $stored_level) {
+            my $current_level = $client->GetLevel();
+            my $level_difference = abs($current_level - $desired_level);
+            my $cost_in_platinum = $level_difference * 500;
+
+            # Display YellowText confirmation for level change
+            if ($level_difference == 0) {
+                plugin::YellowText(
+                    "You have selected your current level ($current_level). No changes are required, and no cost will be incurred."
+                );
+            } else {
+                plugin::YellowText(
+                    "Changing your level to $desired_level will cost $cost_in_platinum platinum pieces. "
+                . "Would you like to ["
+                . quest::saylink("confirm_level_change_$desired_level", 1, "confirm this adjustment")
+                . "]?"
+                );
+            }
+        } else {
+            plugin::NPCTell(
+                "Such a request is beyond my notice. Choose a valid level from the paths I have deemed acceptable."
+            );
+        }
+    }
+
+    if ($text=~/confirm_level_change_(\d+)/i) {
+        my $desired_level = $1;
+        my $stored_level = $client->GetBucket("MaxLevelAchieved") || 0;
+
+        if ($desired_level > 0 && $desired_level <= $stored_level) {
+            my $current_level = $client->GetLevel();
+            my $level_difference = abs($current_level - $desired_level);
+            my $cost_in_copper = $level_difference * 500 * 1000; # Convert platinum to copper (1 platinum = 1000 copper)
+            my $cost_in_platinum = $level_difference * 500;
+
+            if ($level_difference == 0) {
+                plugin::NPCTell(
+                    "You remain at Level $current_level. No changes were made, and no cost was incurred. "
+                . "Seek me again if you truly wish to adjust your path."
+                );
+            } elsif ($client->TakeMoneyFromPP($cost_in_copper, 1)) {
+                plugin::YellowText("You spent $cost_in_platinum platinum pieces.");
+                $client->SetLevel($desired_level,1);
+                plugin::NPCTell(
+                    "Your level has been adjusted to $desired_level for a cost of $cost_in_platinum platinum pieces. "
+                . "Walk this new path wisely, for my patience with mortals is not infinite."
+                );
+
+                if ($desired_level < $current_level) {
+                    $client->UnmemSpellAll(1);
+                }
+            } else {
+                plugin::NPCTell(
+                    "Your resources are insufficient for such an adjustment. You require $cost_in_platinum platinum pieces "
+                . "to proceed. Do not waste my time with your inadequacies."
+                );
+            }
+        } else {
+            plugin::NPCTell(
+                "Such a request is beyond my notice. Choose a valid level from the paths I have deemed acceptable."
+            );
         }
     }
 
