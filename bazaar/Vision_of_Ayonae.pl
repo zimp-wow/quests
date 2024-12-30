@@ -276,8 +276,8 @@ sub EVENT_SAY {
         my $class_id = $1; 
         my $free_class_remove = ($client->GetBucket("free_remove_class_used") || 0);
         if (!$free_class_remove && plugin::HasClass($client, $class_id)) {
-            $client->SetBucket("free_remove_class_used", 1);
             plugin::RemoveClass($class_id, $client);
+            $client->SetBucket("free_remove_class_used", 1);            
         }
     }   
 
