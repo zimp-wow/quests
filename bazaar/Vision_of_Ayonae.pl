@@ -118,14 +118,16 @@ sub EVENT_SAY {
     }
 
     if ($text eq 'confirm_reset_aa') {
-        if (!$client->HasExpeditionLockout("AA Reset Lockout", "") && plugin::SpendEOM($client, $remove_class_cost)) {
-            plugin::YellowText("All of your AA have been refunded.");
-            $client->ResetAA();
-            plugin::CommonCharacterUpdate($client);
-            $client->Save(1);
+        if (!$client->HasExpeditionLockout("AA Reset Lockout", "")) {
+            if (plugin::SpendEOM($client, $remove_class_cost)) {
+                plugin::YellowText("All of your AA have been refunded.");
+                $client->ResetAA();
+                plugin::CommonCharacterUpdate($client);
+                $client->Save(1);
 
-            $client->AddExpeditionLockout("AA Reset Lockout", "", $reset_aa_lockout * 24 * 60 * 60);
-            $client->SetBucket("reset_aa_lockout_scale", $reset_aa_lockout_scale + 1);
+                $client->AddExpeditionLockout("AA Reset Lockout", "", $reset_aa_lockout * 24 * 60 * 60);
+                $client->SetBucket("reset_aa_lockout_scale", $reset_aa_lockout_scale + 1);
+            }
         }
     }
 
@@ -164,10 +166,12 @@ sub EVENT_SAY {
             return 0;
         }
 
-        if (!$client->HasExpeditionLockout("Class Removal Lockout", "") && plugin::HasClass($client, $class_id) && plugin::SpendEOM($client, $remove_class_cost)) {
-            plugin::RemoveClass($class_id, $client);
-            $client->AddExpeditionLockout("Class Removal Lockout", "", $remove_class_lockout * 24 * 60 * 60);
-            $client->SetBucket("remove_class_lockout_scale", $remove_class_lockout_scale + 1);
+        if (!$client->HasExpeditionLockout("Class Removal Lockout", "") && plugin::HasClass($client, $class_id)) {
+            if (plugin::SpendEOM($client, $remove_class_cost)) {
+                plugin::RemoveClass($class_id, $client);
+                $client->AddExpeditionLockout("Class Removal Lockout", "", $remove_class_lockout * 24 * 60 * 60);
+                $client->SetBucket("remove_class_lockout_scale", $remove_class_lockout_scale + 1);
+            }
         }
     }
 
