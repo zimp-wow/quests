@@ -117,12 +117,17 @@ function SpawnWarder(e)
     -- sanity depop
     eq.depop_all(random_npc_id)
 
+	if e.self:EntityVariableExists("warder_spawn") then
+		return;
+	end
+
     local npc = eq.spawn2(random_npc_id, 0, 0, xloc + 75, yloc + 25, zloc, heading)
 
     if npc.valid then
         npc:Shout("I LIVE AGAIN! Master, your wish is my command!")
         current_target = e.self:GetHateDamageTop(e.self);
-        e.self:AddToHateList(current_target,2000);
+        npc:AddToHateList(current_target,2000);
+		e.self:SetEntityVariable("warder_spawn", "true");
     end
 end
 
