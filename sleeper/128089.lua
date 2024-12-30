@@ -146,7 +146,7 @@ function event_hp(e)
 		--wipe the hate list
 		ignore_reengage=true;
 		ignore_disengage=true;
-		e.self:WipeHateList();
+		--e.self:WipeHateList();
 		--add 3k new threat to the random target
 		--e.self:AddToHateList(current_target,2000);		
 		eq.set_next_hp_event(85);
@@ -161,7 +161,7 @@ function event_hp(e)
 		--wipe the hate list
 		ignore_reengage=true;
 		ignore_disengage=true;
-		-- e.self:WipeHateList();
+		--e.self:WipeHateList();
 		--add 3k new threat to the random target
 		--e.self:AddToHateList(current_target,3000);
 		eq.set_next_hp_event(80);
@@ -175,7 +175,7 @@ function event_hp(e)
 		--wipe the hate list
 		ignore_reengage=true;
 		ignore_disengage=true;
-		e.self:WipeHateList();
+		-- e.self:WipeHateList();
 		--add 3k new threat to the random target
 		--e.self:AddToHateList(current_target,3000);
 		eq.set_next_hp_event(75);
