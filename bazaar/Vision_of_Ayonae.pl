@@ -9,9 +9,9 @@ sub EVENT_SAY {
     }
    
     my $remove_class_cost = 10;
-    my $remove_class_lockout_scale = ($client->GetBucket("remove_class_lockout_scale") || 1);
+    my $remove_class_lockout_scale = 1;
     my $remove_class_lockout = 7 * $remove_class_lockout_scale;
-    my $reset_aa_lockout_scale = ($client->GetBucket("reset_aa_lockout_scale") || 1);
+    my $reset_aa_lockout_scale = 1;
     my $reset_aa_lockout = 7 * $reset_aa_lockout_scale;
 
     if ($client->GetGM() && $text=~/resetaa/i) {
