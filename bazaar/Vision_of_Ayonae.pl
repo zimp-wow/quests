@@ -223,7 +223,6 @@ sub EVENT_SAY {
                 $client->Save(1);
 
                 $client->AddExpeditionLockout("AA Reset Lockout", "", $reset_aa_lockout * 24 * 60 * 60);
-                $client->SetBucket("reset_aa_lockout_scale", $reset_aa_lockout_scale + 1);
             }
         }
     }
@@ -256,7 +255,7 @@ sub EVENT_SAY {
     }
 
     if ($text =~ /^proceed_(\d+)$/i) {
-        return;
+        #return;
         my $class_id = $1; 
 
         if ($client->HasExpeditionLockout("Class Removal Lockout", "")) {
@@ -268,13 +267,12 @@ sub EVENT_SAY {
             if (plugin::SpendEOM($client, $remove_class_cost)) {
                 plugin::RemoveClass($class_id, $client);
                 $client->AddExpeditionLockout("Class Removal Lockout", "", $remove_class_lockout * 24 * 60 * 60);
-                $client->SetBucket("remove_class_lockout_scale", $remove_class_lockout_scale + 1);
             }
         }
     }
 
     if ($text =~ /^free_(\d+)$/i) {
-        return;
+        #return;
         my $class_id = $1; 
         my $free_class_remove = ($client->GetBucket("free_remove_class_used") || 0);
         if (!$free_class_remove && plugin::HasClass($client, $class_id)) {
