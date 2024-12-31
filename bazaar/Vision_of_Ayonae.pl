@@ -256,6 +256,7 @@ sub EVENT_SAY {
     }
 
     if ($text =~ /^proceed_(\d+)$/i) {
+        return;
         my $class_id = $1; 
 
         if ($client->HasExpeditionLockout("Class Removal Lockout", "")) {
@@ -273,6 +274,7 @@ sub EVENT_SAY {
     }
 
     if ($text =~ /^free_(\d+)$/i) {
+        return;
         my $class_id = $1; 
         my $free_class_remove = ($client->GetBucket("free_remove_class_used") || 0);
         if (!$free_class_remove && plugin::HasClass($client, $class_id)) {
