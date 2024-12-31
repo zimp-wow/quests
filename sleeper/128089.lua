@@ -28,6 +28,7 @@ function event_combat(e)
 
 		--lets get some pressure on the tank, and anyone who is stupid enough
 		--be in front of the mob :)
+		eq.depop_all(128020);
 		eq.set_timer("TankAEDMG", math.random(1000,3000));
 		eq.stop_timer("reset");
 		
