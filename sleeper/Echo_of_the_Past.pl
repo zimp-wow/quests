@@ -6,3 +6,9 @@ my $dz_zone         = "sleeper";
 sub EVENT_SAY {
   plugin::OfferStandardInstance($expedition_name, $min_players, $max_players, $dz_zone);
 }
+
+sub EVENT_SPAWN() {
+  if ($instanceid > 0) {
+    $npc->Kill();
+  }
+}

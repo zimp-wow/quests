@@ -129,6 +129,8 @@ function SpawnWarder(e)
         current_target = e.self:GetHateDamageTop(e.self);
         npc:AddToHateList(current_target,2000);
 		e.self:SetEntityVariable("warder_spawn", "true");
+
+		npc:SetEntityVariable("warder_spawn", "true");
     end
 end
 
@@ -204,4 +206,6 @@ function event_death_complete(e)
 	e.self:Shout("So then... my fate is sealed... until we meet again.");
 	eq.stop_timer("AE");
 	eq.stop_timer("TankAEDMG");
+
+	local instance_id = eq.get_zone_instance_id();
 end
