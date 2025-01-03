@@ -12,6 +12,8 @@ sub CommonCharacterUpdate {
         plugin::UpdateEoMAward($client);
         plugin::RegisterSeasonalLogin($client);
 
+        plugin::DoEventRewards($client);
+
         plugin::GrantClassesAA($client);
         plugin::GrantGeneralAA($client);
 
