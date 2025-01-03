@@ -16,7 +16,7 @@ sub DoEventRewards {
     my $destroy_24 = quest::get_data($event_key . "xmas24_ret_destroy") || 0;
 
     if (defined $nice_24 && $nice_24) {
-        # Base Reward
+        # Base Reward (val 1)
         if ($nice_24 >= 1 && $nice_24_r < 1) {
             plugin::AddTitleFlag(208);
 
@@ -64,11 +64,11 @@ sub DoEventRewards {
     if (defined $destroy_24 && $destroy_24) {
         plugin::AddTitleFlag(210);
 
-        if ($destroy_24 >= 1) {
+        if ($destroy_24 >= 2) {
             plugin::AddTitleFlag(211);
         }
 
-        if ($destroy_24 == 2) {
+        if ($destroy_24 == 3) {
             plugin::AddTitleFlag(212);
         }
     }
