@@ -41,7 +41,7 @@ my $race_change_cost = 10;
 my $sex_change_cost  = 10;
 my $name_change_cost = 10;
 my $gods_change_cost = 10;
-my $pet_name_reset_cost = 2;
+my $pet_name_reset_cost = 25;
 
 sub EVENT_SAY {
     my $sex_word;
@@ -55,7 +55,7 @@ sub EVENT_SAY {
         quest::say("Greetings, $name. Do you seek perfection? Are you [". quest::saylink("unhappy with your form", 1) ."]? 
                     Are you interested in embracing [". quest::saylink($sex_word, 1) ."]? 
                     Would you like to [".quest::saylink("worship a new deity", 1)."]?
-                    Do you wish to [".quest::saylink("reset pet names", 1)."]?");
+                    Do you wish to [".quest::saylink("rename your pets", 1)."]?");
     }
     elsif ($text =~ /worship a new deity/i) {
         deity_change_intro();
@@ -81,17 +81,19 @@ sub EVENT_SAY {
     elsif ($text =~ /^confirm_gender_(\d)$/i) {
         gender_change_confirm($1);
     }
-    elsif ($text =~ /reset pet names/i) {
-        pet_name_reset_intro();
+    elsif ($text =~ /rename your pets/i) {
+        pet_name_change_intro();
     }
-    # Handle pet name selection (no explicit key names like bear_name_1)
-    elsif ($text =~ /^reset_pet_name_(\w+_\d+)$/i) {   # Capture the full key (e.g., bear_name_1)
-        pet_name_reset_select($1);  # Pass the captured key directly (e.g., bear_name_1)
+    elsif ($text =~ /^change_pet_name_(\d+)$/i) {   # Matches class_id as digits
+        quest::debug("Captured class_id: $1");
+        pet_name_change_select($1);  # Pass the captured class_id
     }
-    # Handle pet name reset confirmation
-    elsif ($text =~ /^confirm_pet_name_reset_(\w+_\d+)$/i) {   # Capture the full key (e.g., bear_name_1)
-        pet_name_reset_confirm($1);  # Pass the captured key directly (e.g., bear_name_1)
+    elsif ($text =~ /^confirm_pet_name_change_(\d+)$/i) {  # Matches class_id as digits
+        quest::debug("Captured class_id for confirmation: $1");
+        pet_name_change_confirm($1);  # Pass the captured class_id
     }
+
+
 }
 
 sub race_change_intro {
@@ -209,42 +211,66 @@ sub gender_change_confirm {
     }
 }
 
-sub pet_name_reset_intro {
-    quest::say("If your loyal companions' names have lost their charm, I can help you reset them. For a mere " . plugin::num2en($pet_name_reset_cost) . " [" . plugin::EOMLink() . "], I can restore their original titles. Please select a pet name to reset.");
-    
-    my $pet_names_list = "";
-    foreach my $prefix ('bear_name', 'skeleton_name', 'warder_name', 'spirit_name', 'spectre_name', 
-                        'air_elemental_name', 'water_elemental_name', 'fire_elemental_name', 'earth_elemental_name') {
-        foreach my $num (1..10) {
-            my $key = "${prefix}_${num}";
-            my $value = $client->GetBucket($key);
-            if (defined $value && $value ne '') {
-                $pet_names_list .= "[" . quest::saylink("reset_pet_name_$key", 1, "$value") . "] ";
-            }
+sub pet_name_change_intro {
+    quest::say("Do you want to rename your loyal companion? I can help you assign a new name for any of your pets. Just choose the class you'd like to change the pet name for, and I will assist you. For a mere " . plugin::num2en($pet_name_reset_cost) . " [" . plugin::EOMLink() . "], you can give your pet a brand-new identity!");
+
+    if ($client->IsPetNameChangeAllowed()) {
+        plugin::YellowText("You currently have a pet name change pending. Please complete that with /changepetname before selecting another pet name to change.");
+        return;
+    }
+
+    my $class_selection_links = GetClassLinkString();
+
+    plugin::YellowText("- Select a Class to Change Pet Name -");
+    plugin::YellowText($class_selection_links);
+}
+
+sub pet_name_change_select {
+    my ($class_id) = @_;
+
+    my %class_map = plugin::GetClassMap();
+    my $class_name = $class_map{$class_id};
+
+    quest::say("Ah, you seek to bestow a new identity upon your companion, the guardian of your '$class_name' craft. A noble choice indeed! For only " . plugin::num2en($pet_name_reset_cost) . " [" . plugin::EOMLink() . "], I can channel the forces of transformation. Are you ready to proceed? [" . quest::saylink("confirm_pet_name_change_$class_id", 1, "Yes, let us begin!") . "]");
+}
+
+sub pet_name_change_confirm {
+    my ($class_id) = @_;
+
+    my %class_map = plugin::GetClassMap();
+    my $class_name = $class_map{$class_id};
+
+    if (plugin::SpendEOM($client, $pet_name_reset_cost)) {
+        quest::say("The currents of magic shift, and the veil of change is drawn back. Your companion, loyal to the ways of the '$class_name', is now ready to take on a new name.");
+        $client->ChangePetName($class_id);  # Open the pet name change dialogue
+        plugin::YellowText("Your pet is ready for renaming. Speak its new name when the time comes.");
+    } else {
+        quest::say("The Echoes of Memory slip through your fingers. Gather more, and return to me when you are ready to embrace the change.");
+    }
+}
+
+sub GetClassLinkString {
+    my $client = shift || plugin::val('$client');  # Ensure $client is available
+    my %class_map = plugin::GetClassMap();        # Get the full class map
+    my $class_bits = $client->GetClassesBitmask();  # Retrieve the class bits for the client
+
+    my @client_classes;
+
+    # Iterate through class IDs to check which classes the client has
+    foreach my $class_id (sort { $a <=> $b } keys %class_map) {
+        if ($class_bits & (1 << ($class_id - 1))) {
+            push @client_classes, "[" . quest::saylink("change_pet_name_$class_id", 1, $class_map{$class_id}) . "]";
         }
     }
 
-    plugin::YellowText("- Select a Pet Name to Reset -");
-    plugin::YellowText($pet_names_list);
-}
-
-sub pet_name_reset_select {
-    my ($pet_key) = @_;
-
-    my $pet_name = $client->GetBucket($pet_key);
-
-    quest::say("You have chosen to reset the name for '$pet_name'. Would you like to proceed with this reset? [".quest::saylink("confirm_pet_name_reset_$pet_key", 1, "Confirm")."]");
-}
-
-sub pet_name_reset_confirm {
-    my ($pet_key) = @_;
-
-    my $pet_name = $client->GetBucket($pet_key);
-
-    if (plugin::SpendEOM($client, $pet_name_reset_cost)) {
-        $client->DeleteBucket($pet_key);
-        quest::say("The pet previously named '$pet_name' is now free to choose a new name.");
+    # Join the client's class names, using ", " and " or " appropriately
+    my $pretty_class_string;
+    if (@client_classes > 1) {
+        $pretty_class_string = join(', ', @client_classes[0..$#client_classes-1]) . ' or ' . $client_classes[-1];
     } else {
-        quest::say("You do not have sufficient Echoes of Memory to reset the pet name '$pet_name'.");
+        $pretty_class_string = $client_classes[0];  # Only one class
     }
+
+    return $pretty_class_string;
 }
+
