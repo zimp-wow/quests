@@ -249,6 +249,11 @@ sub pet_name_change_intro {
 sub pet_name_change_select {
     my ($class_id) = @_;
 
+    if ($client->IsPetNameChangeAllowed()) {
+        plugin::YellowText("You currently have a pet name change pending. Please complete that with /changepetname before selecting another pet name to change.");
+        return;
+    }
+
     my %class_map = plugin::GetClassMap();
     my $class_name = $class_map{$class_id};
 
@@ -261,6 +266,10 @@ sub pet_name_change_select {
 
 sub pet_name_change_confirm {
     my ($class_id, $mode) = @_;
+    if ($client->IsPetNameChangeAllowed()) {
+        plugin::YellowText("You currently have a pet name change pending. Please complete that with /changepetname before selecting another pet name to change.");
+        return;
+    }
 
     my %class_map = plugin::GetClassMap();
     my $class_name = $class_map{$class_id};
@@ -283,7 +292,7 @@ sub pet_name_change_confirm {
 sub GetClassLinkString {
     my $client = shift || plugin::val('$client');  # Ensure $client is available
     my %class_map = plugin::GetClassMap();        # Get the full class map
-    my $class_bits = $client->GetClassesBitmask();  # Retrieve the class bits for the client
+    my $class_bits = $client->GetClassesBitmask();  # Retrieve the class bits for the client    
 
     my @client_classes;
 
