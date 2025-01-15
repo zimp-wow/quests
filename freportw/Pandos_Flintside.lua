@@ -24,22 +24,19 @@ function event_trade(e)
 		muffin = 3;
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 13014,item2 = 13014})) then
 		muffin = 2;
-	elseif(item_lib.check_turn_in(e.trade, {item1 = 13014})) then
+	elseif() then
 		muffin = 1;
 	end
 	
-	if(muffin > 0) then
-		repeat
-			e.self:Say("Mmmm. This smells delicious. Oh great!! No milk!! Don't you have any sense?! Just tell me the name of the bakery and I will run and get it myself. I am sure Lady Shae will be safe.");
-			e.other:Ding();
-			e.other:Faction(226,1,0); -- Clerics of Tunare
-			e.other:Faction(246,1,0); -- Faydark's Champions
-			e.other:Faction(279,1,0); -- King Tearis Thex
-			e.other:Faction(310,1,0); -- Soldiers of Tunare
-			e.other:Faction(234,-1,0); -- Crushbone Orcs
-			e.other:AddEXP(10);
-			muffin = muffin - 1;
-		until muffin == 0
+	while item_lib.check_turn_in(e.trade, {item1 = 13014}) do		
+		e.self:Say("Mmmm. This smells delicious. Oh great!! No milk!! Don't you have any sense?! Just tell me the name of the bakery and I will run and get it myself. I am sure Lady Shae will be safe.");
+		e.other:Ding();
+		e.other:Faction(226,1,0); -- Clerics of Tunare
+		e.other:Faction(246,1,0); -- Faydark's Champions
+		e.other:Faction(279,1,0); -- King Tearis Thex
+		e.other:Faction(310,1,0); -- Soldiers of Tunare
+		e.other:Faction(234,-1,0); -- Crushbone Orcs
+		e.other:AddEXP(10);		
 	end
 	item_lib.return_items(e.self, e.other, e.trade)
 end

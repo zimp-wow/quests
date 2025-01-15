@@ -18,15 +18,6 @@ function event_trade(e)
 	
 	local item_lib = require("items");
 
-	 -- Gnoll Fangs
-	if item_lib.check_turn_in(e.trade, {item1 = 13915, item2 = 13915, item3 = 13915, item4 = 13915}) then
-		fang = 4;
-	elseif item_lib.check_turn_in(e.trade, {item1 = 13915, item2 = 13915, item3 = 13915}) then
-		fang = 3;
-	elseif item_lib.check_turn_in(e.trade, {item1 = 13915, item2 = 13915}) then
-		fang = 2;
-	elseif item_lib.check_turn_in(e.trade, {item1 = 13915}) then
-		fang = 1;
 	elseif item_lib.check_turn_in(e.trade, {item1 = 18815}) then -- Item: Tattered Note
 		e.self:Say("I heard you were on your way.  I have called for the state [executioner].  She should be on her way now.  She will deal with our friend, McNeal Jocub.  Thank you for your help, citizen.");
 		e.other:Faction(262,40,0);	-- Faction: Guards of Qeynos
@@ -50,18 +41,15 @@ function event_trade(e)
 		e.other:SummonItem(8287);	-- Item: Orders for Sergeant Caelin
 	end
 	
-	if fang > 0 then
-		repeat
-			e.self:Say("Very good! One less gnoll the people of Qeynos need to fear. Here is your bounty as promised.");
-			e.other:QuestReward(e.self,{exp = 1000});
-			e.other:Faction(262,3);		-- Faction: Guards of Qeynos
-			e.other:Faction(219,1);		-- Faction: Antonius Bayle
-			e.other:Faction(230,-1);	-- Faction: Corrupt Qeynos Guards
-			e.other:Faction(223,-1);	-- Faction: Circle of Unseen Hands
-			e.other:Faction(291,1);		-- Faction: Merchants of Qeynos
-			e.other:SummonItem(10070);	-- Item: Moonstone
-			fang = fang - 1;
-		until fang == 0
+	while item_lib.check_turn_in(e.trade, {item1 = 13915}) do
+		e.self:Say("Very good! One less gnoll the people of Qeynos need to fear. Here is your bounty as promised.");
+		e.other:QuestReward(e.self,{exp = 1000});
+		e.other:Faction(262,3);		-- Faction: Guards of Qeynos
+		e.other:Faction(219,1);		-- Faction: Antonius Bayle
+		e.other:Faction(230,-1);	-- Faction: Corrupt Qeynos Guards
+		e.other:Faction(223,-1);	-- Faction: Circle of Unseen Hands
+		e.other:Faction(291,1);		-- Faction: Merchants of Qeynos
+		e.other:SummonItem(10070);	-- Item: Moonstone
 	end
 
 	item_lib.return_items(e.self, e.other, e.trade)
