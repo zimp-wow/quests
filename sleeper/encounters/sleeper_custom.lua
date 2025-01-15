@@ -1,7 +1,7 @@
 -- If you found this, please don't spoil it for everyone else. This will be EPIC.
 -- If I catch you spoiling this before velious release, you WILL be banned.
 
-local event_npcs		= {128020, 128059, 128063, 128066, 128068}
+local event_npcs		= {128020, 128059, 128063, 128066, 128068, 128041, 128043, 128042, 128044}
 local next_event_hp		= 90;
 local kerafrym_id       = 128089;
 
@@ -123,7 +123,7 @@ end
 
 function SpawnWarder(e)
     local x,y,z,h = e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading();
-    local warder_spawn = eq.spawn2(eq.ChooseRandom(128059, 128063, 128066, 128068), 0, 0, x + 75, y + 25, z, h);
+    local warder_spawn = eq.spawn2(eq.ChooseRandom(128041, 128043, 128042, 128044), 0, 0, x + 75, y + 25, z, h);
 	if warder_spawn.valid then
         warder_spawn:CastToNPC():Shout("I LIVE AGAIN! Master, your wish is my command!")
 		warder_spawn:CastToNPC():AddToHateList(e.self:GetHateTop(),2000);
