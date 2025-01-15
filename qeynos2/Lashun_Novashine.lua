@@ -16,40 +16,17 @@ end
 function event_trade(e)
 	local item_lib = require("items");
 	local number_of_bone_chip = 0;
-	local two_gold = 0;
-	
-	if(item_lib.check_turn_in(e.trade, {item1 = 13073,item2 = 13073,item3 = 13073,item4 = 13073})) then
-		number_of_bone_chip = 4;
-	elseif(item_lib.check_turn_in(e.trade, {item1 = 13073,item2 = 13073,item3 = 13073})) then
-		number_of_bone_chip = 3;	
-	elseif(item_lib.check_turn_in(e.trade, {item1 = 13073,item2 = 13073})) then
-		number_of_bone_chip = 2;	
-	elseif(item_lib.check_turn_in(e.trade, {item1 = 13073})) then
-		number_of_bone_chip = 1;
-	elseif(item_lib.check_turn_in(e.trade, {gold = 2})) then
-		number_of_bone_chip = 1;
-		two_gold = 1;
-	end
 
-	if(number_of_bone_chip >= 1) then
+	while item_lib.check_turn_in(e.trade, {item1 = 13073}) do
 		e.other:Ding();
 		e.self:CastSpell(17,e.other:GetID()); -- Spell: Light Healing
-		repeat
-			if(two_gold == 1) then
-				e.self:Say("Thank you for the donation to the Temple of Life. May Rodcet Nife cleanse your body of all ills.");
-				e.other:AddEXP(1);
-				two_gold = 0;
-			else
-				e.self:Say("Very well, young one. May the light of the Prime Healer wash away your scars.");
-			end
-			e.other:Faction(341,2,0); -- Faction: Priests of Life
-			e.other:Faction(280,2,0); -- Faction: Knights of Thunder
-			e.other:Faction(262,2,0); -- Faction: Guards of Qeynos
-			e.other:Faction(221,-2,0); -- Faction: Bloodsabers
-			e.other:Faction(219,2,0); -- Faction: Antonius Bayle
-			e.other:AddEXP(12);
-			number_of_bone_chip = number_of_bone_chip - 1;
-		until number_of_bone_chip == 0
+		e.other:Faction(341,2,0); -- Faction: Priests of Life
+		e.other:Faction(280,2,0); -- Faction: Knights of Thunder
+		e.other:Faction(262,2,0); -- Faction: Guards of Qeynos
+		e.other:Faction(221,-2,0); -- Faction: Bloodsabers
+		e.other:Faction(219,2,0); -- Faction: Antonius Bayle
+		e.other:AddEXP(12);
 	end
+
 	item_lib.return_items(e.self, e.other, e.trade)
 end
