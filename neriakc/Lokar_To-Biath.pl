@@ -43,21 +43,23 @@ sub EVENT_ITEM {
 		quest::exp(100);
 	}
 	#:: Match one 13030 - Red Wine
-	elsif (plugin::check_handin(\%itemcount, 13030 => 1)) {
-		#:: Match if faction is Indifferent or better
-		if ($faction <= 5) {
-			quest::say("Ah, yes, let me pray to our god.. Yes, Innoruuk has given me wisdom. A Scribe of Dal still exists, disguised as a barkeep in the Blind Fish. This information will not help you though, for she has sworn a [vow] of silence and will not speak of the Dal.");
-			#:: Ding!
-			quest::ding();
-			#:: Set factions
-			quest::faction(236, 10);		#:: + Dark Bargainers
-			quest::faction(334, 1);			#:: + Dreadguard Outer
-			quest::faction(370, 1);			#:: + Dreadguard Inner
-			#:: Grant a small amount of experience
-			quest::exp(150);
-		}
-		else {
-			quest::say("Leave my sight at once! You are no friend to the Dark Bargainers.");
+	else {
+		while (plugin::check_handin(\%itemcount, 13030 => 1)) {
+			#:: Match if faction is Indifferent or better
+			if ($faction <= 5) {
+				quest::say("Ah, yes, let me pray to our god.. Yes, Innoruuk has given me wisdom. A Scribe of Dal still exists, disguised as a barkeep in the Blind Fish. This information will not help you though, for she has sworn a [vow] of silence and will not speak of the Dal.");
+				#:: Ding!
+				quest::ding();
+				#:: Set factions
+				quest::faction(236, 10);		#:: + Dark Bargainers
+				quest::faction(334, 1);			#:: + Dreadguard Outer
+				quest::faction(370, 1);			#:: + Dreadguard Inner
+				#:: Grant a small amount of experience
+				quest::exp(150);
+			}
+			else {
+				quest::say("Leave my sight at once! You are no friend to the Dark Bargainers.");
+			}
 		}
 	}
 	#:: Return unused items
