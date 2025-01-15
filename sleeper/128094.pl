@@ -1,5 +1,4 @@
 sub EVENT_TICK {
-    quest::debug("WTFWTFWTFWTF");
 
     my $ventani = $entity_list->GetMobByNpcTypeID(128091);
     my $tukaarak = $entity_list->GetMobByNpcTypeID(128092);
