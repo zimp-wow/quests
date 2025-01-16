@@ -12,9 +12,6 @@ sub DoEventRewards {
     my $nice_24 = quest::get_data($event_key . "xmas24_ret_nice") || 0;
     my $nice_24_r = quest::get_data($event_key . "xmas24_ret_nice-rewarded") || 0;
 
-    my $naughty_24 = quest::get_data($event_key . "xmas24_ret_naughty") || 0;
-    my $destroy_24 = quest::get_data($event_key . "xmas24_ret_destroy") || 0;
-
     if (defined $nice_24 && $nice_24) {
         # Base Reward (val 1)
         if ($nice_24 >= 1 && $nice_24_r < 1) {
@@ -56,20 +53,14 @@ sub DoEventRewards {
             quest::set_data($event_key . "xmas24_ret_nice-rewarded", max($nice_24_r, 5));
         }
     }
-
-    if (defined $naughty_24 && $naughty_24) {
+    
+    my $destroyed = quest::get_data($client->AccountID() . "-ess-items-destroyed") || 0;
+    my $opened    = quest::get_data($client->AccountID() . "-ess-items-opened") || 0;
+    if ($opened || $destroyed) {
         plugin::AddTitleFlag(210);
     }
 
-    if (defined $destroy_24 && $destroy_24) {
-        plugin::AddTitleFlag(210);
-
-        if ($destroy_24 >= 2) {
-            plugin::AddTitleFlag(211);
-        }
-
-        if ($destroy_24 == 3) {
-            plugin::AddTitleFlag(212);
-        }
+    if ($destroyed >= 50) {
+         plugin::AddTitleFlag(211);
     }
 }   
