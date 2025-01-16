@@ -187,3 +187,61 @@ sub get_slot_by_item {
 	}
 	return 0;
 }
+
+sub swap_items {
+    my ($client, $item_id) = @_;
+
+    # Normalize item ID to its base form
+    my $normalized_id = $item_id % 1000000;
+    my $rank = int($item_id / 1000000);
+
+    # Define the mapping of source to destination items for swaps
+    my %item_swaps = (
+        # Gauntlet and Hammer swaps
+        11668 => 11669,
+        11669 => 11668,
+
+        # Epic swaps
+        14383 => 800000,
+        10099 => 800001,
+        800000 => 14383,
+        800001 => 10099,
+    );
+
+    # Bail out if the item is not in the swap list
+    return unless exists $item_swaps{$normalized_id};
+
+    # Determine the destination item
+    my $dst_item = $item_swaps{$normalized_id} + ($rank * 1000000);
+
+    # Retrieve augment data for the current item
+    my @augments = (
+        $client->GetAugmentIDAt($slot_id, 0),
+        $client->GetAugmentIDAt($slot_id, 1),
+        $client->GetAugmentIDAt($slot_id, 2),
+        $client->GetAugmentIDAt($slot_id, 3),
+        $client->GetAugmentIDAt($slot_id, 4),
+        $client->GetAugmentIDAt($slot_id, 5),
+    );
+
+    # Replace invalid augment values (-1) with 0
+    foreach my $augment (@augments) {
+        $augment = 0 if $augment == -1;
+    }
+
+    # Construct item data with augments and attunement
+    my $item_data = {
+        item_id       => $dst_item,
+        charges       => 1,
+        augment_one   => $augments[0],
+        augment_two   => $augments[1],
+        augment_three => $augments[2],
+        augment_four  => $augments[3],
+        augment_five  => $augments[4],
+        augment_six   => $augments[5],
+        attuned       => 1,
+    };
+
+    # Add the swapped item with augments
+    $client->AddItem($item_data);
+}
