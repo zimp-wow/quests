@@ -81,18 +81,17 @@ sub EVENT_SAY {
         gender_change_intro();
     }
     elsif ($text =~ /^confirm_gender_(\d)-(\d)$/i) {
-        gender_change_confirm($1);
+        gender_change_confirm($1, $2);
     }
     elsif ($text =~ /rename your pets/i) {
         pet_name_change_intro();
     }
     elsif ($text =~ /^change_pet_name_(\d+)$/i) {
         quest::debug("Captured class_id: $1");
-        pet_name_change_select($1);  # Pass the captured class_id
+        pet_name_change_select($1);
     }
-    elsif ($text =~ /^confirm_pet_name_change_(\d+)-(\d)$/i) {  # Matches class_id as digits
-        quest::debug("Captured class_id for confirmation: $1");
-        pet_name_change_confirm($1);  # Pass the captured class_id
+    elsif ($text =~ /^confirm_pet_name_change_(\d+)-(\d)$/i) {  
+        pet_name_change_confirm($1, $2);  
     }
 
 
@@ -277,6 +276,8 @@ sub pet_name_change_confirm {
     my $success = $mode
         ? plugin::SpendEOM($client, $pet_name_reset_cost)
         : $client->TakeMoneyFromPP($platinum_alt_cost * $pet_name_reset_cost * 1000, 1);
+
+    quest::debug("mode: $mode");
 
     if ($success) {
         quest::say("The currents of magic shift, and the veil of change is drawn back. "
