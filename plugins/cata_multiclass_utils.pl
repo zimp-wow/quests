@@ -290,16 +290,19 @@ sub IsValidToAddClass {
 sub HasClass {
     my $client      = shift;
     my $class_id    = shift;
-    my $class_bits  = $client->GetClassesBitmask();
 
-    return ($class_bits & (1 << ($class_id - 1))) ? 1 : 0;
+    if ($client) {
+        return $client->HasClassID($class_id);
+    }
 }
 
 sub HasClassName {
     my $client      = shift;
     my $class_name  = shift;
 
-    return HasClass($client, GetClassID($class_name));
+    if ($client) {
+        return $client->HasClass($class_name);
+    }
 }
 
 sub GrantGeneralAA {
